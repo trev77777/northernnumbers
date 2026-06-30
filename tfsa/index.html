@@ -288,6 +288,44 @@
       color: var(--color-text-muted);
       line-height: 1.6;
     }
+
+    /* Input summary tags shown above results */
+    .summary-tag {
+      display: inline-flex;
+      align-items: center;
+      padding: var(--space-1) var(--space-3);
+      background: var(--color-primary-light);
+      border: 1px solid rgba(213,43,30,0.2);
+      border-radius: var(--radius-full);
+      font-size: var(--text-xs);
+      font-weight: 600;
+      color: var(--color-primary);
+    }
+
+    /* Button row for calculate + reset */
+    .btn-row {
+      display: flex;
+      gap: var(--space-3);
+      align-items: center;
+      margin-top: var(--space-4);
+    }
+
+    .btn-reset {
+      padding: var(--space-3) var(--space-5);
+      font-size: var(--text-base);
+      font-weight: 600;
+      color: var(--color-text-muted);
+      background: var(--color-white);
+      border: 2px solid var(--color-border);
+      border-radius: var(--radius-lg);
+      cursor: pointer;
+      transition: border-color var(--transition-fast), color var(--transition-fast);
+    }
+
+    .btn-reset:hover {
+      border-color: var(--color-text-muted);
+      color: var(--color-text);
+    }
   </style>
 </head>
 
@@ -505,9 +543,14 @@
               </div>
             </div>
 
-            <button type="submit" class="btn btn-primary btn-calculate" id="tfsa-calculate-btn">
-              Calculate TFSA Growth
-            </button>
+            <div class="btn-row">
+              <button type="submit" class="btn btn-primary btn-calculate" id="tfsa-calculate-btn" style="flex:1;">
+                Calculate TFSA Growth
+              </button>
+              <button type="button" id="tfsa-reset-btn" class="btn-reset">
+                Reset
+              </button>
+            </div>
 
           </form>
 
@@ -535,6 +578,9 @@
           </div>
 
           <div id="tfsa-results-content" class="hidden">
+
+            <!-- Input summary — confirms what the user entered -->
+            <div id="result-summary-box" class="hidden" style="margin-bottom:var(--space-5);padding:var(--space-4);background:var(--color-bg);border:1px solid var(--color-border);border-radius:var(--radius-md);"></div>
 
             <div class="result-big">
               <p class="result-big-label">Future TFSA Value</p>

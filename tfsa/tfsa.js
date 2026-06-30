@@ -26,23 +26,24 @@ const annualLimitEl      = document.getElementById('annual-limit');
 const inflationEl        = document.getElementById('inflation-rate');
 const overContribWarning = document.getElementById('over-contrib-warning');
 
-const resultsPlaceholder = document.getElementById('tfsa-results-placeholder');
-const resultsContent     = document.getElementById('tfsa-results-content');
-const resultFutureValue  = document.getElementById('result-future-value');
+const resultsPlaceholder  = document.getElementById('tfsa-results-placeholder');
+const resultsContent      = document.getElementById('tfsa-results-content');
+const resultFutureValue   = document.getElementById('result-future-value');
 const resultTotalContribs = document.getElementById('result-total-contributions');
-const resultGrowth       = document.getElementById('result-investment-growth');
+const resultGrowth        = document.getElementById('result-investment-growth');
 const resultRemainingRoom = document.getElementById('result-remaining-room');
-const resultInflation    = document.getElementById('result-inflation-adjusted');
+const resultInflation     = document.getElementById('result-inflation-adjusted');
+const resultSummaryBox    = document.getElementById('result-summary-box');
 
-const milestone100k      = document.getElementById('milestone-100k');
-const milestone250k      = document.getElementById('milestone-250k');
-const milestone500k      = document.getElementById('milestone-500k');
-const milestone100kYear  = document.getElementById('milestone-100k-year');
-const milestone250kYear  = document.getElementById('milestone-250k-year');
-const milestone500kYear  = document.getElementById('milestone-500k-year');
-const milestone100kText  = document.getElementById('milestone-100k-text');
-const milestone250kText  = document.getElementById('milestone-250k-text');
-const milestone500kText  = document.getElementById('milestone-500k-text');
+const milestone100k     = document.getElementById('milestone-100k');
+const milestone250k     = document.getElementById('milestone-250k');
+const milestone500k     = document.getElementById('milestone-500k');
+const milestone100kYear = document.getElementById('milestone-100k-year');
+const milestone250kYear = document.getElementById('milestone-250k-year');
+const milestone500kYear = document.getElementById('milestone-500k-year');
+const milestone100kText = document.getElementById('milestone-100k-text');
+const milestone250kText = document.getElementById('milestone-250k-text');
+const milestone500kText = document.getElementById('milestone-500k-text');
 
 const growthSection      = document.getElementById('growth-section');
 const growthToggle       = document.getElementById('growth-toggle');
@@ -72,6 +73,14 @@ function parseInputNumber(value) {
   return parseFloat(String(value).replace(/[^0-9.]/g, '')) || 0;
 }
 
+function friendlyFrequency(freq) {
+  const map = {
+    yearly: 'year', monthly: 'month', biweekly: 'two weeks',
+    weekly: 'week', onetime: 'one time'
+  };
+  return map[freq] || freq;
+}
+
 
 /* =============================================
    3. LIVE INPUT FORMATTING
@@ -84,7 +93,7 @@ function attachFormatter(inputEl) {
     const formatted = isNaN(num) ? '' : new Intl.NumberFormat('en-CA', {
       minimumFractionDigits: 0, maximumFractionDigits: 0
     }).format(num);
-    const sel = this.selectionStart;
+    const sel  = this.selectionStart;
     const prev = this.value.length;
     this.value = formatted;
     const newPos = Math.max(0, sel + (this.value.length - prev));
@@ -112,60 +121,47 @@ advancedToggle.addEventListener('click', function () {
 
 /* =============================================
    5. PRESETS
+   — Sets all fields then calls calculate() directly
+     (avoids timing issues with form.dispatchEvent)
    ============================================= */
 const PRESETS = {
   beginner: {
-    balance: 0,
-    room: 95000,
-    contribution: 100,
-    frequency: 'monthly',
-    annualReturn: 4,
-    horizon: 20,
-    label: '🌱 Beginner Investor',
-    desc: 'Just getting started — $100/month, conservative 4% return'
+    balance: 0, room: 95000, contribution: 100,
+    frequency: 'monthly', annualReturn: 4, horizon: 20
   },
   average: {
-    balance: 15000,
-    room: 50000,
-    contribution: 7000,
-    frequency: 'yearly',
-    annualReturn: 6,
-    horizon: 20,
-    label: '🍁 Average Canadian',
-    desc: 'Maxing out TFSA yearly with a balanced 6% return'
+    balance: 15000, room: 50000, contribution: 7000,
+    frequency: 'yearly', annualReturn: 6, horizon: 20
   },
   growth: {
-    balance: 50000,
-    room: 45000,
-    contribution: 7000,
-    frequency: 'yearly',
-    annualReturn: 8,
-    horizon: 25,
-    label: '📈 Growth Investor',
-    desc: 'Existing TFSA, maxing out yearly, aggressive 8% return'
+    balance: 50000, room: 45000, contribution: 7000,
+    frequency: 'yearly', annualReturn: 8, horizon: 25
   }
 };
 
 document.querySelectorAll('.preset-btn').forEach(btn => {
   btn.addEventListener('click', function () {
-    const preset = PRESETS[this.dataset.preset];
+    const key    = this.dataset.preset;
+    const preset = PRESETS[key];
     if (!preset) return;
 
-    balanceEl.value      = formatInputNumber(preset.balance);
-    roomEl.value         = formatInputNumber(preset.room);
-    contributionEl.value = formatInputNumber(preset.contribution);
-    frequencyEl.value    = preset.frequency;
-    returnEl.value       = preset.annualReturn;
-    horizonEl.value      = preset.horizon;
+    // Set all field values
+    balanceEl.value       = formatInputNumber(preset.balance);
+    roomEl.value          = formatInputNumber(preset.room);
+    contributionEl.value  = formatInputNumber(preset.contribution);
+    frequencyEl.value     = preset.frequency;
+    returnEl.value        = preset.annualReturn;
+    horizonEl.value       = preset.horizon;
 
-    // Mark active
+    // Mark active preset button
     document.querySelectorAll('.preset-btn').forEach(b => b.classList.remove('is-active'));
     this.classList.add('is-active');
 
+    // Update over-contribution warning with new values
     checkOverContrib();
 
-    // Auto-calculate on preset select
-    form.dispatchEvent(new Event('submit'));
+    // Calculate directly — no event dispatch needed
+    calculate();
   });
 });
 
@@ -173,10 +169,10 @@ document.querySelectorAll('.preset-btn').forEach(btn => {
 /* =============================================
    6. VALIDATION
    ============================================= */
-function setError(inputEl, errorElId, message) {
+function setError(inputEl, errorElId, msg) {
   inputEl.classList.add('is-error');
   const el = document.getElementById(errorElId);
-  if (el) { el.textContent = message; el.classList.add('is-visible'); }
+  if (el) { el.textContent = msg; el.classList.add('is-visible'); }
 }
 
 function clearError(inputEl, errorElId) {
@@ -223,13 +219,11 @@ function validateInputs() {
   return {
     valid: true,
     values: {
-      balance,
-      room,
-      contribution,
-      frequency: frequencyEl.value,
+      balance, room, contribution,
+      frequency:     frequencyEl.value,
       annualReturn,
       horizon,
-      annualLimit: parseInputNumber(annualLimitEl.value) || 7000,
+      annualLimit:   parseInputNumber(annualLimitEl.value) || 7000,
       inflationRate: parseFloat(inflationEl.value) || 0
     }
   };
@@ -249,6 +243,11 @@ function toAnnualContribution(amount, frequency) {
   }
 }
 
+/**
+ * Project TFSA growth year by year.
+ * FIX: milestone check now happens AFTER updating balance,
+ * and runs against every year's ending balance — not just the final year.
+ */
 function projectTfsa(balance, room, contribution, frequency, annualReturn, horizon, annualLimit) {
   const annualContrib = toAnnualContribution(contribution, frequency);
   const rate          = annualReturn / 100;
@@ -258,24 +257,33 @@ function projectTfsa(balance, room, contribution, frequency, annualReturn, horiz
   let currentRoom        = room;
   let totalContributions = 0;
   const schedule         = [];
-  const milestones       = { 100000: null, 250000: null, 500000: null };
+
+  // Milestones — null until hit
+  const milestones = { 100000: null, 250000: null, 500000: null };
 
   for (let y = 1; y <= horizon; y++) {
+    // New room added at start of each year after year 1
     if (y > 1) currentRoom += annualLimit;
 
-    const yearContrib  = (frequency === 'onetime' && y > 1) ? 0 : annualContrib;
+    // One-time contributions only apply in year 1
+    const yearContrib   = (frequency === 'onetime' && y > 1) ? 0 : annualContrib;
     const actualContrib = Math.min(yearContrib, currentRoom);
     currentRoom        -= actualContrib;
     totalContributions += actualContrib;
 
+    // Growth calculated on opening balance + half the year's contribution (mid-year approximation)
     const growthBase = currentBalance + actualContrib * 0.5;
     const yearGrowth = growthBase * rate;
-    currentBalance   = currentBalance + actualContrib + yearGrowth;
+
+    // Update balance FIRST, then check milestones
+    currentBalance = currentBalance + actualContrib + yearGrowth;
 
     const calYear = currentYear + y;
-    if (!milestones[100000]  && currentBalance >= 100000)  milestones[100000]  = calYear;
-    if (!milestones[250000]  && currentBalance >= 250000)  milestones[250000]  = calYear;
-    if (!milestones[500000]  && currentBalance >= 500000)  milestones[500000]  = calYear;
+
+    // Check milestones against this year's ending balance
+    if (!milestones[100000] && currentBalance >= 100000)  milestones[100000] = calYear;
+    if (!milestones[250000] && currentBalance >= 250000)  milestones[250000] = calYear;
+    if (!milestones[500000] && currentBalance >= 500000)  milestones[500000] = calYear;
 
     schedule.push({
       year: calYear,
@@ -290,7 +298,7 @@ function projectTfsa(balance, room, contribution, frequency, annualReturn, horiz
     schedule,
     milestones,
     totalContributions,
-    finalBalance: currentBalance,
+    finalBalance:  currentBalance,
     remainingRoom: schedule[schedule.length - 1]?.roomRemaining ?? 0
   };
 }
@@ -303,12 +311,24 @@ function inflationAdjust(futureValue, inflationRate, years) {
 
 /* =============================================
    8. OVER-CONTRIBUTION LIVE CHECK
+   FIX: Only shows warning when BOTH room and contribution
+   are filled in AND contribution genuinely exceeds room.
    ============================================= */
 function checkOverContrib() {
-  const room          = parseInputNumber(roomEl.value);
-  const contribution  = parseInputNumber(contributionEl.value);
-  const annualContrib = toAnnualContribution(contribution, frequencyEl.value);
-  const isOver        = room > 0 && contribution > 0 && annualContrib > room;
+  const room         = parseInputNumber(roomEl.value);
+  const contribution = parseInputNumber(contributionEl.value);
+  const frequency    = frequencyEl.value;
+
+  // Don't warn if either field is empty / zero
+  if (!room || !contribution) {
+    overContribWarning.classList.remove('is-visible');
+    return;
+  }
+
+  const annualContrib = toAnnualContribution(contribution, frequency);
+
+  // Only warn if annual contributions exceed available room
+  const isOver = annualContrib > room;
   overContribWarning.classList.toggle('is-visible', isOver);
 }
 
@@ -318,26 +338,61 @@ frequencyEl.addEventListener('change', checkOverContrib);
 
 
 /* =============================================
-   9. RENDER RESULTS
+   9. RENDER — Input summary box
+   Shows a plain-English summary of what the user entered
+   before the big result number.
    ============================================= */
-function renderMilestone(cardEl, yearEl, textEl, amount, year, reached) {
-  const label   = amount >= 1000000
-    ? '$' + (amount / 1000000) + 'M'
-    : '$' + (amount / 1000) + ',000';
+function renderSummaryBox(contribution, frequency, horizon, annualReturn) {
+  if (!resultSummaryBox) return;
+  const freqLabel = {
+    yearly: 'per year', monthly: 'per month',
+    biweekly: 'every two weeks', weekly: 'per week', onetime: 'as a one-time contribution'
+  }[frequency] || 'per year';
+
+  resultSummaryBox.innerHTML = `
+    <p style="font-size:var(--text-xs);font-weight:600;color:var(--color-text-muted);
+      text-transform:uppercase;letter-spacing:0.05em;margin-bottom:var(--space-2);">
+      Your projection is based on
+    </p>
+    <div style="display:flex;flex-wrap:wrap;gap:var(--space-2);">
+      <span class="summary-tag">${formatCAD(contribution)} ${freqLabel}</span>
+      <span class="summary-tag">for ${horizon} years</span>
+      <span class="summary-tag">${annualReturn}% annual return</span>
+    </div>
+  `;
+  resultSummaryBox.classList.remove('hidden');
+}
+
+
+/* =============================================
+   10. RENDER MILESTONES
+   FIX: milestones now correctly show year for any
+   milestone crossed during the projection period.
+   ============================================= */
+function renderMilestone(cardEl, yearEl, textEl, amount, year, finalBalance) {
+  const label = '$' + amount.toLocaleString('en-CA');
+  const reached = finalBalance >= amount;
 
   if (year) {
+    // Milestone was hit during the projection
     yearEl.textContent = year;
     textEl.innerHTML   = `You could reach <strong>${label}</strong> in`;
     cardEl.classList.toggle('is-reached', reached);
   } else {
+    // Not hit within the time horizon
     yearEl.textContent = 'N/A';
-    textEl.innerHTML   = `<strong>${label}</strong> — not within your time horizon`;
+    textEl.innerHTML   = `<strong>${label}</strong> — beyond your time horizon`;
     cardEl.classList.remove('is-reached');
   }
 }
 
-function renderResults(data, horizon, inflationRate) {
+
+/* =============================================
+   11. RENDER RESULTS
+   ============================================= */
+function renderResults(data, values) {
   const { schedule, milestones, totalContributions, finalBalance, remainingRoom } = data;
+  const { horizon, inflationRate, contribution, frequency, annualReturn } = values;
   const startingBalance  = parseInputNumber(balanceEl.value);
   const investmentGrowth = finalBalance - totalContributions - startingBalance;
   const inflationValue   = inflationAdjust(finalBalance, inflationRate, horizon);
@@ -345,18 +400,25 @@ function renderResults(data, horizon, inflationRate) {
   resultsPlaceholder.classList.add('hidden');
   resultsContent.classList.remove('hidden');
 
-  resultFutureValue.textContent   = formatCAD(finalBalance);
-  resultTotalContribs.textContent = formatCAD(totalContributions);
-  resultGrowth.textContent        = formatCAD(Math.max(0, investmentGrowth));
-  resultRemainingRoom.textContent = formatCAD(remainingRoom);
-  resultInflation.textContent     = formatCAD(inflationValue);
+  // Summary box
+  renderSummaryBox(contribution, frequency, horizon, annualReturn);
 
-  renderMilestone(milestone100k, milestone100kYear, milestone100kText, 100000,  milestones[100000],  finalBalance >= 100000);
-  renderMilestone(milestone250k, milestone250kYear, milestone250kText, 250000,  milestones[250000],  finalBalance >= 250000);
-  renderMilestone(milestone500k, milestone500kYear, milestone500kText, 500000,  milestones[500000],  finalBalance >= 500000);
+  // Main numbers
+  resultFutureValue.textContent    = formatCAD(finalBalance);
+  resultTotalContribs.textContent  = formatCAD(totalContributions);
+  resultGrowth.textContent         = formatCAD(Math.max(0, investmentGrowth));
+  resultRemainingRoom.textContent  = formatCAD(remainingRoom);
+  resultInflation.textContent      = formatCAD(inflationValue);
 
+  // Milestones — pass finalBalance so reached state is correct
+  renderMilestone(milestone100k, milestone100kYear, milestone100kText, 100000, milestones[100000], finalBalance);
+  renderMilestone(milestone250k, milestone250kYear, milestone250kText, 250000, milestones[250000], finalBalance);
+  renderMilestone(milestone500k, milestone500kYear, milestone500kText, 500000, milestones[500000], finalBalance);
+
+  // Growth table
   renderGrowthTable(schedule);
 
+  // Scroll to results on mobile
   if (window.innerWidth < 900) {
     resultsContent.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
   }
@@ -364,7 +426,7 @@ function renderResults(data, horizon, inflationRate) {
 
 
 /* =============================================
-   10. GROWTH TABLE
+   12. GROWTH TABLE
    ============================================= */
 function renderGrowthTable(schedule) {
   growthTbody.innerHTML = '';
@@ -389,31 +451,67 @@ growthToggle.addEventListener('click', function () {
 
 
 /* =============================================
-   11. FORM SUBMIT
+   13. CALCULATE — central function called by
+   both form submit and preset buttons
+   ============================================= */
+function calculate() {
+  const result = validateInputs();
+  if (!result.valid) return;
+  const { values } = result;
+  const data = projectTfsa(
+    values.balance, values.room, values.contribution,
+    values.frequency, values.annualReturn, values.horizon, values.annualLimit
+  );
+  renderResults(data, values);
+}
+
+
+/* =============================================
+   14. FORM EVENTS
    ============================================= */
 form.addEventListener('submit', function (e) {
   e.preventDefault();
-  const { valid, values } = validateInputs();
-  if (!valid) return;
-  const { balance, room, contribution, frequency, annualReturn, horizon, annualLimit, inflationRate } = values;
-  const data = projectTfsa(balance, room, contribution, frequency, annualReturn, horizon, annualLimit);
-  renderResults(data, horizon, inflationRate);
+  calculate();
 });
+
+// Reset button
+const resetBtn = document.getElementById('tfsa-reset-btn');
+if (resetBtn) {
+  resetBtn.addEventListener('click', function () {
+    balanceEl.value      = formatInputNumber(0);
+    roomEl.value         = formatInputNumber(95000);
+    contributionEl.value = formatInputNumber(7000);
+    frequencyEl.value    = 'yearly';
+    returnEl.value       = '6';
+    horizonEl.value      = '20';
+    annualLimitEl.value  = formatInputNumber(7000);
+    inflationEl.value    = '2.1';
+
+    document.querySelectorAll('.preset-btn').forEach(b => b.classList.remove('is-active'));
+
+    resultsPlaceholder.classList.remove('hidden');
+    resultsContent.classList.add('hidden');
+    growthSection.setAttribute('hidden', '');
+    overContribWarning.classList.remove('is-visible');
+    if (resultSummaryBox) resultSummaryBox.classList.add('hidden');
+  });
+}
 
 form.querySelectorAll('input, select').forEach(el => {
   el.addEventListener('keydown', function (e) {
-    if (e.key === 'Enter') { e.preventDefault(); form.dispatchEvent(new Event('submit')); }
+    if (e.key === 'Enter') { e.preventDefault(); calculate(); }
   });
 });
 
 
 /* =============================================
-   12. INIT
+   15. INIT
    ============================================= */
 (function init() {
   balanceEl.value      = formatInputNumber(0);
   roomEl.value         = formatInputNumber(95000);
   contributionEl.value = formatInputNumber(7000);
   annualLimitEl.value  = formatInputNumber(7000);
-  checkOverContrib();
+  // Don't trigger over-contrib warning on page load
+  // — wait for user interaction
 })();
