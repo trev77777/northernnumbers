@@ -340,6 +340,17 @@ function checkOverContrib() {
   // We don't warn for future years because new room accumulates every January.
   const annualContrib = toAnnualContribution(contribution, frequency);
   const isOver = annualContrib > room;
+
+  if (isOver) {
+    const annualFormatted = new Intl.NumberFormat('en-CA', {
+      style: 'currency', currency: 'CAD',
+      minimumFractionDigits: 0, maximumFractionDigits: 0
+    }).format(annualContrib);
+    overContribWarning.innerHTML = `⚠️ <strong>Heads up — possible over-contribution in year 1.</strong>
+      At this frequency, your contributions total <strong>${annualFormatted}/year</strong>,
+      which exceeds your available room of <strong>${new Intl.NumberFormat('en-CA', {style:'currency',currency:'CAD',minimumFractionDigits:0,maximumFractionDigits:0}).format(room)}</strong>.
+      The CRA charges 1% per month on the excess. Verify your room before contributing.`;
+  }
   overContribWarning.classList.toggle('is-visible', isOver);
 }
 
