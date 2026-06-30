@@ -347,20 +347,30 @@ frequencyEl.addEventListener('change', checkOverContrib);
    ============================================= */
 function renderSummaryBox(contribution, frequency, horizon, annualReturn) {
   if (!resultSummaryBox) return;
+
+  // Plain English frequency labels (cleaner than dropdown labels)
   const freqLabel = {
-    yearly: 'per year', monthly: 'per month',
-    biweekly: 'every two weeks', weekly: 'per week', onetime: 'as a one-time contribution'
-  }[frequency] || 'per year';
+    yearly:  'annually',
+    monthly: 'monthly',
+    biweekly: 'bi-weekly',
+    weekly:  'weekly',
+    onetime: 'one-time'
+  }[frequency] || 'annually';
+
+  // Format contribution with frequency naturally
+  const contribText = frequency === 'onetime'
+    ? `${formatCAD(contribution)} one-time contribution`
+    : `${formatCAD(contribution)} / ${freqLabel}`;
 
   resultSummaryBox.innerHTML = `
     <p style="font-size:var(--text-xs);font-weight:600;color:var(--color-text-muted);
-      text-transform:uppercase;letter-spacing:0.05em;margin-bottom:var(--space-2);">
+      text-transform:uppercase;letter-spacing:0.05em;margin-bottom:var(--space-3);">
       Your projection is based on
     </p>
-    <div style="display:flex;flex-wrap:wrap;gap:var(--space-2);">
-      <span class="summary-tag">${formatCAD(contribution)} ${freqLabel}</span>
-      <span class="summary-tag">for ${horizon} years</span>
-      <span class="summary-tag">${annualReturn}% annual return</span>
+    <div style="display:flex;flex-wrap:wrap;gap:var(--space-3);">
+      <span class="summary-tag">💰 ${contribText}</span>
+      <span class="summary-tag">📅 ${horizon} years</span>
+      <span class="summary-tag">📈 ${annualReturn}% annual return</span>
     </div>
   `;
   resultSummaryBox.classList.remove('hidden');
@@ -391,7 +401,36 @@ function renderMilestone(cardEl, yearEl, textEl, amount, year, finalBalance) {
 
 
 /* =============================================
-   11. RENDER RESULTS
+   11. CELEBRATION MESSAGE
+   Shows a contextual congratulations line
+   based on the final projected balance.
+   ============================================= */
+function renderCelebration(finalBalance) {
+  const celebEl = document.getElementById('result-celebration');
+  if (!celebEl) return;
+
+  let msg = '';
+  if (finalBalance >= 1000000) {
+    msg = '🎉 Congratulations! Your TFSA could grow to over <strong>one million dollars</strong> — completely tax-free.';
+  } else if (finalBalance >= 500000) {
+    msg = '🎉 Congratulations! Your TFSA could grow to over <strong>half a million dollars</strong>. That\'s a powerful tax-free nest egg.';
+  } else if (finalBalance >= 250000) {
+    msg = '🎉 Great progress! Your TFSA could grow to over <strong>$250,000</strong> — all tax-free growth.';
+  } else if (finalBalance >= 100000) {
+    msg = '✅ Your TFSA could reach over <strong>$100,000</strong>. Staying consistent will get you there.';
+  }
+
+  if (msg) {
+    celebEl.innerHTML = msg;
+    celebEl.classList.remove('hidden');
+  } else {
+    celebEl.classList.add('hidden');
+  }
+}
+
+
+/* =============================================
+   12. RENDER RESULTS
    ============================================= */
 function renderResults(data, values) {
   const { schedule, milestones, totalContributions, finalBalance, remainingRoom } = data;
@@ -412,6 +451,9 @@ function renderResults(data, values) {
   resultGrowth.textContent         = formatCAD(Math.max(0, investmentGrowth));
   resultRemainingRoom.textContent  = formatCAD(remainingRoom);
   resultInflation.textContent      = formatCAD(inflationValue);
+
+  // Celebration message based on final balance
+  renderCelebration(finalBalance);
 
   // Milestones — pass finalBalance so reached state is correct
   renderMilestone(milestone100k, milestone100kYear, milestone100kText, 100000, milestones[100000], finalBalance);
