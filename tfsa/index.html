@@ -479,6 +479,30 @@
               <p id="contribution-error" class="form-error-msg" role="alert"></p>
             </div>
 
+            <!-- Year 1 Lump Sum (optional) -->
+            <div class="form-group">
+              <label class="form-label" for="lump-sum">
+                Year 1 Lump Sum <span class="form-hint">(optional)</span>
+              </label>
+              <div class="input-wrapper">
+                <span class="input-prefix" aria-hidden="true">$</span>
+                <input
+                  type="text"
+                  id="lump-sum"
+                  class="form-input has-prefix"
+                  placeholder="0"
+                  inputmode="numeric"
+                  autocomplete="off"
+                  value="0"
+                />
+              </div>
+              <p class="field-help">
+                Use this to contribute your full available room upfront in year 1 (e.g. $27,000),
+                then switch to a smaller recurring amount from year 2 onward.
+                Leave as 0 if not needed.
+              </p>
+            </div>
+
             <!-- Frequency -->
             <div class="form-group">
               <label class="form-label" for="contrib-frequency">How often will you contribute?</label>

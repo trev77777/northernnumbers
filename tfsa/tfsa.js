@@ -106,6 +106,10 @@ attachFormatter(roomEl);
 attachFormatter(contributionEl);
 attachFormatter(annualLimitEl);
 
+// Attach formatter to lump sum if present
+const lumpSumEl = document.getElementById('lump-sum');
+if (lumpSumEl) attachFormatter(lumpSumEl);
+
 
 /* =============================================
    4. ADVANCED SETTINGS TOGGLE
@@ -227,7 +231,8 @@ function validateInputs() {
       annualReturn,
       horizon,
       annualLimit:   parseInputNumber(annualLimitEl.value) || 7000,
-      inflationRate: parseFloat(inflationEl.value) || 0
+      inflationRate: parseFloat(inflationEl.value) || 0,
+      lumpSum:       parseInputNumber(document.getElementById('lump-sum')?.value || '0')
     }
   };
 }
@@ -251,7 +256,7 @@ function toAnnualContribution(amount, frequency) {
  * FIX: milestone check now happens AFTER updating balance,
  * and runs against every year's ending balance — not just the final year.
  */
-function projectTfsa(balance, room, contribution, frequency, annualReturn, horizon, annualLimit) {
+function projectTfsa(balance, room, contribution, frequency, annualReturn, horizon, annualLimit, lumpSum = 0) {
   const annualContrib = toAnnualContribution(contribution, frequency);
   const rate          = annualReturn / 100;
   const currentYear   = new Date().getFullYear();
@@ -261,29 +266,35 @@ function projectTfsa(balance, room, contribution, frequency, annualReturn, horiz
   let totalContributions = 0;
   const schedule         = [];
 
-  // Milestones — null until hit
   const milestones = { 100000: null, 250000: null, 500000: null };
 
   for (let y = 1; y <= horizon; y++) {
     // New room added at start of each year after year 1
     if (y > 1) currentRoom += annualLimit;
 
-    // One-time contributions only apply in year 1
-    const yearContrib   = (frequency === 'onetime' && y > 1) ? 0 : annualContrib;
-    const actualContrib = Math.min(yearContrib, currentRoom);
-    currentRoom        -= actualContrib;
-    totalContributions += actualContrib;
+    // Year 1: apply lump sum first (capped at available room), then regular contribution
+    let actualContrib = 0;
+    if (y === 1 && lumpSum > 0) {
+      const lumpActual  = Math.min(lumpSum, currentRoom);
+      currentRoom      -= lumpActual;
+      totalContributions += lumpActual;
+      actualContrib    += lumpActual;
+    }
 
-    // Growth calculated on opening balance + half the year's contribution (mid-year approximation)
+    // Regular recurring contribution (one-time only applies in year 1)
+    const yearContrib    = (frequency === 'onetime' && y > 1) ? 0 : annualContrib;
+    const regularActual  = Math.min(yearContrib, currentRoom);
+    currentRoom         -= regularActual;
+    totalContributions  += regularActual;
+    actualContrib       += regularActual;
+
+    // Growth on opening balance + half this year's total contributions
     const growthBase = currentBalance + actualContrib * 0.5;
     const yearGrowth = growthBase * rate;
 
-    // Update balance FIRST, then check milestones
     currentBalance = currentBalance + actualContrib + yearGrowth;
 
     const calYear = currentYear + y;
-
-    // Check milestones against this year's ending balance
     if (!milestones[100000] && currentBalance >= 100000)  milestones[100000] = calYear;
     if (!milestones[250000] && currentBalance >= 250000)  milestones[250000] = calYear;
     if (!milestones[500000] && currentBalance >= 500000)  milestones[500000] = calYear;
@@ -524,7 +535,8 @@ function calculate() {
   const { values } = result;
   const data = projectTfsa(
     values.balance, values.room, values.contribution,
-    values.frequency, values.annualReturn, values.horizon, values.annualLimit
+    values.frequency, values.annualReturn, values.horizon,
+    values.annualLimit, values.lumpSum
   );
   renderResults(data, values);
 }
@@ -550,6 +562,7 @@ if (resetBtn) {
     horizonEl.value      = '20';
     annualLimitEl.value  = formatInputNumber(7000);
     inflationEl.value    = '2.1';
+    if (lumpSumEl) lumpSumEl.value = formatInputNumber(0);
 
     document.querySelectorAll('.preset-btn').forEach(b => b.classList.remove('is-active'));
 
