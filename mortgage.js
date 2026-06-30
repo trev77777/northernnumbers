@@ -4,6 +4,13 @@
 
    Key Canadian rule: mortgages compound semi-annually,
    not monthly. We convert to an effective monthly rate.
+
+   CMHC rules (2024):
+   - 5.00% – 9.99% down  → 4.00% premium
+   - 10.00% – 14.99% down → 3.10% premium
+   - 15.00% – 19.99% down → 2.80% premium
+   - 20.00%+ down         → 0% (conventional)
+   Premium is added to the mortgage balance before payment calc.
    ============================================= */
 
 'use strict';
@@ -32,12 +39,15 @@ const dpPrefix         = document.getElementById('dp-prefix');
 const resultsPlaceholder = document.getElementById('results-placeholder');
 const resultsContent     = document.getElementById('results-content');
 
-const resultPayment      = document.getElementById('result-payment');
-const paymentLabel       = document.getElementById('payment-label');
-const resultPrincipal    = document.getElementById('result-principal');
-const resultTotalPay     = document.getElementById('result-total-payments');
-const resultTotalInt     = document.getElementById('result-total-interest');
-const resultPayoffDate   = document.getElementById('result-payoff-date');
+const resultPayment       = document.getElementById('result-payment');
+const paymentLabel        = document.getElementById('payment-label');
+const resultBaseMortgage  = document.getElementById('result-base-mortgage');
+const resultCmhcPremium   = document.getElementById('result-cmhc-premium');
+const resultCmhcRow       = document.getElementById('result-cmhc-row');
+const resultTotalMortgage = document.getElementById('result-total-mortgage');
+const resultTotalPay      = document.getElementById('result-total-payments');
+const resultTotalInt      = document.getElementById('result-total-interest');
+const resultPayoffDate    = document.getElementById('result-payoff-date');
 
 const barPrincipal       = document.getElementById('bar-principal');
 const barInterest        = document.getElementById('bar-interest');
@@ -85,7 +95,38 @@ function formatMonthYear(date) {
 
 
 /* =============================================
-   4. CORE MORTGAGE MATH
+   4. CMHC PREMIUM CALCULATION
+   ============================================= */
+
+/**
+ * Calculate CMHC mortgage default insurance premium.
+ * Premium is a % of the BASE mortgage (purchase price - down payment).
+ *
+ * @param {number} dpRatio       - down payment as decimal, e.g. 0.10
+ * @param {number} baseMortgage  - purchase price minus down payment
+ * @returns {{ rate: number, premium: number }}
+ */
+function calcCmhc(dpRatio, baseMortgage) {
+  let rate = 0;
+
+  if (dpRatio >= 0.20) {
+    rate = 0;
+  } else if (dpRatio >= 0.15) {
+    rate = 0.0280;
+  } else if (dpRatio >= 0.10) {
+    rate = 0.0310;
+  } else if (dpRatio >= 0.05) {
+    rate = 0.0400;
+  } else {
+    rate = 0; // under 5% — validation blocks this case
+  }
+
+  return { rate, premium: baseMortgage * rate };
+}
+
+
+/* =============================================
+   5. CORE MORTGAGE MATH
    ============================================= */
 
 /**
@@ -221,12 +262,15 @@ function validateInputs() {
     setError(downPaymentEl, dpErrorEl, 'Please enter a valid down payment.');
     valid = false;
   } else {
-    // Convert % to $ if needed
     if (state.dpType === 'percent') {
       downPayment = price * (downPayment / 100);
     }
+    const dpRatio = price > 0 ? downPayment / price : 0;
     if (downPayment >= price) {
       setError(downPaymentEl, dpErrorEl, 'Down payment must be less than the purchase price.');
+      valid = false;
+    } else if (dpRatio < 0.05) {
+      setError(downPaymentEl, dpErrorEl, 'Minimum down payment for an insured mortgage is 5%.');
       valid = false;
     } else {
       clearError(downPaymentEl, dpErrorEl);
@@ -245,13 +289,16 @@ function validateInputs() {
 
   if (!valid) return { valid: false };
 
+  const rawDp = parseFloat(downPaymentEl.value);
+  const resolvedDp = state.dpType === 'percent'
+    ? price * (rawDp / 100)
+    : rawDp;
+
   return {
     valid: true,
     values: {
       price,
-      downPayment: state.dpType === 'percent'
-        ? price * (parseFloat(downPaymentEl.value) / 100)
-        : downPayment,
+      downPayment: resolvedDp,
       rate,
       amortYears: parseInt(amortizationEl.value),
       frequency: state.frequency,
@@ -270,7 +317,12 @@ function calculate() {
   if (!valid) return;
 
   const { price, downPayment, rate, amortYears, frequency, startDate } = values;
-  const principal = price - downPayment;
+
+  // --- CMHC ---
+  const baseMortgage  = price - downPayment;
+  const dpRatio       = downPayment / price;
+  const cmhc          = calcCmhc(dpRatio, baseMortgage);
+  const totalMortgage = baseMortgage + cmhc.premium; // financed amount
 
   // Determine periods per year and label
   let periodsPerYear, freqLabel;
@@ -295,49 +347,57 @@ function calculate() {
   const ratePerPeriod = getEffectiveRatePerPeriod(rate, periodsPerYear);
   const totalPeriods  = amortYears * periodsPerYear;
 
-  // Calculate base payment
-  let paymentAmount = calcPayment(principal, ratePerPeriod, totalPeriods);
+  // Payment is based on totalMortgage (base + CMHC premium)
+  let paymentAmount = calcPayment(totalMortgage, ratePerPeriod, totalPeriods);
 
-  // Accelerated bi-weekly: use half the monthly payment instead
+  // Accelerated bi-weekly: half of equivalent monthly payment
   if (isAccelerated) {
     const monthlyRate    = getEffectiveRatePerPeriod(rate, 12);
-    const monthlyPayment = calcPayment(principal, monthlyRate, amortYears * 12);
+    const monthlyPayment = calcPayment(totalMortgage, monthlyRate, amortYears * 12);
     paymentAmount = monthlyPayment / 2;
   }
 
-  // Build annual amortization schedule
-  const schedule = buildAmortSchedule(principal, ratePerPeriod, paymentAmount, periodsPerYear, startDate);
+  // Build amortization schedule starting from totalMortgage
+  const schedule      = buildAmortSchedule(totalMortgage, ratePerPeriod, paymentAmount, periodsPerYear, startDate);
+  const totalInterest = schedule.reduce((sum, row) => sum + row.interest, 0);
+  const totalPayments = totalMortgage + totalInterest;
 
-  // Compute totals from schedule
-  const totalInterest  = schedule.reduce((sum, row) => sum + row.interest, 0);
-  const totalPayments  = principal + totalInterest;
-
-  // Calculate payoff date
+  // Payoff date
   let payoffDate = null;
   if (startDate) {
-    const totalPaymentPeriods = schedule.length * periodsPerYear;
     payoffDate = new Date(startDate);
-    payoffDate.setMonth(payoffDate.getMonth() + Math.round((totalPaymentPeriods / periodsPerYear) * 12));
+    payoffDate.setMonth(payoffDate.getMonth() + schedule.length * 12);
   }
 
   // Breakdown percentages
-  const principalPct = principal / totalPayments;
+  const principalPct = totalMortgage / totalPayments;
   const interestPct  = totalInterest / totalPayments;
 
-  // --- Render results ---
+  // --- Render ---
   resultsPlaceholder.classList.add('hidden');
   resultsContent.classList.remove('hidden');
 
-  paymentLabel.textContent  = freqLabel;
-  resultPayment.textContent = formatCAD(paymentAmount);
-  resultPrincipal.textContent    = formatCAD(principal);
-  resultTotalPay.textContent     = formatCAD(totalPayments);
-  resultTotalInt.textContent     = formatCAD(totalInterest);
-  resultPayoffDate.textContent   = payoffDate ? formatMonthYear(payoffDate) : `~${schedule.length} years`;
+  paymentLabel.textContent         = freqLabel;
+  resultPayment.textContent        = formatCAD(paymentAmount);
+  resultBaseMortgage.textContent   = formatCAD(baseMortgage);
+  resultTotalMortgage.textContent  = formatCAD(totalMortgage);
+  resultTotalPay.textContent       = formatCAD(totalPayments);
+  resultTotalInt.textContent       = formatCAD(totalInterest);
+  resultPayoffDate.textContent     = payoffDate
+    ? formatMonthYear(payoffDate)
+    : `~${schedule.length} years`;
+
+  // Show CMHC row only when premium applies
+  if (cmhc.premium > 0) {
+    resultCmhcPremium.textContent = `${formatCAD(cmhc.premium)} (${(cmhc.rate * 100).toFixed(2)}%)`;
+    resultCmhcRow.classList.remove('hidden');
+  } else {
+    resultCmhcRow.classList.add('hidden');
+  }
 
   // Breakdown bar
-  barPrincipal.style.width = formatPct(principalPct);
-  barInterest.style.width  = formatPct(interestPct);
+  barPrincipal.style.width       = formatPct(principalPct);
+  barInterest.style.width        = formatPct(interestPct);
   legendPrincipalPct.textContent = formatPct(principalPct);
   legendInterestPct.textContent  = formatPct(interestPct);
 
@@ -438,7 +498,7 @@ document.querySelectorAll('[data-freq]').forEach(btn => {
 
 
 /* =============================================
-   10. CMHC CHECK — show notice if down < 20%
+   10. CMHC CHECK — show notice + live rate on input
    ============================================= */
 
 function checkCmhc() {
@@ -449,8 +509,15 @@ function checkCmhc() {
     dp = price * (dp / 100);
   }
 
-  const dpRatio = price > 0 ? dp / price : 0;
-  const needsCmhc = dpRatio > 0 && dpRatio < 0.2;
+  const dpRatio   = price > 0 ? dp / price : 0;
+  const needsCmhc = dpRatio >= 0.05 && dpRatio < 0.20 && price > 0 && dp > 0;
+  const { rate }  = calcCmhc(dpRatio, price - dp);
+
+  // Update live rate label inside the notice
+  const cmhcRateEl = document.getElementById('cmhc-rate-label');
+  if (cmhcRateEl) {
+    cmhcRateEl.textContent = `${(rate * 100).toFixed(2)}%`;
+  }
 
   cmhcNotice.classList.toggle('is-visible', needsCmhc);
 }
