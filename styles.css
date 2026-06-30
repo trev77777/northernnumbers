@@ -977,6 +977,13 @@ h1, h2, h3, h4, h5, h6 {
   color: var(--color-white);
 }
 
+/* Footer items for calculators not yet built — plain text, not links */
+.footer-nav-col span.footer-disabled {
+  font-size: var(--text-sm);
+  color: rgba(255, 255, 255, 0.35);
+  cursor: default;
+}
+
 /* Footer bottom */
 .footer-bottom {
   border-top: 1px solid rgba(255, 255, 255, 0.1);
