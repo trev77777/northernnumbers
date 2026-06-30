@@ -78,6 +78,27 @@ function formatCAD(amount) {
 }
 
 /**
+ * Format a raw number with thousands commas, no decimals.
+ * Used for input field display. e.g. 500000 → "500,000"
+ */
+function formatInputNumber(value) {
+  const num = parseFloat(String(value).replace(/[^0-9.]/g, ''));
+  if (isNaN(num)) return '';
+  return new Intl.NumberFormat('en-CA', {
+    minimumFractionDigits: 0,
+    maximumFractionDigits: 0
+  }).format(num);
+}
+
+/**
+ * Strip formatting from an input field value → raw number.
+ * e.g. "500,000" → 500000
+ */
+function parseInputNumber(value) {
+  return parseFloat(String(value).replace(/[^0-9.]/g, '')) || 0;
+}
+
+/**
  * Format a number as a percentage string.
  * e.g. 0.2345 → "23.45%"
  */
@@ -92,6 +113,46 @@ function formatPct(decimal) {
 function formatMonthYear(date) {
   return date.toLocaleDateString('en-CA', { month: 'long', year: 'numeric' });
 }
+
+
+/* =============================================
+   3b. LIVE INPUT FORMATTING
+   Attach comma-formatting to dollar inputs as
+   the user types. Preserves cursor position.
+   ============================================= */
+function attachInputFormatter(inputEl) {
+  inputEl.addEventListener('input', function () {
+    // Only format dollar inputs (not % mode)
+    if (inputEl === downPaymentEl && state.dpType === 'percent') return;
+
+    const raw   = this.value.replace(/[^0-9]/g, ''); // digits only
+    const num   = parseInt(raw, 10);
+
+    if (raw === '') {
+      this.value = '';
+      return;
+    }
+
+    const formatted = isNaN(num)
+      ? ''
+      : new Intl.NumberFormat('en-CA', {
+          minimumFractionDigits: 0,
+          maximumFractionDigits: 0
+        }).format(num);
+
+    // Preserve cursor position after formatting
+    const selStart = this.selectionStart;
+    const prevLen  = this.value.length;
+    this.value     = formatted;
+    const newLen   = this.value.length;
+    const newPos   = Math.max(0, selStart + (newLen - prevLen));
+    this.setSelectionRange(newPos, newPos);
+  });
+}
+
+attachInputFormatter(purchasePriceEl);
+attachInputFormatter(downPaymentEl);
+
 
 
 /* =============================================
@@ -245,9 +306,9 @@ function clearError(inputEl, errorEl) {
 function validateInputs() {
   let valid = true;
 
-  // Purchase price
+  // Purchase price — strip commas before parsing
   const priceErrorEl = document.getElementById('purchase-price-error');
-  const price = parseFloat(purchasePriceEl.value);
+  const price = parseInputNumber(purchasePriceEl.value);
   if (!price || price < 50000) {
     setError(purchasePriceEl, priceErrorEl, 'Please enter a purchase price of at least $50,000.');
     valid = false;
@@ -255,14 +316,16 @@ function validateInputs() {
     clearError(purchasePriceEl, priceErrorEl);
   }
 
-  // Down payment
+  // Down payment — strip commas before parsing
   const dpErrorEl = document.getElementById('down-payment-error');
-  let downPayment = parseFloat(downPaymentEl.value);
+  let downPayment = parseInputNumber(downPaymentEl.value);
   if (isNaN(downPayment) || downPayment < 0) {
     setError(downPaymentEl, dpErrorEl, 'Please enter a valid down payment.');
     valid = false;
   } else {
     if (state.dpType === 'percent') {
+      // In percent mode, value is already a plain number (no commas)
+      downPayment = parseFloat(downPaymentEl.value) || 0;
       downPayment = price * (downPayment / 100);
     }
     const dpRatio = price > 0 ? downPayment / price : 0;
@@ -277,7 +340,7 @@ function validateInputs() {
     }
   }
 
-  // Interest rate
+  // Interest rate — plain number, no formatting needed
   const rateErrorEl = document.getElementById('interest-rate-error');
   const rate = parseFloat(interestRateEl.value);
   if (!rate || rate < 0.1 || rate > 25) {
@@ -289,10 +352,13 @@ function validateInputs() {
 
   if (!valid) return { valid: false };
 
-  const rawDp = parseFloat(downPaymentEl.value);
-  const resolvedDp = state.dpType === 'percent'
-    ? price * (rawDp / 100)
-    : rawDp;
+  // Resolve final down payment value
+  let resolvedDp;
+  if (state.dpType === 'percent') {
+    resolvedDp = price * ((parseFloat(downPaymentEl.value) || 0) / 100);
+  } else {
+    resolvedDp = parseInputNumber(downPaymentEl.value);
+  }
 
   return {
     valid: true,
@@ -450,27 +516,28 @@ document.querySelectorAll('[data-dp-type]').forEach(btn => {
     const type = this.dataset.dpType;
     if (type === state.dpType) return;
 
-    const price = parseFloat(purchasePriceEl.value) || 0;
-    const currentVal = parseFloat(downPaymentEl.value) || 0;
+    const price      = parseInputNumber(purchasePriceEl.value);
+    const currentVal = state.dpType === 'percent'
+      ? parseFloat(downPaymentEl.value) || 0
+      : parseInputNumber(downPaymentEl.value);
 
-    // Convert value between $ and %
     if (type === 'percent' && price > 0) {
-      downPaymentEl.value = ((currentVal / price) * 100).toFixed(1);
-      dpPrefix.textContent = '%';
+      // Convert dollar → percentage
+      downPaymentEl.value       = ((currentVal / price) * 100).toFixed(1);
+      dpPrefix.textContent      = '%';
       downPaymentEl.placeholder = '20';
-      downPaymentEl.max = '99.9';
-      downPaymentEl.step = '0.5';
+      downPaymentEl.inputMode   = 'decimal';
     } else {
-      downPaymentEl.value = Math.round(price * (currentVal / 100));
-      dpPrefix.textContent = '$';
+      // Convert percentage → formatted dollar
+      const dollarVal           = Math.round(price * (currentVal / 100));
+      downPaymentEl.value       = formatInputNumber(dollarVal);
+      dpPrefix.textContent      = '$';
       downPaymentEl.placeholder = '100,000';
-      downPaymentEl.removeAttribute('max');
-      downPaymentEl.step = '1000';
+      downPaymentEl.inputMode   = 'numeric';
     }
 
     state.dpType = type;
 
-    // Update button states
     document.querySelectorAll('[data-dp-type]').forEach(b => {
       b.classList.toggle('is-active', b.dataset.dpType === type);
       b.setAttribute('aria-pressed', (b.dataset.dpType === type).toString());
@@ -502,18 +569,19 @@ document.querySelectorAll('[data-freq]').forEach(btn => {
    ============================================= */
 
 function checkCmhc() {
-  const price = parseFloat(purchasePriceEl.value) || 0;
-  let dp = parseFloat(downPaymentEl.value) || 0;
+  const price = parseInputNumber(purchasePriceEl.value);
+  let dp;
 
   if (state.dpType === 'percent') {
-    dp = price * (dp / 100);
+    dp = price * ((parseFloat(downPaymentEl.value) || 0) / 100);
+  } else {
+    dp = parseInputNumber(downPaymentEl.value);
   }
 
   const dpRatio   = price > 0 ? dp / price : 0;
   const needsCmhc = dpRatio >= 0.05 && dpRatio < 0.20 && price > 0 && dp > 0;
   const { rate }  = calcCmhc(dpRatio, price - dp);
 
-  // Update live rate label inside the notice
   const cmhcRateEl = document.getElementById('cmhc-rate-label');
   if (cmhcRateEl) {
     cmhcRateEl.textContent = `${(rate * 100).toFixed(2)}%`;
@@ -547,13 +615,17 @@ form.querySelectorAll('input, select').forEach(el => {
 
 
 /* =============================================
-   12. INIT — Set default start date to current month
+   12. INIT — Set default start date and format inputs
    ============================================= */
 (function init() {
   const now = new Date();
   const yyyy = now.getFullYear();
   const mm   = String(now.getMonth() + 1).padStart(2, '0');
   startDateEl.value = `${yyyy}-${mm}`;
+
+  // Format default dollar values with commas on load
+  purchasePriceEl.value = formatInputNumber(500000);
+  downPaymentEl.value   = formatInputNumber(100000);
 
   // Run initial CMHC check with default values
   checkCmhc();

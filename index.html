@@ -7,54 +7,253 @@
   <!-- =============================================
        SEO META TAGS
   ============================================= -->
-  <title>Northern Numbers — Smart Canadian Calculators</title>
-  <meta name="description" content="Free, accurate Canadian financial calculators. Mortgage, TFSA, RRSP, FHSA, taxes, loans, and more. Built for Canadians." />
-  <meta name="keywords" content="Canadian mortgage calculator, TFSA calculator, RRSP calculator, FHSA calculator, Canadian tax calculator, loan calculator Canada" />
+  <title>Canadian Mortgage Calculator — Northern Numbers</title>
+  <meta name="description" content="Calculate your Canadian mortgage payments, total interest, and full amortization schedule. Supports monthly, bi-weekly, and accelerated bi-weekly payment frequencies." />
+  <meta name="keywords" content="Canadian mortgage calculator, mortgage payment calculator, amortization schedule Canada, bi-weekly mortgage, mortgage interest calculator" />
   <meta name="author" content="Northern Numbers" />
   <meta name="robots" content="index, follow" />
-  <link rel="canonical" href="https://www.northernnumbers.ca/" />
+  <link rel="canonical" href="https://www.northernnumbers.ca/mortgage/" />
 
   <!-- Open Graph -->
-  <meta property="og:title" content="Northern Numbers — Smart Canadian Calculators" />
-  <meta property="og:description" content="Free, accurate Canadian financial calculators. Built for Canadians." />
+  <meta property="og:title" content="Canadian Mortgage Calculator — Northern Numbers" />
+  <meta property="og:description" content="Free Canadian mortgage calculator. Monthly payments, total interest, and amortization schedule." />
   <meta property="og:type" content="website" />
-  <meta property="og:url" content="https://www.northernnumbers.ca/" />
+  <meta property="og:url" content="https://www.northernnumbers.ca/mortgage/" />
   <meta property="og:locale" content="en_CA" />
 
-  <!-- Twitter Card -->
-  <meta name="twitter:card" content="summary_large_image" />
-  <meta name="twitter:title" content="Northern Numbers — Smart Canadian Calculators" />
-  <meta name="twitter:description" content="Free, accurate Canadian financial calculators. Built for Canadians." />
+  <!-- Structured Data — Calculator -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "Canadian Mortgage Calculator",
+    "url": "https://www.northernnumbers.ca/mortgage/",
+    "description": "Free Canadian mortgage calculator with amortization schedule.",
+    "applicationCategory": "FinanceApplication",
+    "offers": { "@type": "Offer", "price": "0", "priceCurrency": "CAD" },
+    "provider": {
+      "@type": "Organization",
+      "name": "Northern Numbers",
+      "url": "https://www.northernnumbers.ca"
+    }
+  }
+  </script>
 
-  <!-- =============================================
-       FONTS — Poppins (headings) + Inter (body)
-  ============================================= -->
+  <!-- Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Poppins:wght@600;700;800&display=swap" rel="stylesheet" />
 
-  <!-- =============================================
-       STYLESHEET
-  ============================================= -->
-  <link rel="stylesheet" href="styles.css" />
+  <!-- Global design system -->
+  <link rel="stylesheet" href="../styles.css" />
 
-  <!-- Favicon placeholder — replace with real favicon -->
-  <!-- <link rel="icon" type="image/svg+xml" href="/assets/images/favicon.svg" /> -->
+  <!-- Mortgage-specific styles -->
+  <style>
+    /* Amortization table */
+    .amort-section {
+      margin-top: var(--space-8);
+    }
+
+    .amort-toggle {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      width: 100%;
+      padding: var(--space-4) var(--space-6);
+      background: var(--color-bg);
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-md);
+      font-family: var(--font-heading);
+      font-size: var(--text-base);
+      font-weight: 600;
+      color: var(--color-text);
+      cursor: pointer;
+      transition: background-color var(--transition-fast);
+    }
+
+    .amort-toggle:hover {
+      background: var(--color-border);
+    }
+
+    .amort-toggle-icon {
+      transition: transform var(--transition-base);
+    }
+
+    .amort-toggle[aria-expanded="true"] .amort-toggle-icon {
+      transform: rotate(180deg);
+    }
+
+    .amort-table-wrapper {
+      display: none;
+      overflow-x: auto;
+      margin-top: var(--space-4);
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-md);
+    }
+
+    .amort-table-wrapper.is-open {
+      display: block;
+    }
+
+    .amort-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: var(--text-sm);
+    }
+
+    .amort-table th {
+      background: var(--color-bg);
+      padding: var(--space-3) var(--space-4);
+      text-align: right;
+      font-weight: 600;
+      font-size: var(--text-xs);
+      color: var(--color-text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      border-bottom: 2px solid var(--color-border);
+      white-space: nowrap;
+    }
+
+    .amort-table th:first-child {
+      text-align: left;
+    }
+
+    .amort-table td {
+      padding: var(--space-3) var(--space-4);
+      text-align: right;
+      border-bottom: 1px solid var(--color-border);
+      color: var(--color-text);
+      white-space: nowrap;
+    }
+
+    .amort-table td:first-child {
+      text-align: left;
+      font-weight: 600;
+    }
+
+    .amort-table tr:last-child td {
+      border-bottom: none;
+    }
+
+    .amort-table tr:nth-child(even) {
+      background: rgba(248, 249, 250, 0.6);
+    }
+
+    .amort-table .td-interest {
+      color: var(--color-error);
+    }
+
+    .amort-table .td-principal {
+      color: var(--color-success);
+    }
+
+    /* Payment breakdown visual bar */
+    .breakdown-bar {
+      display: flex;
+      height: 10px;
+      border-radius: var(--radius-full);
+      overflow: hidden;
+      margin: var(--space-4) 0 var(--space-2);
+    }
+
+    .breakdown-bar-principal {
+      background: var(--color-success);
+      transition: width var(--transition-slow);
+    }
+
+    .breakdown-bar-interest {
+      background: var(--color-error);
+      transition: width var(--transition-slow);
+    }
+
+    .breakdown-legend {
+      display: flex;
+      gap: var(--space-6);
+      font-size: var(--text-xs);
+      color: var(--color-text-muted);
+    }
+
+    .legend-dot {
+      display: inline-block;
+      width: 10px;
+      height: 10px;
+      border-radius: var(--radius-full);
+      margin-right: var(--space-1);
+      vertical-align: middle;
+    }
+
+    .legend-dot--principal { background: var(--color-success); }
+    .legend-dot--interest  { background: var(--color-error); }
+
+    /* Canadian mortgage note */
+    .mortgage-note {
+      margin-top: var(--space-6);
+      padding: var(--space-4) var(--space-5);
+      background: #EFF6FF;
+      border: 1px solid #BFDBFE;
+      border-radius: var(--radius-md);
+      font-size: var(--text-sm);
+      color: #1E40AF;
+      line-height: 1.6;
+    }
+
+    .mortgage-note strong {
+      display: block;
+      margin-bottom: var(--space-1);
+    }
+
+    /* Down payment toggle ($ vs %) */
+    .dp-input-group {
+      display: flex;
+      gap: var(--space-3);
+      align-items: flex-end;
+    }
+
+    .dp-input-group .input-wrapper {
+      flex: 1;
+    }
+
+    .dp-toggle-group {
+      flex-shrink: 0;
+    }
+
+    .dp-toggle-group .toggle-group {
+      height: 48px;
+    }
+
+    .dp-toggle-group .toggle-btn {
+      padding: var(--space-2) var(--space-4);
+      font-size: var(--text-sm);
+    }
+
+    /* CMHC insurance notice */
+    .cmhc-notice {
+      display: none;
+      margin-top: var(--space-3);
+      padding: var(--space-3) var(--space-4);
+      background: #FFFBEB;
+      border: 1px solid #FDE68A;
+      border-radius: var(--radius-md);
+      font-size: var(--text-xs);
+      color: #92400E;
+    }
+
+    .cmhc-notice.is-visible {
+      display: block;
+    }
+  </style>
 </head>
 
 <body>
 
   <!-- =============================================
-       HEADER & NAVIGATION
+       HEADER (same as homepage)
   ============================================= -->
   <header class="site-header" role="banner">
     <div class="container header-inner">
-
-      <!-- Logo -->
       <a href="/" class="logo" aria-label="Northern Numbers — Home">
         <span class="logo-icon" aria-hidden="true">
-          <!-- Simple maple leaf SVG mark -->
-          <svg width="28" height="28" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <svg width="28" height="28" viewBox="0 0 28 28" fill="none" aria-hidden="true">
             <path d="M14 2L16.5 8.5H23L17.5 12.5L19.5 19L14 15.5L8.5 19L10.5 12.5L5 8.5H11.5L14 2Z" fill="#D52B1E"/>
             <rect x="12.5" y="19" width="3" height="5" fill="#D52B1E"/>
           </svg>
@@ -62,19 +261,17 @@
         <span class="logo-text">Northern Numbers</span>
       </a>
 
-      <!-- Desktop Navigation -->
       <nav class="main-nav" aria-label="Main navigation">
         <ul role="list">
-          <li><a href="/" class="nav-link active" aria-current="page">Home</a></li>
-          <li><a href="/mortgage/" class="nav-link">Mortgage</a></li>
-          <li><a href="#calculators" class="nav-link">Finance</a></li>
-          <li><a href="#calculators" class="nav-link">Tax</a></li>
+          <li><a href="/" class="nav-link">Home</a></li>
+          <li><a href="/mortgage/" class="nav-link active" aria-current="page">Mortgage</a></li>
+          <li><a href="/#calculators" class="nav-link">Finance</a></li>
+          <li><a href="/#calculators" class="nav-link">Tax</a></li>
           <li><a href="/about.html" class="nav-link">About</a></li>
           <li><a href="/contact.html" class="nav-link">Contact</a></li>
         </ul>
       </nav>
 
-      <!-- Mobile hamburger button -->
       <button
         class="nav-toggle"
         aria-label="Open navigation menu"
@@ -87,14 +284,13 @@
       </button>
     </div>
 
-    <!-- Mobile Menu -->
-    <div id="mobile-menu" class="mobile-menu" aria-hidden="true" role="dialog" aria-label="Navigation menu">
+    <div id="mobile-menu" class="mobile-menu" aria-hidden="true">
       <nav aria-label="Mobile navigation">
         <ul role="list">
           <li><a href="/" class="mobile-nav-link">Home</a></li>
           <li><a href="/mortgage/" class="mobile-nav-link">Mortgage</a></li>
-          <li><a href="#calculators" class="mobile-nav-link">Finance</a></li>
-          <li><a href="#calculators" class="mobile-nav-link">Tax</a></li>
+          <li><a href="/#calculators" class="mobile-nav-link">Finance</a></li>
+          <li><a href="/#calculators" class="mobile-nav-link">Tax</a></li>
           <li><a href="/about.html" class="mobile-nav-link">About</a></li>
           <li><a href="/contact.html" class="mobile-nav-link">Contact</a></li>
         </ul>
@@ -105,330 +301,332 @@
   <!-- =============================================
        MAIN CONTENT
   ============================================= -->
-  <main id="main-content">
+  <main id="main-content" class="calc-page">
+    <div class="container">
 
-    <!-- HERO SECTION -->
-    <section class="hero" aria-labelledby="hero-heading">
-      <div class="container hero-inner">
+      <!-- Breadcrumb -->
+      <nav class="calc-breadcrumb" aria-label="Breadcrumb">
+        <a href="/">Home</a>
+        <span class="calc-breadcrumb-sep" aria-hidden="true">›</span>
+        <span aria-current="page">Mortgage Calculator</span>
+      </nav>
 
-        <div class="hero-content">
-          <!-- Eyebrow label -->
-          <span class="hero-eyebrow">🇨🇦 Built for Canadians</span>
-
-          <h1 id="hero-heading" class="hero-heading">
-            Smart calculators<br />for your financial life.
-          </h1>
-
-          <p class="hero-subheading">
-            Free, accurate tools for mortgages, RRSPs, TFSAs, taxes, loans, and more.
-            No sign-up. No ads. Just the numbers you need.
-          </p>
-
-          <!-- CTA buttons -->
-          <div class="hero-actions">
-            <a href="#calculators" class="btn btn-primary">Explore Calculators</a>
-            <a href="/mortgage/" class="btn btn-secondary">Mortgage Calculator</a>
-          </div>
-        </div>
-
-        <!-- Hero stats — builds trust fast -->
-        <div class="hero-stats" aria-label="Site highlights">
-          <div class="stat-item">
-            <span class="stat-number">10+</span>
-            <span class="stat-label">Calculators</span>
-          </div>
-          <div class="stat-divider" aria-hidden="true"></div>
-          <div class="stat-item">
-            <span class="stat-number">100%</span>
-            <span class="stat-label">Free</span>
-          </div>
-          <div class="stat-divider" aria-hidden="true"></div>
-          <div class="stat-item">
-            <span class="stat-number">🇨🇦</span>
-            <span class="stat-label">Canada-specific</span>
-          </div>
-        </div>
-
+      <!-- Page header -->
+      <div class="calc-page-header">
+        <h1 class="calc-page-title">Canadian Mortgage Calculator</h1>
+        <p class="calc-page-desc">
+          Calculate your mortgage payments, total interest paid, and full amortization schedule.
+          Built for Canadian mortgages with semi-annual compounding.
+        </p>
       </div>
-    </section>
 
-    <!-- SEARCH BAR -->
-    <section class="search-section" aria-label="Search calculators">
-      <div class="container">
-        <div class="search-wrapper" role="search">
-          <label for="calculator-search" class="sr-only">Search for a calculator</label>
-          <svg class="search-icon" width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true">
-            <circle cx="9" cy="9" r="6" stroke="#9CA3AF" stroke-width="2"/>
-            <path d="M13.5 13.5L17 17" stroke="#9CA3AF" stroke-width="2" stroke-linecap="round"/>
+      <!-- Two-column layout: form + results -->
+      <div class="calc-layout">
+
+        <!-- LEFT: Input form -->
+        <section class="calc-panel" aria-labelledby="inputs-heading">
+          <h2 id="inputs-heading" class="calc-panel-title">Your Mortgage Details</h2>
+
+          <form id="mortgage-form" novalidate aria-label="Mortgage calculator inputs">
+
+            <!-- Purchase Price -->
+            <div class="form-group">
+              <label class="form-label" for="purchase-price">
+                Purchase Price
+                <span class="form-hint">(CAD)</span>
+              </label>
+              <div class="input-wrapper">
+                <span class="input-prefix" aria-hidden="true">$</span>
+                <input
+                  type="text"
+                  id="purchase-price"
+                  class="form-input has-prefix"
+                  placeholder="500,000"
+                  inputmode="numeric"
+                  autocomplete="off"
+                  value="500,000"
+                  aria-describedby="purchase-price-error"
+                  required
+                />
+              </div>
+              <p id="purchase-price-error" class="form-error-msg" role="alert"></p>
+            </div>
+
+            <!-- Down Payment -->
+            <div class="form-group">
+              <label class="form-label" for="down-payment">
+                Down Payment
+              </label>
+              <div class="dp-input-group">
+                <div class="input-wrapper">
+                  <span class="input-prefix" aria-hidden="true" id="dp-prefix">$</span>
+                  <input
+                    type="text"
+                    id="down-payment"
+                    class="form-input has-prefix"
+                    placeholder="100,000"
+                    inputmode="numeric"
+                    autocomplete="off"
+                    value="100,000"
+                    aria-describedby="down-payment-error"
+                    required
+                  />
+                </div>
+                <div class="dp-toggle-group">
+                  <div class="toggle-group" role="group" aria-label="Down payment type">
+                    <button type="button" class="toggle-btn is-active" data-dp-type="dollar" aria-pressed="true">$</button>
+                    <button type="button" class="toggle-btn" data-dp-type="percent" aria-pressed="false">%</button>
+                  </div>
+                </div>
+              </div>
+              <!-- CMHC insurance notice — shown when down < 20% -->
+              <div id="cmhc-notice" class="cmhc-notice" role="status" aria-live="polite">
+                ⚠️ <strong>CMHC insurance applies — <span id="cmhc-rate-label">4.00%</span> premium.</strong>
+                Your down payment is under 20%, so CMHC mortgage default insurance is required.
+                The premium will be added to your mortgage and included in your payment calculation.
+              </div>
+              <p id="down-payment-error" class="form-error-msg" role="alert"></p>
+            </div>
+
+            <!-- Interest Rate -->
+            <div class="form-group">
+              <label class="form-label" for="interest-rate">
+                Annual Interest Rate
+              </label>
+              <div class="input-wrapper">
+                <input
+                  type="number"
+                  id="interest-rate"
+                  class="form-input has-suffix"
+                  placeholder="5.25"
+                  min="0.1"
+                  max="25"
+                  step="0.05"
+                  value="5.25"
+                  aria-describedby="interest-rate-error"
+                  required
+                />
+                <span class="input-suffix" aria-hidden="true">%</span>
+              </div>
+              <p id="interest-rate-error" class="form-error-msg" role="alert"></p>
+            </div>
+
+            <!-- Amortization Period -->
+            <div class="form-group">
+              <label class="form-label" for="amortization">
+                Amortization Period
+                <span class="form-hint">(years)</span>
+              </label>
+              <select id="amortization" class="form-select" aria-describedby="amortization-hint">
+                <option value="5">5 years</option>
+                <option value="10">10 years</option>
+                <option value="15">15 years</option>
+                <option value="20">20 years</option>
+                <option value="25" selected>25 years</option>
+                <option value="30">30 years</option>
+              </select>
+              <p id="amortization-hint" class="form-error-msg" style="color: var(--color-text-muted); display:block;">
+                Maximum 25 years for insured mortgages (down payment &lt; 20%).
+              </p>
+            </div>
+
+            <!-- Payment Frequency -->
+            <div class="form-group">
+              <fieldset>
+                <legend class="form-label">Payment Frequency</legend>
+                <div class="toggle-group" role="group" aria-label="Payment frequency">
+                  <button type="button" class="toggle-btn is-active" data-freq="monthly" aria-pressed="true">Monthly</button>
+                  <button type="button" class="toggle-btn" data-freq="biweekly" aria-pressed="false">Bi-Weekly</button>
+                  <button type="button" class="toggle-btn" data-freq="accelerated" aria-pressed="false">Accelerated</button>
+                </div>
+              </fieldset>
+            </div>
+
+            <!-- Mortgage Start Date (optional) -->
+            <div class="form-group">
+              <label class="form-label" for="start-date">
+                Mortgage Start Date
+                <span class="form-hint">(optional)</span>
+              </label>
+              <input
+                type="month"
+                id="start-date"
+                class="form-input"
+                aria-label="Mortgage start month and year"
+              />
+            </div>
+
+            <!-- Calculate button -->
+            <button
+              type="submit"
+              class="btn btn-primary btn-calculate"
+              id="calculate-btn"
+              aria-label="Calculate mortgage payments"
+            >
+              Calculate Mortgage
+            </button>
+
+          </form>
+
+          <!-- Canadian mortgage note -->
+          <div class="mortgage-note" role="note">
+            <strong>🇨🇦 Canadian mortgage compounding</strong>
+            Canadian mortgages compound semi-annually by law, not monthly like US mortgages.
+            This calculator uses the correct Canadian formula.
+          </div>
+
+        </section>
+
+        <!-- RIGHT: Results panel -->
+        <section class="calc-panel" aria-labelledby="results-heading" aria-live="polite">
+          <h2 id="results-heading" class="calc-panel-title">Your Results</h2>
+
+          <!-- Placeholder state (before calculation) -->
+          <div id="results-placeholder" class="result-placeholder">
+            <div class="result-placeholder-icon" aria-hidden="true">
+              <svg width="56" height="56" viewBox="0 0 56 56" fill="none">
+                <rect x="10" y="8" width="36" height="40" rx="4" stroke="#D1D5DB" stroke-width="2"/>
+                <path d="M18 20H38M18 28H38M18 36H28" stroke="#D1D5DB" stroke-width="2" stroke-linecap="round"/>
+              </svg>
+            </div>
+            <p>Enter your mortgage details and click <strong>Calculate Mortgage</strong> to see your results.</p>
+          </div>
+
+          <!-- Results (shown after calculation) -->
+          <div id="results-content" class="hidden">
+
+            <!-- Primary payment result -->
+            <div style="text-align:center; padding: var(--space-6) 0; border-bottom: 2px solid var(--color-border); margin-bottom: var(--space-6);">
+              <p style="font-size: var(--text-sm); color: var(--color-text-muted); margin-bottom: var(--space-2);" id="payment-label">Monthly Payment</p>
+              <p id="result-payment" style="font-family: var(--font-heading); font-size: 2.75rem; font-weight: 800; color: var(--color-primary); line-height:1;">—</p>
+            </div>
+
+            <!-- Summary rows -->
+            <div class="result-summary" role="list">
+              <div class="result-row" role="listitem">
+                <span class="result-row-label">Base Mortgage Amount</span>
+                <span class="result-row-value" id="result-base-mortgage">—</span>
+              </div>
+              <div class="result-row hidden" role="listitem" id="result-cmhc-row">
+                <span class="result-row-label">CMHC Insurance Premium</span>
+                <span class="result-row-value" id="result-cmhc-premium" style="color: var(--color-error);">—</span>
+              </div>
+              <div class="result-row" role="listitem">
+                <span class="result-row-label">Total Mortgage (financed)</span>
+                <span class="result-row-value" id="result-total-mortgage" style="font-weight: 800;">—</span>
+              </div>
+              <div class="result-row" role="listitem">
+                <span class="result-row-label">Total of All Payments</span>
+                <span class="result-row-value" id="result-total-payments">—</span>
+              </div>
+              <div class="result-row" role="listitem">
+                <span class="result-row-label">Total Interest Paid</span>
+                <span class="result-row-value" id="result-total-interest" style="color: var(--color-error);">—</span>
+              </div>
+              <div class="result-row" role="listitem">
+                <span class="result-row-label">Payoff Date</span>
+                <span class="result-row-value" id="result-payoff-date">—</span>
+              </div>
+            </div>
+
+            <!-- Principal vs Interest breakdown bar -->
+            <div style="margin-top: var(--space-6);">
+              <p style="font-size: var(--text-sm); font-weight: 600; margin-bottom: var(--space-3);">Principal vs. Interest Breakdown</p>
+              <div class="breakdown-bar" role="img" id="breakdown-bar" aria-label="Principal vs interest breakdown">
+                <div class="breakdown-bar-principal" id="bar-principal" style="width: 0%"></div>
+                <div class="breakdown-bar-interest" id="bar-interest" style="width: 100%"></div>
+              </div>
+              <div class="breakdown-legend">
+                <span><span class="legend-dot legend-dot--principal"></span>Principal (<span id="legend-principal-pct">—</span>)</span>
+                <span><span class="legend-dot legend-dot--interest"></span>Interest (<span id="legend-interest-pct">—</span>)</span>
+              </div>
+            </div>
+
+          </div><!-- /results-content -->
+
+        </section>
+      </div><!-- /calc-layout -->
+
+      <!-- AMORTIZATION SCHEDULE -->
+      <div class="amort-section" id="amort-section" aria-label="Amortization schedule" hidden>
+        <button
+          type="button"
+          class="amort-toggle"
+          id="amort-toggle"
+          aria-expanded="false"
+          aria-controls="amort-table-wrapper"
+        >
+          <span>View Full Amortization Schedule</span>
+          <svg class="amort-toggle-icon" width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true">
+            <path d="M5 7.5L10 12.5L15 7.5" stroke="#1F2937" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
           </svg>
-          <input
-            type="search"
-            id="calculator-search"
-            class="search-input"
-            placeholder="Search calculators — try &quot;mortgage&quot; or &quot;TFSA&quot;"
-            aria-label="Search for a calculator"
-            autocomplete="off"
-          />
+        </button>
+
+        <div
+          id="amort-table-wrapper"
+          class="amort-table-wrapper"
+          aria-live="polite"
+        >
+          <table class="amort-table" aria-label="Annual amortization schedule">
+            <thead>
+              <tr>
+                <th scope="col">Year</th>
+                <th scope="col">Payment</th>
+                <th scope="col">Principal</th>
+                <th scope="col">Interest</th>
+                <th scope="col">Balance</th>
+              </tr>
+            </thead>
+            <tbody id="amort-tbody">
+              <!-- Populated by mortgage.js -->
+            </tbody>
+          </table>
         </div>
-        <!-- Search results container (populated by JS) -->
-        <div id="search-results" class="search-results" aria-live="polite" aria-label="Search results"></div>
-      </div>
-    </section>
+      </div><!-- /amort-section -->
 
-    <!-- CALCULATOR GRID -->
-    <section class="calculators-section" id="calculators" aria-labelledby="calculators-heading">
-      <div class="container">
-
-        <div class="section-header">
-          <h2 id="calculators-heading" class="section-title">Popular Calculators</h2>
-          <p class="section-subtitle">Everything you need to make smarter financial decisions.</p>
+      <!-- SEO content block -->
+      <section style="margin-top: var(--space-16); padding-top: var(--space-10); border-top: 1px solid var(--color-border);" aria-labelledby="seo-heading">
+        <h2 id="seo-heading" style="font-size: var(--text-2xl); font-weight: 700; margin-bottom: var(--space-6);">How the Canadian Mortgage Calculator Works</h2>
+        <div style="display: grid; grid-template-columns: 1fr; gap: var(--space-6);">
+          <div>
+            <h3 style="font-size: var(--text-lg); font-weight: 600; margin-bottom: var(--space-2);">Semi-Annual Compounding</h3>
+            <p style="color: var(--color-text-muted); line-height: 1.7; font-size: var(--text-sm);">
+              Canadian mortgages are legally required to compound semi-annually (twice per year),
+              unlike American mortgages which compound monthly. Our calculator uses the correct
+              Canadian equivalent rate formula to give you accurate results.
+            </p>
+          </div>
+          <div>
+            <h3 style="font-size: var(--text-lg); font-weight: 600; margin-bottom: var(--space-2);">Accelerated Bi-Weekly Payments</h3>
+            <p style="color: var(--color-text-muted); line-height: 1.7; font-size: var(--text-sm);">
+              Accelerated bi-weekly payments are calculated as half your monthly payment, paid every
+              two weeks. This results in one extra monthly payment per year, which can save you
+              thousands in interest and shorten your amortization by years.
+            </p>
+          </div>
+          <div>
+            <h3 style="font-size: var(--text-lg); font-weight: 600; margin-bottom: var(--space-2);">CMHC Mortgage Insurance</h3>
+            <p style="color: var(--color-text-muted); line-height: 1.7; font-size: var(--text-sm);">
+              If your down payment is less than 20% of the purchase price, CMHC mortgage default
+              insurance is required. The premium ranges from 2.80% to 4.00% of the mortgage amount
+              and is typically added to your mortgage balance.
+            </p>
+          </div>
         </div>
+      </section>
 
-        <!-- Calculator Cards Grid -->
-        <div class="calc-grid" role="list">
-
-          <!-- Mortgage Calculator -->
-          <article class="calc-card" role="listitem" data-category="mortgage" data-tags="mortgage home house payment amortization">
-            <div class="calc-card-icon" aria-hidden="true">
-              <svg width="28" height="28" viewBox="0 0 28 28" fill="none">
-                <path d="M4 14L14 4L24 14V24H18V18H10V24H4V14Z" stroke="#D52B1E" stroke-width="2" stroke-linejoin="round"/>
-              </svg>
-            </div>
-            <div class="calc-card-body">
-              <h3 class="calc-card-title">Mortgage Calculator</h3>
-              <p class="calc-card-desc">Calculate your monthly payments, total interest, and full amortization schedule.</p>
-            </div>
-            <a href="/mortgage/" class="btn btn-calc" aria-label="Open Mortgage Calculator">Calculate →</a>
-          </article>
-
-          <!-- TFSA Calculator -->
-          <article class="calc-card" role="listitem" data-category="finance" data-tags="tfsa savings tax-free investment contribution room" data-coming-soon="true">
-            <div class="calc-card-icon" aria-hidden="true">
-              <svg width="28" height="28" viewBox="0 0 28 28" fill="none">
-                <rect x="4" y="8" width="20" height="16" rx="2" stroke="#D52B1E" stroke-width="2"/>
-                <path d="M9 8V6C9 4.9 9.9 4 11 4H17C18.1 4 19 4.9 19 6V8" stroke="#D52B1E" stroke-width="2"/>
-                <path d="M14 13V19M11 16H17" stroke="#D52B1E" stroke-width="2" stroke-linecap="round"/>
-              </svg>
-            </div>
-            <div class="calc-card-body">
-              <h3 class="calc-card-title">TFSA Calculator</h3>
-              <p class="calc-card-desc">Find your contribution room and project your tax-free savings growth over time.</p>
-            </div>
-            <a href="/tfsa/" class="btn btn-calc" aria-label="Open TFSA Calculator">Calculate →</a>
-          </article>
-
-          <!-- RRSP Calculator -->
-          <article class="calc-card" role="listitem" data-category="finance" data-tags="rrsp retirement savings deduction tax refund" data-coming-soon="true">
-            <div class="calc-card-icon" aria-hidden="true">
-              <svg width="28" height="28" viewBox="0 0 28 28" fill="none">
-                <circle cx="14" cy="14" r="10" stroke="#D52B1E" stroke-width="2"/>
-                <path d="M14 9V14L17 17" stroke="#D52B1E" stroke-width="2" stroke-linecap="round"/>
-              </svg>
-            </div>
-            <div class="calc-card-body">
-              <h3 class="calc-card-title">RRSP Calculator</h3>
-              <p class="calc-card-desc">Estimate your RRSP contribution limit, tax refund, and retirement savings growth.</p>
-            </div>
-            <a href="/rrsp/" class="btn btn-calc" aria-label="Open RRSP Calculator">Calculate →</a>
-          </article>
-
-          <!-- FHSA Calculator -->
-          <article class="calc-card" role="listitem" data-category="finance" data-tags="fhsa first home savings account buyer" data-coming-soon="true">
-            <div class="calc-card-icon" aria-hidden="true">
-              <svg width="28" height="28" viewBox="0 0 28 28" fill="none">
-                <path d="M14 3L25 12H22V24H16V18H12V24H6V12H3L14 3Z" stroke="#D52B1E" stroke-width="2" stroke-linejoin="round"/>
-                <circle cx="14" cy="13" r="2" fill="#D52B1E"/>
-              </svg>
-            </div>
-            <div class="calc-card-body">
-              <h3 class="calc-card-title">FHSA Calculator</h3>
-              <p class="calc-card-desc">Plan your First Home Savings Account — Canada's newest tax-advantaged savings tool.</p>
-            </div>
-            <a href="/fhsa/" class="btn btn-calc" aria-label="Open FHSA Calculator">Calculate →</a>
-          </article>
-
-          <!-- Compound Interest Calculator -->
-          <article class="calc-card" role="listitem" data-category="finance" data-tags="compound interest growth investment savings" data-coming-soon="true">
-            <div class="calc-card-icon" aria-hidden="true">
-              <svg width="28" height="28" viewBox="0 0 28 28" fill="none">
-                <polyline points="4,22 10,14 16,18 24,6" stroke="#D52B1E" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                <circle cx="24" cy="6" r="2" fill="#D52B1E"/>
-              </svg>
-            </div>
-            <div class="calc-card-body">
-              <h3 class="calc-card-title">Compound Interest</h3>
-              <p class="calc-card-desc">See how your money grows with the power of compounding over months and years.</p>
-            </div>
-            <a href="/compound-interest/" class="btn btn-calc" aria-label="Open Compound Interest Calculator">Calculate →</a>
-          </article>
-
-          <!-- Loan Calculator -->
-          <article class="calc-card" role="listitem" data-category="finance" data-tags="loan personal payment interest rate" data-coming-soon="true">
-            <div class="calc-card-icon" aria-hidden="true">
-              <svg width="28" height="28" viewBox="0 0 28 28" fill="none">
-                <rect x="3" y="6" width="22" height="16" rx="2" stroke="#D52B1E" stroke-width="2"/>
-                <path d="M3 11H25" stroke="#D52B1E" stroke-width="2"/>
-                <path d="M7 16H12M16 16H21" stroke="#D52B1E" stroke-width="2" stroke-linecap="round"/>
-              </svg>
-            </div>
-            <div class="calc-card-body">
-              <h3 class="calc-card-title">Loan Calculator</h3>
-              <p class="calc-card-desc">Calculate monthly payments and total cost for any personal or business loan.</p>
-            </div>
-            <a href="/loan/" class="btn btn-calc" aria-label="Open Loan Calculator">Calculate →</a>
-          </article>
-
-          <!-- Car Loan Calculator -->
-          <article class="calc-card" role="listitem" data-category="finance" data-tags="car loan auto vehicle payment financing" data-coming-soon="true">
-            <div class="calc-card-icon" aria-hidden="true">
-              <svg width="28" height="28" viewBox="0 0 28 28" fill="none">
-                <path d="M5 17H23V20H5V17Z" stroke="#D52B1E" stroke-width="2" stroke-linejoin="round"/>
-                <path d="M7 17L9 11H19L21 17" stroke="#D52B1E" stroke-width="2" stroke-linejoin="round"/>
-                <circle cx="9" cy="21" r="2" stroke="#D52B1E" stroke-width="2"/>
-                <circle cx="19" cy="21" r="2" stroke="#D52B1E" stroke-width="2"/>
-              </svg>
-            </div>
-            <div class="calc-card-body">
-              <h3 class="calc-card-title">Car Loan Calculator</h3>
-              <p class="calc-card-desc">Find out your monthly car payment including HST, trade-in value, and financing costs.</p>
-            </div>
-            <a href="/car-loan/" class="btn btn-calc" aria-label="Open Car Loan Calculator">Calculate →</a>
-          </article>
-
-          <!-- Budget Calculator -->
-          <article class="calc-card" role="listitem" data-category="finance" data-tags="budget income expenses savings monthly" data-coming-soon="true">
-            <div class="calc-card-icon" aria-hidden="true">
-              <svg width="28" height="28" viewBox="0 0 28 28" fill="none">
-                <rect x="5" y="4" width="18" height="20" rx="2" stroke="#D52B1E" stroke-width="2"/>
-                <path d="M9 10H19M9 14H19M9 18H15" stroke="#D52B1E" stroke-width="2" stroke-linecap="round"/>
-              </svg>
-            </div>
-            <div class="calc-card-body">
-              <h3 class="calc-card-title">Budget Calculator</h3>
-              <p class="calc-card-desc">Build a monthly budget, track your income vs expenses, and see where your money goes.</p>
-            </div>
-            <a href="/budget/" class="btn btn-calc" aria-label="Open Budget Calculator">Calculate →</a>
-          </article>
-
-          <!-- Inflation Calculator -->
-          <article class="calc-card" role="listitem" data-category="finance" data-tags="inflation purchasing power CPI cost of living" data-coming-soon="true">
-            <div class="calc-card-icon" aria-hidden="true">
-              <svg width="28" height="28" viewBox="0 0 28 28" fill="none">
-                <path d="M6 22L11 15L15 19L22 8" stroke="#D52B1E" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                <path d="M18 8H22V12" stroke="#D52B1E" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-              </svg>
-            </div>
-            <div class="calc-card-body">
-              <h3 class="calc-card-title">Inflation Calculator</h3>
-              <p class="calc-card-desc">Compare purchasing power over time using Canada's historical CPI data.</p>
-            </div>
-            <a href="/inflation/" class="btn btn-calc" aria-label="Open Inflation Calculator">Calculate →</a>
-          </article>
-
-          <!-- Retirement Calculator -->
-          <article class="calc-card" role="listitem" data-category="finance" data-tags="retirement savings CPP OAS nest egg projection" data-coming-soon="true">
-            <div class="calc-card-icon" aria-hidden="true">
-              <svg width="28" height="28" viewBox="0 0 28 28" fill="none">
-                <path d="M14 4C8.5 4 4 8.5 4 14C4 19.5 8.5 24 14 24C19.5 24 24 19.5 24 14" stroke="#D52B1E" stroke-width="2" stroke-linecap="round"/>
-                <path d="M14 8V14H20" stroke="#D52B1E" stroke-width="2" stroke-linecap="round"/>
-                <path d="M20 4L24 8L20 12" stroke="#D52B1E" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-              </svg>
-            </div>
-            <div class="calc-card-body">
-              <h3 class="calc-card-title">Retirement Calculator</h3>
-              <p class="calc-card-desc">Plan your retirement with CPP, OAS, and RRSP projections tailored to Canada.</p>
-            </div>
-            <a href="/retirement/" class="btn btn-calc" aria-label="Open Retirement Calculator">Calculate →</a>
-          </article>
-
-          <!-- Coming Soon card -->
-          <article class="calc-card calc-card--coming-soon" role="listitem" aria-label="More calculators coming soon">
-            <div class="calc-card-icon" aria-hidden="true">
-              <svg width="28" height="28" viewBox="0 0 28 28" fill="none">
-                <circle cx="14" cy="14" r="10" stroke="#9CA3AF" stroke-width="2" stroke-dasharray="4 3"/>
-                <path d="M14 9V14M14 17V19" stroke="#9CA3AF" stroke-width="2" stroke-linecap="round"/>
-              </svg>
-            </div>
-            <div class="calc-card-body">
-              <h3 class="calc-card-title">More Coming Soon</h3>
-              <p class="calc-card-desc">Tax bracket, salary, land transfer tax, investment, and many more calculators are on the way.</p>
-            </div>
-            <span class="badge-coming-soon">In Progress</span>
-          </article>
-
-        </div><!-- /calc-grid -->
-
-      </div>
-    </section>
-
-    <!-- TRUST SECTION -->
-    <section class="trust-section" aria-labelledby="trust-heading">
-      <div class="container">
-        <h2 id="trust-heading" class="section-title text-center">Why Canadians trust Northern Numbers</h2>
-        <div class="trust-grid">
-
-          <div class="trust-item">
-            <div class="trust-icon" aria-hidden="true">
-              <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
-                <path d="M16 3L4 8V16C4 22.6 9.3 28.7 16 30C22.7 28.7 28 22.6 28 16V8L16 3Z" stroke="#D52B1E" stroke-width="2" stroke-linejoin="round"/>
-                <path d="M11 16L14 19L21 12" stroke="#D52B1E" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-              </svg>
-            </div>
-            <h3 class="trust-title">Canadian-specific</h3>
-            <p class="trust-desc">Built around Canadian tax rules, contribution limits, and financial regulations. Not a generic calculator with a maple leaf.</p>
-          </div>
-
-          <div class="trust-item">
-            <div class="trust-icon" aria-hidden="true">
-              <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
-                <circle cx="16" cy="16" r="12" stroke="#D52B1E" stroke-width="2"/>
-                <path d="M12 16L15 19L20 13" stroke="#D52B1E" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-              </svg>
-            </div>
-            <h3 class="trust-title">Always accurate</h3>
-            <p class="trust-desc">Formulas verified against CRA guidelines and updated annually. We note the source of every rule we use.</p>
-          </div>
-
-          <div class="trust-item">
-            <div class="trust-icon" aria-hidden="true">
-              <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
-                <rect x="6" y="4" width="20" height="24" rx="2" stroke="#D52B1E" stroke-width="2"/>
-                <path d="M6 10H26" stroke="#D52B1E" stroke-width="2"/>
-                <path d="M11 16H21M11 20H17" stroke="#D52B1E" stroke-width="2" stroke-linecap="round"/>
-              </svg>
-            </div>
-            <h3 class="trust-title">No account needed</h3>
-            <p class="trust-desc">No sign-up, no email, no tracking. Your financial data stays on your device, always.</p>
-          </div>
-
-          <div class="trust-item">
-            <div class="trust-icon" aria-hidden="true">
-              <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
-                <path d="M16 4L4 10V18C4 24 9 29 16 31C23 29 28 24 28 18V10L16 4Z" stroke="#D52B1E" stroke-width="2"/>
-                <path d="M12 18L15 21L21 15" stroke="#16A34A" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
-              </svg>
-            </div>
-            <h3 class="trust-title">100% free</h3>
-            <p class="trust-desc">Every calculator on this site is completely free. No premium tiers, no hidden paywalls.</p>
-          </div>
-
-        </div>
-      </div>
-    </section>
-
+    </div><!-- /container -->
   </main>
 
   <!-- =============================================
-       FOOTER
+       FOOTER (same as homepage)
   ============================================= -->
   <footer class="site-footer" role="contentinfo">
     <div class="container footer-inner">
-
-      <!-- Footer brand -->
       <div class="footer-brand">
         <a href="/" class="logo logo--light" aria-label="Northern Numbers — Home">
           <span class="logo-icon" aria-hidden="true">
-            <svg width="24" height="24" viewBox="0 0 28 28" fill="none" aria-hidden="true">
+            <svg width="24" height="24" viewBox="0 0 28 28" fill="none">
               <path d="M14 2L16.5 8.5H23L17.5 12.5L19.5 19L14 15.5L8.5 19L10.5 12.5L5 8.5H11.5L14 2Z" fill="#D52B1E"/>
               <rect x="12.5" y="19" width="3" height="5" fill="#D52B1E"/>
             </svg>
@@ -439,7 +637,6 @@
         <p class="footer-desc">Free, accurate financial tools built for Canadians. No sign-up required.</p>
       </div>
 
-      <!-- Footer nav links -->
       <nav class="footer-nav" aria-label="Footer navigation">
         <div class="footer-nav-col">
           <h4 class="footer-nav-heading">Calculators</h4>
@@ -471,25 +668,23 @@
           </ul>
         </div>
       </nav>
-
     </div>
 
-    <!-- Footer bottom bar -->
     <div class="footer-bottom">
       <div class="container footer-bottom-inner">
         <p class="footer-legal">
           © <span id="footer-year">2026</span> Northern Numbers. All rights reserved.
-          Calculators are for informational purposes only and do not constitute financial advice.
+          Mortgage calculations are for informational purposes only and do not constitute financial advice.
         </p>
         <p class="footer-built">Built for Canadians. 🇨🇦</p>
       </div>
     </div>
   </footer>
 
-  <!-- =============================================
-       SCRIPTS
-  ============================================= -->
-  <script src="script.js" defer></script>
+  <!-- Global script (nav, footer year, etc.) -->
+  <script src="../script.js" defer></script>
+  <!-- Mortgage calculator logic -->
+  <script src="mortgage.js" defer></script>
 
 </body>
 </html>
