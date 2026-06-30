@@ -4,7 +4,6 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-  <!-- SEO -->
   <title>Canadian TFSA Calculator 2026 — Northern Numbers</title>
   <meta name="description" content="Free Canadian TFSA calculator. Project your tax-free savings growth, calculate contribution room, and see when your TFSA reaches $100K, $250K, and $500K." />
   <meta name="keywords" content="TFSA calculator, TFSA contribution room 2026, tax-free savings account calculator Canada, TFSA growth calculator, CRA TFSA limit" />
@@ -12,14 +11,12 @@
   <meta name="robots" content="index, follow" />
   <link rel="canonical" href="https://www.northernnumbers.ca/tfsa/" />
 
-  <!-- Open Graph -->
   <meta property="og:title" content="Canadian TFSA Calculator 2026 — Northern Numbers" />
   <meta property="og:description" content="Project your TFSA growth, check contribution room, and plan your tax-free savings. Free and built for Canadians." />
   <meta property="og:type" content="website" />
   <meta property="og:url" content="https://www.northernnumbers.ca/tfsa/" />
   <meta property="og:locale" content="en_CA" />
 
-  <!-- Schema -->
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
@@ -29,75 +26,114 @@
     "description": "Free Canadian TFSA calculator. Project tax-free savings growth and contribution room.",
     "applicationCategory": "FinanceApplication",
     "offers": { "@type": "Offer", "price": "0", "priceCurrency": "CAD" },
-    "provider": {
-      "@type": "Organization",
-      "name": "Northern Numbers",
-      "url": "https://www.northernnumbers.ca"
-    }
+    "provider": { "@type": "Organization", "name": "Northern Numbers", "url": "https://www.northernnumbers.ca" }
   }
   </script>
 
-  <!-- Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Poppins:wght@600;700;800&display=swap" rel="stylesheet" />
-
-  <!-- Shared design system -->
   <link rel="stylesheet" href="../styles.css" />
 
-  <!-- TFSA-specific styles -->
   <style>
-    /* Milestone badges */
-    .milestone-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: var(--space-3);
-      margin-top: var(--space-6);
+    /* Quick Start */
+    .quick-start {
+      background: var(--color-primary-light);
+      border: 1px solid rgba(213,43,30,0.15);
+      border-radius: var(--radius-md);
+      padding: var(--space-5) var(--space-6);
+      margin-bottom: var(--space-6);
     }
-
-    @media (max-width: 600px) {
-      .milestone-grid { grid-template-columns: 1fr; }
+    .quick-start-title {
+      font-family: var(--font-heading);
+      font-size: var(--text-base);
+      font-weight: 700;
+      color: var(--color-primary);
+      margin-bottom: var(--space-3);
+      display: flex;
+      align-items: center;
+      gap: var(--space-2);
     }
-
-    .milestone-card {
+    .quick-start ol {
+      list-style: decimal;
+      padding-left: var(--space-5);
       display: flex;
       flex-direction: column;
-      align-items: center;
-      text-align: center;
-      padding: var(--space-4) var(--space-3);
-      background: var(--color-bg);
-      border: 1px solid var(--color-border);
-      border-radius: var(--radius-md);
-      gap: var(--space-1);
+      gap: var(--space-2);
     }
-
-    .milestone-card.is-reached {
-      background: var(--color-success-light);
-      border-color: var(--color-success);
-    }
-
-    .milestone-amount {
-      font-family: var(--font-heading);
+    .quick-start ol li {
       font-size: var(--text-sm);
-      font-weight: 700;
-      color: var(--color-text-muted);
-    }
-
-    .milestone-year {
-      font-family: var(--font-heading);
-      font-size: var(--text-xl);
-      font-weight: 800;
       color: var(--color-text);
-      line-height: 1;
+      line-height: 1.5;
     }
 
-    .milestone-card.is-reached .milestone-year {
-      color: var(--color-success);
+    /* Preset buttons */
+    .preset-group {
+      display: flex;
+      flex-wrap: wrap;
+      gap: var(--space-2);
+      margin-bottom: var(--space-6);
+    }
+    .preset-btn {
+      padding: var(--space-2) var(--space-4);
+      font-size: var(--text-sm);
+      font-weight: 600;
+      border: 2px solid var(--color-border);
+      border-radius: var(--radius-lg);
+      background: var(--color-white);
+      color: var(--color-text-muted);
+      cursor: pointer;
+      transition: border-color var(--transition-fast), color var(--transition-fast), background var(--transition-fast);
+    }
+    .preset-btn:hover, .preset-btn.is-active {
+      border-color: var(--color-primary);
+      color: var(--color-primary);
+      background: var(--color-primary-light);
     }
 
-    .milestone-label {
+    /* Advanced settings toggle */
+    .advanced-toggle {
+      display: flex;
+      align-items: center;
+      gap: var(--space-2);
+      background: none;
+      border: none;
+      font-family: var(--font-body);
+      font-size: var(--text-sm);
+      font-weight: 600;
+      color: var(--color-text-muted);
+      cursor: pointer;
+      padding: var(--space-3) 0;
+      width: 100%;
+      text-align: left;
+      border-top: 1px solid var(--color-border);
+      margin-top: var(--space-2);
+      transition: color var(--transition-fast);
+    }
+    .advanced-toggle:hover { color: var(--color-text); }
+    .advanced-toggle-icon {
+      margin-left: auto;
+      transition: transform var(--transition-base);
+    }
+    .advanced-toggle[aria-expanded="true"] .advanced-toggle-icon {
+      transform: rotate(180deg);
+    }
+    .advanced-fields {
+      display: none;
+      padding-top: var(--space-4);
+    }
+    .advanced-fields.is-open { display: block; }
+
+    /* CRA help link */
+    .field-help {
       font-size: var(--text-xs);
       color: var(--color-text-muted);
+      margin-top: var(--space-1);
+      line-height: 1.5;
+    }
+    .field-help a {
+      color: var(--color-primary);
+      text-decoration: underline;
     }
 
     /* Over-contribution warning */
@@ -112,7 +148,6 @@
       color: var(--color-error);
       line-height: 1.6;
     }
-
     .over-contrib-warning.is-visible { display: block; }
 
     /* CRA note */
@@ -126,15 +161,70 @@
       color: #1E40AF;
       line-height: 1.6;
     }
+    .cra-note strong { display: block; margin-bottom: var(--space-1); }
 
-    .cra-note strong {
-      display: block;
-      margin-bottom: var(--space-1);
+    /* Result big */
+    .result-big {
+      text-align: center;
+      padding: var(--space-6) 0;
+      border-bottom: 2px solid var(--color-border);
+      margin-bottom: var(--space-6);
     }
+    .result-big-label {
+      font-size: var(--text-sm);
+      color: var(--color-text-muted);
+      margin-bottom: var(--space-2);
+    }
+    .result-big-value {
+      font-family: var(--font-heading);
+      font-size: 2.75rem;
+      font-weight: 800;
+      color: var(--color-primary);
+      line-height: 1;
+    }
+
+    /* Milestones */
+    .milestone-list {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-3);
+      margin-top: var(--space-4);
+    }
+    .milestone-item {
+      display: flex;
+      align-items: center;
+      gap: var(--space-3);
+      padding: var(--space-3) var(--space-4);
+      background: var(--color-bg);
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-md);
+      font-size: var(--text-sm);
+    }
+    .milestone-item.is-reached {
+      background: var(--color-success-light);
+      border-color: var(--color-success);
+    }
+    .milestone-dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: var(--color-text-light);
+      flex-shrink: 0;
+    }
+    .milestone-item.is-reached .milestone-dot { background: var(--color-success); }
+    .milestone-text { flex: 1; color: var(--color-text); line-height: 1.4; }
+    .milestone-text strong { font-weight: 700; }
+    .milestone-year-badge {
+      font-family: var(--font-heading);
+      font-size: var(--text-base);
+      font-weight: 800;
+      color: var(--color-text-muted);
+      white-space: nowrap;
+    }
+    .milestone-item.is-reached .milestone-year-badge { color: var(--color-success); }
 
     /* Growth table */
     .growth-section { margin-top: var(--space-8); }
-
     .growth-toggle {
       display: flex;
       align-items: center;
@@ -151,17 +241,9 @@
       cursor: pointer;
       transition: background-color var(--transition-fast);
     }
-
     .growth-toggle:hover { background: var(--color-border); }
-
-    .growth-toggle-icon {
-      transition: transform var(--transition-base);
-    }
-
-    .growth-toggle[aria-expanded="true"] .growth-toggle-icon {
-      transform: rotate(180deg);
-    }
-
+    .growth-toggle-icon { transition: transform var(--transition-base); }
+    .growth-toggle[aria-expanded="true"] .growth-toggle-icon { transform: rotate(180deg); }
     .growth-table-wrapper {
       display: none;
       overflow-x: auto;
@@ -169,15 +251,8 @@
       border: 1px solid var(--color-border);
       border-radius: var(--radius-md);
     }
-
     .growth-table-wrapper.is-open { display: block; }
-
-    .growth-table {
-      width: 100%;
-      border-collapse: collapse;
-      font-size: var(--text-sm);
-    }
-
+    .growth-table { width: 100%; border-collapse: collapse; font-size: var(--text-sm); }
     .growth-table th {
       background: var(--color-bg);
       padding: var(--space-3) var(--space-4);
@@ -190,46 +265,17 @@
       border-bottom: 2px solid var(--color-border);
       white-space: nowrap;
     }
-
     .growth-table th:first-child { text-align: left; }
-
     .growth-table td {
       padding: var(--space-3) var(--space-4);
       text-align: right;
       border-bottom: 1px solid var(--color-border);
       white-space: nowrap;
     }
-
-    .growth-table td:first-child {
-      text-align: left;
-      font-weight: 600;
-    }
-
+    .growth-table td:first-child { text-align: left; font-weight: 600; }
     .growth-table tr:last-child td { border-bottom: none; }
     .growth-table tr:nth-child(even) { background: rgba(248,249,250,0.6); }
     .growth-table .td-growth { color: var(--color-success); }
-
-    /* Result number highlight */
-    .result-big {
-      text-align: center;
-      padding: var(--space-6) 0;
-      border-bottom: 2px solid var(--color-border);
-      margin-bottom: var(--space-6);
-    }
-
-    .result-big-label {
-      font-size: var(--text-sm);
-      color: var(--color-text-muted);
-      margin-bottom: var(--space-2);
-    }
-
-    .result-big-value {
-      font-family: var(--font-heading);
-      font-size: 2.75rem;
-      font-weight: 800;
-      color: var(--color-primary);
-      line-height: 1;
-    }
 
     /* Disclaimer */
     .calc-disclaimer {
@@ -259,7 +305,6 @@
         </span>
         <span class="logo-text">Northern Numbers</span>
       </a>
-
       <nav class="main-nav" aria-label="Main navigation">
         <ul role="list">
           <li><a href="/" class="nav-link">Home</a></li>
@@ -270,14 +315,12 @@
           <li><a href="/contact.html" class="nav-link">Contact</a></li>
         </ul>
       </nav>
-
       <button class="nav-toggle" aria-label="Open navigation menu" aria-expanded="false" aria-controls="mobile-menu">
         <span class="hamburger-line"></span>
         <span class="hamburger-line"></span>
         <span class="hamburger-line"></span>
       </button>
     </div>
-
     <div id="mobile-menu" class="mobile-menu" aria-hidden="true">
       <nav aria-label="Mobile navigation">
         <ul role="list">
@@ -296,112 +339,105 @@
   <main id="main-content" class="calc-page">
     <div class="container">
 
-      <!-- Breadcrumb -->
       <nav class="calc-breadcrumb" aria-label="Breadcrumb">
         <a href="/">Home</a>
         <span class="calc-breadcrumb-sep" aria-hidden="true">›</span>
         <span aria-current="page">TFSA Calculator</span>
       </nav>
 
-      <!-- Page header -->
       <div class="calc-page-header">
         <h1 class="calc-page-title">Canadian TFSA Calculator</h1>
-        <p class="calc-page-desc">
-          Project your tax-free savings growth, check your contribution room,
-          and find out when your TFSA reaches your goals.
-        </p>
+        <p class="calc-page-desc">Project your tax-free savings growth, check your contribution room, and find out when your TFSA reaches your goals.</p>
       </div>
 
-      <!-- Two-column layout -->
       <div class="calc-layout">
 
         <!-- LEFT: Inputs -->
         <section class="calc-panel" aria-labelledby="tfsa-inputs-heading">
           <h2 id="tfsa-inputs-heading" class="calc-panel-title">Your TFSA Details</h2>
 
+          <!-- Quick Start -->
+          <div class="quick-start" role="note" aria-label="How to use this calculator">
+            <p class="quick-start-title">
+              <span aria-hidden="true">📋</span> How to use this calculator
+            </p>
+            <ol>
+              <li>Enter your current TFSA balance (enter 0 if you're just starting).</li>
+              <li>Enter your available contribution room — find this in <a href="https://www.canada.ca/en/revenue-agency/services/e-services/digital-services-individuals/account-individuals.html" target="_blank" rel="noopener" style="color:var(--color-primary);text-decoration:underline;">CRA My Account</a>.</li>
+              <li>Enter how much you plan to contribute and how often.</li>
+              <li>Set your expected annual return (6% is a common long-term estimate for index funds).</li>
+              <li>Click <strong>Calculate TFSA Growth</strong>.</li>
+            </ol>
+          </div>
+
+          <!-- Presets -->
+          <div style="margin-bottom:var(--space-2);">
+            <p style="font-size:var(--text-sm);font-weight:600;color:var(--color-text-muted);margin-bottom:var(--space-2);">Quick start with a preset:</p>
+            <div class="preset-group" role="group" aria-label="Preset scenarios">
+              <button type="button" class="preset-btn" data-preset="beginner">🌱 Beginner Investor</button>
+              <button type="button" class="preset-btn" data-preset="average">🍁 Average Canadian</button>
+              <button type="button" class="preset-btn" data-preset="growth">📈 Growth Investor</button>
+            </div>
+          </div>
+
           <form id="tfsa-form" novalidate aria-label="TFSA calculator inputs">
 
             <!-- Current Balance -->
             <div class="form-group">
-              <label class="form-label" for="current-balance">
-                Current TFSA Balance <span class="form-hint">(CAD)</span>
-              </label>
+              <label class="form-label" for="current-balance">Current TFSA Balance</label>
               <div class="input-wrapper">
                 <span class="input-prefix" aria-hidden="true">$</span>
-                <input
-                  type="text"
-                  id="current-balance"
-                  class="form-input has-prefix"
-                  placeholder="0"
-                  inputmode="numeric"
-                  autocomplete="off"
-                  value="0"
-                  aria-describedby="current-balance-error"
-                />
+                <input type="text" id="current-balance" class="form-input has-prefix"
+                  placeholder="0" inputmode="numeric" autocomplete="off" value="0"
+                  aria-describedby="current-balance-error" />
               </div>
+              <p class="field-help">Enter 0 if you haven't started yet.</p>
               <p id="current-balance-error" class="form-error-msg" role="alert"></p>
             </div>
 
-            <!-- Available Contribution Room -->
+            <!-- Contribution Room -->
             <div class="form-group">
-              <label class="form-label" for="contrib-room">
-                Available Contribution Room <span class="form-hint">(CAD)</span>
-              </label>
+              <label class="form-label" for="contrib-room">Available Contribution Room</label>
               <div class="input-wrapper">
                 <span class="input-prefix" aria-hidden="true">$</span>
-                <input
-                  type="text"
-                  id="contrib-room"
-                  class="form-input has-prefix"
-                  placeholder="95,000"
-                  inputmode="numeric"
-                  autocomplete="off"
-                  value="95,000"
-                  aria-describedby="contrib-room-hint contrib-room-error"
-                />
+                <input type="text" id="contrib-room" class="form-input has-prefix"
+                  placeholder="95,000" inputmode="numeric" autocomplete="off" value="95,000"
+                  aria-describedby="contrib-room-hint contrib-room-error" />
               </div>
-              <p id="contrib-room-hint" style="font-size:var(--text-xs);color:var(--color-text-muted);margin-top:var(--space-1);">
-                If you've been eligible since 2009 and never contributed, your room is $95,000 in 2026. Check CRA My Account for your exact amount.
+              <p id="contrib-room-hint" class="field-help">
+                This is how much you can contribute today without a penalty.
+                Find your exact amount in <a href="https://www.canada.ca/en/revenue-agency/services/e-services/digital-services-individuals/account-individuals.html" target="_blank" rel="noopener">CRA My Account</a>.
+                If you've been eligible since 2009 and never contributed, your room is $95,000 in 2026.
               </p>
               <p id="contrib-room-error" class="form-error-msg" role="alert"></p>
             </div>
 
-            <!-- Planned Contribution -->
+            <!-- Contribution Amount -->
             <div class="form-group">
-              <label class="form-label" for="contribution">
-                Planned Contribution Amount <span class="form-hint">(CAD)</span>
-              </label>
+              <label class="form-label" for="contribution">Contribution Amount</label>
               <div class="input-wrapper">
                 <span class="input-prefix" aria-hidden="true">$</span>
-                <input
-                  type="text"
-                  id="contribution"
-                  class="form-input has-prefix"
-                  placeholder="7,000"
-                  inputmode="numeric"
-                  autocomplete="off"
-                  value="7,000"
-                  aria-describedby="contribution-error"
-                />
+                <input type="text" id="contribution" class="form-input has-prefix"
+                  placeholder="7,000" inputmode="numeric" autocomplete="off" value="7,000"
+                  aria-describedby="contribution-error" />
               </div>
-              <!-- Over-contribution warning -->
               <div id="over-contrib-warning" class="over-contrib-warning" role="alert" aria-live="polite">
                 ⚠️ <strong>Over-contribution risk.</strong>
                 Your planned contributions may exceed your available room.
-                The CRA charges 1% per month on excess amounts. Verify your room before contributing.
+                The CRA charges 1% per month on the excess. Verify your room before contributing.
               </div>
               <p id="contribution-error" class="form-error-msg" role="alert"></p>
             </div>
 
-            <!-- Contribution Frequency -->
+            <!-- Frequency -->
             <div class="form-group">
-              <label class="form-label" for="contrib-frequency">Contribution Frequency</label>
+              <label class="form-label" for="contrib-frequency">How often will you contribute?</label>
               <select id="contrib-frequency" class="form-select">
-                <option value="yearly" selected>Yearly</option>
-                <option value="monthly">Monthly</option>
-                <option value="biweekly">Bi-Weekly</option>
-                <option value="weekly">Weekly</option>
-                <option value="onetime">One-Time</option>
+                <option value="yearly" selected>Once a year (Yearly)</option>
+                <option value="monthly">Once a month (Monthly)</option>
+                <option value="biweekly">Every two weeks (Bi-Weekly)</option>
+                <option value="weekly">Every week (Weekly)</option>
+                <option value="onetime">One-time contribution only</option>
               </select>
             </div>
 
@@ -409,106 +445,77 @@
             <div class="form-group">
               <label class="form-label" for="annual-return">Expected Annual Return</label>
               <div class="input-wrapper">
-                <input
-                  type="number"
-                  id="annual-return"
-                  class="form-input has-suffix"
-                  placeholder="6"
-                  min="0"
-                  max="30"
-                  step="0.1"
-                  value="6"
-                  aria-describedby="annual-return-error"
-                />
+                <input type="number" id="annual-return" class="form-input has-suffix"
+                  placeholder="6" min="0" max="30" step="0.1" value="6"
+                  aria-describedby="annual-return-hint annual-return-error" />
                 <span class="input-suffix" aria-hidden="true">%</span>
               </div>
+              <p class="field-help" id="annual-return-hint">
+                6% is a commonly used long-term estimate for a diversified index fund portfolio. Conservative investors might use 4–5%; aggressive investors 7–9%.
+              </p>
               <p id="annual-return-error" class="form-error-msg" role="alert"></p>
             </div>
 
             <!-- Time Horizon -->
             <div class="form-group">
-              <label class="form-label" for="time-horizon">
-                Time Horizon <span class="form-hint">(years)</span>
-              </label>
+              <label class="form-label" for="time-horizon">How many years will you invest?</label>
               <div class="input-wrapper">
-                <input
-                  type="number"
-                  id="time-horizon"
-                  class="form-input has-suffix"
-                  placeholder="20"
-                  min="1"
-                  max="60"
-                  step="1"
-                  value="20"
-                  aria-describedby="time-horizon-error"
-                />
-                <span class="input-suffix" aria-hidden="true">yrs</span>
+                <input type="number" id="time-horizon" class="form-input has-suffix"
+                  placeholder="20" min="1" max="60" step="1" value="20"
+                  aria-describedby="time-horizon-error" />
+                <span class="input-suffix" aria-hidden="true">years</span>
               </div>
               <p id="time-horizon-error" class="form-error-msg" role="alert"></p>
             </div>
 
-            <!-- Annual TFSA Limit -->
-            <div class="form-group">
-              <label class="form-label" for="annual-limit">
-                Annual TFSA Limit <span class="form-hint">(optional)</span>
-              </label>
-              <div class="input-wrapper">
-                <span class="input-prefix" aria-hidden="true">$</span>
-                <input
-                  type="text"
-                  id="annual-limit"
-                  class="form-input has-prefix"
-                  placeholder="7,000"
-                  inputmode="numeric"
-                  autocomplete="off"
-                  value="7,000"
-                />
+            <!-- Advanced Settings -->
+            <button type="button" class="advanced-toggle" id="advanced-toggle"
+              aria-expanded="false" aria-controls="advanced-fields">
+              <span>⚙️ Advanced Settings (Optional)</span>
+              <svg class="advanced-toggle-icon" width="18" height="18" viewBox="0 0 20 20" fill="none" aria-hidden="true">
+                <path d="M5 7.5L10 12.5L15 7.5" stroke="#6B7280" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </button>
+
+            <div id="advanced-fields" class="advanced-fields">
+              <!-- Annual TFSA Limit -->
+              <div class="form-group">
+                <label class="form-label" for="annual-limit">Annual TFSA Limit</label>
+                <div class="input-wrapper">
+                  <span class="input-prefix" aria-hidden="true">$</span>
+                  <input type="text" id="annual-limit" class="form-input has-prefix"
+                    placeholder="7,000" inputmode="numeric" autocomplete="off" value="7,000" />
+                </div>
+                <p class="field-help">
+                  The 2026 CRA limit is $7,000. Only change this if you're modelling future years when the limit may increase.
+                </p>
               </div>
-              <p style="font-size:var(--text-xs);color:var(--color-text-muted);margin-top:var(--space-1);">
-                Defaults to $7,000 (2026 CRA limit). Used to track room accumulation over time.
-              </p>
+
+              <!-- Inflation Rate -->
+              <div class="form-group">
+                <label class="form-label" for="inflation-rate">Inflation Rate</label>
+                <div class="input-wrapper">
+                  <input type="number" id="inflation-rate" class="form-input has-suffix"
+                    placeholder="2.1" min="0" max="20" step="0.1" value="2.1" />
+                  <span class="input-suffix" aria-hidden="true">%</span>
+                </div>
+                <p class="field-help">
+                  Used to calculate the inflation-adjusted (real) value of your TFSA. Canada's long-term average is about 2%.
+                </p>
+              </div>
             </div>
 
-            <!-- Inflation Rate -->
-            <div class="form-group">
-              <label class="form-label" for="inflation-rate">
-                Inflation Rate <span class="form-hint">(optional)</span>
-              </label>
-              <div class="input-wrapper">
-                <input
-                  type="number"
-                  id="inflation-rate"
-                  class="form-input has-suffix"
-                  placeholder="2.1"
-                  min="0"
-                  max="20"
-                  step="0.1"
-                  value="2.1"
-                />
-                <span class="input-suffix" aria-hidden="true">%</span>
-              </div>
-              <p style="font-size:var(--text-xs);color:var(--color-text-muted);margin-top:var(--space-1);">
-                Used to calculate the inflation-adjusted (real) value of your TFSA.
-              </p>
-            </div>
-
-            <!-- Calculate button -->
-            <button
-              type="submit"
-              class="btn btn-primary btn-calculate"
-              id="tfsa-calculate-btn"
-            >
+            <button type="submit" class="btn btn-primary btn-calculate" id="tfsa-calculate-btn">
               Calculate TFSA Growth
             </button>
 
           </form>
 
-          <!-- CRA note -->
           <div class="cra-note" role="note">
-            <strong>🇨🇦 CRA My Account note</strong>
-            CRA My Account may not reflect current-year TFSA transactions until the following spring.
-            Financial institutions report transactions annually. Always verify your contribution room
-            using your own records before contributing to avoid over-contribution penalties.
+            <strong>🇨🇦 Important: CRA My Account may be out of date</strong>
+            CRA My Account does not immediately reflect contributions or withdrawals made during the current year.
+            Financial institutions report transactions once a year. Always verify your exact contribution room
+            using your own records before contributing — over-contributions are penalized at 1% per month.
           </div>
 
         </section>
@@ -517,7 +524,6 @@
         <section class="calc-panel" aria-labelledby="tfsa-results-heading" aria-live="polite">
           <h2 id="tfsa-results-heading" class="calc-panel-title">Your Results</h2>
 
-          <!-- Placeholder -->
           <div id="tfsa-results-placeholder" class="result-placeholder">
             <div class="result-placeholder-icon" aria-hidden="true">
               <svg width="56" height="56" viewBox="0 0 56 56" fill="none">
@@ -525,26 +531,23 @@
                 <path d="M18 20H38M18 28H38M18 36H28" stroke="#D1D5DB" stroke-width="2" stroke-linecap="round"/>
               </svg>
             </div>
-            <p>Enter your TFSA details and click <strong>Calculate TFSA Growth</strong> to see your results.</p>
+            <p>Fill in your details on the left and click <strong>Calculate TFSA Growth</strong> to see your projection.</p>
           </div>
 
-          <!-- Results -->
           <div id="tfsa-results-content" class="hidden">
 
-            <!-- Big number -->
             <div class="result-big">
               <p class="result-big-label">Future TFSA Value</p>
               <p id="result-future-value" class="result-big-value">—</p>
             </div>
 
-            <!-- Summary rows -->
             <div class="result-summary" role="list">
               <div class="result-row" role="listitem">
                 <span class="result-row-label">Total Contributions</span>
                 <span class="result-row-value" id="result-total-contributions">—</span>
               </div>
               <div class="result-row" role="listitem">
-                <span class="result-row-label">Investment Growth</span>
+                <span class="result-row-label">Investment Growth (Tax-Free)</span>
                 <span class="result-row-value is-success" id="result-investment-growth">—</span>
               </div>
               <div class="result-row" role="listitem">
@@ -557,54 +560,47 @@
               </div>
             </div>
 
-            <!-- Milestone cards -->
+            <!-- Improved milestones -->
             <div style="margin-top:var(--space-6);">
-              <p style="font-size:var(--text-sm);font-weight:600;margin-bottom:var(--space-3);">When Your TFSA Reaches…</p>
-              <div class="milestone-grid">
-                <div class="milestone-card" id="milestone-100k">
-                  <span class="milestone-amount">$100,000</span>
-                  <span class="milestone-year" id="milestone-100k-year">—</span>
-                  <span class="milestone-label" id="milestone-100k-label">projected year</span>
+              <p style="font-size:var(--text-sm);font-weight:600;margin-bottom:var(--space-3);">Your Savings Milestones</p>
+              <div class="milestone-list">
+                <div class="milestone-item" id="milestone-100k">
+                  <div class="milestone-dot"></div>
+                  <span class="milestone-text" id="milestone-100k-text">You could reach <strong>$100,000</strong> in —</span>
+                  <span class="milestone-year-badge" id="milestone-100k-year">—</span>
                 </div>
-                <div class="milestone-card" id="milestone-250k">
-                  <span class="milestone-amount">$250,000</span>
-                  <span class="milestone-year" id="milestone-250k-year">—</span>
-                  <span class="milestone-label" id="milestone-250k-label">projected year</span>
+                <div class="milestone-item" id="milestone-250k">
+                  <div class="milestone-dot"></div>
+                  <span class="milestone-text" id="milestone-250k-text">You could reach <strong>$250,000</strong> in —</span>
+                  <span class="milestone-year-badge" id="milestone-250k-year">—</span>
                 </div>
-                <div class="milestone-card" id="milestone-500k">
-                  <span class="milestone-amount">$500,000</span>
-                  <span class="milestone-year" id="milestone-500k-year">—</span>
-                  <span class="milestone-label" id="milestone-500k-label">projected year</span>
+                <div class="milestone-item" id="milestone-500k">
+                  <div class="milestone-dot"></div>
+                  <span class="milestone-text" id="milestone-500k-text">You could reach <strong>$500,000</strong> in —</span>
+                  <span class="milestone-year-badge" id="milestone-500k-year">—</span>
                 </div>
               </div>
             </div>
 
-            <!-- Disclaimer -->
             <div class="calc-disclaimer">
-              Results are estimates based on a constant rate of return and do not account for market
-              volatility, fees, or changes in contribution limits. This is not financial advice.
-              Consult a financial advisor for personalized guidance.
+              Results are estimates based on a constant annual return and do not account for market volatility,
+              management fees, or future changes to TFSA contribution limits. This is not financial advice.
+              Consult a registered financial advisor for personalized guidance.
             </div>
 
-          </div><!-- /tfsa-results-content -->
+          </div>
         </section>
-      </div><!-- /calc-layout -->
+      </div>
 
       <!-- YEAR-BY-YEAR GROWTH TABLE -->
       <div class="growth-section" id="growth-section" hidden>
-        <button
-          type="button"
-          class="growth-toggle"
-          id="growth-toggle"
-          aria-expanded="false"
-          aria-controls="growth-table-wrapper"
-        >
+        <button type="button" class="growth-toggle" id="growth-toggle"
+          aria-expanded="false" aria-controls="growth-table-wrapper">
           <span>View Year-by-Year Growth</span>
           <svg class="growth-toggle-icon" width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true">
             <path d="M5 7.5L10 12.5L15 7.5" stroke="#1F2937" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
           </svg>
         </button>
-
         <div id="growth-table-wrapper" class="growth-table-wrapper" aria-live="polite">
           <table class="growth-table" aria-label="Year-by-year TFSA growth">
             <thead>
@@ -613,12 +609,10 @@
                 <th scope="col">Contribution</th>
                 <th scope="col">Growth</th>
                 <th scope="col">Balance</th>
-                <th scope="col">Room Used</th>
+                <th scope="col">Room Remaining</th>
               </tr>
             </thead>
-            <tbody id="growth-tbody">
-              <!-- Populated by tfsa.js -->
-            </tbody>
+            <tbody id="growth-tbody"></tbody>
           </table>
         </div>
       </div>
@@ -626,52 +620,27 @@
       <!-- SEO CONTENT -->
       <section style="margin-top:var(--space-16);padding-top:var(--space-10);border-top:1px solid var(--color-border);" aria-labelledby="tfsa-seo-heading">
         <h2 id="tfsa-seo-heading" style="font-size:var(--text-2xl);font-weight:700;margin-bottom:var(--space-8);">Understanding Your TFSA</h2>
-
         <div style="display:grid;grid-template-columns:1fr;gap:var(--space-8);">
-
           <div>
             <h3 style="font-size:var(--text-lg);font-weight:600;margin-bottom:var(--space-2);">What is TFSA Contribution Room?</h3>
-            <p style="color:var(--color-text-muted);line-height:1.7;font-size:var(--text-sm);">
-              Your TFSA contribution room is the maximum amount you can deposit into all your TFSAs combined.
-              It accumulates every year starting at age 18 (as long as you're a Canadian resident with a SIN),
-              regardless of whether you actually have a TFSA open. If you were 18 or older in 2009, your
-              lifetime contribution room in 2026 is $95,000.
-            </p>
+            <p style="color:var(--color-text-muted);line-height:1.7;font-size:var(--text-sm);">Your TFSA contribution room is the maximum amount you can deposit into all your TFSAs combined. It accumulates every year starting at age 18 (as long as you're a Canadian resident with a SIN), regardless of whether you actually have a TFSA open. If you were 18 or older in 2009, your lifetime contribution room in 2026 is $95,000.</p>
           </div>
-
           <div>
-            <h3 style="font-size:var(--text-lg);font-weight:600;margin-bottom:var(--space-2);">Annual TFSA Limits</h3>
-            <p style="color:var(--color-text-muted);line-height:1.7;font-size:var(--text-sm);">
-              The CRA sets a new annual TFSA limit each year, indexed to inflation and rounded to the nearest $500.
-              The limit has been $7,000 for 2024, 2025, and 2026. That new room is added to your account on
-              January 1 each year. Any unused room from previous years carries forward indefinitely.
-            </p>
+            <h3 style="font-size:var(--text-lg);font-weight:600;margin-bottom:var(--space-2);">Annual TFSA Limits (2009–2026)</h3>
+            <p style="color:var(--color-text-muted);line-height:1.7;font-size:var(--text-sm);">The CRA sets a new annual TFSA limit each year, indexed to inflation and rounded to the nearest $500. The limit has been $7,000 for 2024, 2025, and 2026. Unused room from previous years carries forward indefinitely — you never lose it.</p>
           </div>
-
           <div>
             <h3 style="font-size:var(--text-lg);font-weight:600;margin-bottom:var(--space-2);">Withdrawals and Re-contributions</h3>
-            <p style="color:var(--color-text-muted);line-height:1.7;font-size:var(--text-sm);">
-              When you withdraw from your TFSA, that amount is added back to your contribution room — but not
-              until January 1 of the following year. If you withdraw and re-contribute in the same calendar year
-              without having the room available, you'll be over-contributing and face a 1% per month penalty on
-              the excess amount from the CRA.
-            </p>
+            <p style="color:var(--color-text-muted);line-height:1.7;font-size:var(--text-sm);">When you withdraw from your TFSA, that amount is added back to your contribution room — but not until January 1 of the following year. Re-contributing in the same calendar year without the available room will trigger a 1% per month penalty on the excess.</p>
           </div>
-
           <div>
-            <h3 style="font-size:var(--text-lg);font-weight:600;margin-bottom:var(--space-2);">Over-Contribution Risk</h3>
-            <p style="color:var(--color-text-muted);line-height:1.7;font-size:var(--text-sm);">
-              The CRA charges a tax equal to 1% per month on the highest excess TFSA amount for every month
-              the excess remains. This penalty continues until the excess is withdrawn. Because CRA My Account
-              may not show current-year contributions until the following spring, you should always track your
-              own contributions carefully and verify with your financial institution.
-            </p>
+            <h3 style="font-size:var(--text-lg);font-weight:600;margin-bottom:var(--space-2);">Over-Contribution Penalties</h3>
+            <p style="color:var(--color-text-muted);line-height:1.7;font-size:var(--text-sm);">The CRA charges 1% per month on the highest excess TFSA amount for every month the excess remains. Because CRA My Account may not reflect current-year contributions until spring, always track your own contributions carefully and verify with your financial institution before making large deposits.</p>
           </div>
-
         </div>
       </section>
 
-    </div><!-- /container -->
+    </div>
   </main>
 
   <!-- FOOTER -->
@@ -690,7 +659,6 @@
         <p class="footer-tagline">Smart Canadian Calculators</p>
         <p class="footer-desc">Free, accurate financial tools built for Canadians. No sign-up required.</p>
       </div>
-
       <nav class="footer-nav" aria-label="Footer navigation">
         <div class="footer-nav-col">
           <h4 class="footer-nav-heading">Calculators</h4>
@@ -723,13 +691,9 @@
         </div>
       </nav>
     </div>
-
     <div class="footer-bottom">
       <div class="container footer-bottom-inner">
-        <p class="footer-legal">
-          © <span id="footer-year">2026</span> Northern Numbers. All rights reserved.
-          Results are estimates only and do not constitute financial advice.
-        </p>
+        <p class="footer-legal">© <span id="footer-year">2026</span> Northern Numbers. All rights reserved. Results are estimates only and do not constitute financial advice.</p>
         <p class="footer-built">Built for Canadians. 🇨🇦</p>
       </div>
     </div>

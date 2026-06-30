@@ -24,15 +24,15 @@ const returnEl           = document.getElementById('annual-return');
 const horizonEl          = document.getElementById('time-horizon');
 const annualLimitEl      = document.getElementById('annual-limit');
 const inflationEl        = document.getElementById('inflation-rate');
+const overContribWarning = document.getElementById('over-contrib-warning');
 
 const resultsPlaceholder = document.getElementById('tfsa-results-placeholder');
 const resultsContent     = document.getElementById('tfsa-results-content');
-
-const resultFutureValue    = document.getElementById('result-future-value');
-const resultTotalContribs  = document.getElementById('result-total-contributions');
-const resultGrowth         = document.getElementById('result-investment-growth');
-const resultRemainingRoom  = document.getElementById('result-remaining-room');
-const resultInflation      = document.getElementById('result-inflation-adjusted');
+const resultFutureValue  = document.getElementById('result-future-value');
+const resultTotalContribs = document.getElementById('result-total-contributions');
+const resultGrowth       = document.getElementById('result-investment-growth');
+const resultRemainingRoom = document.getElementById('result-remaining-room');
+const resultInflation    = document.getElementById('result-inflation-adjusted');
 
 const milestone100k      = document.getElementById('milestone-100k');
 const milestone250k      = document.getElementById('milestone-250k');
@@ -40,38 +40,23 @@ const milestone500k      = document.getElementById('milestone-500k');
 const milestone100kYear  = document.getElementById('milestone-100k-year');
 const milestone250kYear  = document.getElementById('milestone-250k-year');
 const milestone500kYear  = document.getElementById('milestone-500k-year');
-const milestone100kLabel = document.getElementById('milestone-100k-label');
-const milestone250kLabel = document.getElementById('milestone-250k-label');
-const milestone500kLabel = document.getElementById('milestone-500k-label');
+const milestone100kText  = document.getElementById('milestone-100k-text');
+const milestone250kText  = document.getElementById('milestone-250k-text');
+const milestone500kText  = document.getElementById('milestone-500k-text');
 
 const growthSection      = document.getElementById('growth-section');
 const growthToggle       = document.getElementById('growth-toggle');
 const growthTableWrapper = document.getElementById('growth-table-wrapper');
 const growthTbody        = document.getElementById('growth-tbody');
 
-const overContribWarning = document.getElementById('over-contrib-warning');
-
 
 /* =============================================
    2. FORMATTING UTILITIES
    ============================================= */
-
 function formatCAD(amount) {
   return new Intl.NumberFormat('en-CA', {
-    style: 'currency',
-    currency: 'CAD',
-    minimumFractionDigits: 2,
-    maximumFractionDigits: 2
-  }).format(amount);
-}
-
-function formatCAD0(amount) {
-  // No decimal places — for cleaner display of large round numbers
-  return new Intl.NumberFormat('en-CA', {
-    style: 'currency',
-    currency: 'CAD',
-    minimumFractionDigits: 0,
-    maximumFractionDigits: 0
+    style: 'currency', currency: 'CAD',
+    minimumFractionDigits: 2, maximumFractionDigits: 2
   }).format(amount);
 }
 
@@ -79,8 +64,7 @@ function formatInputNumber(value) {
   const num = parseFloat(String(value).replace(/[^0-9.]/g, ''));
   if (isNaN(num)) return '';
   return new Intl.NumberFormat('en-CA', {
-    minimumFractionDigits: 0,
-    maximumFractionDigits: 0
+    minimumFractionDigits: 0, maximumFractionDigits: 0
   }).format(num);
 }
 
@@ -90,25 +74,21 @@ function parseInputNumber(value) {
 
 
 /* =============================================
-   3. LIVE INPUT FORMATTING (dollar fields)
+   3. LIVE INPUT FORMATTING
    ============================================= */
 function attachFormatter(inputEl) {
   inputEl.addEventListener('input', function () {
-    const raw    = this.value.replace(/[^0-9]/g, '');
+    const raw = this.value.replace(/[^0-9]/g, '');
     if (raw === '') { this.value = ''; return; }
-    const num    = parseInt(raw, 10);
+    const num = parseInt(raw, 10);
     const formatted = isNaN(num) ? '' : new Intl.NumberFormat('en-CA', {
-      minimumFractionDigits: 0,
-      maximumFractionDigits: 0
+      minimumFractionDigits: 0, maximumFractionDigits: 0
     }).format(num);
-    const selStart = this.selectionStart;
-    const prevLen  = this.value.length;
-    this.value     = formatted;
-    const newLen   = this.value.length;
-    this.setSelectionRange(
-      Math.max(0, selStart + (newLen - prevLen)),
-      Math.max(0, selStart + (newLen - prevLen))
-    );
+    const sel = this.selectionStart;
+    const prev = this.value.length;
+    this.value = formatted;
+    const newPos = Math.max(0, sel + (this.value.length - prev));
+    this.setSelectionRange(newPos, newPos);
   });
 }
 
@@ -119,7 +99,79 @@ attachFormatter(annualLimitEl);
 
 
 /* =============================================
-   4. VALIDATION
+   4. ADVANCED SETTINGS TOGGLE
+   ============================================= */
+const advancedToggle = document.getElementById('advanced-toggle');
+const advancedFields = document.getElementById('advanced-fields');
+
+advancedToggle.addEventListener('click', function () {
+  const isOpen = advancedFields.classList.toggle('is-open');
+  this.setAttribute('aria-expanded', isOpen.toString());
+});
+
+
+/* =============================================
+   5. PRESETS
+   ============================================= */
+const PRESETS = {
+  beginner: {
+    balance: 0,
+    room: 95000,
+    contribution: 100,
+    frequency: 'monthly',
+    annualReturn: 4,
+    horizon: 20,
+    label: '🌱 Beginner Investor',
+    desc: 'Just getting started — $100/month, conservative 4% return'
+  },
+  average: {
+    balance: 15000,
+    room: 50000,
+    contribution: 7000,
+    frequency: 'yearly',
+    annualReturn: 6,
+    horizon: 20,
+    label: '🍁 Average Canadian',
+    desc: 'Maxing out TFSA yearly with a balanced 6% return'
+  },
+  growth: {
+    balance: 50000,
+    room: 45000,
+    contribution: 7000,
+    frequency: 'yearly',
+    annualReturn: 8,
+    horizon: 25,
+    label: '📈 Growth Investor',
+    desc: 'Existing TFSA, maxing out yearly, aggressive 8% return'
+  }
+};
+
+document.querySelectorAll('.preset-btn').forEach(btn => {
+  btn.addEventListener('click', function () {
+    const preset = PRESETS[this.dataset.preset];
+    if (!preset) return;
+
+    balanceEl.value      = formatInputNumber(preset.balance);
+    roomEl.value         = formatInputNumber(preset.room);
+    contributionEl.value = formatInputNumber(preset.contribution);
+    frequencyEl.value    = preset.frequency;
+    returnEl.value       = preset.annualReturn;
+    horizonEl.value      = preset.horizon;
+
+    // Mark active
+    document.querySelectorAll('.preset-btn').forEach(b => b.classList.remove('is-active'));
+    this.classList.add('is-active');
+
+    checkOverContrib();
+
+    // Auto-calculate on preset select
+    form.dispatchEvent(new Event('submit'));
+  });
+});
+
+
+/* =============================================
+   6. VALIDATION
    ============================================= */
 function setError(inputEl, errorElId, message) {
   inputEl.classList.add('is-error');
@@ -136,50 +188,35 @@ function clearError(inputEl, errorElId) {
 function validateInputs() {
   let valid = true;
 
-  // Balance — allow 0
   const balance = parseInputNumber(balanceEl.value);
   if (isNaN(balance) || balance < 0) {
     setError(balanceEl, 'current-balance-error', 'Please enter a valid balance (0 or more).');
     valid = false;
-  } else {
-    clearError(balanceEl, 'current-balance-error');
-  }
+  } else { clearError(balanceEl, 'current-balance-error'); }
 
-  // Contribution room
   const room = parseInputNumber(roomEl.value);
   if (isNaN(room) || room < 0) {
     setError(roomEl, 'contrib-room-error', 'Please enter your available contribution room (0 or more).');
     valid = false;
-  } else {
-    clearError(roomEl, 'contrib-room-error');
-  }
+  } else { clearError(roomEl, 'contrib-room-error'); }
 
-  // Contribution amount
   const contribution = parseInputNumber(contributionEl.value);
   if (isNaN(contribution) || contribution < 0) {
     setError(contributionEl, 'contribution-error', 'Please enter a valid contribution amount.');
     valid = false;
-  } else {
-    clearError(contributionEl, 'contribution-error');
-  }
+  } else { clearError(contributionEl, 'contribution-error'); }
 
-  // Annual return
   const annualReturn = parseFloat(returnEl.value);
   if (isNaN(annualReturn) || annualReturn < 0 || annualReturn > 30) {
-    setError(returnEl, 'annual-return-error', 'Please enter an expected return between 0% and 30%.');
+    setError(returnEl, 'annual-return-error', 'Please enter a return between 0% and 30%.');
     valid = false;
-  } else {
-    clearError(returnEl, 'annual-return-error');
-  }
+  } else { clearError(returnEl, 'annual-return-error'); }
 
-  // Time horizon
   const horizon = parseInt(horizonEl.value);
   if (isNaN(horizon) || horizon < 1 || horizon > 60) {
     setError(horizonEl, 'time-horizon-error', 'Please enter a time horizon between 1 and 60 years.');
     valid = false;
-  } else {
-    clearError(horizonEl, 'time-horizon-error');
-  }
+  } else { clearError(horizonEl, 'time-horizon-error'); }
 
   if (!valid) return { valid: false };
 
@@ -200,75 +237,52 @@ function validateInputs() {
 
 
 /* =============================================
-   5. CORE TFSA MATH
+   7. CORE TFSA MATH
    ============================================= */
-
-/**
- * Convert a periodic contribution to an annual equivalent.
- * @param {number} amount - contribution amount
- * @param {string} frequency - 'yearly'|'monthly'|'biweekly'|'weekly'|'onetime'
- * @returns {number} annual contribution amount
- */
 function toAnnualContribution(amount, frequency) {
   switch (frequency) {
-    case 'monthly':   return amount * 12;
-    case 'biweekly':  return amount * 26;
-    case 'weekly':    return amount * 52;
-    case 'onetime':   return amount; // only in year 1
-    default:          return amount; // yearly
+    case 'monthly':  return amount * 12;
+    case 'biweekly': return amount * 26;
+    case 'weekly':   return amount * 52;
+    case 'onetime':  return amount;
+    default:         return amount; // yearly
   }
 }
 
-/**
- * Project TFSA growth year by year.
- * Returns array of { year, contribution, growth, balance, roomUsed, roomRemaining }
- */
 function projectTfsa(balance, room, contribution, frequency, annualReturn, horizon, annualLimit) {
   const annualContrib = toAnnualContribution(contribution, frequency);
   const rate          = annualReturn / 100;
   const currentYear   = new Date().getFullYear();
 
-  let currentBalance      = balance;
-  let currentRoom         = room;
-  let totalContributions  = 0;
-  const schedule          = [];
-
-  // Milestones
-  const milestones = { 100000: null, 250000: null, 500000: null };
+  let currentBalance     = balance;
+  let currentRoom        = room;
+  let totalContributions = 0;
+  const schedule         = [];
+  const milestones       = { 100000: null, 250000: null, 500000: null };
 
   for (let y = 1; y <= horizon; y++) {
-    // Add new annual room (except year 1 — room already includes current year)
-    if (y > 1) {
-      currentRoom += annualLimit;
-    }
+    if (y > 1) currentRoom += annualLimit;
 
-    // Contribution this year (one-time only applies to year 1)
-    const yearContrib = (frequency === 'onetime' && y > 1) ? 0 : annualContrib;
-
-    // Cap contribution at available room
+    const yearContrib  = (frequency === 'onetime' && y > 1) ? 0 : annualContrib;
     const actualContrib = Math.min(yearContrib, currentRoom);
     currentRoom        -= actualContrib;
     totalContributions += actualContrib;
 
-    // Growth on (opening balance + contributions, simplified as mid-year)
     const growthBase = currentBalance + actualContrib * 0.5;
     const yearGrowth = growthBase * rate;
+    currentBalance   = currentBalance + actualContrib + yearGrowth;
 
-    currentBalance = currentBalance + actualContrib + yearGrowth;
-
-    // Check milestones
     const calYear = currentYear + y;
     if (!milestones[100000]  && currentBalance >= 100000)  milestones[100000]  = calYear;
     if (!milestones[250000]  && currentBalance >= 250000)  milestones[250000]  = calYear;
     if (!milestones[500000]  && currentBalance >= 500000)  milestones[500000]  = calYear;
 
     schedule.push({
-      year:           calYear,
-      contribution:   actualContrib,
-      growth:         yearGrowth,
-      balance:        currentBalance,
-      roomUsed:       actualContrib,
-      roomRemaining:  currentRoom
+      year: calYear,
+      contribution: actualContrib,
+      growth: yearGrowth,
+      balance: currentBalance,
+      roomRemaining: currentRoom
     });
   }
 
@@ -281,10 +295,6 @@ function projectTfsa(balance, room, contribution, frequency, annualReturn, horiz
   };
 }
 
-/**
- * Adjust a future value for inflation.
- * PV = FV / (1 + r)^n
- */
 function inflationAdjust(futureValue, inflationRate, years) {
   if (inflationRate <= 0) return futureValue;
   return futureValue / Math.pow(1 + inflationRate / 100, years);
@@ -292,15 +302,13 @@ function inflationAdjust(futureValue, inflationRate, years) {
 
 
 /* =============================================
-   6. OVER-CONTRIBUTION LIVE CHECK
+   8. OVER-CONTRIBUTION LIVE CHECK
    ============================================= */
 function checkOverContrib() {
-  const room         = parseInputNumber(roomEl.value);
-  const contribution = parseInputNumber(contributionEl.value);
-  const frequency    = frequencyEl.value;
-  const annualContrib = toAnnualContribution(contribution, frequency);
-
-  const isOver = room > 0 && contribution > 0 && annualContrib > room;
+  const room          = parseInputNumber(roomEl.value);
+  const contribution  = parseInputNumber(contributionEl.value);
+  const annualContrib = toAnnualContribution(contribution, frequencyEl.value);
+  const isOver        = room > 0 && contribution > 0 && annualContrib > room;
   overContribWarning.classList.toggle('is-visible', isOver);
 }
 
@@ -310,11 +318,28 @@ frequencyEl.addEventListener('change', checkOverContrib);
 
 
 /* =============================================
-   7. RENDER RESULTS
+   9. RENDER RESULTS
    ============================================= */
+function renderMilestone(cardEl, yearEl, textEl, amount, year, reached) {
+  const label   = amount >= 1000000
+    ? '$' + (amount / 1000000) + 'M'
+    : '$' + (amount / 1000) + ',000';
+
+  if (year) {
+    yearEl.textContent = year;
+    textEl.innerHTML   = `You could reach <strong>${label}</strong> in`;
+    cardEl.classList.toggle('is-reached', reached);
+  } else {
+    yearEl.textContent = 'N/A';
+    textEl.innerHTML   = `<strong>${label}</strong> — not within your time horizon`;
+    cardEl.classList.remove('is-reached');
+  }
+}
+
 function renderResults(data, horizon, inflationRate) {
   const { schedule, milestones, totalContributions, finalBalance, remainingRoom } = data;
-  const investmentGrowth = finalBalance - totalContributions - parseInputNumber(balanceEl.value);
+  const startingBalance  = parseInputNumber(balanceEl.value);
+  const investmentGrowth = finalBalance - totalContributions - startingBalance;
   const inflationValue   = inflationAdjust(finalBalance, inflationRate, horizon);
 
   resultsPlaceholder.classList.add('hidden');
@@ -326,12 +351,10 @@ function renderResults(data, horizon, inflationRate) {
   resultRemainingRoom.textContent = formatCAD(remainingRoom);
   resultInflation.textContent     = formatCAD(inflationValue);
 
-  // Milestones
-  renderMilestone(milestone100k, milestone100kYear, milestone100kLabel, milestones[100000], finalBalance >= 100000);
-  renderMilestone(milestone250k, milestone250kYear, milestone250kLabel, milestones[250000], finalBalance >= 250000);
-  renderMilestone(milestone500k, milestone500kYear, milestone500kLabel, milestones[500000], finalBalance >= 500000);
+  renderMilestone(milestone100k, milestone100kYear, milestone100kText, 100000,  milestones[100000],  finalBalance >= 100000);
+  renderMilestone(milestone250k, milestone250kYear, milestone250kText, 250000,  milestones[250000],  finalBalance >= 250000);
+  renderMilestone(milestone500k, milestone500kYear, milestone500kText, 500000,  milestones[500000],  finalBalance >= 500000);
 
-  // Growth table
   renderGrowthTable(schedule);
 
   if (window.innerWidth < 900) {
@@ -339,25 +362,12 @@ function renderResults(data, horizon, inflationRate) {
   }
 }
 
-function renderMilestone(cardEl, yearEl, labelEl, year, reached) {
-  if (year) {
-    yearEl.textContent  = year;
-    labelEl.textContent = reached ? 'achieved' : 'projected year';
-    cardEl.classList.toggle('is-reached', reached);
-  } else {
-    yearEl.textContent  = 'N/A';
-    labelEl.textContent = 'not within horizon';
-    cardEl.classList.remove('is-reached');
-  }
-}
-
 
 /* =============================================
-   8. GROWTH TABLE
+   10. GROWTH TABLE
    ============================================= */
 function renderGrowthTable(schedule) {
   growthTbody.innerHTML = '';
-
   schedule.forEach(row => {
     const tr = document.createElement('tr');
     tr.innerHTML = `
@@ -369,7 +379,6 @@ function renderGrowthTable(schedule) {
     `;
     growthTbody.appendChild(tr);
   });
-
   growthSection.removeAttribute('hidden');
 }
 
@@ -380,16 +389,13 @@ growthToggle.addEventListener('click', function () {
 
 
 /* =============================================
-   9. FORM SUBMIT
+   11. FORM SUBMIT
    ============================================= */
 form.addEventListener('submit', function (e) {
   e.preventDefault();
-
   const { valid, values } = validateInputs();
   if (!valid) return;
-
   const { balance, room, contribution, frequency, annualReturn, horizon, annualLimit, inflationRate } = values;
-
   const data = projectTfsa(balance, room, contribution, frequency, annualReturn, horizon, annualLimit);
   renderResults(data, horizon, inflationRate);
 });
@@ -402,12 +408,12 @@ form.querySelectorAll('input, select').forEach(el => {
 
 
 /* =============================================
-   10. INIT — format default values on load
+   12. INIT
    ============================================= */
 (function init() {
-  balanceEl.value     = formatInputNumber(0);
-  roomEl.value        = formatInputNumber(95000);
+  balanceEl.value      = formatInputNumber(0);
+  roomEl.value         = formatInputNumber(95000);
   contributionEl.value = formatInputNumber(7000);
-  annualLimitEl.value = formatInputNumber(7000);
+  annualLimitEl.value  = formatInputNumber(7000);
   checkOverContrib();
 })();
