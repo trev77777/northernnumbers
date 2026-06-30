@@ -149,9 +149,12 @@ document.querySelectorAll('.preset-btn').forEach(btn => {
     balanceEl.value       = formatInputNumber(preset.balance);
     roomEl.value          = formatInputNumber(preset.room);
     contributionEl.value  = formatInputNumber(preset.contribution);
-    frequencyEl.value     = preset.frequency;
     returnEl.value        = preset.annualReturn;
     horizonEl.value       = preset.horizon;
+
+    // Force frequency dropdown to update and trigger change listeners
+    frequencyEl.value = preset.frequency;
+    frequencyEl.dispatchEvent(new Event('change'));
 
     // Mark active preset button
     document.querySelectorAll('.preset-btn').forEach(b => b.classList.remove('is-active'));
