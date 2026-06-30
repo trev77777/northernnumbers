@@ -314,8 +314,10 @@ function inflationAdjust(futureValue, inflationRate, years) {
 
 /* =============================================
    8. OVER-CONTRIBUTION LIVE CHECK
-   FIX: Only shows warning when BOTH room and contribution
-   are filled in AND contribution genuinely exceeds room.
+   Only warns if the FIRST YEAR contribution
+   exceeds current available room. After year 1,
+   new room opens up each January so recurring
+   contributions are not flagged.
    ============================================= */
 function checkOverContrib() {
   const room         = parseInputNumber(roomEl.value);
@@ -328,9 +330,15 @@ function checkOverContrib() {
     return;
   }
 
-  const annualContrib = toAnnualContribution(contribution, frequency);
+  // One-time: just compare directly
+  if (frequency === 'onetime') {
+    overContribWarning.classList.toggle('is-visible', contribution > room);
+    return;
+  }
 
-  // Only warn if annual contributions exceed available room
+  // For recurring: only warn if the ANNUAL total in year 1 exceeds current room.
+  // We don't warn for future years because new room accumulates every January.
+  const annualContrib = toAnnualContribution(contribution, frequency);
   const isOver = annualContrib > room;
   overContribWarning.classList.toggle('is-visible', isOver);
 }
