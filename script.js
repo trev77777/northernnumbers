@@ -296,6 +296,46 @@
 
 
 /* =============================================
+   4b. COMING SOON CARDS
+   Any .calc-card with [data-coming-soon="true"]
+   gets its Calculate button swapped for a disabled
+   "Coming Soon" pill with a tooltip, and its link
+   removed so it can't be clicked or reached by
+   keyboard tab navigation.
+
+   TO RE-ENABLE A CALCULATOR: in the HTML, simply
+   remove the data-coming-soon attribute (or change
+   it to "false") on that card's <article> element.
+   This script will leave the original Calculate
+   button and link untouched automatically.
+   ============================================= */
+(function initComingSoonCards() {
+  const comingSoonCards = document.querySelectorAll('.calc-card[data-coming-soon="true"]');
+
+  comingSoonCards.forEach(function (card) {
+    const link = card.querySelector('a.btn-calc');
+    if (!link) return; // already converted or no button present
+
+    const calcName = card.querySelector('.calc-card-title')?.textContent.trim() || 'This calculator';
+
+    // Build the disabled replacement element
+    const pill = document.createElement('span');
+    pill.className = 'btn-coming-soon';
+    pill.setAttribute('tabindex', '0'); // focusable for keyboard tooltip, but not a link
+    pill.setAttribute('role', 'note');
+    pill.setAttribute('aria-label', `${calcName} is coming soon. This calculator is currently in development and will be available soon.`);
+    pill.setAttribute('data-tooltip', 'This calculator is currently in development and will be available soon.');
+    pill.textContent = 'Coming Soon';
+
+    link.replaceWith(pill);
+
+    // Mark the whole card as disabled for styling + cursor behavior
+    card.style.cursor = 'default';
+  });
+})();
+
+
+/* =============================================
    5. HEADER — Add shadow on scroll
    ============================================= */
 (function initHeaderScroll() {
