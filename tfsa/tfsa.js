@@ -110,6 +110,9 @@ attachFormatter(annualLimitEl);
 const lumpSumEl = document.getElementById('lump-sum');
 if (lumpSumEl) attachFormatter(lumpSumEl);
 
+const pastContribEl = document.getElementById('past-contributions');
+if (pastContribEl) attachFormatter(pastContribEl);
+
 
 /* =============================================
    4b. BIRTH YEAR → AUTO-CALCULATE CONTRIBUTION ROOM
@@ -147,23 +150,32 @@ const roomAutoBadge = document.getElementById('room-auto-badge');
 // Calculates room from birth year only — does NOT subtract balance
 // (balance ≠ contributions; investment growth doesn't affect room)
 function autoCalcRoom() {
-  const yr = parseInt(birthYearEl?.value);
+  const raw = birthYearEl?.value.replace(/\D/g, '');
+  if (!raw || raw.length < 4) {
+    if (roomAutoBadge) roomAutoBadge.classList.add('hidden');
+    return;
+  }
 
+  const yr = parseInt(raw);
   if (isNaN(yr) || yr < 1940 || yr > 2008) {
     if (roomAutoBadge) roomAutoBadge.classList.add('hidden');
     return;
   }
 
-  const lifetimeRoom = calcLifetimeRoom(yr);
+  const lifetimeRoom   = calcLifetimeRoom(yr);
   if (lifetimeRoom <= 0) return;
 
-  roomEl.value = formatInputNumber(lifetimeRoom);
+  const pastContribs   = parseInputNumber(pastContribEl?.value || '0');
+  const remainingRoom  = Math.max(0, lifetimeRoom - pastContribs);
+
+  roomEl.value = formatInputNumber(remainingRoom);
   if (roomAutoBadge) roomAutoBadge.classList.remove('hidden');
   checkOverContrib();
 }
 
 if (birthYearEl) birthYearEl.addEventListener('input', autoCalcRoom);
-// Balance changes no longer affect room
+// Recalculate room whenever past contributions change
+if (pastContribEl) pastContribEl.addEventListener('input', autoCalcRoom);
 
 
 
@@ -619,6 +631,7 @@ if (resetBtn) {
     annualLimitEl.value  = formatInputNumber(7000);
     inflationEl.value    = '2.1';
     if (lumpSumEl) lumpSumEl.value = formatInputNumber(0);
+    if (pastContribEl) pastContribEl.value = formatInputNumber(0);
     if (birthYearEl) birthYearEl.value = '';
     if (roomAutoBadge) roomAutoBadge.classList.add('hidden');
     roomEl.value = formatInputNumber(95000);

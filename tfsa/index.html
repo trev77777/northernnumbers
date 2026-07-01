@@ -436,8 +436,9 @@
             <div class="form-group">
               <label class="form-label" for="birth-year">Year of Birth</label>
               <div class="input-wrapper">
-                <input type="number" id="birth-year" class="form-input"
-                  placeholder="1990" min="1940" max="2008" step="1"
+                <input type="text" id="birth-year" class="form-input"
+                  placeholder="e.g. 1990" inputmode="numeric" autocomplete="off"
+                  maxlength="4"
                   aria-describedby="birth-year-hint birth-year-error" />
               </div>
               <p id="birth-year-hint" class="field-help">
@@ -447,7 +448,21 @@
               <p id="birth-year-error" class="form-error-msg" role="alert"></p>
             </div>
 
-            <!-- 2. Current TFSA Balance -->
+            <!-- 2. Total Past Contributions -->
+            <div class="form-group">
+              <label class="form-label" for="past-contributions">Total Past Contributions</label>
+              <div class="input-wrapper">
+                <span class="input-prefix" aria-hidden="true">$</span>
+                <input type="text" id="past-contributions" class="form-input has-prefix"
+                  placeholder="0" inputmode="numeric" autocomplete="off" value="0" />
+              </div>
+              <p class="field-help">
+                How much you've contributed to your TFSA in total over the years — not your current balance.
+                Investment growth doesn't count. Enter 0 if you've never contributed.
+              </p>
+            </div>
+
+            <!-- Current TFSA Balance (kept for growth projection) -->
             <div class="form-group">
               <label class="form-label" for="current-balance">Current TFSA Balance</label>
               <div class="input-wrapper">
@@ -456,7 +471,7 @@
                   placeholder="0" inputmode="numeric" autocomplete="off" value="0"
                   aria-describedby="current-balance-error" />
               </div>
-              <p class="field-help">The total currently sitting in all your TFSAs. Enter 0 if you're just starting.</p>
+              <p class="field-help">What's currently sitting in your TFSA today. Used to project future growth. Enter 0 if you're just starting.</p>
               <p id="current-balance-error" class="form-error-msg" role="alert"></p>
             </div>
 
@@ -477,10 +492,9 @@
                   aria-describedby="contrib-room-hint contrib-room-error" />
               </div>
               <p id="contrib-room-hint" class="field-help">
-                Your estimated lifetime room if you've never contributed.
-                <strong>Subtract any past contributions</strong> (not your balance — investment growth doesn't count against your room)
-                to get your real remaining room. Then verify in <a href="https://www.canada.ca/en/revenue-agency/services/e-services/digital-services-individuals/account-individuals.html" target="_blank" rel="noopener">CRA My Account</a>.
-                You can edit this field directly.
+                Lifetime room minus your past contributions. Investment growth doesn't affect this.
+                Always verify in <a href="https://www.canada.ca/en/revenue-agency/services/e-services/digital-services-individuals/account-individuals.html" target="_blank" rel="noopener">CRA My Account</a>.
+                You can edit this field directly if your exact room is different.
               </p>
               <p id="contrib-room-error" class="form-error-msg" role="alert"></p>
             </div>
