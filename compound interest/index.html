@@ -1,0 +1,720 @@
+<!DOCTYPE html>
+<html lang="en-CA">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Canadian Compound Interest Calculator 2026 — Northern Numbers</title>
+  <meta name="description" content="Calculate compound interest, investment growth, future value, and retirement savings with Canada's free compound interest calculator. See your TFSA, RRSP, and FHSA growth potential." />
+  <meta name="keywords" content="compound interest calculator Canada, investment growth calculator, TFSA compound interest, future value calculator Canada, retirement savings calculator" />
+  <meta name="author" content="Northern Numbers" />
+  <meta name="robots" content="index, follow" />
+  <link rel="canonical" href="https://www.northernnumbers.ca/compound-interest/" />
+  <meta property="og:title" content="Canadian Compound Interest Calculator 2026 — Northern Numbers" />
+  <meta property="og:description" content="See how compound interest grows your investments over time. Free Canadian calculator with TFSA, RRSP, and FHSA context." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://www.northernnumbers.ca/compound-interest/" />
+  <meta property="og:locale" content="en_CA" />
+
+  <script type="application/ld+json">
+  {"@context":"https://schema.org","@type":"WebApplication","name":"Canadian Compound Interest Calculator","url":"https://www.northernnumbers.ca/compound-interest/","description":"Free Canadian compound interest calculator with milestone tracking, inflation adjustment, and investment insights.","applicationCategory":"FinanceApplication","offers":{"@type":"Offer","price":"0","priceCurrency":"CAD"},"provider":{"@type":"Organization","name":"Northern Numbers","url":"https://www.northernnumbers.ca"}}
+  </script>
+  <script type="application/ld+json">
+  {"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://www.northernnumbers.ca/"},{"@type":"ListItem","position":2,"name":"Compound Interest Calculator","item":"https://www.northernnumbers.ca/compound-interest/"}]}
+  </script>
+  <script type="application/ld+json">
+  {"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"What is compound interest?","acceptedAnswer":{"@type":"Answer","text":"Compound interest is interest calculated on both the initial principal and the accumulated interest. Unlike simple interest, it grows exponentially over time."}},{"@type":"Question","name":"How often should I compound interest?","acceptedAnswer":{"@type":"Answer","text":"More frequent compounding (daily or monthly) produces slightly higher returns. Most Canadian savings accounts and GICs compound monthly or annually."}},{"@type":"Question","name":"What is the Rule of 72?","acceptedAnswer":{"@type":"Answer","text":"The Rule of 72 is a shortcut to estimate how long it takes to double your money. Divide 72 by your annual interest rate. At 6%, your money doubles every 12 years."}},{"@type":"Question","name":"How does inflation affect compound interest?","acceptedAnswer":{"@type":"Answer","text":"Inflation reduces the real purchasing power of your returns. If your investment earns 7% but inflation is 2%, your real return is approximately 5%."}},{"@type":"Question","name":"What is a good annual return in Canada?","acceptedAnswer":{"@type":"Answer","text":"The Canadian stock market (S&P/TSX Composite) has historically returned 6-8% annually. A diversified portfolio including bonds might average 5-7% over the long term."}}]}
+  </script>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Poppins:wght@600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="../styles.css" />
+
+  <style>
+    /* ── Quick start ── */
+    .quick-start{background:var(--color-primary-light);border:1px solid rgba(213,43,30,.15);border-radius:var(--radius-md);padding:var(--space-5) var(--space-6);margin-bottom:var(--space-6)}
+    .quick-start-title{font-family:var(--font-heading);font-size:var(--text-base);font-weight:700;color:var(--color-primary);margin-bottom:var(--space-3);display:flex;align-items:center;gap:var(--space-2)}
+    .quick-start ol{list-style:decimal;padding-left:var(--space-5);display:flex;flex-direction:column;gap:var(--space-2)}
+    .quick-start ol li{font-size:var(--text-sm);color:var(--color-text);line-height:1.5}
+    /* ── Presets ── */
+    .preset-group{display:flex;flex-wrap:wrap;gap:var(--space-2);margin-bottom:var(--space-5)}
+    .preset-btn{padding:var(--space-2) var(--space-4);font-size:var(--text-sm);font-weight:600;border:2px solid var(--color-border);border-radius:var(--radius-lg);background:var(--color-white);color:var(--color-text-muted);cursor:pointer;transition:all var(--transition-fast)}
+    .preset-btn:hover,.preset-btn.is-active{border-color:var(--color-primary);color:var(--color-primary);background:var(--color-primary-light)}
+    /* ── Field help ── */
+    .field-help{font-size:var(--text-xs);color:var(--color-text-muted);margin-top:var(--space-1);line-height:1.5}
+    /* ── Advanced toggle ── */
+    .advanced-toggle{display:flex;align-items:center;gap:var(--space-2);background:none;border:none;font-family:var(--font-body);font-size:var(--text-sm);font-weight:600;color:var(--color-text-muted);cursor:pointer;padding:var(--space-3) 0;width:100%;text-align:left;border-top:1px solid var(--color-border);margin-top:var(--space-2);transition:color var(--transition-fast)}
+    .advanced-toggle:hover{color:var(--color-text)}
+    .advanced-toggle-icon{margin-left:auto;transition:transform var(--transition-base)}
+    .advanced-toggle[aria-expanded="true"] .advanced-toggle-icon{transform:rotate(180deg)}
+    .advanced-fields{display:none;padding-top:var(--space-4)}
+    .advanced-fields.is-open{display:block}
+    /* ── Compare toggle ── */
+    .compare-toggle-wrap{display:flex;align-items:center;justify-content:space-between;padding:var(--space-4) var(--space-5);background:var(--color-bg);border:2px solid var(--color-border);border-radius:var(--radius-md);margin-bottom:var(--space-5);cursor:pointer;transition:border-color var(--transition-fast)}
+    .compare-toggle-wrap:hover{border-color:var(--color-primary)}
+    .compare-toggle-wrap.is-active{border-color:var(--color-primary);background:var(--color-primary-light)}
+    .toggle-switch{width:44px;height:24px;background:var(--color-border);border-radius:var(--radius-full);position:relative;transition:background var(--transition-fast);flex-shrink:0}
+    .toggle-switch::after{content:'';position:absolute;width:18px;height:18px;background:white;border-radius:50%;top:3px;left:3px;transition:transform var(--transition-fast)}
+    .compare-toggle-wrap.is-active .toggle-switch{background:var(--color-primary)}
+    .compare-toggle-wrap.is-active .toggle-switch::after{transform:translateX(20px)}
+    .compare-section{display:none;padding:var(--space-5);background:var(--color-bg);border:1px solid var(--color-border);border-radius:var(--radius-md);margin-bottom:var(--space-5)}
+    .compare-section.is-open{display:block}
+    .compare-section-title{font-family:var(--font-heading);font-size:var(--text-base);font-weight:700;margin-bottom:var(--space-4)}
+    /* ── Summary pills ── */
+    .summary-tag{display:inline-flex;align-items:center;padding:var(--space-2) var(--space-4);background:var(--color-primary-light);border:1px solid rgba(213,43,30,.2);border-radius:var(--radius-full);font-size:var(--text-sm);font-weight:600;color:var(--color-primary)}
+    /* ── Celebration ── */
+    .result-celebration{margin-bottom:var(--space-5);padding:var(--space-4) var(--space-5);background:linear-gradient(135deg,#F0FDF4,#DCFCE7);border:1px solid var(--color-success);border-radius:var(--radius-md);font-size:var(--text-sm);color:#166534;line-height:1.6}
+    /* ── Result big ── */
+    .result-big{text-align:center;padding:var(--space-6) 0;border-bottom:2px solid var(--color-border);margin-bottom:var(--space-6)}
+    .result-big-label{font-size:var(--text-sm);color:var(--color-text-muted);margin-bottom:var(--space-2)}
+    .result-big-value{font-family:var(--font-heading);font-size:2.75rem;font-weight:800;color:var(--color-primary);line-height:1}
+    /* ── Breakdown card ── */
+    .breakdown-card{margin-top:var(--space-5);padding:var(--space-5);background:var(--color-bg);border:1px solid var(--color-border);border-radius:var(--radius-md)}
+    .breakdown-card-title{font-family:var(--font-heading);font-size:var(--text-base);font-weight:700;margin-bottom:var(--space-4)}
+    .breakdown-bar-wrap{height:16px;background:var(--color-border);border-radius:var(--radius-full);overflow:hidden;margin-bottom:var(--space-3);display:flex}
+    .breakdown-bar-contrib{background:var(--color-primary);height:100%;transition:width .6s ease}
+    .breakdown-bar-interest{background:var(--color-success);height:100%;transition:width .6s ease}
+    .breakdown-legend{display:flex;gap:var(--space-5);flex-wrap:wrap;font-size:var(--text-xs);color:var(--color-text-muted);margin-bottom:var(--space-4)}
+    .legend-dot{display:inline-block;width:10px;height:10px;border-radius:2px;margin-right:4px;vertical-align:middle}
+    /* ── Rule of 72 card ── */
+    .rule72-card{margin-top:var(--space-4);padding:var(--space-5);background:#FFFBEB;border:1px solid #FDE68A;border-radius:var(--radius-md)}
+    .rule72-title{font-family:var(--font-heading);font-size:var(--text-base);font-weight:700;color:#92400E;margin-bottom:var(--space-2)}
+    .rule72-value{font-family:var(--font-heading);font-size:var(--text-3xl);font-weight:800;color:#92400E;line-height:1;margin-bottom:var(--space-2)}
+    /* ── Monthly income card ── */
+    .income-card{margin-top:var(--space-4);padding:var(--space-5);background:linear-gradient(135deg,#EFF6FF,#DBEAFE);border:1px solid #BFDBFE;border-radius:var(--radius-md)}
+    .income-card-title{font-family:var(--font-heading);font-size:var(--text-base);font-weight:700;color:#1E40AF;margin-bottom:var(--space-4)}
+    .income-row{display:flex;justify-content:space-between;padding:var(--space-2) 0;border-bottom:1px solid rgba(37,99,235,.15);font-size:var(--text-sm);color:#1E40AF}
+    .income-row:last-child{border-bottom:none}
+    /* ── Insights card ── */
+    .insights-card{margin-top:var(--space-4);padding:var(--space-5);background:#EFF6FF;border:1px solid #BFDBFE;border-radius:var(--radius-md)}
+    .insights-card-title{font-family:var(--font-heading);font-size:var(--text-base);font-weight:700;color:#1E40AF;margin-bottom:var(--space-3)}
+    .insights-card p{font-size:var(--text-sm);color:#1E40AF;line-height:1.7}
+    /* ── Compare results ── */
+    .compare-card{margin-top:var(--space-4);padding:var(--space-5);background:var(--color-bg);border:1px solid var(--color-border);border-radius:var(--radius-md)}
+    .compare-card-title{font-family:var(--font-heading);font-size:var(--text-base);font-weight:700;margin-bottom:var(--space-4)}
+    .compare-grid{display:grid;grid-template-columns:1fr 1fr;gap:var(--space-4)}
+    .compare-col{padding:var(--space-4);border-radius:var(--radius-md);border:2px solid var(--color-border)}
+    .compare-col.is-winner{border-color:var(--color-success);background:var(--color-success-light)}
+    .compare-col-label{font-size:var(--text-xs);font-weight:700;text-transform:uppercase;letter-spacing:.05em;color:var(--color-text-muted);margin-bottom:var(--space-2)}
+    .compare-col-value{font-family:var(--font-heading);font-size:var(--text-xl);font-weight:800;color:var(--color-primary)}
+    .compare-col.is-winner .compare-col-value{color:var(--color-success)}
+    .compare-diff{margin-top:var(--space-4);padding:var(--space-3) var(--space-4);background:var(--color-success-light);border:1px solid var(--color-success);border-radius:var(--radius-md);font-size:var(--text-sm);color:#166534;text-align:center}
+    /* ── Goal planner ── */
+    .goal-card{margin-top:var(--space-4);padding:var(--space-5);background:var(--color-bg);border:1px solid var(--color-border);border-radius:var(--radius-md)}
+    .goal-card-title{font-family:var(--font-heading);font-size:var(--text-base);font-weight:700;margin-bottom:var(--space-4)}
+    .goal-row{display:flex;justify-content:space-between;padding:var(--space-2) 0;border-bottom:1px solid var(--color-border);font-size:var(--text-sm)}
+    .goal-row:last-child{border-bottom:none}
+    /* ── Timeline milestones ── */
+    .timeline-list{display:flex;flex-direction:column;gap:var(--space-3);margin-top:var(--space-4)}
+    .timeline-item{display:flex;align-items:center;gap:var(--space-3);padding:var(--space-3) var(--space-4);background:var(--color-bg);border:1px solid var(--color-border);border-radius:var(--radius-md);font-size:var(--text-sm)}
+    .timeline-item.is-reached{background:var(--color-success-light);border-color:var(--color-success)}
+    .timeline-dot{width:10px;height:10px;border-radius:50%;background:var(--color-text-light);flex-shrink:0}
+    .timeline-item.is-reached .timeline-dot{background:var(--color-success)}
+    .timeline-inner{flex:1}
+    .timeline-amount{font-weight:700;color:var(--color-text)}
+    .timeline-sub{font-size:var(--text-xs);color:var(--color-text-muted)}
+    .timeline-item.is-reached .timeline-sub{color:var(--color-success)}
+    .timeline-year{font-family:var(--font-heading);font-size:var(--text-base);font-weight:800;color:var(--color-text-muted)}
+    .timeline-item.is-reached .timeline-year{color:var(--color-success)}
+    /* ── Chart ── */
+    .chart-section{margin-top:var(--space-8)}
+    .chart-toggle{display:flex;align-items:center;justify-content:space-between;width:100%;padding:var(--space-4) var(--space-6);background:var(--color-bg);border:1px solid var(--color-border);border-radius:var(--radius-md);font-family:var(--font-heading);font-size:var(--text-base);font-weight:600;color:var(--color-text);cursor:pointer;transition:background-color var(--transition-fast)}
+    .chart-toggle:hover{background:var(--color-border)}
+    .chart-toggle-icon{transition:transform var(--transition-base)}
+    .chart-toggle[aria-expanded="true"] .chart-toggle-icon{transform:rotate(180deg)}
+    .chart-wrapper{display:none;margin-top:var(--space-4);padding:var(--space-5);background:var(--color-white);border:1px solid var(--color-border);border-radius:var(--radius-md)}
+    .chart-wrapper.is-open{display:block}
+    .chart-canvas{width:100%;height:280px;display:block}
+    .chart-legend{display:flex;gap:var(--space-5);justify-content:center;margin-top:var(--space-3);flex-wrap:wrap}
+    .chart-legend-item{display:flex;align-items:center;gap:var(--space-2);font-size:var(--text-xs);color:var(--color-text-muted)}
+    .chart-legend-dot{width:12px;height:12px;border-radius:2px;flex-shrink:0}
+    /* ── Growth table ── */
+    .growth-section{margin-top:var(--space-8)}
+    .growth-toggle{display:flex;align-items:center;justify-content:space-between;width:100%;padding:var(--space-4) var(--space-6);background:var(--color-bg);border:1px solid var(--color-border);border-radius:var(--radius-md);font-family:var(--font-heading);font-size:var(--text-base);font-weight:600;color:var(--color-text);cursor:pointer;transition:background-color var(--transition-fast)}
+    .growth-toggle:hover{background:var(--color-border)}
+    .growth-toggle-icon{transition:transform var(--transition-base)}
+    .growth-toggle[aria-expanded="true"] .growth-toggle-icon{transform:rotate(180deg)}
+    .growth-table-wrapper{display:none;overflow-x:auto;margin-top:var(--space-4);border:1px solid var(--color-border);border-radius:var(--radius-md)}
+    .growth-table-wrapper.is-open{display:block}
+    .growth-table{width:100%;border-collapse:collapse;font-size:var(--text-sm)}
+    .growth-table th{background:var(--color-bg);padding:var(--space-3) var(--space-4);text-align:right;font-weight:600;font-size:var(--text-xs);color:var(--color-text-muted);text-transform:uppercase;letter-spacing:.05em;border-bottom:2px solid var(--color-border);white-space:nowrap}
+    .growth-table th:first-child{text-align:left}
+    .growth-table td{padding:var(--space-3) var(--space-4);text-align:right;border-bottom:1px solid var(--color-border);white-space:nowrap}
+    .growth-table td:first-child{text-align:left;font-weight:600}
+    .growth-table tr:last-child td{border-bottom:none}
+    .growth-table tr:nth-child(even){background:rgba(248,249,250,.6)}
+    .growth-table .td-interest{color:var(--color-success)}
+    /* ── Buttons ── */
+    .btn-row{display:flex;gap:var(--space-3);align-items:center;margin-top:var(--space-4)}
+    .btn-reset{padding:var(--space-3) var(--space-5);font-size:var(--text-base);font-weight:600;color:var(--color-text-muted);background:var(--color-white);border:2px solid var(--color-border);border-radius:var(--radius-lg);cursor:pointer;transition:all var(--transition-fast)}
+    .btn-reset:hover{border-color:var(--color-text-muted);color:var(--color-text)}
+    .copy-btn{display:flex;align-items:center;gap:var(--space-2);padding:var(--space-3) var(--space-5);font-size:var(--text-sm);font-weight:600;color:var(--color-text-muted);background:var(--color-white);border:2px solid var(--color-border);border-radius:var(--radius-lg);cursor:pointer;transition:all var(--transition-fast);margin-top:var(--space-3);width:100%;justify-content:center}
+    .copy-btn:hover{border-color:var(--color-text);color:var(--color-text)}
+    .copy-btn.copied{border-color:var(--color-success);color:var(--color-success)}
+    .print-btn{display:flex;align-items:center;gap:var(--space-2);padding:var(--space-3) var(--space-5);font-size:var(--text-sm);font-weight:600;color:var(--color-text-muted);background:var(--color-white);border:2px solid var(--color-border);border-radius:var(--radius-lg);cursor:pointer;transition:all var(--transition-fast);margin-top:var(--space-3);width:100%;justify-content:center}
+    .print-btn:hover{border-color:var(--color-text);color:var(--color-text)}
+    /* ── Disclaimer ── */
+    .calc-disclaimer{margin-top:var(--space-6);padding:var(--space-3) var(--space-4);background:var(--color-bg);border:1px solid var(--color-border);border-radius:var(--radius-md);font-size:var(--text-xs);color:var(--color-text-muted);line-height:1.6}
+    /* ── Slider ── */
+    .slider-wrap{margin-top:var(--space-2)}
+    .slider-labels{display:flex;justify-content:space-between;font-size:var(--text-xs);color:var(--color-text-muted);margin-bottom:var(--space-1)}
+    input[type=range].ci-slider{width:100%;accent-color:var(--color-primary);cursor:pointer}
+    /* ── Print ── */
+    @media print{
+      .site-header,.site-footer,.calc-panel:first-of-type,.chart-section,.growth-section,
+      .copy-btn,.print-btn,.btn-row,.quick-start,.preset-group,.compare-toggle-wrap,
+      .compare-section,.advanced-toggle,.advanced-fields,.calc-breadcrumb,.calc-page-desc,
+      #ci-results-placeholder,nav,button{display:none!important}
+      body{font-size:12pt;color:#000}
+      .calc-layout{display:block}
+      .calc-panel{box-shadow:none;border:none;padding:0}
+      #ci-results-content{display:block!important}
+      .result-big-value{font-size:28pt}
+      @page{margin:1.5cm;size:A4}
+    }
+  </style>
+</head>
+<body>
+
+<!-- HEADER -->
+<header class="site-header" role="banner">
+  <div class="container header-inner">
+    <a href="/" class="logo" aria-label="Northern Numbers — Home">
+      <span class="logo-icon" aria-hidden="true">
+        <svg width="28" height="28" viewBox="0 0 28 28" fill="none">
+          <path d="M14 2L16.5 8.5H23L17.5 12.5L19.5 19L14 15.5L8.5 19L10.5 12.5L5 8.5H11.5L14 2Z" fill="#D52B1E"/>
+          <rect x="12.5" y="19" width="3" height="5" fill="#D52B1E"/>
+        </svg>
+      </span>
+      <span class="logo-text">Northern Numbers</span>
+    </a>
+    <nav class="main-nav" aria-label="Main navigation">
+      <ul role="list">
+        <li><a href="/" class="nav-link">Home</a></li>
+        <li><a href="/mortgage/" class="nav-link">Mortgage</a></li>
+        <li><a href="/#calculators" class="nav-link">Finance</a></li>
+        <li><a href="/#calculators" class="nav-link">Tax</a></li>
+        <li><a href="/about.html" class="nav-link">About</a></li>
+        <li><a href="/contact.html" class="nav-link">Contact</a></li>
+      </ul>
+    </nav>
+    <button class="nav-toggle" aria-label="Open navigation menu" aria-expanded="false" aria-controls="mobile-menu">
+      <span class="hamburger-line"></span><span class="hamburger-line"></span><span class="hamburger-line"></span>
+    </button>
+  </div>
+  <div id="mobile-menu" class="mobile-menu" aria-hidden="true">
+    <nav aria-label="Mobile navigation">
+      <ul role="list">
+        <li><a href="/" class="mobile-nav-link">Home</a></li>
+        <li><a href="/mortgage/" class="mobile-nav-link">Mortgage</a></li>
+        <li><a href="/#calculators" class="mobile-nav-link">Finance</a></li>
+        <li><a href="/#calculators" class="mobile-nav-link">Tax</a></li>
+        <li><a href="/about.html" class="mobile-nav-link">About</a></li>
+        <li><a href="/contact.html" class="mobile-nav-link">Contact</a></li>
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<!-- MAIN -->
+<main id="main-content" class="calc-page">
+  <div class="container">
+
+    <nav class="calc-breadcrumb" aria-label="Breadcrumb">
+      <a href="/">Home</a>
+      <span class="calc-breadcrumb-sep" aria-hidden="true">›</span>
+      <span aria-current="page">Compound Interest Calculator</span>
+    </nav>
+
+    <div class="calc-page-header">
+      <h1 class="calc-page-title">Canadian Compound Interest Calculator</h1>
+      <p class="calc-page-desc">See how compound interest grows your investments over time. Perfect for TFSA, RRSP, FHSA, and RESP planning.</p>
+    </div>
+
+    <div class="calc-layout">
+
+      <!-- LEFT: Inputs -->
+      <section class="calc-panel" aria-labelledby="ci-inputs-heading">
+        <h2 id="ci-inputs-heading" class="calc-panel-title">Your Investment Details</h2>
+
+        <div class="quick-start" role="note">
+          <p class="quick-start-title"><span aria-hidden="true">📋</span> How to use this calculator</p>
+          <ol>
+            <li>Enter your initial investment amount.</li>
+            <li>Add a regular contribution amount and frequency.</li>
+            <li>Set your expected annual return and compounding frequency.</li>
+            <li>Choose how many years you plan to invest.</li>
+            <li>Click <strong>Calculate Growth</strong> to see your projection.</li>
+          </ol>
+        </div>
+
+        <div style="margin-bottom:var(--space-2)">
+          <p style="font-size:var(--text-sm);font-weight:600;color:var(--color-text-muted);margin-bottom:var(--space-2)">Quick start with a preset:</p>
+          <div class="preset-group" role="group">
+            <button type="button" class="preset-btn" data-preset="starter">🌱 Starter</button>
+            <button type="button" class="preset-btn" data-preset="young">🧑 Young Canadian</button>
+            <button type="button" class="preset-btn" data-preset="retirement">🏖 Retirement</button>
+            <button type="button" class="preset-btn" data-preset="aggressive">🚀 Aggressive</button>
+            <button type="button" class="preset-btn" data-preset="passive">📊 Passive Index</button>
+          </div>
+        </div>
+
+        <!-- Compare Mode Toggle -->
+        <div class="compare-toggle-wrap" id="compare-toggle" role="button" tabindex="0" aria-pressed="false">
+          <div>
+            <p style="font-size:var(--text-sm);font-weight:600;color:var(--color-text)">⚖️ Compare Two Scenarios</p>
+            <p style="font-size:var(--text-xs);color:var(--color-text-muted)">Side-by-side comparison of different strategies</p>
+          </div>
+          <div class="toggle-switch" aria-hidden="true"></div>
+        </div>
+
+        <form id="ci-form" novalidate aria-label="Compound interest calculator inputs">
+
+          <!-- Initial Investment -->
+          <div class="form-group">
+            <label class="form-label" for="initial-investment">Initial Investment</label>
+            <div class="input-wrapper">
+              <span class="input-prefix" aria-hidden="true">$</span>
+              <input type="text" id="initial-investment" class="form-input has-prefix" placeholder="10,000" inputmode="numeric" autocomplete="off" value="10,000" />
+            </div>
+            <p class="field-help">The amount you're investing today. Enter 0 if you're starting from scratch.</p>
+            <p id="initial-investment-error" class="form-error-msg" role="alert"></p>
+          </div>
+
+          <!-- Regular Contribution -->
+          <div class="form-group">
+            <label class="form-label" for="regular-contribution">Regular Contribution</label>
+            <div class="input-wrapper">
+              <span class="input-prefix" aria-hidden="true">$</span>
+              <input type="text" id="regular-contribution" class="form-input has-prefix" placeholder="500" inputmode="numeric" autocomplete="off" value="500" />
+            </div>
+            <div class="slider-wrap">
+              <div class="slider-labels"><span>$0</span><span>$1,000</span><span>$2,000</span></div>
+              <input type="range" id="contrib-slider" class="ci-slider" min="0" max="2000" step="25" value="500" aria-label="Contribution slider" />
+            </div>
+            <p class="field-help">How much you'll add regularly. Leave at 0 for a one-time investment only.</p>
+          </div>
+
+          <!-- Contribution Frequency -->
+          <div class="form-group">
+            <label class="form-label" for="contrib-frequency">Contribution Frequency</label>
+            <select id="contrib-frequency" class="form-select">
+              <option value="monthly" selected>Monthly</option>
+              <option value="biweekly">Bi-Weekly</option>
+              <option value="weekly">Weekly</option>
+              <option value="yearly">Yearly</option>
+            </select>
+          </div>
+
+          <!-- Annual Interest Rate -->
+          <div class="form-group">
+            <label class="form-label" for="annual-rate">Expected Annual Return</label>
+            <div class="input-wrapper">
+              <input type="number" id="annual-rate" class="form-input has-suffix" placeholder="7" min="0.1" max="30" step="0.1" value="7" />
+              <span class="input-suffix" aria-hidden="true">%</span>
+            </div>
+            <div class="slider-wrap">
+              <div class="slider-labels"><span>1%</span><span>10%</span><span>20%</span></div>
+              <input type="range" id="rate-slider" class="ci-slider" min="1" max="20" step="0.1" value="7" aria-label="Rate slider" />
+            </div>
+            <p class="field-help">Conservative: 4–5% · Balanced: 6–7% · Growth: 8–10%. The S&P/TSX has historically returned ~7% annually.</p>
+            <p id="annual-rate-error" class="form-error-msg" role="alert"></p>
+          </div>
+
+          <!-- Compound Frequency -->
+          <div class="form-group">
+            <label class="form-label" for="compound-frequency">Compounding Frequency</label>
+            <select id="compound-frequency" class="form-select">
+              <option value="12" selected>Monthly</option>
+              <option value="365">Daily</option>
+              <option value="4">Quarterly</option>
+              <option value="2">Semi-Annually</option>
+              <option value="1">Annually</option>
+            </select>
+            <p class="field-help">How often interest is calculated and added to your balance. More frequent = slightly higher returns.</p>
+          </div>
+
+          <!-- Investment Length -->
+          <div class="form-group">
+            <label class="form-label" for="investment-years">Investment Length</label>
+            <div class="input-wrapper">
+              <input type="number" id="investment-years" class="form-input has-suffix" placeholder="25" min="1" max="60" step="1" value="25" />
+              <span class="input-suffix" aria-hidden="true">years</span>
+            </div>
+            <div class="slider-wrap">
+              <div class="slider-labels"><span>1 yr</span><span>30 yrs</span><span>60 yrs</span></div>
+              <input type="range" id="years-slider" class="ci-slider" min="1" max="60" step="1" value="25" aria-label="Years slider" />
+            </div>
+            <p id="investment-years-error" class="form-error-msg" role="alert"></p>
+          </div>
+
+          <!-- Goal Planner -->
+          <div style="border-top:2px solid var(--color-border);margin:var(--space-5) 0;padding-top:var(--space-5)">
+            <p style="font-family:var(--font-heading);font-size:var(--text-base);font-weight:700;margin-bottom:var(--space-4)">🎯 Goal Planner (Optional)</p>
+            <div class="form-group">
+              <label class="form-label" for="target-goal">Target Portfolio Value</label>
+              <div class="input-wrapper">
+                <span class="input-prefix" aria-hidden="true">$</span>
+                <input type="text" id="target-goal" class="form-input has-prefix" placeholder="500,000" inputmode="numeric" autocomplete="off" value="500,000" />
+              </div>
+              <p class="field-help">How much do you want to have? We'll show you when you'll get there and how to get there faster.</p>
+            </div>
+          </div>
+
+          <!-- Scenario B (Compare Mode) -->
+          <div class="compare-section" id="compare-section">
+            <p class="compare-section-title">📊 Scenario B — Alternative Strategy</p>
+            <div class="form-group">
+              <label class="form-label" for="b-initial">Initial Investment (B)</label>
+              <div class="input-wrapper">
+                <span class="input-prefix" aria-hidden="true">$</span>
+                <input type="text" id="b-initial" class="form-input has-prefix" placeholder="10,000" inputmode="numeric" autocomplete="off" value="10,000" />
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="b-contribution">Monthly Contribution (B)</label>
+              <div class="input-wrapper">
+                <span class="input-prefix" aria-hidden="true">$</span>
+                <input type="text" id="b-contribution" class="form-input has-prefix" placeholder="300" inputmode="numeric" autocomplete="off" value="300" />
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="b-rate">Annual Return (B)</label>
+              <div class="input-wrapper">
+                <input type="number" id="b-rate" class="form-input has-suffix" placeholder="5" min="0.1" max="30" step="0.1" value="5" />
+                <span class="input-suffix" aria-hidden="true">%</span>
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="b-years">Years (B)</label>
+              <div class="input-wrapper">
+                <input type="number" id="b-years" class="form-input has-suffix" placeholder="25" min="1" max="60" step="1" value="25" />
+                <span class="input-suffix" aria-hidden="true">years</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Advanced Settings -->
+          <button type="button" class="advanced-toggle" id="advanced-toggle" aria-expanded="false" aria-controls="advanced-fields">
+            <span>⚙️ Advanced Settings (Optional)</span>
+            <svg class="advanced-toggle-icon" width="18" height="18" viewBox="0 0 20 20" fill="none" aria-hidden="true">
+              <path d="M5 7.5L10 12.5L15 7.5" stroke="#6B7280" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </button>
+          <div id="advanced-fields" class="advanced-fields">
+            <div class="form-group">
+              <label class="form-label" for="inflation-rate">Inflation Rate</label>
+              <div class="input-wrapper">
+                <input type="number" id="inflation-rate" class="form-input has-suffix" placeholder="2" min="0" max="20" step="0.1" value="2" />
+                <span class="input-suffix" aria-hidden="true">%</span>
+              </div>
+              <p class="field-help">Canada's long-term average is ~2%. Used to calculate the inflation-adjusted (real) value of your investment.</p>
+            </div>
+          </div>
+
+          <div class="btn-row">
+            <button type="submit" class="btn btn-primary btn-calculate" id="ci-calculate-btn" style="flex:1">Calculate Growth</button>
+            <button type="button" id="ci-reset-btn" class="btn-reset">Reset</button>
+          </div>
+
+        </form>
+
+        <div style="margin-top:var(--space-6);padding:var(--space-4) var(--space-5);background:#EFF6FF;border:1px solid #BFDBFE;border-radius:var(--radius-md);font-size:var(--text-sm);color:#1E40AF;line-height:1.6">
+          <strong style="display:block;margin-bottom:var(--space-1)">🇨🇦 Best accounts for compound growth in Canada</strong>
+          <strong>TFSA</strong> — Tax-free growth and withdrawals ·
+          <strong>RRSP</strong> — Tax-deferred growth ·
+          <strong>FHSA</strong> — Tax-free for first-time buyers ·
+          <strong>RESP</strong> — Education savings with 20% CESG grant
+        </div>
+      </section>
+
+      <!-- RIGHT: Results -->
+      <section class="calc-panel" aria-labelledby="ci-results-heading" aria-live="polite">
+        <h2 id="ci-results-heading" class="calc-panel-title">Your Results</h2>
+
+        <div id="ci-results-placeholder" class="result-placeholder">
+          <div class="result-placeholder-icon" aria-hidden="true">
+            <svg width="56" height="56" viewBox="0 0 56 56" fill="none">
+              <rect x="10" y="8" width="36" height="40" rx="4" stroke="#D1D5DB" stroke-width="2"/>
+              <path d="M18 20H38M18 28H38M18 36H28" stroke="#D1D5DB" stroke-width="2" stroke-linecap="round"/>
+            </svg>
+          </div>
+          <p>Fill in your details and click <strong>Calculate Growth</strong> to see your compound interest projection.</p>
+        </div>
+
+        <div id="ci-results-content" class="hidden">
+
+          <!-- Summary pills -->
+          <div id="result-summary-box" class="hidden" style="margin-bottom:var(--space-5);padding:var(--space-4);background:var(--color-bg);border:1px solid var(--color-border);border-radius:var(--radius-md)"></div>
+
+          <!-- Celebration -->
+          <div id="result-celebration" class="result-celebration hidden"></div>
+
+          <!-- Big value -->
+          <div class="result-big">
+            <p class="result-big-label">Future Portfolio Value</p>
+            <p id="result-future-value" class="result-big-value">—</p>
+          </div>
+
+          <!-- Summary rows -->
+          <div class="result-summary" role="list">
+            <div class="result-row" role="listitem">
+              <span class="result-row-label">Total Contributions</span>
+              <span class="result-row-value" id="result-total-contributions">—</span>
+            </div>
+            <div class="result-row" role="listitem">
+              <span class="result-row-label">Total Interest Earned</span>
+              <span class="result-row-value is-success" id="result-total-interest">—</span>
+            </div>
+            <div class="result-row" role="listitem">
+              <span class="result-row-label">Investment Growth</span>
+              <span class="result-row-value is-success" id="result-growth-pct">—</span>
+            </div>
+            <div class="result-row" role="listitem">
+              <span class="result-row-label">Inflation-Adjusted Value</span>
+              <span class="result-row-value" id="result-inflation-adj">—</span>
+            </div>
+            <div class="result-row" role="listitem">
+              <span class="result-row-label">Average Annual Growth</span>
+              <span class="result-row-value" id="result-avg-annual">—</span>
+            </div>
+            <div class="result-row" role="listitem">
+              <span class="result-row-label">Average Monthly Growth</span>
+              <span class="result-row-value" id="result-avg-monthly">—</span>
+            </div>
+          </div>
+
+          <!-- Breakdown bar -->
+          <div class="breakdown-card">
+            <p class="breakdown-card-title">Contributions vs. Investment Growth</p>
+            <div class="breakdown-bar-wrap">
+              <div class="breakdown-bar-contrib" id="bar-contrib" style="width:50%"></div>
+              <div class="breakdown-bar-interest" id="bar-interest" style="width:50%"></div>
+            </div>
+            <div class="breakdown-legend">
+              <span><span class="legend-dot" style="background:var(--color-primary)"></span>Contributions (<span id="contrib-pct">—</span>)</span>
+              <span><span class="legend-dot" style="background:var(--color-success)"></span>Growth (<span id="interest-pct">—</span>)</span>
+            </div>
+          </div>
+
+          <!-- Rule of 72 -->
+          <div class="rule72-card">
+            <p class="rule72-title">⏱ Rule of 72 — Your Money Doubles Every</p>
+            <p id="rule72-value" class="rule72-value">—</p>
+            <p id="rule72-text" style="font-size:var(--text-sm);color:#92400E;line-height:1.6">—</p>
+          </div>
+
+          <!-- Monthly income projection -->
+          <div class="income-card">
+            <p class="income-card-title">💵 Estimated Monthly Retirement Income</p>
+            <div class="income-row"><span>At 3% withdrawal rate</span><span id="income-3pct">—</span></div>
+            <div class="income-row"><span>At 4% withdrawal rate</span><span id="income-4pct">—</span></div>
+            <div class="income-row"><span>At 5% withdrawal rate</span><span id="income-5pct">—</span></div>
+            <p style="font-size:var(--text-xs);color:rgba(30,64,175,.7);margin-top:var(--space-3);line-height:1.5">Based on your projected portfolio without depleting principal. This is an estimate only.</p>
+          </div>
+
+          <!-- Financial insights -->
+          <div class="insights-card">
+            <p class="insights-card-title">💡 Financial Insight</p>
+            <p id="insight-text">—</p>
+          </div>
+
+          <!-- Goal planner results -->
+          <div class="goal-card" id="goal-card">
+            <p class="goal-card-title">🎯 Goal Planner</p>
+            <div class="goal-row"><span style="color:var(--color-text-muted)">Your target</span><span id="goal-target" style="font-weight:700">—</span></div>
+            <div class="goal-row"><span style="color:var(--color-text-muted)">Projected value</span><span id="goal-projected" style="font-weight:700">—</span></div>
+            <div class="goal-row"><span style="color:var(--color-text-muted)">Years to reach goal</span><span id="goal-years" style="font-weight:700">—</span></div>
+            <div class="goal-row"><span style="color:var(--color-text-muted)">Extra monthly needed</span><span id="goal-extra" style="font-weight:700">—</span></div>
+          </div>
+
+          <!-- Compare results -->
+          <div class="compare-card hidden" id="compare-results-card">
+            <p class="compare-card-title">⚖️ Scenario Comparison</p>
+            <div class="compare-grid">
+              <div class="compare-col" id="compare-col-a">
+                <div class="compare-col-label">Scenario A</div>
+                <div class="compare-col-value" id="compare-val-a">—</div>
+                <div style="font-size:var(--text-xs);color:var(--color-text-muted);margin-top:var(--space-2)" id="compare-sub-a">—</div>
+              </div>
+              <div class="compare-col" id="compare-col-b">
+                <div class="compare-col-label">Scenario B</div>
+                <div class="compare-col-value" id="compare-val-b">—</div>
+                <div style="font-size:var(--text-xs);color:var(--color-text-muted);margin-top:var(--space-2)" id="compare-sub-b">—</div>
+              </div>
+            </div>
+            <div class="compare-diff" id="compare-diff">—</div>
+          </div>
+
+          <!-- Milestones -->
+          <div style="margin-top:var(--space-6)">
+            <p style="font-size:var(--text-sm);font-weight:600;margin-bottom:var(--space-3)">💰 Wealth Milestones</p>
+            <div class="timeline-list">
+              <div class="timeline-item" id="tl-25k"><div class="timeline-dot"></div><div class="timeline-inner"><div class="timeline-amount">$25,000</div><div class="timeline-sub" id="tl-25k-sub">—</div></div><span class="timeline-year" id="tl-25k-year">—</span></div>
+              <div class="timeline-item" id="tl-50k"><div class="timeline-dot"></div><div class="timeline-inner"><div class="timeline-amount">$50,000</div><div class="timeline-sub" id="tl-50k-sub">—</div></div><span class="timeline-year" id="tl-50k-year">—</span></div>
+              <div class="timeline-item" id="tl-100k"><div class="timeline-dot"></div><div class="timeline-inner"><div class="timeline-amount">$100,000</div><div class="timeline-sub" id="tl-100k-sub">—</div></div><span class="timeline-year" id="tl-100k-year">—</span></div>
+              <div class="timeline-item" id="tl-250k"><div class="timeline-dot"></div><div class="timeline-inner"><div class="timeline-amount">$250,000</div><div class="timeline-sub" id="tl-250k-sub">—</div></div><span class="timeline-year" id="tl-250k-year">—</span></div>
+              <div class="timeline-item" id="tl-500k"><div class="timeline-dot"></div><div class="timeline-inner"><div class="timeline-amount">$500,000</div><div class="timeline-sub" id="tl-500k-sub">—</div></div><span class="timeline-year" id="tl-500k-year">—</span></div>
+              <div class="timeline-item" id="tl-1m"><div class="timeline-dot"></div><div class="timeline-inner"><div class="timeline-amount">$1,000,000</div><div class="timeline-sub" id="tl-1m-sub">—</div></div><span class="timeline-year" id="tl-1m-year">—</span></div>
+            </div>
+          </div>
+
+          <button type="button" id="copy-results-btn" class="copy-btn">📋 Copy Results to Clipboard</button>
+          <button type="button" class="print-btn" onclick="window.print()">🖨️ Download / Print as PDF</button>
+
+          <div class="calc-disclaimer">Results are estimates assuming a constant annual return. Actual investment returns vary and past performance does not guarantee future results. This is not financial advice — consult a registered financial advisor.</div>
+
+        </div>
+      </section>
+    </div>
+
+    <!-- Chart -->
+    <div class="chart-section" id="chart-section" hidden>
+      <button type="button" class="chart-toggle" id="chart-toggle" aria-expanded="false" aria-controls="chart-wrapper">
+        <span>📈 View Interactive Growth Chart</span>
+        <svg class="chart-toggle-icon" width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true">
+          <path d="M5 7.5L10 12.5L15 7.5" stroke="#1F2937" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </button>
+      <div id="chart-wrapper" class="chart-wrapper">
+        <canvas id="growth-chart" class="chart-canvas" aria-label="Investment growth chart"></canvas>
+        <div class="chart-legend">
+          <div class="chart-legend-item"><div class="chart-legend-dot" style="background:#3B82F6"></div>Portfolio Value</div>
+          <div class="chart-legend-item"><div class="chart-legend-dot" style="background:#9CA3AF"></div>Total Contributions</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Year-by-Year Table -->
+    <div class="growth-section" id="growth-section" hidden>
+      <button type="button" class="growth-toggle" id="growth-toggle" aria-expanded="false" aria-controls="growth-table-wrapper">
+        <span>View Year-by-Year Breakdown</span>
+        <svg class="growth-toggle-icon" width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true">
+          <path d="M5 7.5L10 12.5L15 7.5" stroke="#1F2937" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </button>
+      <div id="growth-table-wrapper" class="growth-table-wrapper">
+        <table class="growth-table" aria-label="Year-by-year investment growth">
+          <thead>
+            <tr>
+              <th scope="col">Year</th>
+              <th scope="col">Contributions</th>
+              <th scope="col">Interest Earned</th>
+              <th scope="col">Balance</th>
+              <th scope="col">Inflation-Adj. Balance</th>
+            </tr>
+          </thead>
+          <tbody id="growth-tbody"></tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- Educational Section -->
+    <section style="margin-top:var(--space-16);padding-top:var(--space-10);border-top:1px solid var(--color-border)" aria-labelledby="ci-seo-heading">
+      <h2 id="ci-seo-heading" style="font-size:var(--text-2xl);font-weight:700;margin-bottom:var(--space-10)">Understanding Compound Interest</h2>
+      <div style="display:grid;grid-template-columns:1fr;gap:var(--space-10)">
+
+        <div><h3 style="font-size:var(--text-xl);font-weight:600;margin-bottom:var(--space-3)">📈 What is Compound Interest?</h3>
+        <p style="color:var(--color-text-muted);line-height:1.8;font-size:var(--text-base)">Compound interest is interest calculated on both your initial principal and the accumulated interest from previous periods. Unlike simple interest (which only earns on the original amount), compound interest grows exponentially. Albert Einstein famously called it "the eighth wonder of the world." The longer you let it compound, the more powerful it becomes — which is why starting early is one of the most important financial decisions you can make.</p></div>
+
+        <div><h3 style="font-size:var(--text-xl);font-weight:600;margin-bottom:var(--space-3)">⏰ Why Starting Early Matters</h3>
+        <p style="color:var(--color-text-muted);line-height:1.8;font-size:var(--text-base)">Time is the most powerful variable in compound interest. Consider two Canadians: Alex starts investing $300/month at age 25 and stops at 35 (10 years, $36,000 total). Jordan starts at 35 and invests $300/month until 65 (30 years, $108,000 total). At 7%, Alex ends up with more money at 65 — despite contributing 3× less. That's the power of starting early. Every decade you wait roughly halves the final outcome.</p></div>
+
+        <div><h3 style="font-size:var(--text-xl);font-weight:600;margin-bottom:var(--space-3)">⏱ The Rule of 72</h3>
+        <p style="color:var(--color-text-muted);line-height:1.8;font-size:var(--text-base)">The Rule of 72 is a simple mental math shortcut to estimate how long it takes for an investment to double. Divide 72 by your annual return: at 6%, your money doubles every 12 years. At 9%, every 8 years. At 3% (a savings account), it takes 24 years. This illustrates why the difference between a 5% and 8% return is enormous over 30 years — it's not 3% more, it's potentially twice as much wealth.</p></div>
+
+        <div><h3 style="font-size:var(--text-xl);font-weight:600;margin-bottom:var(--space-3)">💰 The Power of Monthly Contributions</h3>
+        <p style="color:var(--color-text-muted);line-height:1.8;font-size:var(--text-base)">Regular contributions dramatically accelerate compound growth. Adding $500/month to a $10,000 investment at 7% over 25 years produces approximately $450,000 more than a one-time $10,000 investment. The key insight is that each contribution starts its own compounding journey. Monthly contributions also help you practice dollar-cost averaging — buying more units when prices are low and fewer when prices are high, reducing your average cost over time.</p></div>
+
+        <div><h3 style="font-size:var(--text-xl);font-weight:600;margin-bottom:var(--space-3)">📉 How Inflation Affects Returns</h3>
+        <p style="color:var(--color-text-muted);line-height:1.8;font-size:var(--text-base)">Inflation silently erodes the purchasing power of your returns. If your investment grows at 7% but inflation runs at 2%, your real return is approximately 5%. A portfolio worth $1,000,000 in 2050 might only buy what $550,000 buys today. This is why the inflation-adjusted value shown in this calculator is an important number — it tells you what your future wealth is actually worth in today's dollars. Aim for a return that meaningfully exceeds inflation.</p></div>
+
+        <div><h3 style="font-size:var(--text-xl);font-weight:600;margin-bottom:var(--space-3)">🇨🇦 Average Canadian Market Returns</h3>
+        <p style="color:var(--color-text-muted);line-height:1.8;font-size:var(--text-base)">The S&P/TSX Composite Index (Canada's main stock index) has historically returned approximately 6–8% annually over long periods. A globally diversified portfolio (including US and international stocks) using low-cost ETFs like XEQT or VEQT has historically returned 7–9% annually. GICs and high-interest savings accounts typically return 3–5%. Canadian bonds average 3–5%. Most financial planners use 5–7% as a conservative long-term planning estimate for balanced portfolios.</p></div>
+
+        <div><h3 style="font-size:var(--text-xl);font-weight:600;margin-bottom:var(--space-3)">📊 Stocks vs. Bonds vs. GICs</h3>
+        <p style="color:var(--color-text-muted);line-height:1.8;font-size:var(--text-base)">Stocks (equities) offer the highest historical returns but with the most short-term volatility. Bonds provide stable income with lower returns. GICs (Guaranteed Investment Certificates) offer guaranteed returns with no market risk, making them ideal for short-term savings or capital preservation. For compound growth over 10+ years, a heavier equity allocation has historically produced superior outcomes. As you approach your goal, gradually shifting toward bonds and GICs can help protect your gains.</p></div>
+
+        <div><h3 style="font-size:var(--text-xl);font-weight:600;margin-bottom:var(--space-3)">🏦 Best Canadian Accounts for Compound Growth</h3>
+        <p style="color:var(--color-text-muted);line-height:1.8;font-size:var(--text-base)">The account you use dramatically affects your real return. A <strong>TFSA</strong> lets your investments grow completely tax-free — you keep every dollar of compound growth. An <strong>RRSP</strong> provides tax-deferred growth; you don't pay tax until withdrawal (ideally in a lower-income retirement year). An <strong>FHSA</strong> combines both tax-deductible contributions and tax-free withdrawals for first-time home buyers. An <strong>RESP</strong> receives a 20% Canada Education Savings Grant on the first $2,500 contributed annually. Always maximize registered accounts before investing in taxable accounts.</p></div>
+
+        <div><h3 style="font-size:var(--text-xl);font-weight:600;margin-bottom:var(--space-3)">🚫 Common Mistakes Investors Make</h3>
+        <p style="color:var(--color-text-muted);line-height:1.8;font-size:var(--text-base)">The most costly mistakes include: starting too late (time is irreplaceable), stopping contributions during market downturns (missing the recovery), paying high management fees (a 2% MER instead of 0.2% costs hundreds of thousands over 30 years), trying to time the market (even professionals fail consistently), and holding too much cash (inflation erodes it). The single most effective strategy for most Canadians is to invest consistently in low-cost, broadly diversified ETFs inside registered accounts and not touch the money during downturns.</p></div>
+
+        <div><h3 style="font-size:var(--text-xl);font-weight:600;margin-bottom:var(--space-3)">❓ Frequently Asked Questions</h3>
+        <div style="display:flex;flex-direction:column;gap:var(--space-5)">
+          <div><p style="font-weight:600;margin-bottom:var(--space-1)">How much should I invest per month?</p><p style="color:var(--color-text-muted);font-size:var(--text-sm);line-height:1.7">A common guideline is to save 10–20% of your gross income. Even $200–$300/month invested consistently for 30 years at 7% can produce over $200,000. Start with whatever you can — the habit matters more than the amount early on.</p></div>
+          <div><p style="font-weight:600;margin-bottom:var(--space-1)">Does compounding frequency matter much?</p><p style="color:var(--color-text-muted);font-size:var(--text-sm);line-height:1.7">The difference between monthly and daily compounding at typical rates is very small (less than 0.1%). Annual vs. monthly compounding makes a slightly more meaningful difference. Don't choose investments based on compounding frequency alone.</p></div>
+          <div><p style="font-weight:600;margin-bottom:var(--space-1)">Is compound interest taxable in Canada?</p><p style="color:var(--color-text-muted);font-size:var(--text-sm);line-height:1.7">Yes, in non-registered accounts, interest income is fully taxable as income each year. This is why TFSA, RRSP, FHSA, and RESP accounts are so valuable — they shelter your compound growth from tax, letting you keep more of your returns.</p></div>
+          <div><p style="font-weight:600;margin-bottom:var(--space-1)">What's a realistic return to use in this calculator?</p><p style="color:var(--color-text-muted);font-size:var(--text-sm);line-height:1.7">Financial planners often recommend 5–7% as a conservative long-term estimate for a diversified portfolio. Using 6% is reasonable for planning. Using 8–10% is optimistic and should only be used as a best-case scenario.</p></div>
+        </div></div>
+
+      </div>
+      <div style="margin-top:var(--space-10);padding:var(--space-4) var(--space-5);background:var(--color-bg);border:1px solid var(--color-border);border-radius:var(--radius-md);font-size:var(--text-sm);color:var(--color-text-muted);line-height:1.7">
+        📋 All calculations are estimates assuming constant rates of return. Investment returns are not guaranteed. Past performance does not predict future results. Information is for educational purposes only and does not constitute financial advice. Consult a registered financial advisor for personalized guidance.
+      </div>
+    </section>
+
+  </div>
+</main>
+
+<!-- FOOTER -->
+<footer class="site-footer" role="contentinfo">
+  <div class="container footer-inner">
+    <div class="footer-brand">
+      <a href="/" class="logo logo--light" aria-label="Northern Numbers — Home">
+        <span class="logo-icon" aria-hidden="true">
+          <svg width="24" height="24" viewBox="0 0 28 28" fill="none">
+            <path d="M14 2L16.5 8.5H23L17.5 12.5L19.5 19L14 15.5L8.5 19L10.5 12.5L5 8.5H11.5L14 2Z" fill="#D52B1E"/>
+            <rect x="12.5" y="19" width="3" height="5" fill="#D52B1E"/>
+          </svg>
+        </span>
+        <span class="logo-text">Northern Numbers</span>
+      </a>
+      <p class="footer-tagline">Smart Canadian Calculators</p>
+      <p class="footer-desc">Free, accurate financial tools built for Canadians. No sign-up required.</p>
+    </div>
+    <nav class="footer-nav" aria-label="Footer navigation">
+      <div class="footer-nav-col">
+        <h4 class="footer-nav-heading">Calculators</h4>
+        <ul role="list">
+          <li><a href="/mortgage/">Mortgage</a></li>
+          <li><a href="/tfsa/">TFSA</a></li>
+          <li><a href="/rrsp/">RRSP</a></li>
+          <li><a href="/fhsa/">FHSA</a></li>
+          <li><a href="/compound-interest/">Compound Interest</a></li>
+        </ul>
+      </div>
+      <div class="footer-nav-col">
+        <h4 class="footer-nav-heading">More Tools</h4>
+        <ul role="list">
+          <li><span class="footer-disabled">Loan Calculator</span></li>
+          <li><span class="footer-disabled">Car Loan</span></li>
+          <li><span class="footer-disabled">Budget</span></li>
+          <li><span class="footer-disabled">Inflation</span></li>
+          <li><span class="footer-disabled">Retirement</span></li>
+        </ul>
+      </div>
+      <div class="footer-nav-col">
+        <h4 class="footer-nav-heading">Site</h4>
+        <ul role="list">
+          <li><a href="/about.html">About</a></li>
+          <li><a href="/contact.html">Contact</a></li>
+          <li><span class="footer-disabled">Privacy Policy</span></li>
+          <li><span class="footer-disabled">Terms of Use</span></li>
+        </ul>
+      </div>
+    </nav>
+  </div>
+  <div class="footer-bottom">
+    <div class="container footer-bottom-inner">
+      <p class="footer-legal">© <span id="footer-year">2026</span> Northern Numbers. All rights reserved. Results are estimates only and do not constitute financial advice.</p>
+      <p class="footer-built">Built for Canadians. 🇨🇦</p>
+    </div>
+  </div>
+</footer>
+
+<script src="../script.js" defer></script>
+<script src="compound-interest.js" defer></script>
+</body>
+</html>
