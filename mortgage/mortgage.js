@@ -438,9 +438,6 @@ function calculate() {
   const interestPct  = totalInterest / totalPayments;
 
   // --- Render ---
-  resultsPlaceholder.classList.add('hidden');
-  resultsContent.classList.remove('hidden');
-
   paymentLabel.textContent         = freqLabel;
   resultPayment.textContent        = formatCAD(paymentAmount);
   resultBaseMortgage.textContent   = formatCAD(baseMortgage);
@@ -512,8 +509,18 @@ function calculate() {
     }
   }
 
-  // Store for copy
-  window._mortgageResults = {
+  // Scroll to results heading only on first calculation
+  const wasHidden = resultsContent.classList.contains('hidden');
+  resultsPlaceholder.classList.add('hidden');
+  resultsContent.classList.remove('hidden');
+
+  if (wasHidden) {
+    const resultsHeading = document.getElementById('results-heading');
+    if (resultsHeading) {
+      const top = resultsHeading.getBoundingClientRect().top + window.scrollY - 80;
+      window.scrollTo({ top, behavior: 'smooth' });
+    }
+  }
     payment: formatCAD(paymentAmount),
     freq: freqLabel,
     baseMortgage: formatCAD(baseMortgage),
@@ -522,13 +529,6 @@ function calculate() {
     totalPayments: formatCAD(totalPayments),
     payoff: payoffDate ? formatMonthYear(payoffDate) : `~${schedule.length} years`
   };
-
-  // Scroll to results heading
-  const resultsHeading = document.getElementById('results-heading');
-  if (resultsHeading) {
-    const top = resultsHeading.getBoundingClientRect().top + window.scrollY - 80;
-    window.scrollTo({ top, behavior: 'smooth' });
-  }
 }
 
 
@@ -634,13 +634,12 @@ function checkCmhc() {
   }
 
   const dpRatio   = price > 0 ? dp / price : 0;
-  const needsCmhc = dpRatio >= 0.05 && dpRatio < 0.20 && price > 0 && dp > 0;
+  // CMHC only applies when dp is 5%–19.99% AND price < $1M
+  const needsCmhc = price > 0 && dp > 0 && dpRatio >= 0.05 && dpRatio < 0.20 && price < 1000000;
   const { rate }  = calcCmhc(dpRatio, price - dp);
 
   const cmhcRateEl = document.getElementById('cmhc-rate-label');
-  if (cmhcRateEl) {
-    cmhcRateEl.textContent = `${(rate * 100).toFixed(2)}%`;
-  }
+  if (cmhcRateEl) cmhcRateEl.textContent = `${(rate * 100).toFixed(2)}%`;
 
   cmhcNotice.classList.toggle('is-visible', needsCmhc);
 }
