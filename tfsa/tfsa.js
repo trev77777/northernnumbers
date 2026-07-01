@@ -144,31 +144,27 @@ function calcLifetimeRoom(birthYear) {
 const birthYearEl   = document.getElementById('birth-year');
 const roomAutoBadge = document.getElementById('room-auto-badge');
 
-// Recalculates room = lifetime limit - current balance
-// Called whenever birth year or balance changes
+// Calculates room from birth year only — does NOT subtract balance
+// (balance ≠ contributions; investment growth doesn't affect room)
 function autoCalcRoom() {
-  const yr      = parseInt(birthYearEl?.value);
-  const balance = parseInputNumber(balanceEl.value) || 0;
+  const yr = parseInt(birthYearEl?.value);
 
   if (isNaN(yr) || yr < 1940 || yr > 2008) {
     if (roomAutoBadge) roomAutoBadge.classList.add('hidden');
     return;
   }
 
-  const lifetimeRoom  = calcLifetimeRoom(yr);
+  const lifetimeRoom = calcLifetimeRoom(yr);
   if (lifetimeRoom <= 0) return;
 
-  const remainingRoom = Math.max(0, lifetimeRoom - balance);
-  roomEl.value        = formatInputNumber(remainingRoom);
-  if (roomAutoBadge)  roomAutoBadge.classList.remove('hidden');
+  roomEl.value = formatInputNumber(lifetimeRoom);
+  if (roomAutoBadge) roomAutoBadge.classList.remove('hidden');
   checkOverContrib();
 }
 
 if (birthYearEl) birthYearEl.addEventListener('input', autoCalcRoom);
-// Also recalculate when balance changes (if birth year already entered)
-balanceEl.addEventListener('input', function () {
-  if (birthYearEl && birthYearEl.value) autoCalcRoom();
-});
+// Balance changes no longer affect room
+
 
 
 /* =============================================
