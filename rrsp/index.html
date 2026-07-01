@@ -332,8 +332,156 @@
       line-height: 1.6;
     }
 
-    /* RRIF note */
-    .rrif-note {
+    /* Contribution slider */
+    .contrib-slider-wrapper {
+      margin-top: var(--space-3);
+    }
+    .contrib-slider-labels {
+      display: flex;
+      justify-content: space-between;
+      font-size: var(--text-xs);
+      color: var(--color-text-muted);
+      margin-bottom: var(--space-1);
+    }
+    #contrib-slider {
+      width: 100%;
+      accent-color: var(--color-primary);
+      cursor: pointer;
+    }
+
+    /* Hero tax refund card */
+    .refund-hero {
+      background: linear-gradient(135deg, #065F46, #047857);
+      border-radius: var(--radius-md);
+      padding: var(--space-6);
+      margin-bottom: var(--space-5);
+      color: white;
+      text-align: center;
+    }
+    .refund-hero-label {
+      font-size: var(--text-sm);
+      font-weight: 600;
+      color: rgba(255,255,255,0.8);
+      margin-bottom: var(--space-2);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+    .refund-hero-amount {
+      font-family: var(--font-heading);
+      font-size: 3rem;
+      font-weight: 800;
+      color: white;
+      line-height: 1;
+      margin-bottom: var(--space-2);
+    }
+    .refund-hero-pct {
+      font-size: var(--text-sm);
+      color: rgba(255,255,255,0.75);
+      margin-bottom: var(--space-5);
+    }
+    .refund-hero-uses {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-2);
+      text-align: left;
+      background: rgba(255,255,255,0.1);
+      border-radius: var(--radius-md);
+      padding: var(--space-4);
+    }
+    .refund-hero-use {
+      font-size: var(--text-sm);
+      color: rgba(255,255,255,0.9);
+      display: flex;
+      align-items: center;
+      gap: var(--space-2);
+    }
+
+    /* Tax savings comparison */
+    .tax-savings-card {
+      margin-bottom: var(--space-5);
+      padding: var(--space-5);
+      background: var(--color-bg);
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-md);
+    }
+    .tax-savings-title {
+      font-family: var(--font-heading);
+      font-size: var(--text-base);
+      font-weight: 700;
+      color: var(--color-text);
+      margin-bottom: var(--space-4);
+    }
+    .tax-savings-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: var(--space-3) 0;
+      border-bottom: 1px solid var(--color-border);
+      font-size: var(--text-sm);
+    }
+    .tax-savings-row:last-child { border-bottom: none; }
+    .tax-savings-label { color: var(--color-text-muted); }
+    .tax-savings-value { font-weight: 700; }
+    .tax-savings-value.is-bad  { color: var(--color-error); }
+    .tax-savings-value.is-good { color: var(--color-success); }
+    .tax-savings-value.is-win  { color: var(--color-success); font-size: var(--text-lg); }
+
+    /* Refund reinvestment card */
+    .reinvest-card {
+      margin-top: var(--space-4);
+      padding: var(--space-5);
+      background: linear-gradient(135deg, #EFF6FF, #DBEAFE);
+      border: 1px solid #BFDBFE;
+      border-radius: var(--radius-md);
+    }
+    .reinvest-title {
+      font-family: var(--font-heading);
+      font-size: var(--text-base);
+      font-weight: 700;
+      color: #1E40AF;
+      margin-bottom: var(--space-4);
+    }
+    .reinvest-row {
+      display: flex;
+      justify-content: space-between;
+      padding: var(--space-2) 0;
+      font-size: var(--text-sm);
+      color: #1E40AF;
+      border-bottom: 1px solid rgba(37,99,235,0.15);
+    }
+    .reinvest-row:last-child { border-bottom: none; font-weight: 700; font-size: var(--text-base); }
+    .reinvest-extra { color: var(--color-success); font-weight: 700; }
+
+    /* Improved milestone cards */
+    .milestone-item-inner {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+    .milestone-sub { font-size: var(--text-xs); color: var(--color-text-muted); }
+    .milestone-item.is-reached .milestone-sub { color: var(--color-success); }
+
+    /* Copy results button */
+    .copy-btn {
+      display: flex;
+      align-items: center;
+      gap: var(--space-2);
+      padding: var(--space-3) var(--space-5);
+      font-size: var(--text-sm);
+      font-weight: 600;
+      color: var(--color-text-muted);
+      background: var(--color-white);
+      border: 2px solid var(--color-border);
+      border-radius: var(--radius-lg);
+      cursor: pointer;
+      transition: all var(--transition-fast);
+      margin-top: var(--space-4);
+      width: 100%;
+      justify-content: center;
+    }
+    .copy-btn:hover { border-color: var(--color-text); color: var(--color-text); }
+    .copy-btn.copied { border-color: var(--color-success); color: var(--color-success); }
       margin-top: var(--space-4);
       padding: var(--space-3) var(--space-4);
       background: #FFFBEB;
@@ -427,10 +575,10 @@
           <div style="margin-bottom:var(--space-2);">
             <p style="font-size:var(--text-sm);font-weight:600;color:var(--color-text-muted);margin-bottom:var(--space-2);">Quick start with a preset:</p>
             <div class="preset-group" role="group" aria-label="Preset scenarios">
-              <button type="button" class="preset-btn" data-preset="graduate">🟢 New Graduate</button>
-              <button type="button" class="preset-btn" data-preset="average">🟠 Average Canadian</button>
-              <button type="button" class="preset-btn" data-preset="highincome">🔴 High Income</button>
-              <button type="button" class="preset-btn" data-preset="nearretirement">👴 Near Retirement</button>
+              <button type="button" class="preset-btn" data-preset="graduate">🎓 First Job</button>
+              <button type="button" class="preset-btn" data-preset="average">👨‍💼 Average Canadian</button>
+              <button type="button" class="preset-btn" data-preset="highincome">💰 High Earner</button>
+              <button type="button" class="preset-btn" data-preset="nearretirement">🏖 Near Retirement</button>
             </div>
           </div>
 
@@ -538,6 +686,15 @@
                 <input type="text" id="rrsp-contribution" class="form-input has-prefix"
                   placeholder="7,000" inputmode="numeric" autocomplete="off" value="7,000"
                   aria-describedby="rrsp-contribution-error" />
+              </div>
+              <!-- Contribution slider -->
+              <div class="contrib-slider-wrapper">
+                <div class="contrib-slider-labels">
+                  <span>$0</span>
+                  <span id="slider-mid-label">$16,245</span>
+                  <span>$32,490</span>
+                </div>
+                <input type="range" id="contrib-slider" min="0" max="32490" step="100" value="7000" aria-label="Contribution amount slider" />
               </div>
               <!-- Over-contribution warning -->
               <div id="over-contrib-warning" class="over-contrib-warning" role="alert" aria-live="polite"></div>
@@ -681,13 +838,43 @@
             <!-- Celebration -->
             <div id="result-celebration" class="result-celebration hidden"></div>
 
-            <!-- Big number -->
+            <!-- 1. HERO TAX REFUND — top of results, most prominent -->
+            <div class="refund-hero" id="refund-hero">
+              <p class="refund-hero-label">💰 Estimated Tax Refund This Year</p>
+              <p id="result-tax-refund" class="refund-hero-amount">—</p>
+              <p id="result-refund-pct" class="refund-hero-pct">—</p>
+              <div class="refund-hero-uses">
+                <p style="font-size:var(--text-xs);font-weight:700;color:rgba(255,255,255,0.6);text-transform:uppercase;letter-spacing:0.05em;margin-bottom:var(--space-1);">Your refund could be used to:</p>
+                <div class="refund-hero-use">✅ Reinvest into your RRSP next year</div>
+                <div class="refund-hero-use">✅ Max out your TFSA</div>
+                <div class="refund-hero-use">✅ Pay down high-interest debt</div>
+              </div>
+            </div>
+
+            <!-- 2. TAX SAVINGS COMPARISON -->
+            <div class="tax-savings-card">
+              <p class="tax-savings-title">📊 Your Tax Savings This Year</p>
+              <div class="tax-savings-row">
+                <span class="tax-savings-label">Without RRSP contribution</span>
+                <span class="tax-savings-value is-bad" id="result-tax-without">—</span>
+              </div>
+              <div class="tax-savings-row">
+                <span class="tax-savings-label">With RRSP contribution</span>
+                <span class="tax-savings-value" id="result-tax-with">—</span>
+              </div>
+              <div class="tax-savings-row">
+                <span class="tax-savings-label" style="font-weight:600;">You save</span>
+                <span class="tax-savings-value is-win" id="result-tax-saved">—</span>
+              </div>
+            </div>
+
+            <!-- 3. BIG FUTURE VALUE -->
             <div class="result-big">
               <p class="result-big-label">Future RRSP Value at Retirement</p>
               <p id="result-future-value" class="result-big-value">—</p>
             </div>
 
-            <!-- Summary rows -->
+            <!-- 4. SUMMARY ROWS -->
             <div class="result-summary" role="list">
               <div class="result-row" role="listitem">
                 <span class="result-row-label">Total Contributions</span>
@@ -715,73 +902,95 @@
               </div>
             </div>
 
-            <!-- Retirement Income Card -->
-            <div class="retirement-income-card" id="retirement-income-card">
+            <!-- 5. RETIREMENT INCOME -->
+            <div class="retirement-income-card" style="margin-top:var(--space-4);">
               <p class="retirement-income-label">📊 Estimated Annual Retirement Income (4% Rule)</p>
               <p id="result-retirement-income" class="retirement-income-value">—</p>
-              <p class="retirement-income-note">Based on withdrawing 4% of your RRSP annually at retirement. This is an estimate — actual income will depend on RRIF rules and tax rates.</p>
+              <p class="retirement-income-note">Based on withdrawing 4% of your RRSP annually at retirement.</p>
             </div>
 
-            <!-- Tax Refund Card -->
-            <div class="refund-card" id="refund-card">
-              <p class="refund-card-title">💰 Estimated Tax Refund This Year</p>
-              <p id="result-tax-refund" class="refund-amount">—</p>
-              <div class="refund-uses">
-                <p style="font-size:var(--text-xs);font-weight:600;color:#166534;margin-bottom:var(--space-1);">Your refund could be used to:</p>
-                <div class="refund-use-item">✅ Reinvest into your RRSP next year</div>
-                <div class="refund-use-item">✅ Max out your TFSA</div>
-                <div class="refund-use-item">✅ Pay down high-interest debt</div>
+            <!-- 6. REFUND REINVESTMENT COMPARISON -->
+            <div class="reinvest-card">
+              <p class="reinvest-title">🔄 What if you reinvested your tax refund every year?</p>
+              <div class="reinvest-row">
+                <span>Without reinvesting refund</span>
+                <span id="result-no-reinvest">—</span>
+              </div>
+              <div class="reinvest-row">
+                <span>Reinvesting refund annually</span>
+                <span id="result-with-reinvest">—</span>
+              </div>
+              <div class="reinvest-row">
+                <span>Extra wealth from reinvesting</span>
+                <span class="reinvest-extra" id="result-reinvest-extra">—</span>
               </div>
             </div>
 
-            <!-- Strategy Card -->
+            <!-- 7. STRATEGY CARD -->
             <div class="strategy-card" id="strategy-card">
               <p class="strategy-card-title">💡 Personalized Strategy</p>
               <p id="strategy-text">—</p>
             </div>
 
-            <!-- RRSP vs TFSA Card -->
+            <!-- 8. RRSP vs TFSA -->
             <div class="comparison-card" id="comparison-card">
               <p class="comparison-card-title">⚖️ Should You Use an RRSP or TFSA?</p>
               <p class="comparison-winner" id="comparison-winner">—</p>
               <p id="comparison-text">—</p>
             </div>
 
-            <!-- Milestones -->
+            <!-- 9. MILESTONES -->
             <div style="margin-top:var(--space-6);">
               <p style="font-size:var(--text-sm);font-weight:600;margin-bottom:var(--space-3);">Your Savings Milestones</p>
               <div class="milestone-list">
                 <div class="milestone-item" id="milestone-100k">
                   <div class="milestone-dot"></div>
-                  <span class="milestone-text" id="milestone-100k-text">You could reach <strong>$100,000</strong> in</span>
+                  <div class="milestone-item-inner">
+                    <span class="milestone-text" id="milestone-100k-text"><strong>$100,000</strong></span>
+                    <span class="milestone-sub" id="milestone-100k-sub">—</span>
+                  </div>
                   <span class="milestone-year-badge" id="milestone-100k-year">—</span>
                 </div>
                 <div class="milestone-item" id="milestone-250k">
                   <div class="milestone-dot"></div>
-                  <span class="milestone-text" id="milestone-250k-text">You could reach <strong>$250,000</strong> in</span>
+                  <div class="milestone-item-inner">
+                    <span class="milestone-text" id="milestone-250k-text"><strong>$250,000</strong></span>
+                    <span class="milestone-sub" id="milestone-250k-sub">—</span>
+                  </div>
                   <span class="milestone-year-badge" id="milestone-250k-year">—</span>
                 </div>
                 <div class="milestone-item" id="milestone-500k">
                   <div class="milestone-dot"></div>
-                  <span class="milestone-text" id="milestone-500k-text">You could reach <strong>$500,000</strong> in</span>
+                  <div class="milestone-item-inner">
+                    <span class="milestone-text" id="milestone-500k-text"><strong>$500,000</strong></span>
+                    <span class="milestone-sub" id="milestone-500k-sub">—</span>
+                  </div>
                   <span class="milestone-year-badge" id="milestone-500k-year">—</span>
                 </div>
                 <div class="milestone-item" id="milestone-1m">
                   <div class="milestone-dot"></div>
-                  <span class="milestone-text" id="milestone-1m-text">You could reach <strong>$1,000,000</strong> in</span>
+                  <div class="milestone-item-inner">
+                    <span class="milestone-text" id="milestone-1m-text"><strong>$1,000,000</strong></span>
+                    <span class="milestone-sub" id="milestone-1m-sub">—</span>
+                  </div>
                   <span class="milestone-year-badge" id="milestone-1m-year">—</span>
                 </div>
               </div>
             </div>
 
             <!-- RRIF note -->
-            <div class="rrif-note" id="rrif-note" style="display:none;">
-              ⚠️ <strong>RRIF conversion required.</strong> You must convert your RRSP to a RRIF (or annuity) by December 31 of the year you turn 71. After conversion, you must withdraw a minimum amount each year, which is taxable income.
+            <div class="rrif-note" id="rrif-note" style="display:none;margin-top:var(--space-4);">
+              ⚠️ <strong>RRIF conversion required.</strong> You must convert your RRSP to a RRIF by December 31 of the year you turn 71. Minimum withdrawals are required annually and are taxable income.
             </div>
+
+            <!-- 10. COPY RESULTS BUTTON -->
+            <button type="button" id="copy-results-btn" class="copy-btn">
+              📋 Copy Results to Clipboard
+            </button>
 
             <!-- Disclaimer -->
             <div class="calc-disclaimer">
-              Results are estimates based on constant rates of return and tax rules as of 2026. Actual results will vary based on market performance, income changes, and future tax law changes. This is not financial advice — consult a registered financial advisor.
+              Results are estimates based on constant rates of return and 2026 tax rules. Actual results will vary. This is not financial advice.
             </div>
 
           </div>

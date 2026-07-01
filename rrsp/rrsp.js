@@ -666,38 +666,97 @@ function renderSummaryBox(values) {
   resultSummaryBox.classList.remove('hidden');
 }
 
-function renderMilestone(cardEl, yearEl, textEl, amount, year, finalBalance) {
+function renderMilestone(cardEl, yearEl, textEl, subEl, amount, year, finalBalance) {
   const label   = amount >= 1000000 ? '$1,000,000' : '$' + amount.toLocaleString('en-CA');
   const reached = finalBalance >= amount;
+  const currentYear = new Date().getFullYear();
+
   if (year) {
+    const yearsAway = year - currentYear;
     yearEl.textContent = year;
-    textEl.innerHTML   = `You could reach <strong>${label}</strong> in`;
+    textEl.innerHTML   = `<strong>${label}</strong> ${reached ? '✓' : ''}`;
+    if (subEl) subEl.textContent = yearsAway <= 0 ? 'already reached' : `${yearsAway} year${yearsAway === 1 ? '' : 's'} from now`;
     cardEl.classList.toggle('is-reached', reached);
   } else {
     yearEl.textContent = 'N/A';
-    textEl.innerHTML   = `<strong>${label}</strong> — beyond your time horizon`;
+    textEl.innerHTML   = `<strong>${label}</strong>`;
+    if (subEl) subEl.textContent = 'beyond your time horizon';
     cardEl.classList.remove('is-reached');
   }
 }
 
+function calcTaxOwed(income, province) {
+  // Simplified: apply brackets cumulatively for a rough total tax estimate
+  let tax = 0;
+  const fedBrackets = FED_BRACKETS;
+  const provBrackets = PROV_BRACKETS[province] || PROV_BRACKETS['ON'];
+
+  for (let i = 0; i < fedBrackets.length; i++) {
+    const b = fedBrackets[i];
+    if (income <= b.min) break;
+    const taxable = Math.min(income, b.max) - b.min;
+    tax += taxable * b.rate;
+  }
+  for (let i = 0; i < provBrackets.length; i++) {
+    const b = provBrackets[i];
+    if (income <= b.min) break;
+    const taxable = Math.min(income, b.max) - b.min;
+    tax += taxable * b.rate;
+  }
+  return tax;
+}
+
+function calcReinvestScenario(values, baseBalance) {
+  // Project RRSP if user reinvests their annual tax refund as extra contribution each year
+  const { income, province, currentAge, retirementAge, contribution,
+          lumpSum, frequency, annualReturn, salaryGrowth, employerMatch } = values;
+
+  const years         = retirementAge - currentAge;
+  const rate          = annualReturn / 100;
+  const annualContrib = toAnnualContribution(contribution, frequency);
+  const matchRate     = employerMatch / 100;
+  const refundRate    = getMarginalRate(income, province);
+
+  let balance = baseBalance;
+
+  for (let y = 1; y <= years; y++) {
+    const yearContrib   = (frequency === 'onetime' && y > 1) ? 0 : annualContrib;
+    // Extra from reinvesting last year's refund
+    const reinvestExtra = y > 1 ? annualContrib * refundRate : 0;
+    const totalDeposit  = yearContrib + reinvestExtra + (yearContrib + reinvestExtra) * matchRate;
+    const growthBase    = balance + totalDeposit * 0.5;
+    balance             = balance + totalDeposit + growthBase * rate;
+  }
+  return balance;
+}
+
 function renderResults(data, values) {
   const { schedule, milestones, totalContributions, totalEmployerMatch, finalBalance, remainingRoom, rrifYear } = data;
-  const { currentAge, retirementAge, annualReturn, inflationRate, income, province, retirementTax } = values;
-  const years          = retirementAge - currentAge;
-  const startingBalance = parseInputNumber(balanceEl.value);
+  const { currentAge, retirementAge, annualReturn, inflationRate, income, province } = values;
+  const years            = retirementAge - currentAge;
+  const startingBalance  = parseInputNumber(balanceEl.value);
   const investmentGrowth = finalBalance - totalContributions - totalEmployerMatch - startingBalance;
   const inflationValue   = inflationAdjust(finalBalance, inflationRate, years);
-  const taxRefund        = estimateTaxRefund(income, parseInputNumber(contributionEl.value), province);
+  const contribution     = parseInputNumber(contributionEl.value);
+  const taxRefund        = estimateTaxRefund(income, contribution, province);
+  const refundPct        = contribution > 0 ? Math.round((taxRefund / contribution) * 100) : 0;
   const retirementIncome = finalBalance * 0.04;
   const currentYear      = new Date().getFullYear();
+
+  // Tax with vs without RRSP
+  const taxWithout = calcTaxOwed(income, province);
+  const taxWith    = calcTaxOwed(income - contribution, province);
+  const taxSaved   = taxWithout - taxWith;
+
+  // Reinvest scenario
+  const withReinvest    = calcReinvestScenario(values, startingBalance);
+  const reinvestExtra   = withReinvest - finalBalance;
 
   resultsPlaceholder.classList.add('hidden');
   resultsContent.classList.remove('hidden');
 
-  // Summary pills
   renderSummaryBox(values);
 
-  // Celebration
   const celebMsg = getCelebrationText(finalBalance);
   if (celebMsg) {
     resultCelebration.innerHTML = celebMsg;
@@ -706,41 +765,66 @@ function renderResults(data, values) {
     resultCelebration.classList.add('hidden');
   }
 
-  // Main numbers
-  resultFutureValue.textContent    = formatCAD(finalBalance);
-  resultTotalContribs.textContent  = formatCAD(totalContributions);
-  resultEmployerMatch.textContent  = totalEmployerMatch > 0 ? formatCAD(totalEmployerMatch) : '$0.00';
-  resultGrowth.textContent         = formatCAD(Math.max(0, investmentGrowth));
-  resultInflation.textContent      = formatCAD(inflationValue);
-  resultRemainingRoom.textContent  = formatCAD(remainingRoom);
-  resultRrifYear.textContent       = rrifYear.toString();
+  // Hero tax refund
+  resultTaxRefund.textContent = formatCAD(taxRefund);
+  const refundPctEl = document.getElementById('result-refund-pct');
+  if (refundPctEl) refundPctEl.textContent = `You're getting back ${refundPct}% of your contribution`;
 
-  // Retirement income
+  // Tax savings comparison
+  const taxWithoutEl = document.getElementById('result-tax-without');
+  const taxWithEl    = document.getElementById('result-tax-with');
+  const taxSavedEl   = document.getElementById('result-tax-saved');
+  if (taxWithoutEl) taxWithoutEl.textContent = formatCAD(taxWithout);
+  if (taxWithEl)    taxWithEl.textContent    = formatCAD(taxWith);
+  if (taxSavedEl)   taxSavedEl.textContent   = `${formatCAD(taxSaved)} saved`;
+
+  // Main numbers
+  resultFutureValue.textContent   = formatCAD(finalBalance);
+  resultTotalContribs.textContent = formatCAD(totalContributions);
+  resultEmployerMatch.textContent = totalEmployerMatch > 0 ? formatCAD(totalEmployerMatch) : '$0.00';
+  resultGrowth.textContent        = formatCAD(Math.max(0, investmentGrowth));
+  resultInflation.textContent     = formatCAD(inflationValue);
+  resultRemainingRoom.textContent = formatCAD(remainingRoom);
+  resultRrifYear.textContent      = rrifYear.toString();
+
   resultRetirementIncome.textContent = `${formatCAD0(retirementIncome)}/year`;
 
-  // Tax refund
-  resultTaxRefund.textContent = formatCAD(taxRefund);
+  // Reinvest comparison
+  const noReinvestEl    = document.getElementById('result-no-reinvest');
+  const withReinvestEl  = document.getElementById('result-with-reinvest');
+  const reinvestExtraEl = document.getElementById('result-reinvest-extra');
+  if (noReinvestEl)    noReinvestEl.textContent    = formatCAD(finalBalance);
+  if (withReinvestEl)  withReinvestEl.textContent  = formatCAD(withReinvest);
+  if (reinvestExtraEl) reinvestExtraEl.textContent = `+${formatCAD(reinvestExtra)}`;
 
-  // Strategy
+  // Strategy + comparison
   strategyText.textContent = getStrategyText(income, currentAge, retirementAge, province, finalBalance);
-
-  // RRSP vs TFSA comparison
   const comparison = getComparisonText(income, province);
   comparisonWinner.textContent = comparison.winner;
   comparisonText.textContent   = comparison.text;
 
-  // Milestones
-  renderMilestone(milestone100k, milestone100kYear, milestone100kText, 100000,  milestones[100000],  finalBalance);
-  renderMilestone(milestone250k, milestone250kYear, milestone250kText, 250000,  milestones[250000],  finalBalance);
-  renderMilestone(milestone500k, milestone500kYear, milestone500kText, 500000,  milestones[500000],  finalBalance);
-  renderMilestone(milestone1m,   milestone1mYear,   milestone1mText,   1000000, milestones[1000000], finalBalance);
+  // Milestones with "years from now"
+  const m100kSub = document.getElementById('milestone-100k-sub');
+  const m250kSub = document.getElementById('milestone-250k-sub');
+  const m500kSub = document.getElementById('milestone-500k-sub');
+  const m1mSub   = document.getElementById('milestone-1m-sub');
 
-  // RRIF note (if near or past conversion age)
-  if (retirementAge >= 65) {
-    rrifNote.style.display = 'block';
-  }
+  renderMilestone(milestone100k, milestone100kYear, milestone100kText, m100kSub, 100000,  milestones[100000],  finalBalance);
+  renderMilestone(milestone250k, milestone250kYear, milestone250kText, m250kSub, 250000,  milestones[250000],  finalBalance);
+  renderMilestone(milestone500k, milestone500kYear, milestone500kText, m500kSub, 500000,  milestones[500000],  finalBalance);
+  renderMilestone(milestone1m,   milestone1mYear,   milestone1mText,   m1mSub,   1000000, milestones[1000000], finalBalance);
 
-  // Growth table
+  if (retirementAge >= 65) rrifNote.style.display = 'block';
+
+  // Store results for copy button
+  window._rrspResults = {
+    futureValue: formatCAD(finalBalance),
+    taxRefund: formatCAD(taxRefund),
+    retirementIncome: `${formatCAD0(retirementIncome)}/year`,
+    totalContribs: formatCAD(totalContributions),
+    inflationValue: formatCAD(inflationValue)
+  };
+
   renderGrowthTable(schedule);
 
   if (window.innerWidth < 900) {
@@ -821,6 +905,7 @@ if (resetBtn) {
     roomAutoBadge.classList.add('hidden');
     document.querySelectorAll('.preset-btn').forEach(b => b.classList.remove('is-active'));
     overContribWarning.classList.remove('is-visible');
+    if (contribSlider) contribSlider.value = 7000;
 
     resultsPlaceholder.classList.remove('hidden');
     resultsContent.classList.add('hidden');
@@ -833,13 +918,79 @@ if (resetBtn) {
 
 
 /* =============================================
-   17. INIT
+   17. CONTRIBUTION SLIDER
+   ============================================= */
+const contribSlider = document.getElementById('contrib-slider');
+
+if (contribSlider) {
+  // Slider → updates text input
+  contribSlider.addEventListener('input', function () {
+    const val = parseInt(this.value);
+    contributionEl.value = formatInputNumber(val);
+    checkOverContrib();
+    // Live recalculate if results already showing
+    if (!resultsContent.classList.contains('hidden')) calculate();
+  });
+
+  // Text input → updates slider
+  contributionEl.addEventListener('input', function () {
+    const val = parseInputNumber(this.value);
+    if (!isNaN(val) && val >= 0 && val <= 32490) {
+      contribSlider.value = val;
+    }
+  });
+
+  // Update slider max when room changes
+  roomEl.addEventListener('input', function () {
+    const room = parseInputNumber(this.value);
+    if (room > 0 && room <= 32490) contribSlider.max = room;
+  });
+}
+
+
+/* =============================================
+   18. COPY RESULTS
+   ============================================= */
+const copyBtn = document.getElementById('copy-results-btn');
+if (copyBtn) {
+  copyBtn.addEventListener('click', function () {
+    const r = window._rrspResults;
+    if (!r) return;
+
+    const text = [
+      '📊 My RRSP Projection — Northern Numbers',
+      '─────────────────────────',
+      `💰 Estimated Tax Refund:     ${r.taxRefund}`,
+      `📈 Future RRSP Value:        ${r.futureValue}`,
+      `🏖 Retirement Income (4%):   ${r.retirementIncome}`,
+      `💵 Total Contributions:      ${r.totalContribs}`,
+      `📉 Inflation-Adjusted Value: ${r.inflationValue}`,
+      '─────────────────────────',
+      'Calculated at northernnumbers.ca/rrsp/'
+    ].join('\n');
+
+    navigator.clipboard.writeText(text).then(() => {
+      copyBtn.textContent = '✅ Copied!';
+      copyBtn.classList.add('copied');
+      setTimeout(() => {
+        copyBtn.textContent = '📋 Copy Results to Clipboard';
+        copyBtn.classList.remove('copied');
+      }, 2500);
+    }).catch(() => {
+      copyBtn.textContent = 'Copy not supported in this browser';
+    });
+  });
+}
+
+
+/* =============================================
+   19. INIT
    ============================================= */
 (function init() {
   incomeEl.value       = formatInputNumber(85000);
   balanceEl.value      = formatInputNumber(0);
   contributionEl.value = formatInputNumber(7000);
   lumpSumEl.value      = formatInputNumber(0);
-  // Auto-estimate room from default income
+  if (contribSlider) contribSlider.value = 7000;
   autoEstimateRoom();
 })();
