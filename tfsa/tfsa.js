@@ -223,6 +223,10 @@ document.querySelectorAll('.preset-btn').forEach(btn => {
     contributionEl.value  = formatInputNumber(preset.contribution);
     returnEl.value        = preset.annualReturn;
     horizonEl.value       = preset.horizon;
+    if (lumpSumEl) lumpSumEl.value = formatInputNumber(0);
+    if (pastContribEl) pastContribEl.value = formatInputNumber(0);
+    if (birthYearEl) birthYearEl.value = '';
+    if (roomAutoBadge) roomAutoBadge.classList.add('hidden');
 
     // Force frequency dropdown to update and trigger change listeners
     frequencyEl.value = preset.frequency;
