@@ -685,6 +685,9 @@ function renderResults(data, values) {
     progressPct: `${progressPct}%`
   };
 
+  // Store schedule for chart
+  window._fhsaSchedule = schedule;
+
   // Growth table
   growthTbody.innerHTML = '';
   schedule.forEach(row => {
@@ -700,9 +703,15 @@ function renderResults(data, values) {
     growthTbody.appendChild(tr);
   });
   growthSection.removeAttribute('hidden');
+  if (chartSection) chartSection.removeAttribute('hidden');
 
-  if (window.innerWidth < 900) {
-    resultsContent.scrollIntoView({ behavior:'smooth', block:'nearest' });
+  // Always scroll to results heading — on mobile goes to top of results,
+  // on desktop it scrolls just enough to show the results panel
+  const resultsHeading = document.getElementById('fhsa-results-heading');
+  if (resultsHeading) {
+    const headerOffset = 80;
+    const top = resultsHeading.getBoundingClientRect().top + window.scrollY - headerOffset;
+    window.scrollTo({ top, behavior: 'smooth' });
   }
 }
 
@@ -710,6 +719,109 @@ growthToggle.addEventListener('click', function () {
   const isOpen = growthTableWrapper.classList.toggle('is-open');
   this.setAttribute('aria-expanded', isOpen.toString());
 });
+
+/* =============================================
+   GROWTH CHART
+   Canvas bar chart: Contributions vs Growth vs Balance
+   ============================================= */
+const chartSection  = document.getElementById('chart-section');
+const chartToggle   = document.getElementById('chart-toggle');
+const chartWrapper  = document.getElementById('chart-wrapper');
+const chartCanvas   = document.getElementById('growth-chart');
+
+if (chartToggle) {
+  chartToggle.addEventListener('click', function () {
+    const isOpen = chartWrapper.classList.toggle('is-open');
+    this.setAttribute('aria-expanded', isOpen.toString());
+    if (isOpen && window._fhsaSchedule) drawChart(window._fhsaSchedule);
+  });
+}
+
+function drawChart(schedule) {
+  if (!chartCanvas) return;
+  const ctx    = chartCanvas.getContext('2d');
+  const dpr    = window.devicePixelRatio || 1;
+  const W      = chartCanvas.offsetWidth;
+  const H      = 280;
+  chartCanvas.width  = W * dpr;
+  chartCanvas.height = H * dpr;
+  ctx.scale(dpr, dpr);
+
+  // Thin out data if too many years
+  const maxBars = 20;
+  const step    = Math.ceil(schedule.length / maxBars);
+  const data    = schedule.filter((_, i) => i % step === 0 || i === schedule.length - 1);
+
+  const maxVal  = Math.max(...data.map(d => d.balance)) * 1.1;
+  const padL    = 60, padR = 16, padT = 20, padB = 40;
+  const chartW  = W - padL - padR;
+  const chartH  = H - padT - padB;
+  const barGap  = 4;
+  const barW    = Math.max(4, (chartW / data.length) - barGap);
+
+  ctx.clearRect(0, 0, W, H);
+
+  // Grid lines
+  ctx.strokeStyle = '#E5E7EB';
+  ctx.lineWidth   = 1;
+  for (let i = 0; i <= 4; i++) {
+    const y = padT + (chartH / 4) * i;
+    ctx.beginPath();
+    ctx.moveTo(padL, y);
+    ctx.lineTo(W - padR, y);
+    ctx.stroke();
+
+    // Y-axis labels
+    const val = maxVal * (1 - i / 4);
+    ctx.fillStyle   = '#9CA3AF';
+    ctx.font        = `${11 * dpr / dpr}px Inter, sans-serif`;
+    ctx.textAlign   = 'right';
+    ctx.textBaseline = 'middle';
+    ctx.fillText(val >= 1000 ? `$${Math.round(val/1000)}k` : `$${Math.round(val)}`, padL - 6, y);
+  }
+
+  // Bars
+  data.forEach((row, i) => {
+    const x         = padL + i * (barW + barGap);
+    const contribH  = (row.contribution / maxVal) * chartH;
+    const growthH   = Math.max(0, ((row.balance - row.contribution - (schedule[0]?.balance || 0)) / maxVal) * chartH);
+    const balanceH  = (row.balance / maxVal) * chartH;
+
+    // Balance bar (blue, behind)
+    ctx.fillStyle = 'rgba(59,130,246,0.15)';
+    ctx.fillRect(x, padT + chartH - balanceH, barW, balanceH);
+
+    // Contribution bar (red)
+    ctx.fillStyle = '#D52B1E';
+    ctx.fillRect(x, padT + chartH - contribH, barW, contribH);
+
+    // Balance line dot
+    ctx.fillStyle = '#3B82F6';
+    ctx.beginPath();
+    ctx.arc(x + barW / 2, padT + chartH - balanceH, 3, 0, Math.PI * 2);
+    ctx.fill();
+
+    // X-axis year label (every other bar)
+    if (i % 2 === 0 || i === data.length - 1) {
+      ctx.fillStyle   = '#9CA3AF';
+      ctx.font        = `10px Inter, sans-serif`;
+      ctx.textAlign   = 'center';
+      ctx.textBaseline = 'top';
+      ctx.fillText(row.year, x + barW / 2, padT + chartH + 6);
+    }
+  });
+
+  // Connect balance line
+  ctx.strokeStyle = '#3B82F6';
+  ctx.lineWidth   = 2;
+  ctx.beginPath();
+  data.forEach((row, i) => {
+    const x = padL + i * (barW + barGap) + barW / 2;
+    const y = padT + chartH - (row.balance / maxVal) * chartH;
+    i === 0 ? ctx.moveTo(x, y) : ctx.lineTo(x, y);
+  });
+  ctx.stroke();
+}
 
 
 /* =============================================
@@ -786,6 +898,7 @@ document.getElementById('fhsa-reset-btn')?.addEventListener('click', function ()
   resultsPlaceholder.classList.remove('hidden');
   resultsContent.classList.add('hidden');
   growthSection.setAttribute('hidden','');
+  if (chartSection) { chartSection.setAttribute('hidden',''); chartWrapper && chartWrapper.classList.remove('is-open'); }
   if (resultSummaryBox) resultSummaryBox.classList.add('hidden');
   if (resultCelebration) resultCelebration.classList.add('hidden');
 });

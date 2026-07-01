@@ -20,13 +20,50 @@
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
-    "@type": "WebApplication",
-    "name": "Canadian FHSA Calculator",
-    "url": "https://www.northernnumbers.ca/fhsa/",
-    "description": "Free Canadian First Home Savings Account calculator with tax refund estimation and down payment planning.",
-    "applicationCategory": "FinanceApplication",
-    "offers": { "@type": "Offer", "price": "0", "priceCurrency": "CAD" },
-    "provider": { "@type": "Organization", "name": "Northern Numbers", "url": "https://www.northernnumbers.ca" }
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://www.northernnumbers.ca/" },
+      { "@type": "ListItem", "position": 2, "name": "FHSA Calculator", "item": "https://www.northernnumbers.ca/fhsa/" }
+    ]
+  }
+  </script>
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "What is the FHSA annual contribution limit for 2026?",
+        "acceptedAnswer": { "@type": "Answer", "text": "The FHSA annual contribution limit is $8,000 per year for 2026, with a lifetime maximum of $40,000 per person." }
+      },
+      {
+        "@type": "Question",
+        "name": "Who qualifies for an FHSA in Canada?",
+        "acceptedAnswer": { "@type": "Answer", "text": "To open an FHSA you must be a Canadian resident, at least 18 years old, and a first-time home buyer — meaning you have not owned a qualifying home you lived in during the current year or the previous four calendar years." }
+      },
+      {
+        "@type": "Question",
+        "name": "Can couples both use the FHSA?",
+        "acceptedAnswer": { "@type": "Answer", "text": "Yes. Each eligible individual can open their own FHSA and contribute up to $40,000 lifetime. As a couple, you could have up to $80,000 in combined tax-free savings for your down payment." }
+      },
+      {
+        "@type": "Question",
+        "name": "Can I combine the FHSA and RRSP Home Buyers' Plan?",
+        "acceptedAnswer": { "@type": "Answer", "text": "Yes. You can withdraw from your FHSA (up to $40,000, tax-free, no repayment required) and use the RRSP Home Buyers' Plan (up to $35,000, must be repaid over 15 years) for the same home purchase. As a couple, this could mean up to $150,000 combined." }
+      },
+      {
+        "@type": "Question",
+        "name": "What happens if I never buy a home?",
+        "acceptedAnswer": { "@type": "Answer", "text": "If you don't buy a home within 15 years of opening your FHSA, or by December 31 of the year you turn 71, you can transfer all funds to your RRSP or RRIF tax-free without affecting your RRSP contribution room." }
+      },
+      {
+        "@type": "Question",
+        "name": "What is the FHSA contribution deadline?",
+        "acceptedAnswer": { "@type": "Answer", "text": "FHSA contributions must be made by December 31 of each calendar year — there is no 60-day grace period like the RRSP." }
+      }
+    ]
   }
   </script>
 
@@ -198,8 +235,58 @@
     .copy-btn:hover { border-color:var(--color-text);color:var(--color-text); }
     .copy-btn.copied { border-color:var(--color-success);color:var(--color-success); }
 
-    /* Disclaimer */
-    .calc-disclaimer { margin-top:var(--space-6);padding:var(--space-3) var(--space-4);background:var(--color-bg);border:1px solid var(--color-border);border-radius:var(--radius-md);font-size:var(--text-xs);color:var(--color-text-muted);line-height:1.6; }
+    /* Growth chart */
+    .chart-section { margin-top: var(--space-8); }
+    .chart-toggle {
+      display:flex;align-items:center;justify-content:space-between;width:100%;
+      padding:var(--space-4) var(--space-6);background:var(--color-bg);
+      border:1px solid var(--color-border);border-radius:var(--radius-md);
+      font-family:var(--font-heading);font-size:var(--text-base);font-weight:600;
+      color:var(--color-text);cursor:pointer;transition:background-color var(--transition-fast);
+    }
+    .chart-toggle:hover { background:var(--color-border); }
+    .chart-toggle-icon { transition:transform var(--transition-base); }
+    .chart-toggle[aria-expanded="true"] .chart-toggle-icon { transform:rotate(180deg); }
+    .chart-wrapper { display:none;margin-top:var(--space-4);padding:var(--space-5);background:var(--color-white);border:1px solid var(--color-border);border-radius:var(--radius-md); }
+    .chart-wrapper.is-open { display:block; }
+    .chart-canvas { width:100%;height:280px;display:block; }
+    .chart-legend { display:flex;gap:var(--space-5);justify-content:center;margin-top:var(--space-3);flex-wrap:wrap; }
+    .chart-legend-item { display:flex;align-items:center;gap:var(--space-2);font-size:var(--text-xs);color:var(--color-text-muted); }
+    .chart-legend-dot { width:12px;height:12px;border-radius:2px;flex-shrink:0; }
+
+    /* Print button */
+    .print-btn {
+      display:flex;align-items:center;gap:var(--space-2);padding:var(--space-3) var(--space-5);
+      font-size:var(--text-sm);font-weight:600;color:var(--color-text-muted);
+      background:var(--color-white);border:2px solid var(--color-border);border-radius:var(--radius-lg);
+      cursor:pointer;transition:all var(--transition-fast);margin-top:var(--space-3);width:100%;justify-content:center;
+    }
+    .print-btn:hover { border-color:var(--color-text);color:var(--color-text); }
+
+    /* Print styles */
+    @media print {
+      .site-header, .site-footer, .calc-panel:first-of-type,
+      .growth-section, .chart-section, .copy-btn, .print-btn,
+      .quick-start, .preset-group, .couple-toggle-wrap,
+      .calc-breadcrumb, .calc-page-desc, .deadline-banner,
+      #fhsa-results-placeholder, .calc-disclaimer,
+      nav, button, .btn-row { display:none !important; }
+
+      body { font-size: 12pt; color: #000; }
+      .calc-page { padding: 0; }
+      .calc-layout { display: block; }
+      .calc-panel { box-shadow: none; border: none; padding: 0; }
+      #fhsa-results-content { display: block !important; }
+
+      .progress-bar-wrap { border: 1px solid #ccc; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+      .progress-bar-fill { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+      .refund-hero { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+
+      .calc-page-title { font-size: 20pt; margin-bottom: 8pt; }
+      .result-big-value { font-size: 28pt; }
+
+      @page { margin: 1.5cm; size: A4; }
+    }
 
     /* Contribution slider */
     .contrib-slider-wrapper { margin-top:var(--space-3); }
@@ -726,6 +813,8 @@
 
             <!-- COPY BUTTON -->
             <button type="button" id="copy-results-btn" class="copy-btn">📋 Copy Results to Clipboard</button>
+            <!-- PRINT BUTTON -->
+            <button type="button" id="print-btn" class="print-btn" onclick="window.print()">🖨️ Download / Print as PDF</button>
 
           </div>
         </section>
@@ -756,7 +845,23 @@
         </div>
       </div>
 
-      <!-- EDUCATIONAL SECTION -->
+      <!-- GROWTH CHART -->
+      <div class="chart-section" id="chart-section" hidden>
+        <button type="button" class="chart-toggle" id="chart-toggle" aria-expanded="false" aria-controls="chart-wrapper">
+          <span>📈 View Interactive Growth Chart</span>
+          <svg class="chart-toggle-icon" width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true">
+            <path d="M5 7.5L10 12.5L15 7.5" stroke="#1F2937" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </button>
+        <div id="chart-wrapper" class="chart-wrapper" aria-live="polite">
+          <canvas id="growth-chart" class="chart-canvas" aria-label="FHSA growth chart showing contributions and investment growth over time"></canvas>
+          <div class="chart-legend">
+            <div class="chart-legend-item"><div class="chart-legend-dot" style="background:#D52B1E;"></div>Contributions</div>
+            <div class="chart-legend-item"><div class="chart-legend-dot" style="background:#16A34A;"></div>Investment Growth</div>
+            <div class="chart-legend-item"><div class="chart-legend-dot" style="background:#3B82F6;"></div>Total Balance</div>
+          </div>
+        </div>
+      </div>
       <section style="margin-top:var(--space-16);padding-top:var(--space-10);border-top:1px solid var(--color-border);" aria-labelledby="fhsa-seo-heading">
         <h2 id="fhsa-seo-heading" style="font-size:var(--text-2xl);font-weight:700;margin-bottom:var(--space-10);">Understanding the FHSA</h2>
         <div style="display:grid;grid-template-columns:1fr;gap:var(--space-10);">
