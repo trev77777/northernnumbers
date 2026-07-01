@@ -112,6 +112,56 @@ if (lumpSumEl) attachFormatter(lumpSumEl);
 
 
 /* =============================================
+   4b. BIRTH YEAR → AUTO-CALCULATE CONTRIBUTION ROOM
+   Official CRA TFSA annual dollar limits (all years)
+   ============================================= */
+const TFSA_LIMITS = {
+  2009: 5000, 2010: 5000, 2011: 5000, 2012: 5000,
+  2013: 5500, 2014: 5500, 2015: 10000,
+  2016: 5500, 2017: 5500, 2018: 5500,
+  2019: 6000, 2020: 6000, 2021: 6000,
+  2022: 6000, 2023: 6500, 2024: 7000,
+  2025: 7000, 2026: 7000
+};
+
+const CURRENT_YEAR = new Date().getFullYear();
+
+/**
+ * Calculate lifetime TFSA room for someone born in birthYear,
+ * assuming they have never contributed and have always been
+ * a Canadian resident since turning 18.
+ */
+function calcLifetimeRoom(birthYear) {
+  const firstEligibleYear = Math.max(birthYear + 18, 2009);
+  if (firstEligibleYear > CURRENT_YEAR) return 0;
+  let total = 0;
+  for (let y = firstEligibleYear; y <= CURRENT_YEAR; y++) {
+    total += TFSA_LIMITS[y] || 7000;
+  }
+  return total;
+}
+
+const birthYearEl   = document.getElementById('birth-year');
+const roomAutoBadge = document.getElementById('room-auto-badge');
+
+if (birthYearEl) {
+  birthYearEl.addEventListener('input', function () {
+    const yr = parseInt(this.value);
+    if (isNaN(yr) || yr < 1940 || yr > 2008) {
+      if (roomAutoBadge) roomAutoBadge.classList.add('hidden');
+      return;
+    }
+    const room = calcLifetimeRoom(yr);
+    if (room > 0) {
+      roomEl.value = formatInputNumber(room);
+      if (roomAutoBadge) roomAutoBadge.classList.remove('hidden');
+      checkOverContrib();
+    }
+  });
+}
+
+
+/* =============================================
    4. ADVANCED SETTINGS TOGGLE
    ============================================= */
 const advancedToggle = document.getElementById('advanced-toggle');
@@ -563,6 +613,9 @@ if (resetBtn) {
     annualLimitEl.value  = formatInputNumber(7000);
     inflationEl.value    = '2.1';
     if (lumpSumEl) lumpSumEl.value = formatInputNumber(0);
+    if (birthYearEl) birthYearEl.value = '';
+    if (roomAutoBadge) roomAutoBadge.classList.add('hidden');
+    roomEl.value = formatInputNumber(95000);
 
     document.querySelectorAll('.preset-btn').forEach(b => b.classList.remove('is-active'));
 

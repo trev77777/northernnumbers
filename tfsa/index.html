@@ -413,7 +413,7 @@
             </p>
             <ol>
               <li>Enter your current TFSA balance (enter 0 if you're just starting).</li>
-              <li>Enter your available contribution room — find this in <a href="https://www.canada.ca/en/revenue-agency/services/e-services/digital-services-individuals/account-individuals.html" target="_blank" rel="noopener" style="color:var(--color-primary);text-decoration:underline;">CRA My Account</a>.</li>
+              <li>Enter your birth year — we'll estimate your contribution room automatically.</li>
               <li>Enter how much you plan to contribute and how often.</li>
               <li>Set your expected annual return (6% is a common long-term estimate for index funds).</li>
               <li>Click <strong>Calculate TFSA Growth</strong>.</li>
@@ -445,9 +445,31 @@
               <p id="current-balance-error" class="form-error-msg" role="alert"></p>
             </div>
 
-            <!-- Contribution Room -->
+            <!-- Birth Year → Auto-calculates contribution room -->
             <div class="form-group">
-              <label class="form-label" for="contrib-room">Available Contribution Room</label>
+              <label class="form-label" for="birth-year">Year of Birth</label>
+              <div class="input-wrapper">
+                <input type="number" id="birth-year" class="form-input"
+                  placeholder="1990" min="1940" max="2008" step="1"
+                  aria-describedby="birth-year-hint birth-year-error" />
+              </div>
+              <p id="birth-year-hint" class="field-help">
+                We'll estimate your TFSA contribution room based on the year you turned 18.
+                TFSA eligibility started in 2009 — if you were born in 1991 or earlier, your room starts from 2009.
+              </p>
+              <p id="birth-year-error" class="form-error-msg" role="alert"></p>
+            </div>
+
+            <!-- Contribution Room — auto-filled from birth year, still editable -->
+            <div class="form-group">
+              <label class="form-label" for="contrib-room">
+                Available Contribution Room
+                <span id="room-auto-badge" class="hidden" style="
+                  font-size:var(--text-xs);font-weight:600;color:var(--color-success);
+                  background:var(--color-success-light);padding:2px 8px;
+                  border-radius:var(--radius-full);margin-left:var(--space-2);
+                ">Auto-calculated</span>
+              </label>
               <div class="input-wrapper">
                 <span class="input-prefix" aria-hidden="true">$</span>
                 <input type="text" id="contrib-room" class="form-input has-prefix"
@@ -455,9 +477,10 @@
                   aria-describedby="contrib-room-hint contrib-room-error" />
               </div>
               <p id="contrib-room-hint" class="field-help">
-                This is how much you can contribute today without a penalty.
-                Find your exact amount in <a href="https://www.canada.ca/en/revenue-agency/services/e-services/digital-services-individuals/account-individuals.html" target="_blank" rel="noopener">CRA My Account</a>.
-                If you've been eligible since 2009 and never contributed, your room is $95,000 in 2026.
+                This is your estimated maximum room if you've never contributed.
+                <strong>Always verify your exact amount in <a href="https://www.canada.ca/en/revenue-agency/services/e-services/digital-services-individuals/account-individuals.html" target="_blank" rel="noopener">CRA My Account</a></strong>
+                — past contributions and withdrawals will reduce this number.
+                You can edit this field to match your actual room.
               </p>
               <p id="contrib-room-error" class="form-error-msg" role="alert"></p>
             </div>
