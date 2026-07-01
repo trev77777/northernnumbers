@@ -521,6 +521,9 @@ function calculate() {
       window.scrollTo({ top, behavior: 'smooth' });
     }
   }
+
+  // Store for copy button
+  window._mortgageResults = {
     payment: formatCAD(paymentAmount),
     freq: freqLabel,
     baseMortgage: formatCAD(baseMortgage),
