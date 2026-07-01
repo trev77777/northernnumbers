@@ -816,7 +816,12 @@ function renderResults(data, values) {
 
   if (retirementAge >= 65) rrifNote.style.display = 'block';
 
-  // Store results for copy button
+  // Scroll to results heading
+  const resultsHeading = document.getElementById('rrsp-results-heading');
+  if (resultsHeading) {
+    const top = resultsHeading.getBoundingClientRect().top + window.scrollY - 80;
+    window.scrollTo({ top, behavior: 'smooth' });
+  }
   window._rrspResults = {
     futureValue: formatCAD(finalBalance),
     taxRefund: formatCAD(taxRefund),

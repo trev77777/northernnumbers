@@ -572,8 +572,11 @@ function renderResults(data, values) {
   renderGrowthTable(schedule);
 
   // Scroll to results on mobile
-  if (window.innerWidth < 900) {
-    resultsContent.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+  // Scroll to results heading
+  const resultsHeading = document.getElementById('tfsa-results-heading');
+  if (resultsHeading) {
+    const top = resultsHeading.getBoundingClientRect().top + window.scrollY - 80;
+    window.scrollTo({ top, behavior: 'smooth' });
   }
 }
 
