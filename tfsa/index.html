@@ -432,20 +432,7 @@
 
           <form id="tfsa-form" novalidate aria-label="TFSA calculator inputs">
 
-            <!-- Current Balance -->
-            <div class="form-group">
-              <label class="form-label" for="current-balance">Current TFSA Balance</label>
-              <div class="input-wrapper">
-                <span class="input-prefix" aria-hidden="true">$</span>
-                <input type="text" id="current-balance" class="form-input has-prefix"
-                  placeholder="0" inputmode="numeric" autocomplete="off" value="0"
-                  aria-describedby="current-balance-error" />
-              </div>
-              <p class="field-help">Enter 0 if you haven't started yet.</p>
-              <p id="current-balance-error" class="form-error-msg" role="alert"></p>
-            </div>
-
-            <!-- Birth Year → Auto-calculates contribution room -->
+            <!-- 1. Year of Birth -->
             <div class="form-group">
               <label class="form-label" for="birth-year">Year of Birth</label>
               <div class="input-wrapper">
@@ -454,13 +441,26 @@
                   aria-describedby="birth-year-hint birth-year-error" />
               </div>
               <p id="birth-year-hint" class="field-help">
-                We'll estimate your TFSA contribution room based on the year you turned 18.
+                We'll use this to estimate your lifetime TFSA contribution room.
                 TFSA eligibility started in 2009 — if you were born in 1991 or earlier, your room starts from 2009.
               </p>
               <p id="birth-year-error" class="form-error-msg" role="alert"></p>
             </div>
 
-            <!-- Contribution Room — auto-filled from birth year, still editable -->
+            <!-- 2. Current TFSA Balance -->
+            <div class="form-group">
+              <label class="form-label" for="current-balance">Current TFSA Balance</label>
+              <div class="input-wrapper">
+                <span class="input-prefix" aria-hidden="true">$</span>
+                <input type="text" id="current-balance" class="form-input has-prefix"
+                  placeholder="0" inputmode="numeric" autocomplete="off" value="0"
+                  aria-describedby="current-balance-error" />
+              </div>
+              <p class="field-help">The total currently sitting in all your TFSAs. Enter 0 if you're just starting.</p>
+              <p id="current-balance-error" class="form-error-msg" role="alert"></p>
+            </div>
+
+            <!-- 3. Available Contribution Room — auto-filled (lifetime room minus balance), still editable -->
             <div class="form-group">
               <label class="form-label" for="contrib-room">
                 Available Contribution Room
@@ -477,10 +477,10 @@
                   aria-describedby="contrib-room-hint contrib-room-error" />
               </div>
               <p id="contrib-room-hint" class="field-help">
-                This is your estimated maximum room if you've never contributed.
-                <strong>Always verify your exact amount in <a href="https://www.canada.ca/en/revenue-agency/services/e-services/digital-services-individuals/account-individuals.html" target="_blank" rel="noopener">CRA My Account</a></strong>
-                — past contributions and withdrawals will reduce this number.
-                You can edit this field to match your actual room.
+                Your estimated room = lifetime limit minus your current balance.
+                <strong>Always verify in <a href="https://www.canada.ca/en/revenue-agency/services/e-services/digital-services-individuals/account-individuals.html" target="_blank" rel="noopener">CRA My Account</a></strong>
+                — past withdrawals and contributions affect your real number.
+                You can edit this field to match your exact CRA amount.
               </p>
               <p id="contrib-room-error" class="form-error-msg" role="alert"></p>
             </div>
