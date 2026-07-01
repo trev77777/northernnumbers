@@ -402,40 +402,46 @@ function checkOverContrib() {
   const room         = parseInputNumber(roomEl.value);
   const contribution = parseInputNumber(contributionEl.value);
   const frequency    = frequencyEl.value;
+  const lumpSum      = parseInputNumber(lumpSumEl?.value || '0');
 
-  // Don't warn if either field is empty / zero
-  if (!room || !contribution) {
+  // Don't warn if no room or no contribution entered
+  if (!room || (!contribution && !lumpSum)) {
     overContribWarning.classList.remove('is-visible');
     return;
   }
 
-  // One-time: just compare directly
-  if (frequency === 'onetime') {
-    overContribWarning.classList.toggle('is-visible', contribution > room);
-    return;
-  }
-
-  // For recurring: only warn if the ANNUAL total in year 1 exceeds current room.
-  // We don't warn for future years because new room accumulates every January.
-  const annualContrib = toAnnualContribution(contribution, frequency);
-  const isOver = annualContrib > room;
+  // Year 1 total = lump sum + annual recurring contributions
+  const annualContrib  = frequency === 'onetime'
+    ? contribution
+    : toAnnualContribution(contribution, frequency);
+  const year1Total = lumpSum + annualContrib;
+  const isOver     = year1Total > room;
 
   if (isOver) {
-    const annualFormatted = new Intl.NumberFormat('en-CA', {
+    const fmt = (n) => new Intl.NumberFormat('en-CA', {
       style: 'currency', currency: 'CAD',
       minimumFractionDigits: 0, maximumFractionDigits: 0
-    }).format(annualContrib);
-    overContribWarning.innerHTML = `⚠️ <strong>Heads up — possible over-contribution in year 1.</strong>
-      At this frequency, your contributions total <strong>${annualFormatted}/year</strong>,
-      which exceeds your available room of <strong>${new Intl.NumberFormat('en-CA', {style:'currency',currency:'CAD',minimumFractionDigits:0,maximumFractionDigits:0}).format(room)}</strong>.
-      The CRA charges 1% per month on the excess. Verify your room before contributing.`;
+    }).format(n);
+
+    let msg = `⚠️ <strong>Heads up — possible over-contribution in year 1.</strong> `;
+    if (lumpSum > 0 && annualContrib > 0) {
+      msg += `Your lump sum (${fmt(lumpSum)}) plus recurring contributions (${fmt(annualContrib)}/year) total <strong>${fmt(year1Total)}</strong>, which exceeds your available room of <strong>${fmt(room)}</strong>.`;
+    } else if (lumpSum > 0) {
+      msg += `Your lump sum of <strong>${fmt(lumpSum)}</strong> exceeds your available room of <strong>${fmt(room)}</strong>.`;
+    } else {
+      msg += `At this frequency, your contributions total <strong>${fmt(annualContrib)}/year</strong>, which exceeds your available room of <strong>${fmt(room)}</strong>.`;
+    }
+    msg += ` The CRA charges 1% per month on the excess. Verify your room before contributing.`;
+    overContribWarning.innerHTML = msg;
   }
+
   overContribWarning.classList.toggle('is-visible', isOver);
 }
 
 roomEl.addEventListener('input', checkOverContrib);
 contributionEl.addEventListener('input', checkOverContrib);
 frequencyEl.addEventListener('change', checkOverContrib);
+if (lumpSumEl) lumpSumEl.addEventListener('input', checkOverContrib);
 
 
 /* =============================================
@@ -661,6 +667,6 @@ form.querySelectorAll('input, select').forEach(el => {
   roomEl.value         = formatInputNumber(95000);
   contributionEl.value = formatInputNumber(7000);
   annualLimitEl.value  = formatInputNumber(7000);
-  // Don't trigger over-contrib warning on page load
-  // — wait for user interaction
+  if (lumpSumEl) lumpSumEl.value = formatInputNumber(0);
+  if (pastContribEl) pastContribEl.value = formatInputNumber(0);
 })();
