@@ -78,6 +78,27 @@ function formatCAD(amount) {
 }
 
 /**
+ * Format a raw number with thousands commas, no decimals.
+ * Used for input field display. e.g. 500000 → "500,000"
+ */
+function formatInputNumber(value) {
+  const num = parseFloat(String(value).replace(/[^0-9.]/g, ''));
+  if (isNaN(num)) return '';
+  return new Intl.NumberFormat('en-CA', {
+    minimumFractionDigits: 0,
+    maximumFractionDigits: 0
+  }).format(num);
+}
+
+/**
+ * Strip formatting from an input field value → raw number.
+ * e.g. "500,000" → 500000
+ */
+function parseInputNumber(value) {
+  return parseFloat(String(value).replace(/[^0-9.]/g, '')) || 0;
+}
+
+/**
  * Format a number as a percentage string.
  * e.g. 0.2345 → "23.45%"
  */
@@ -92,6 +113,44 @@ function formatPct(decimal) {
 function formatMonthYear(date) {
   return date.toLocaleDateString('en-CA', { month: 'long', year: 'numeric' });
 }
+
+
+/* =============================================
+   3b. LIVE INPUT FORMATTING
+   Attach comma-formatting to dollar inputs as
+   the user types. Preserves cursor position.
+   ============================================= */
+function attachInputFormatter(inputEl) {
+  function formatValue() {
+    // Only format dollar inputs (not % mode)
+    if (inputEl === downPaymentEl && state.dpType === 'percent') return;
+
+    const raw = this.value.replace(/[^0-9]/g, '');
+    const num = parseInt(raw, 10);
+
+    if (raw === '') { this.value = ''; return; }
+
+    const formatted = isNaN(num) ? '' : new Intl.NumberFormat('en-CA', {
+      minimumFractionDigits: 0, maximumFractionDigits: 0
+    }).format(num);
+
+    // Preserve cursor position
+    const selStart = this.selectionStart;
+    const prevLen  = this.value.length;
+    this.value     = formatted;
+    const newLen   = this.value.length;
+    const newPos   = Math.max(0, selStart + (newLen - prevLen));
+    try { this.setSelectionRange(newPos, newPos); } catch(e) {}
+  }
+
+  // Use both input and change to catch iOS Safari
+  inputEl.addEventListener('input',  formatValue);
+  inputEl.addEventListener('change', formatValue);
+}
+
+attachInputFormatter(purchasePriceEl);
+attachInputFormatter(downPaymentEl);
+
 
 
 /* =============================================
@@ -245,9 +304,9 @@ function clearError(inputEl, errorEl) {
 function validateInputs() {
   let valid = true;
 
-  // Purchase price
+  // Purchase price — strip commas before parsing
   const priceErrorEl = document.getElementById('purchase-price-error');
-  const price = parseFloat(purchasePriceEl.value);
+  const price = parseInputNumber(purchasePriceEl.value);
   if (!price || price < 50000) {
     setError(purchasePriceEl, priceErrorEl, 'Please enter a purchase price of at least $50,000.');
     valid = false;
@@ -255,14 +314,16 @@ function validateInputs() {
     clearError(purchasePriceEl, priceErrorEl);
   }
 
-  // Down payment
+  // Down payment — strip commas before parsing
   const dpErrorEl = document.getElementById('down-payment-error');
-  let downPayment = parseFloat(downPaymentEl.value);
+  let downPayment = parseInputNumber(downPaymentEl.value);
   if (isNaN(downPayment) || downPayment < 0) {
     setError(downPaymentEl, dpErrorEl, 'Please enter a valid down payment.');
     valid = false;
   } else {
     if (state.dpType === 'percent') {
+      // In percent mode, value is already a plain number (no commas)
+      downPayment = parseFloat(downPaymentEl.value) || 0;
       downPayment = price * (downPayment / 100);
     }
     const dpRatio = price > 0 ? downPayment / price : 0;
@@ -277,7 +338,7 @@ function validateInputs() {
     }
   }
 
-  // Interest rate
+  // Interest rate — plain number, no formatting needed
   const rateErrorEl = document.getElementById('interest-rate-error');
   const rate = parseFloat(interestRateEl.value);
   if (!rate || rate < 0.1 || rate > 25) {
@@ -289,10 +350,13 @@ function validateInputs() {
 
   if (!valid) return { valid: false };
 
-  const rawDp = parseFloat(downPaymentEl.value);
-  const resolvedDp = state.dpType === 'percent'
-    ? price * (rawDp / 100)
-    : rawDp;
+  // Resolve final down payment value
+  let resolvedDp;
+  if (state.dpType === 'percent') {
+    resolvedDp = price * ((parseFloat(downPaymentEl.value) || 0) / 100);
+  } else {
+    resolvedDp = parseInputNumber(downPaymentEl.value);
+  }
 
   return {
     valid: true,
@@ -404,9 +468,66 @@ function calculate() {
   // Render amortization schedule
   renderAmortTable(schedule);
 
-  // Scroll to results on mobile
-  if (window.innerWidth < 900) {
-    resultsContent.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+  // Input summary pills
+  const summaryBox = document.getElementById('result-summary-box');
+  if (summaryBox) {
+    const dpDisplay = state.dpType === 'percent'
+      ? `${downPaymentEl.value}% down`
+      : `${formatCAD(downPayment)} down`;
+    summaryBox.innerHTML = `
+      <p style="font-size:var(--text-xs);font-weight:600;color:var(--color-text-muted);text-transform:uppercase;letter-spacing:0.05em;margin-bottom:var(--space-3);">Your mortgage is based on</p>
+      <div style="display:flex;flex-wrap:wrap;gap:var(--space-3);">
+        <span class="summary-tag">🏠 ${formatCAD(price)}</span>
+        <span class="summary-tag">💰 ${dpDisplay}</span>
+        <span class="summary-tag">📈 ${rate * 100}% rate</span>
+        <span class="summary-tag">📅 ${amortYears} yr amort</span>
+      </div>`;
+    summaryBox.classList.remove('hidden');
+  }
+
+  // Accelerated savings card
+  const savingsCard = document.getElementById('savings-card');
+  if (savingsCard) {
+    if (frequency === 'accelerated') {
+      // Compare against standard monthly
+      const monthlyRate2  = getEffectiveRatePerPeriod(rate, 12);
+      const monthlyPmt    = calcPayment(totalMortgage, monthlyRate2, amortYears * 12);
+      const monthlySchedule = buildAmortSchedule(totalMortgage, monthlyRate2, monthlyPmt, 12, startDate);
+      const monthlyInterest = monthlySchedule.reduce((s, r) => s + r.interest, 0);
+      const interestSaved   = monthlyInterest - totalInterest;
+      const monthsSaved     = (monthlySchedule.length - schedule.length) * 12;
+      const yearsSaved      = Math.floor(Math.abs(monthsSaved) / 12);
+      const moSaved         = Math.abs(monthsSaved) % 12;
+      const timeSavedText   = yearsSaved > 0
+        ? `${yearsSaved} yr${yearsSaved > 1 ? 's' : ''} ${moSaved > 0 ? moSaved + ' mo' : ''}`
+        : `${moSaved} months`;
+
+      document.getElementById('savings-monthly-total').textContent  = formatCAD(totalMortgage + monthlyInterest);
+      document.getElementById('savings-accel-total').textContent    = formatCAD(totalPayments);
+      document.getElementById('savings-interest-saved').textContent = formatCAD(interestSaved);
+      document.getElementById('savings-time-saved').textContent     = timeSavedText;
+      savingsCard.classList.remove('hidden');
+    } else {
+      savingsCard.classList.add('hidden');
+    }
+  }
+
+  // Store for copy
+  window._mortgageResults = {
+    payment: formatCAD(paymentAmount),
+    freq: freqLabel,
+    baseMortgage: formatCAD(baseMortgage),
+    totalMortgage: formatCAD(totalMortgage),
+    totalInterest: formatCAD(totalInterest),
+    totalPayments: formatCAD(totalPayments),
+    payoff: payoffDate ? formatMonthYear(payoffDate) : `~${schedule.length} years`
+  };
+
+  // Scroll to results heading
+  const resultsHeading = document.getElementById('results-heading');
+  if (resultsHeading) {
+    const top = resultsHeading.getBoundingClientRect().top + window.scrollY - 80;
+    window.scrollTo({ top, behavior: 'smooth' });
   }
 }
 
@@ -450,27 +571,28 @@ document.querySelectorAll('[data-dp-type]').forEach(btn => {
     const type = this.dataset.dpType;
     if (type === state.dpType) return;
 
-    const price = parseFloat(purchasePriceEl.value) || 0;
-    const currentVal = parseFloat(downPaymentEl.value) || 0;
+    const price      = parseInputNumber(purchasePriceEl.value);
+    const currentVal = state.dpType === 'percent'
+      ? parseFloat(downPaymentEl.value) || 0
+      : parseInputNumber(downPaymentEl.value);
 
-    // Convert value between $ and %
     if (type === 'percent' && price > 0) {
-      downPaymentEl.value = ((currentVal / price) * 100).toFixed(1);
-      dpPrefix.textContent = '%';
+      // Convert dollar → percentage
+      downPaymentEl.value       = ((currentVal / price) * 100).toFixed(1);
+      dpPrefix.textContent      = '%';
       downPaymentEl.placeholder = '20';
-      downPaymentEl.max = '99.9';
-      downPaymentEl.step = '0.5';
+      downPaymentEl.inputMode   = 'decimal';
     } else {
-      downPaymentEl.value = Math.round(price * (currentVal / 100));
-      dpPrefix.textContent = '$';
+      // Convert percentage → formatted dollar
+      const dollarVal           = Math.round(price * (currentVal / 100));
+      downPaymentEl.value       = formatInputNumber(dollarVal);
+      dpPrefix.textContent      = '$';
       downPaymentEl.placeholder = '100,000';
-      downPaymentEl.removeAttribute('max');
-      downPaymentEl.step = '1000';
+      downPaymentEl.inputMode   = 'numeric';
     }
 
     state.dpType = type;
 
-    // Update button states
     document.querySelectorAll('[data-dp-type]').forEach(b => {
       b.classList.toggle('is-active', b.dataset.dpType === type);
       b.setAttribute('aria-pressed', (b.dataset.dpType === type).toString());
@@ -502,18 +624,19 @@ document.querySelectorAll('[data-freq]').forEach(btn => {
    ============================================= */
 
 function checkCmhc() {
-  const price = parseFloat(purchasePriceEl.value) || 0;
-  let dp = parseFloat(downPaymentEl.value) || 0;
+  const price = parseInputNumber(purchasePriceEl.value);
+  let dp;
 
   if (state.dpType === 'percent') {
-    dp = price * (dp / 100);
+    dp = price * ((parseFloat(downPaymentEl.value) || 0) / 100);
+  } else {
+    dp = parseInputNumber(downPaymentEl.value);
   }
 
   const dpRatio   = price > 0 ? dp / price : 0;
   const needsCmhc = dpRatio >= 0.05 && dpRatio < 0.20 && price > 0 && dp > 0;
   const { rate }  = calcCmhc(dpRatio, price - dp);
 
-  // Update live rate label inside the notice
   const cmhcRateEl = document.getElementById('cmhc-rate-label');
   if (cmhcRateEl) {
     cmhcRateEl.textContent = `${(rate * 100).toFixed(2)}%`;
@@ -547,14 +670,148 @@ form.querySelectorAll('input, select').forEach(el => {
 
 
 /* =============================================
-   12. INIT — Set default start date to current month
+   12. INIT — Set default start date and format inputs
    ============================================= */
 (function init() {
-  const now = new Date();
+  const now  = new Date();
   const yyyy = now.getFullYear();
   const mm   = String(now.getMonth() + 1).padStart(2, '0');
-  startDateEl.value = `${yyyy}-${mm}`;
-
-  // Run initial CMHC check with default values
+  startDateEl.value     = `${yyyy}-${mm}`;
+  purchasePriceEl.value = formatInputNumber(500000);
+  downPaymentEl.value   = formatInputNumber(100000);
   checkCmhc();
 })();
+
+
+/* =============================================
+   13. RATE SLIDER ↔ INPUT SYNC
+   ============================================= */
+const rateSlider = document.getElementById('rate-slider');
+if (rateSlider) {
+  rateSlider.addEventListener('input', function () {
+    interestRateEl.value = parseFloat(this.value).toFixed(2);
+    checkCmhc();
+    if (!resultsContent.classList.contains('hidden')) calculate();
+  });
+  interestRateEl.addEventListener('input', function () {
+    const val = parseFloat(this.value);
+    if (!isNaN(val) && val >= 0.5 && val <= 10) rateSlider.value = val;
+  });
+}
+
+
+/* =============================================
+   14. PRESETS
+   ============================================= */
+const PRESETS = {
+  starter:  { price: 500000, dp: 25000,  rate: 5.25, amort: 25, freq: 'monthly' },
+  average:  { price: 750000, dp: 150000, rate: 5.25, amort: 25, freq: 'monthly' },
+  upsizer:  { price: 1100000, dp: 300000, rate: 5.00, amort: 25, freq: 'accelerated' },
+  renewal:  { price: 600000, dp: 120000, rate: 5.50, amort: 20, freq: 'accelerated' }
+};
+
+document.querySelectorAll('.preset-btn').forEach(btn => {
+  btn.addEventListener('click', function () {
+    const p = PRESETS[this.dataset.preset];
+    if (!p) return;
+
+    purchasePriceEl.value = formatInputNumber(p.price);
+    downPaymentEl.value   = formatInputNumber(p.dp);
+    interestRateEl.value  = p.rate;
+    amortizationEl.value  = p.amort;
+    if (rateSlider) rateSlider.value = p.rate;
+
+    // Reset dp mode to $
+    state.dpType          = 'dollar';
+    dpPrefix.textContent  = '$';
+    downPaymentEl.inputMode = 'numeric';
+    document.querySelectorAll('[data-dp-type]').forEach(b => {
+      b.classList.toggle('is-active', b.dataset.dpType === 'dollar');
+      b.setAttribute('aria-pressed', (b.dataset.dpType === 'dollar').toString());
+    });
+
+    // Set frequency
+    state.frequency = p.freq;
+    document.querySelectorAll('[data-freq]').forEach(b => {
+      b.classList.toggle('is-active', b.dataset.freq === p.freq);
+      b.setAttribute('aria-pressed', (b.dataset.freq === p.freq).toString());
+    });
+
+    document.querySelectorAll('.preset-btn').forEach(b => b.classList.remove('is-active'));
+    this.classList.add('is-active');
+
+    checkCmhc();
+    calculate();
+  });
+});
+
+
+/* =============================================
+   15. RESET
+   ============================================= */
+const resetBtn = document.getElementById('reset-btn');
+if (resetBtn) {
+  resetBtn.addEventListener('click', function () {
+    purchasePriceEl.value = formatInputNumber(500000);
+    downPaymentEl.value   = formatInputNumber(100000);
+    interestRateEl.value  = '5.25';
+    amortizationEl.value  = '25';
+    if (rateSlider) rateSlider.value = 5.25;
+
+    state.dpType    = 'dollar';
+    state.frequency = 'monthly';
+    dpPrefix.textContent = '$';
+
+    document.querySelectorAll('[data-dp-type]').forEach(b => {
+      b.classList.toggle('is-active', b.dataset.dpType === 'dollar');
+      b.setAttribute('aria-pressed', (b.dataset.dpType === 'dollar').toString());
+    });
+    document.querySelectorAll('[data-freq]').forEach(b => {
+      b.classList.toggle('is-active', b.dataset.freq === 'monthly');
+      b.setAttribute('aria-pressed', (b.dataset.freq === 'monthly').toString());
+    });
+    document.querySelectorAll('.preset-btn').forEach(b => b.classList.remove('is-active'));
+
+    resultsPlaceholder.classList.remove('hidden');
+    resultsContent.classList.add('hidden');
+    amortSection.setAttribute('hidden', '');
+
+    const summaryBox = document.getElementById('result-summary-box');
+    if (summaryBox) summaryBox.classList.add('hidden');
+    const savingsCard = document.getElementById('savings-card');
+    if (savingsCard) savingsCard.classList.add('hidden');
+    const copyBtn = document.getElementById('copy-results-btn');
+    if (copyBtn) { copyBtn.textContent = '📋 Copy Results to Clipboard'; copyBtn.classList.remove('copied'); }
+
+    checkCmhc();
+  });
+}
+
+
+/* =============================================
+   16. COPY RESULTS
+   ============================================= */
+const copyBtn = document.getElementById('copy-results-btn');
+if (copyBtn) {
+  copyBtn.addEventListener('click', function () {
+    const r = window._mortgageResults;
+    if (!r) return;
+    const text = [
+      '🏠 My Mortgage Results — Northern Numbers',
+      '─────────────────────────',
+      `💰 ${r.freq}:        ${r.payment}`,
+      `🏦 Base Mortgage:        ${r.baseMortgage}`,
+      `📋 Total Mortgage:       ${r.totalMortgage}`,
+      `💸 Total Interest:       ${r.totalInterest}`,
+      `💵 Total Payments:       ${r.totalPayments}`,
+      `📅 Payoff Date:          ${r.payoff}`,
+      '─────────────────────────',
+      'Calculated at northernnumbers.ca/mortgage/'
+    ].join('\n');
+    navigator.clipboard.writeText(text).then(() => {
+      copyBtn.textContent = '✅ Copied!';
+      copyBtn.classList.add('copied');
+      setTimeout(() => { copyBtn.textContent = '📋 Copy Results to Clipboard'; copyBtn.classList.remove('copied'); }, 2500);
+    }).catch(() => { copyBtn.textContent = 'Copy not supported in this browser'; });
+  });
+}

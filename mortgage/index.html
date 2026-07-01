@@ -49,6 +49,40 @@
 
   <!-- Mortgage-specific styles -->
   <style>
+    /* Quick start */
+    .quick-start { background:var(--color-primary-light);border:1px solid rgba(213,43,30,0.15);border-radius:var(--radius-md);padding:var(--space-5) var(--space-6);margin-bottom:var(--space-6); }
+    .quick-start-title { font-family:var(--font-heading);font-size:var(--text-base);font-weight:700;color:var(--color-primary);margin-bottom:var(--space-3);display:flex;align-items:center;gap:var(--space-2); }
+    .quick-start ol { list-style:decimal;padding-left:var(--space-5);display:flex;flex-direction:column;gap:var(--space-2); }
+    .quick-start ol li { font-size:var(--text-sm);color:var(--color-text);line-height:1.5; }
+
+    /* Presets */
+    .preset-group { display:flex;flex-wrap:wrap;gap:var(--space-2);margin-bottom:var(--space-5); }
+    .preset-btn { padding:var(--space-2) var(--space-4);font-size:var(--text-sm);font-weight:600;border:2px solid var(--color-border);border-radius:var(--radius-lg);background:var(--color-white);color:var(--color-text-muted);cursor:pointer;transition:all var(--transition-fast); }
+    .preset-btn:hover,.preset-btn.is-active { border-color:var(--color-primary);color:var(--color-primary);background:var(--color-primary-light); }
+
+    /* Summary pills */
+    .summary-tag { display:inline-flex;align-items:center;padding:var(--space-2) var(--space-4);background:var(--color-primary-light);border:1px solid rgba(213,43,30,0.2);border-radius:var(--radius-full);font-size:var(--text-sm);font-weight:600;color:var(--color-primary); }
+
+    /* Rate slider */
+    .rate-slider-wrap { margin-top:var(--space-2); }
+    .rate-slider-labels { display:flex;justify-content:space-between;font-size:var(--text-xs);color:var(--color-text-muted);margin-bottom:var(--space-1); }
+    #rate-slider { width:100%;accent-color:var(--color-primary);cursor:pointer; }
+
+    /* Button row */
+    .btn-row { display:flex;gap:var(--space-3);align-items:center;margin-top:var(--space-4); }
+    .btn-reset { padding:var(--space-3) var(--space-5);font-size:var(--text-base);font-weight:600;color:var(--color-text-muted);background:var(--color-white);border:2px solid var(--color-border);border-radius:var(--radius-lg);cursor:pointer;transition:all var(--transition-fast); }
+    .btn-reset:hover { border-color:var(--color-text-muted);color:var(--color-text); }
+
+    /* Copy button */
+    .copy-btn { display:flex;align-items:center;gap:var(--space-2);padding:var(--space-3) var(--space-5);font-size:var(--text-sm);font-weight:600;color:var(--color-text-muted);background:var(--color-white);border:2px solid var(--color-border);border-radius:var(--radius-lg);cursor:pointer;transition:all var(--transition-fast);margin-top:var(--space-4);width:100%;justify-content:center; }
+    .copy-btn:hover { border-color:var(--color-text);color:var(--color-text); }
+    .copy-btn.copied { border-color:var(--color-success);color:var(--color-success); }
+
+    /* Savings card */
+    .savings-card { margin-top:var(--space-5);padding:var(--space-5);background:linear-gradient(135deg,#F0FDF4,#DCFCE7);border:1px solid var(--color-success);border-radius:var(--radius-md); }
+    .savings-card-title { font-family:var(--font-heading);font-size:var(--text-base);font-weight:700;color:#166534;margin-bottom:var(--space-3); }
+    .savings-row { display:flex;justify-content:space-between;padding:var(--space-2) 0;border-bottom:1px solid rgba(22,163,74,0.2);font-size:var(--text-sm);color:#166534; }
+    .savings-row:last-child { border-bottom:none;font-weight:700;font-size:var(--text-base); }</style>
     /* Amortization table */
     .amort-section {
       margin-top: var(--space-8);
@@ -327,6 +361,29 @@
         <section class="calc-panel" aria-labelledby="inputs-heading">
           <h2 id="inputs-heading" class="calc-panel-title">Your Mortgage Details</h2>
 
+          <!-- How to use -->
+          <div class="quick-start" role="note">
+            <p class="quick-start-title"><span aria-hidden="true">📋</span> How to use this calculator</p>
+            <ol>
+              <li>Enter the home purchase price.</li>
+              <li>Enter your down payment ($ or %).</li>
+              <li>Enter your mortgage interest rate.</li>
+              <li>Select your amortization period and payment frequency.</li>
+              <li>Click <strong>Calculate Mortgage</strong>.</li>
+            </ol>
+          </div>
+
+          <!-- Presets -->
+          <div style="margin-bottom:var(--space-5);">
+            <p style="font-size:var(--text-sm);font-weight:600;color:var(--color-text-muted);margin-bottom:var(--space-2);">Quick start with a preset:</p>
+            <div class="preset-group" role="group">
+              <button type="button" class="preset-btn" data-preset="starter">🏠 First Home</button>
+              <button type="button" class="preset-btn" data-preset="average">🇨🇦 Average Canadian</button>
+              <button type="button" class="preset-btn" data-preset="upsizer">📈 Upsizer</button>
+              <button type="button" class="preset-btn" data-preset="renewal">🔄 Renewal</button>
+            </div>
+          </div>
+
           <form id="mortgage-form" novalidate aria-label="Mortgage calculator inputs">
 
             <!-- Purchase Price -->
@@ -409,6 +466,11 @@
                 <span class="input-suffix" aria-hidden="true">%</span>
               </div>
               <p id="interest-rate-error" class="form-error-msg" role="alert"></p>
+              <!-- Rate slider -->
+              <div class="rate-slider-wrap">
+                <div class="rate-slider-labels"><span>0.5%</span><span>5%</span><span>10%</span></div>
+                <input type="range" id="rate-slider" min="0.5" max="10" step="0.05" value="5.25" aria-label="Interest rate slider" />
+              </div>
             </div>
 
             <!-- Amortization Period -->
@@ -456,15 +518,13 @@
               />
             </div>
 
-            <!-- Calculate button -->
-            <button
-              type="submit"
-              class="btn btn-primary btn-calculate"
-              id="calculate-btn"
-              aria-label="Calculate mortgage payments"
-            >
-              Calculate Mortgage
-            </button>
+            <!-- Calculate + Reset -->
+            <div class="btn-row">
+              <button type="submit" class="btn btn-primary btn-calculate" id="calculate-btn" style="flex:1;" aria-label="Calculate mortgage payments">
+                Calculate Mortgage
+              </button>
+              <button type="button" id="reset-btn" class="btn-reset">Reset</button>
+            </div>
 
           </form>
 
@@ -494,6 +554,9 @@
 
           <!-- Results (shown after calculation) -->
           <div id="results-content" class="hidden">
+
+            <!-- Input summary -->
+            <div id="result-summary-box" class="hidden" style="margin-bottom:var(--space-5);padding:var(--space-4);background:var(--color-bg);border:1px solid var(--color-border);border-radius:var(--radius-md);"></div>
 
             <!-- Primary payment result -->
             <div style="text-align:center; padding: var(--space-6) 0; border-bottom: 2px solid var(--color-border); margin-bottom: var(--space-6);">
@@ -542,6 +605,18 @@
               </div>
             </div>
 
+            <!-- Accelerated savings card (shown when accelerated bi-weekly selected) -->
+            <div class="savings-card hidden" id="savings-card">
+              <p class="savings-card-title">⚡ Accelerated Bi-Weekly Savings</p>
+              <div class="savings-row"><span>Standard monthly payments</span><span id="savings-monthly-total">—</span></div>
+              <div class="savings-row"><span>With accelerated bi-weekly</span><span id="savings-accel-total">—</span></div>
+              <div class="savings-row"><span>Interest saved</span><span id="savings-interest-saved">—</span></div>
+              <div class="savings-row"><span>Time saved</span><span id="savings-time-saved">—</span></div>
+            </div>
+
+            <!-- Copy results -->
+            <button type="button" id="copy-results-btn" class="copy-btn">📋 Copy Results to Clipboard</button>
+
           </div><!-- /results-content -->
 
         </section>
@@ -585,33 +660,31 @@
       </div><!-- /amort-section -->
 
       <!-- SEO content block -->
-      <section style="margin-top: var(--space-16); padding-top: var(--space-10); border-top: 1px solid var(--color-border);" aria-labelledby="seo-heading">
-        <h2 id="seo-heading" style="font-size: var(--text-2xl); font-weight: 700; margin-bottom: var(--space-6);">How the Canadian Mortgage Calculator Works</h2>
-        <div style="display: grid; grid-template-columns: 1fr; gap: var(--space-6);">
-          <div>
-            <h3 style="font-size: var(--text-lg); font-weight: 600; margin-bottom: var(--space-2);">Semi-Annual Compounding</h3>
-            <p style="color: var(--color-text-muted); line-height: 1.7; font-size: var(--text-sm);">
-              Canadian mortgages are legally required to compound semi-annually (twice per year),
-              unlike American mortgages which compound monthly. Our calculator uses the correct
-              Canadian equivalent rate formula to give you accurate results.
-            </p>
-          </div>
-          <div>
-            <h3 style="font-size: var(--text-lg); font-weight: 600; margin-bottom: var(--space-2);">Accelerated Bi-Weekly Payments</h3>
-            <p style="color: var(--color-text-muted); line-height: 1.7; font-size: var(--text-sm);">
-              Accelerated bi-weekly payments are calculated as half your monthly payment, paid every
-              two weeks. This results in one extra monthly payment per year, which can save you
-              thousands in interest and shorten your amortization by years.
-            </p>
-          </div>
-          <div>
-            <h3 style="font-size: var(--text-lg); font-weight: 600; margin-bottom: var(--space-2);">CMHC Mortgage Insurance</h3>
-            <p style="color: var(--color-text-muted); line-height: 1.7; font-size: var(--text-sm);">
-              If your down payment is less than 20% of the purchase price, CMHC mortgage default
-              insurance is required. The premium ranges from 2.80% to 4.00% of the mortgage amount
-              and is typically added to your mortgage balance.
-            </p>
-          </div>
+      <section style="margin-top:var(--space-16);padding-top:var(--space-10);border-top:1px solid var(--color-border);" aria-labelledby="seo-heading">
+        <h2 id="seo-heading" style="font-size:var(--text-2xl);font-weight:700;margin-bottom:var(--space-10);">Understanding Your Canadian Mortgage</h2>
+        <div style="display:grid;grid-template-columns:1fr;gap:var(--space-10);">
+
+          <div><h3 style="font-size:var(--text-xl);font-weight:600;margin-bottom:var(--space-3);">🇨🇦 Semi-Annual Compounding</h3>
+          <p style="color:var(--color-text-muted);line-height:1.8;font-size:var(--text-base);">Canadian mortgages are legally required to compound semi-annually (twice per year) under the Interest Act of Canada. This is different from US mortgages, which compound monthly. This calculator uses the correct Canadian formula to convert your nominal annual rate to an effective monthly rate, giving you accurate payment amounts.</p></div>
+
+          <div><h3 style="font-size:var(--text-xl);font-weight:600;margin-bottom:var(--space-3);">⚡ Accelerated Bi-Weekly Payments</h3>
+          <p style="color:var(--color-text-muted);line-height:1.8;font-size:var(--text-base);">Accelerated bi-weekly payments are calculated as half your equivalent monthly payment, paid every two weeks. Because there are 26 bi-weekly periods per year (not 24), you effectively make one extra monthly payment per year. This can shave years off your amortization and save tens of thousands in interest over the life of your mortgage.</p></div>
+
+          <div><h3 style="font-size:var(--text-xl);font-weight:600;margin-bottom:var(--space-3);">🏦 CMHC Mortgage Insurance</h3>
+          <p style="color:var(--color-text-muted);line-height:1.8;font-size:var(--text-base);">If your down payment is less than 20% of the purchase price, CMHC (Canada Mortgage and Housing Corporation) mortgage default insurance is required by law. The premium ranges from 2.80% to 4.00% of the mortgage amount and is typically added directly to your mortgage balance. You pay it off over the life of your mortgage, not upfront.</p></div>
+
+          <div><h3 style="font-size:var(--text-xl);font-weight:600;margin-bottom:var(--space-3);">💰 Minimum Down Payment Rules</h3>
+          <p style="color:var(--color-text-muted);line-height:1.8;font-size:var(--text-base);">In Canada, the minimum down payment depends on the purchase price: 5% for homes under $500,000; 5% on the first $500,000 plus 10% on the remainder for homes between $500,000 and $999,999; and 20% for homes $1,000,000 or more. Homes over $1M do not qualify for CMHC insurance regardless of down payment.</p></div>
+
+          <div><h3 style="font-size:var(--text-xl);font-weight:600;margin-bottom:var(--space-3);">📅 Mortgage Terms vs Amortization</h3>
+          <p style="color:var(--color-text-muted);line-height:1.8;font-size:var(--text-base);">Your mortgage term (typically 1–5 years) is how long your current interest rate is locked in. Your amortization period (typically 25 years) is how long it would take to pay off the entire mortgage. At the end of each term, you renew at current rates. Most Canadians renew their mortgage 4–5 times over the life of a 25-year amortization.</p></div>
+
+          <div><h3 style="font-size:var(--text-xl);font-weight:600;margin-bottom:var(--space-3);">📉 How to Pay Your Mortgage Off Faster</h3>
+          <p style="color:var(--color-text-muted);line-height:1.8;font-size:var(--text-base);">Three of the most effective strategies: switch to accelerated bi-weekly payments (saves years off your amortization), make lump sum prepayments on renewal (most mortgages allow 10–20% per year), and increase your payment amount slightly above the minimum. Even $100/month extra on a $500,000 mortgage can save over $30,000 in interest and cut years off your timeline.</p></div>
+
+        </div>
+        <div style="margin-top:var(--space-10);padding:var(--space-4) var(--space-5);background:var(--color-bg);border:1px solid var(--color-border);border-radius:var(--radius-md);font-size:var(--text-sm);color:var(--color-text-muted);line-height:1.7;">
+          📋 Results are estimates based on fixed rates and do not account for prepayments, rate changes at renewal, or variable-rate mortgages. This is not financial advice — consult a mortgage broker or your financial institution for personalized guidance.
         </div>
       </section>
 
