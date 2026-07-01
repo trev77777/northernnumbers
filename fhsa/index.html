@@ -1,0 +1,869 @@
+<!DOCTYPE html>
+<html lang="en-CA">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <title>Canadian FHSA Calculator 2026 — First Home Savings Account | Northern Numbers</title>
+  <meta name="description" content="Free Canadian FHSA calculator. Project your First Home Savings Account growth, estimate your tax refund, track your down payment progress, and find out when you can buy your first home." />
+  <meta name="keywords" content="FHSA calculator Canada, first home savings account calculator, FHSA contribution room 2026, FHSA tax refund, first time home buyer Canada" />
+  <meta name="author" content="Northern Numbers" />
+  <meta name="robots" content="index, follow" />
+  <link rel="canonical" href="https://www.northernnumbers.ca/fhsa/" />
+
+  <meta property="og:title" content="Canadian FHSA Calculator 2026 — Northern Numbers" />
+  <meta property="og:description" content="Plan your first home purchase with Canada's most comprehensive FHSA calculator. Tax refund estimates, down payment progress, couple mode and more." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://www.northernnumbers.ca/fhsa/" />
+  <meta property="og:locale" content="en_CA" />
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "Canadian FHSA Calculator",
+    "url": "https://www.northernnumbers.ca/fhsa/",
+    "description": "Free Canadian First Home Savings Account calculator with tax refund estimation and down payment planning.",
+    "applicationCategory": "FinanceApplication",
+    "offers": { "@type": "Offer", "price": "0", "priceCurrency": "CAD" },
+    "provider": { "@type": "Organization", "name": "Northern Numbers", "url": "https://www.northernnumbers.ca" }
+  }
+  </script>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Poppins:wght@600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="../styles.css" />
+
+  <style>
+    /* Quick start */
+    .quick-start { background:var(--color-primary-light);border:1px solid rgba(213,43,30,0.15);border-radius:var(--radius-md);padding:var(--space-5) var(--space-6);margin-bottom:var(--space-6); }
+    .quick-start-title { font-family:var(--font-heading);font-size:var(--text-base);font-weight:700;color:var(--color-primary);margin-bottom:var(--space-3);display:flex;align-items:center;gap:var(--space-2); }
+    .quick-start ol { list-style:decimal;padding-left:var(--space-5);display:flex;flex-direction:column;gap:var(--space-2); }
+    .quick-start ol li { font-size:var(--text-sm);color:var(--color-text);line-height:1.5; }
+
+    /* Presets */
+    .preset-group { display:flex;flex-wrap:wrap;gap:var(--space-2);margin-bottom:var(--space-6); }
+    .preset-btn { padding:var(--space-2) var(--space-4);font-size:var(--text-sm);font-weight:600;border:2px solid var(--color-border);border-radius:var(--radius-lg);background:var(--color-white);color:var(--color-text-muted);cursor:pointer;transition:all var(--transition-fast); }
+    .preset-btn:hover,.preset-btn.is-active { border-color:var(--color-primary);color:var(--color-primary);background:var(--color-primary-light); }
+
+    /* Field help */
+    .field-help { font-size:var(--text-xs);color:var(--color-text-muted);margin-top:var(--space-1);line-height:1.5; }
+    .field-help a { color:var(--color-primary);text-decoration:underline; }
+
+    /* Advanced toggle */
+    .advanced-toggle { display:flex;align-items:center;gap:var(--space-2);background:none;border:none;font-family:var(--font-body);font-size:var(--text-sm);font-weight:600;color:var(--color-text-muted);cursor:pointer;padding:var(--space-3) 0;width:100%;text-align:left;border-top:1px solid var(--color-border);margin-top:var(--space-2);transition:color var(--transition-fast); }
+    .advanced-toggle:hover { color:var(--color-text); }
+    .advanced-toggle-icon { margin-left:auto;transition:transform var(--transition-base); }
+    .advanced-toggle[aria-expanded="true"] .advanced-toggle-icon { transform:rotate(180deg); }
+    .advanced-fields { display:none;padding-top:var(--space-4); }
+    .advanced-fields.is-open { display:block; }
+
+    /* Couple toggle */
+    .couple-toggle-wrap {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: var(--space-4) var(--space-5);
+      background: var(--color-bg);
+      border: 2px solid var(--color-border);
+      border-radius: var(--radius-md);
+      margin-bottom: var(--space-6);
+      cursor: pointer;
+      transition: border-color var(--transition-fast);
+    }
+    .couple-toggle-wrap:hover { border-color: var(--color-primary); }
+    .couple-toggle-wrap.is-active { border-color: var(--color-primary); background: var(--color-primary-light); }
+    .couple-toggle-label { font-size:var(--text-sm);font-weight:600;color:var(--color-text); }
+    .couple-toggle-sub { font-size:var(--text-xs);color:var(--color-text-muted); }
+    .toggle-switch { width:44px;height:24px;background:var(--color-border);border-radius:var(--radius-full);position:relative;transition:background var(--transition-fast);flex-shrink:0; }
+    .toggle-switch::after { content:'';position:absolute;width:18px;height:18px;background:white;border-radius:50%;top:3px;left:3px;transition:transform var(--transition-fast); }
+    .couple-toggle-wrap.is-active .toggle-switch { background:var(--color-primary); }
+    .couple-toggle-wrap.is-active .toggle-switch::after { transform:translateX(20px); }
+
+    .partner-section { display:none;padding:var(--space-5);background:var(--color-bg);border:1px solid var(--color-border);border-radius:var(--radius-md);margin-bottom:var(--space-5); }
+    .partner-section.is-open { display:block; }
+    .partner-section-title { font-family:var(--font-heading);font-size:var(--text-base);font-weight:700;color:var(--color-text);margin-bottom:var(--space-4); }
+
+    /* Warnings */
+    .over-contrib-warning { display:none;margin-top:var(--space-3);padding:var(--space-3) var(--space-4);background:var(--color-error-light);border:1px solid var(--color-error);border-radius:var(--radius-md);font-size:var(--text-xs);color:var(--color-error);line-height:1.6; }
+    .over-contrib-warning.is-visible { display:block; }
+    .lifetime-warning { display:none;margin-top:var(--space-2);padding:var(--space-3) var(--space-4);background:#FFFBEB;border:1px solid #FDE68A;border-radius:var(--radius-md);font-size:var(--text-xs);color:#92400E;line-height:1.6; }
+    .lifetime-warning.is-visible { display:block; }
+
+    /* Auto badge */
+    .auto-badge { font-size:var(--text-xs);font-weight:600;color:var(--color-success);background:var(--color-success-light);padding:2px 8px;border-radius:var(--radius-full);margin-left:var(--space-2); }
+
+    /* Summary pills */
+    .summary-tag { display:inline-flex;align-items:center;padding:var(--space-2) var(--space-4);background:var(--color-primary-light);border:1px solid rgba(213,43,30,0.2);border-radius:var(--radius-full);font-size:var(--text-sm);font-weight:600;color:var(--color-primary); }
+
+    /* Celebration */
+    .result-celebration { margin-bottom:var(--space-5);padding:var(--space-4) var(--space-5);background:linear-gradient(135deg,#F0FDF4,#DCFCE7);border:1px solid var(--color-success);border-radius:var(--radius-md);font-size:var(--text-sm);color:#166534;line-height:1.6; }
+
+    /* Result big */
+    .result-big { text-align:center;padding:var(--space-6) 0;border-bottom:2px solid var(--color-border);margin-bottom:var(--space-6); }
+    .result-big-label { font-size:var(--text-sm);color:var(--color-text-muted);margin-bottom:var(--space-2); }
+    .result-big-value { font-family:var(--font-heading);font-size:2.75rem;font-weight:800;color:var(--color-primary);line-height:1; }
+
+    /* Tax refund hero */
+    .refund-hero { background:linear-gradient(135deg,#065F46,#047857);border-radius:var(--radius-md);padding:var(--space-6);margin-bottom:var(--space-5);color:white;text-align:center; }
+    .refund-hero-label { font-size:var(--text-sm);font-weight:600;color:rgba(255,255,255,0.8);margin-bottom:var(--space-2);text-transform:uppercase;letter-spacing:0.05em; }
+    .refund-hero-amount { font-family:var(--font-heading);font-size:3rem;font-weight:800;color:white;line-height:1;margin-bottom:var(--space-2); }
+    .refund-hero-pct { font-size:var(--text-sm);color:rgba(255,255,255,0.75);margin-bottom:var(--space-4); }
+    .refund-hero-uses { display:flex;flex-direction:column;gap:var(--space-2);text-align:left;background:rgba(255,255,255,0.1);border-radius:var(--radius-md);padding:var(--space-4); }
+    .refund-hero-use { font-size:var(--text-sm);color:rgba(255,255,255,0.9);display:flex;align-items:center;gap:var(--space-2); }
+
+    /* Down payment progress card */
+    .progress-card { margin-bottom:var(--space-5);padding:var(--space-5);background:var(--color-white);border:1px solid var(--color-border);border-radius:var(--radius-md);box-shadow:var(--shadow-card); }
+    .progress-card-title { font-family:var(--font-heading);font-size:var(--text-base);font-weight:700;margin-bottom:var(--space-4); }
+    .progress-bar-wrap { background:var(--color-bg);border-radius:var(--radius-full);height:16px;overflow:hidden;margin-bottom:var(--space-2); }
+    .progress-bar-fill { height:100%;border-radius:var(--radius-full);background:linear-gradient(90deg,var(--color-primary),#FF6B6B);transition:width 0.6s ease; }
+    .progress-bar-fill.is-success { background:linear-gradient(90deg,#16A34A,#22C55E); }
+    .progress-pct { font-family:var(--font-heading);font-size:var(--text-2xl);font-weight:800;color:var(--color-primary); }
+    .progress-pct.is-success { color:var(--color-success); }
+    .progress-status { font-size:var(--text-sm);color:var(--color-text-muted);margin-top:var(--space-2); }
+    .progress-row { display:flex;justify-content:space-between;font-size:var(--text-sm);margin-bottom:var(--space-1); }
+    .progress-row-label { color:var(--color-text-muted); }
+    .progress-row-value { font-weight:600; }
+
+    /* Home purchase goal */
+    .goal-input-group { display:flex;gap:var(--space-3);align-items:flex-end;margin-bottom:var(--space-4); }
+    .goal-input-group .input-wrapper { flex:1; }
+    .goal-result { padding:var(--space-4);background:var(--color-bg);border:1px solid var(--color-border);border-radius:var(--radius-md);font-size:var(--text-sm);color:var(--color-text);line-height:1.6; }
+
+    /* Couple results */
+    .couple-result-badge { display:inline-flex;align-items:center;gap:var(--space-2);padding:var(--space-2) var(--space-4);background:var(--color-primary-light);border:1px solid rgba(213,43,30,0.2);border-radius:var(--radius-full);font-size:var(--text-xs);font-weight:700;color:var(--color-primary);margin-bottom:var(--space-4); }
+
+    /* Timeline milestones */
+    .timeline-list { display:flex;flex-direction:column;gap:var(--space-3);margin-top:var(--space-4); }
+    .timeline-item { display:flex;align-items:center;gap:var(--space-3);padding:var(--space-3) var(--space-4);background:var(--color-bg);border:1px solid var(--color-border);border-radius:var(--radius-md);font-size:var(--text-sm); }
+    .timeline-item.is-reached { background:var(--color-success-light);border-color:var(--color-success); }
+    .timeline-item.is-target { background:var(--color-primary-light);border-color:rgba(213,43,30,0.3); }
+    .timeline-dot { width:10px;height:10px;border-radius:50%;background:var(--color-text-light);flex-shrink:0; }
+    .timeline-item.is-reached .timeline-dot { background:var(--color-success); }
+    .timeline-item.is-target .timeline-dot { background:var(--color-primary); }
+    .timeline-inner { flex:1; }
+    .timeline-amount { font-weight:700;color:var(--color-text); }
+    .timeline-sub { font-size:var(--text-xs);color:var(--color-text-muted); }
+    .timeline-item.is-reached .timeline-sub { color:var(--color-success); }
+    .timeline-item.is-target .timeline-amount { color:var(--color-primary); }
+    .timeline-year { font-family:var(--font-heading);font-size:var(--text-base);font-weight:800;color:var(--color-text-muted); }
+    .timeline-item.is-reached .timeline-year { color:var(--color-success); }
+    .timeline-item.is-target .timeline-year { color:var(--color-primary); }
+
+    /* Priority card */
+    .priority-card { margin-top:var(--space-4);padding:var(--space-5);background:#EFF6FF;border:1px solid #BFDBFE;border-radius:var(--radius-md); }
+    .priority-title { font-family:var(--font-heading);font-size:var(--text-base);font-weight:700;color:#1E40AF;margin-bottom:var(--space-4); }
+    .priority-item { display:flex;align-items:center;gap:var(--space-3);padding:var(--space-3) 0;border-bottom:1px solid rgba(37,99,235,0.15);font-size:var(--text-sm);color:#1E40AF; }
+    .priority-item:last-child { border-bottom:none; }
+    .priority-num { width:28px;height:28px;border-radius:50%;background:#1E40AF;color:white;font-weight:700;font-size:var(--text-xs);display:flex;align-items:center;justify-content:center;flex-shrink:0; }
+    .priority-text-main { font-weight:600; }
+    .priority-text-sub { font-size:var(--text-xs);color:rgba(30,64,175,0.7); }
+
+    /* Strategy card */
+    .strategy-card { margin-top:var(--space-4);padding:var(--space-5);background:#EFF6FF;border:1px solid #BFDBFE;border-radius:var(--radius-md); }
+    .strategy-card-title { font-family:var(--font-heading);font-size:var(--text-base);font-weight:700;color:#1E40AF;margin-bottom:var(--space-3); }
+    .strategy-card p { font-size:var(--text-sm);color:#1E40AF;line-height:1.7; }
+
+    /* HBP combo card */
+    .hbp-card { margin-top:var(--space-4);padding:var(--space-5);background:linear-gradient(135deg,#F5F3FF,#EDE9FE);border:1px solid #C4B5FD;border-radius:var(--radius-md); }
+    .hbp-title { font-family:var(--font-heading);font-size:var(--text-base);font-weight:700;color:#5B21B6;margin-bottom:var(--space-3); }
+    .hbp-row { display:flex;justify-content:space-between;padding:var(--space-2) 0;border-bottom:1px solid rgba(139,92,246,0.2);font-size:var(--text-sm);color:#5B21B6; }
+    .hbp-row:last-child { border-bottom:none;font-weight:700;font-size:var(--text-base); }
+
+    /* Growth table */
+    .growth-section { margin-top:var(--space-8); }
+    .growth-toggle { display:flex;align-items:center;justify-content:space-between;width:100%;padding:var(--space-4) var(--space-6);background:var(--color-bg);border:1px solid var(--color-border);border-radius:var(--radius-md);font-family:var(--font-heading);font-size:var(--text-base);font-weight:600;color:var(--color-text);cursor:pointer;transition:background-color var(--transition-fast); }
+    .growth-toggle:hover { background:var(--color-border); }
+    .growth-toggle-icon { transition:transform var(--transition-base); }
+    .growth-toggle[aria-expanded="true"] .growth-toggle-icon { transform:rotate(180deg); }
+    .growth-table-wrapper { display:none;overflow-x:auto;margin-top:var(--space-4);border:1px solid var(--color-border);border-radius:var(--radius-md); }
+    .growth-table-wrapper.is-open { display:block; }
+    .growth-table { width:100%;border-collapse:collapse;font-size:var(--text-sm); }
+    .growth-table th { background:var(--color-bg);padding:var(--space-3) var(--space-4);text-align:right;font-weight:600;font-size:var(--text-xs);color:var(--color-text-muted);text-transform:uppercase;letter-spacing:0.05em;border-bottom:2px solid var(--color-border);white-space:nowrap; }
+    .growth-table th:first-child { text-align:left; }
+    .growth-table td { padding:var(--space-3) var(--space-4);text-align:right;border-bottom:1px solid var(--color-border);white-space:nowrap; }
+    .growth-table td:first-child { text-align:left;font-weight:600; }
+    .growth-table tr:last-child td { border-bottom:none; }
+    .growth-table tr:nth-child(even) { background:rgba(248,249,250,0.6); }
+    .growth-table .td-growth { color:var(--color-success); }
+
+    /* Button row */
+    .btn-row { display:flex;gap:var(--space-3);align-items:center;margin-top:var(--space-4); }
+    .btn-reset { padding:var(--space-3) var(--space-5);font-size:var(--text-base);font-weight:600;color:var(--color-text-muted);background:var(--color-white);border:2px solid var(--color-border);border-radius:var(--radius-lg);cursor:pointer;transition:all var(--transition-fast); }
+    .btn-reset:hover { border-color:var(--color-text-muted);color:var(--color-text); }
+
+    /* Copy button */
+    .copy-btn { display:flex;align-items:center;gap:var(--space-2);padding:var(--space-3) var(--space-5);font-size:var(--text-sm);font-weight:600;color:var(--color-text-muted);background:var(--color-white);border:2px solid var(--color-border);border-radius:var(--radius-lg);cursor:pointer;transition:all var(--transition-fast);margin-top:var(--space-4);width:100%;justify-content:center; }
+    .copy-btn:hover { border-color:var(--color-text);color:var(--color-text); }
+    .copy-btn.copied { border-color:var(--color-success);color:var(--color-success); }
+
+    /* Disclaimer */
+    .calc-disclaimer { margin-top:var(--space-6);padding:var(--space-3) var(--space-4);background:var(--color-bg);border:1px solid var(--color-border);border-radius:var(--radius-md);font-size:var(--text-xs);color:var(--color-text-muted);line-height:1.6; }
+
+    /* Contribution slider */
+    .contrib-slider-wrapper { margin-top:var(--space-3); }
+    .contrib-slider-labels { display:flex;justify-content:space-between;font-size:var(--text-xs);color:var(--color-text-muted);margin-bottom:var(--space-1); }
+    #contrib-slider { width:100%;accent-color:var(--color-primary);cursor:pointer; }
+
+    /* Deadline banner */
+    .deadline-banner { display:flex;align-items:center;gap:var(--space-3);padding:var(--space-3) var(--space-4);background:#FFFBEB;border:1px solid #FDE68A;border-radius:var(--radius-md);margin-bottom:var(--space-6);font-size:var(--text-sm);color:#92400E; }
+    .deadline-days { font-family:var(--font-heading);font-size:var(--text-xl);font-weight:800;color:#92400E;white-space:nowrap; }
+  </style>
+</head>
+<body>
+
+  <!-- HEADER -->
+  <header class="site-header" role="banner">
+    <div class="container header-inner">
+      <a href="/" class="logo" aria-label="Northern Numbers — Home">
+        <span class="logo-icon" aria-hidden="true">
+          <svg width="28" height="28" viewBox="0 0 28 28" fill="none" aria-hidden="true">
+            <path d="M14 2L16.5 8.5H23L17.5 12.5L19.5 19L14 15.5L8.5 19L10.5 12.5L5 8.5H11.5L14 2Z" fill="#D52B1E"/>
+            <rect x="12.5" y="19" width="3" height="5" fill="#D52B1E"/>
+          </svg>
+        </span>
+        <span class="logo-text">Northern Numbers</span>
+      </a>
+      <nav class="main-nav" aria-label="Main navigation">
+        <ul role="list">
+          <li><a href="/" class="nav-link">Home</a></li>
+          <li><a href="/mortgage/" class="nav-link">Mortgage</a></li>
+          <li><a href="/#calculators" class="nav-link">Finance</a></li>
+          <li><a href="/#calculators" class="nav-link">Tax</a></li>
+          <li><a href="/about.html" class="nav-link">About</a></li>
+          <li><a href="/contact.html" class="nav-link">Contact</a></li>
+        </ul>
+      </nav>
+      <button class="nav-toggle" aria-label="Open navigation menu" aria-expanded="false" aria-controls="mobile-menu">
+        <span class="hamburger-line"></span>
+        <span class="hamburger-line"></span>
+        <span class="hamburger-line"></span>
+      </button>
+    </div>
+    <div id="mobile-menu" class="mobile-menu" aria-hidden="true">
+      <nav aria-label="Mobile navigation">
+        <ul role="list">
+          <li><a href="/" class="mobile-nav-link">Home</a></li>
+          <li><a href="/mortgage/" class="mobile-nav-link">Mortgage</a></li>
+          <li><a href="/#calculators" class="mobile-nav-link">Finance</a></li>
+          <li><a href="/#calculators" class="mobile-nav-link">Tax</a></li>
+          <li><a href="/about.html" class="mobile-nav-link">About</a></li>
+          <li><a href="/contact.html" class="mobile-nav-link">Contact</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <!-- MAIN -->
+  <main id="main-content" class="calc-page">
+    <div class="container">
+
+      <nav class="calc-breadcrumb" aria-label="Breadcrumb">
+        <a href="/">Home</a>
+        <span class="calc-breadcrumb-sep" aria-hidden="true">›</span>
+        <span aria-current="page">FHSA Calculator</span>
+      </nav>
+
+      <div class="calc-page-header">
+        <h1 class="calc-page-title">Canadian FHSA Calculator</h1>
+        <p class="calc-page-desc">Plan your first home purchase — project your savings, estimate your tax refund, and find out exactly when you can buy.</p>
+      </div>
+
+      <!-- Deadline banner -->
+      <div class="deadline-banner" id="deadline-banner">
+        <span style="font-size:1.5rem;">🏠</span>
+        <div>
+          <strong id="deadline-days-text">FHSA contribution deadline:</strong>
+          December 31, 2026 — <span id="days-remaining">calculating...</span> days remaining to contribute for the 2026 tax year.
+        </div>
+      </div>
+
+      <div class="calc-layout">
+
+        <!-- LEFT: Inputs -->
+        <section class="calc-panel" aria-labelledby="fhsa-inputs-heading">
+          <h2 id="fhsa-inputs-heading" class="calc-panel-title">Your FHSA Details</h2>
+
+          <!-- Quick Start -->
+          <div class="quick-start" role="note">
+            <p class="quick-start-title"><span aria-hidden="true">📋</span> How to use this calculator</p>
+            <ol>
+              <li>Enter your income and province — we'll estimate your tax refund.</li>
+              <li>Enter your current age and the year you want to buy your home.</li>
+              <li>Enter your FHSA balance and contribution room.</li>
+              <li>Set your down payment goal to track your progress.</li>
+              <li>Click <strong>Calculate FHSA Growth</strong>.</li>
+            </ol>
+          </div>
+
+          <!-- Presets -->
+          <div style="margin-bottom:var(--space-2);">
+            <p style="font-size:var(--text-sm);font-weight:600;color:var(--color-text-muted);margin-bottom:var(--space-2);">Quick start with a preset:</p>
+            <div class="preset-group" role="group">
+              <button type="button" class="preset-btn" data-preset="firsthome">🏠 First Home Buyer</button>
+              <button type="button" class="preset-btn" data-preset="average">🇨🇦 Average Canadian</button>
+              <button type="button" class="preset-btn" data-preset="highincome">💰 High Income Saver</button>
+              <button type="button" class="preset-btn" data-preset="aggressive">🚀 Aggressive Saver</button>
+            </div>
+          </div>
+
+          <!-- Couple Mode Toggle -->
+          <div class="couple-toggle-wrap" id="couple-toggle" role="button" tabindex="0" aria-pressed="false">
+            <div>
+              <p class="couple-toggle-label">💑 I have a partner</p>
+              <p class="couple-toggle-sub">Combine both FHSAs for up to $80,000 tax-free</p>
+            </div>
+            <div class="toggle-switch" aria-hidden="true"></div>
+          </div>
+
+          <form id="fhsa-form" novalidate aria-label="FHSA calculator inputs">
+
+            <!-- === YOUR DETAILS === -->
+            <div class="form-group">
+              <label class="form-label" for="annual-income">Your Annual Income</label>
+              <div class="input-wrapper">
+                <span class="input-prefix" aria-hidden="true">$</span>
+                <input type="text" id="annual-income" class="form-input has-prefix" placeholder="85,000" inputmode="numeric" autocomplete="off" value="85,000" />
+              </div>
+              <p class="field-help">Used to estimate your marginal tax rate and FHSA tax refund.</p>
+              <p id="annual-income-error" class="form-error-msg" role="alert"></p>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label" for="province">Province or Territory</label>
+              <select id="province" class="form-select">
+                <option value="ON" selected>Ontario</option>
+                <option value="AB">Alberta</option>
+                <option value="BC">British Columbia</option>
+                <option value="MB">Manitoba</option>
+                <option value="SK">Saskatchewan</option>
+                <option value="QC">Quebec</option>
+                <option value="NB">New Brunswick</option>
+                <option value="NS">Nova Scotia</option>
+                <option value="PE">Prince Edward Island</option>
+                <option value="NL">Newfoundland &amp; Labrador</option>
+                <option value="YT">Yukon</option>
+                <option value="NT">Northwest Territories</option>
+                <option value="NU">Nunavut</option>
+              </select>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label" for="current-age">Your Current Age</label>
+              <div class="input-wrapper">
+                <input type="number" id="current-age" class="form-input has-suffix" placeholder="28" min="18" max="70" step="1" value="28" />
+                <span class="input-suffix" aria-hidden="true">yrs</span>
+              </div>
+              <p class="field-help">FHSA can be opened between ages 18 and 71. The account closes after 15 years if no home is purchased.</p>
+              <p id="current-age-error" class="form-error-msg" role="alert"></p>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label" for="purchase-year">Target Home Purchase Year</label>
+              <div class="input-wrapper">
+                <input type="number" id="purchase-year" class="form-input" placeholder="2030" min="2026" max="2050" step="1" value="2030" />
+              </div>
+              <p class="field-help">The year you plan to buy your home. We'll calculate how much you'll have saved by then.</p>
+              <p id="purchase-year-error" class="form-error-msg" role="alert"></p>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label" for="fhsa-balance">Current FHSA Balance</label>
+              <div class="input-wrapper">
+                <span class="input-prefix" aria-hidden="true">$</span>
+                <input type="text" id="fhsa-balance" class="form-input has-prefix" placeholder="0" inputmode="numeric" autocomplete="off" value="0" />
+              </div>
+              <p class="field-help">Total currently in your FHSA. Enter 0 if you haven't opened one yet.</p>
+              <p id="fhsa-balance-error" class="form-error-msg" role="alert"></p>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label" for="fhsa-room">
+                Available FHSA Contribution Room
+                <span id="room-auto-badge" class="auto-badge hidden">Auto-estimated</span>
+              </label>
+              <div class="input-wrapper">
+                <span class="input-prefix" aria-hidden="true">$</span>
+                <input type="text" id="fhsa-room" class="form-input has-prefix" placeholder="8,000" inputmode="numeric" autocomplete="off" value="8,000" />
+              </div>
+              <p class="field-help">
+                $8,000/year (up to $40,000 lifetime). Unused room from the prior year carries forward — max $8,000 carry-forward per year.
+                Find your exact room in <a href="https://www.canada.ca/en/revenue-agency/services/e-services/digital-services-individuals/account-individuals.html" target="_blank" rel="noopener">CRA My Account</a>.
+              </p>
+              <div id="lifetime-warning" class="lifetime-warning">⚠️ You're approaching the $40,000 FHSA lifetime contribution limit.</div>
+              <p id="fhsa-room-error" class="form-error-msg" role="alert"></p>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label" for="fhsa-contribution">Planned Contribution Amount</label>
+              <div class="input-wrapper">
+                <span class="input-prefix" aria-hidden="true">$</span>
+                <input type="text" id="fhsa-contribution" class="form-input has-prefix" placeholder="8,000" inputmode="numeric" autocomplete="off" value="8,000" />
+              </div>
+              <div class="contrib-slider-wrapper">
+                <div class="contrib-slider-labels"><span>$0</span><span>$4,000</span><span>$8,000</span></div>
+                <input type="range" id="contrib-slider" min="0" max="8000" step="100" value="8000" aria-label="Contribution slider" />
+              </div>
+              <div id="over-contrib-warning" class="over-contrib-warning" role="alert" aria-live="polite"></div>
+              <p id="fhsa-contribution-error" class="form-error-msg" role="alert"></p>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label" for="lump-sum">Year 1 Lump Sum <span class="form-hint">(optional)</span></label>
+              <div class="input-wrapper">
+                <span class="input-prefix" aria-hidden="true">$</span>
+                <input type="text" id="lump-sum" class="form-input has-prefix" placeholder="0" inputmode="numeric" autocomplete="off" value="0" />
+              </div>
+              <p class="field-help">Max $8,000 in year 1 (or $16,000 if you have carry-forward room). Leave as 0 if not needed.</p>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label" for="contrib-frequency">How often will you contribute?</label>
+              <select id="contrib-frequency" class="form-select">
+                <option value="yearly" selected>Yearly</option>
+                <option value="monthly">Monthly</option>
+                <option value="biweekly">Bi-Weekly</option>
+                <option value="weekly">Weekly</option>
+                <option value="quarterly">Quarterly</option>
+                <option value="onetime">One-Time</option>
+              </select>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label" for="annual-return">Expected Annual Return</label>
+              <div class="input-wrapper">
+                <input type="number" id="annual-return" class="form-input has-suffix" placeholder="6" min="0" max="30" step="0.1" value="6" />
+                <span class="input-suffix" aria-hidden="true">%</span>
+              </div>
+              <p class="field-help">Conservative portfolios 4–5%, balanced 6–7%, growth 8–10%. For a shorter timeline, consider more conservative investments.</p>
+              <p id="annual-return-error" class="form-error-msg" role="alert"></p>
+            </div>
+
+            <!-- DOWN PAYMENT GOAL -->
+            <div style="border-top:2px solid var(--color-border);margin:var(--space-5) 0;padding-top:var(--space-5);">
+              <p style="font-family:var(--font-heading);font-size:var(--text-base);font-weight:700;margin-bottom:var(--space-4);">🎯 Down Payment Goal</p>
+
+              <div class="form-group">
+                <label class="form-label" for="home-price">Target Home Price</label>
+                <div class="input-wrapper">
+                  <span class="input-prefix" aria-hidden="true">$</span>
+                  <input type="text" id="home-price" class="form-input has-prefix" placeholder="650,000" inputmode="numeric" autocomplete="off" value="650,000" />
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label class="form-label" for="down-payment-pct">Target Down Payment</label>
+                <div class="input-wrapper">
+                  <input type="number" id="down-payment-pct" class="form-input has-suffix" placeholder="10" min="5" max="100" step="0.5" value="10" />
+                  <span class="input-suffix" aria-hidden="true">%</span>
+                </div>
+                <p class="field-help">Minimum 5% for homes under $500K, 10% for homes $500K–$999K, 20% for homes $1M+.</p>
+              </div>
+            </div>
+
+            <!-- PARTNER SECTION -->
+            <div class="partner-section" id="partner-section">
+              <p class="partner-section-title">💑 Partner's FHSA Details</p>
+
+              <div class="form-group">
+                <label class="form-label" for="partner-balance">Partner's FHSA Balance</label>
+                <div class="input-wrapper">
+                  <span class="input-prefix" aria-hidden="true">$</span>
+                  <input type="text" id="partner-balance" class="form-input has-prefix" placeholder="0" inputmode="numeric" autocomplete="off" value="0" />
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label class="form-label" for="partner-contribution">Partner's Annual Contribution</label>
+                <div class="input-wrapper">
+                  <span class="input-prefix" aria-hidden="true">$</span>
+                  <input type="text" id="partner-contribution" class="form-input has-prefix" placeholder="8,000" inputmode="numeric" autocomplete="off" value="8,000" />
+                </div>
+                <p class="field-help">Max $8,000/year per person. Combined lifetime max: $80,000 as a couple.</p>
+              </div>
+
+              <div class="form-group">
+                <label class="form-label" for="partner-income">Partner's Annual Income</label>
+                <div class="input-wrapper">
+                  <span class="input-prefix" aria-hidden="true">$</span>
+                  <input type="text" id="partner-income" class="form-input has-prefix" placeholder="75,000" inputmode="numeric" autocomplete="off" value="75,000" />
+                </div>
+                <p class="field-help">Used to estimate partner's tax refund.</p>
+              </div>
+            </div>
+
+            <!-- ADVANCED SETTINGS -->
+            <button type="button" class="advanced-toggle" id="advanced-toggle" aria-expanded="false" aria-controls="advanced-fields">
+              <span>⚙️ Advanced Settings (Optional)</span>
+              <svg class="advanced-toggle-icon" width="18" height="18" viewBox="0 0 20 20" fill="none" aria-hidden="true">
+                <path d="M5 7.5L10 12.5L15 7.5" stroke="#6B7280" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </button>
+
+            <div id="advanced-fields" class="advanced-fields">
+              <div class="form-group">
+                <label class="form-label" for="annual-limit">Annual FHSA Limit</label>
+                <div class="input-wrapper">
+                  <span class="input-prefix" aria-hidden="true">$</span>
+                  <input type="text" id="annual-limit" class="form-input has-prefix" placeholder="8,000" inputmode="numeric" autocomplete="off" value="8,000" />
+                </div>
+                <p class="field-help">Currently $8,000/year (2026). Lifetime maximum is $40,000.</p>
+              </div>
+
+              <div class="form-group">
+                <label class="form-label" for="inflation-rate">Inflation Rate</label>
+                <div class="input-wrapper">
+                  <input type="number" id="inflation-rate" class="form-input has-suffix" placeholder="2.1" min="0" max="20" step="0.1" value="2.1" />
+                  <span class="input-suffix" aria-hidden="true">%</span>
+                </div>
+                <p class="field-help">Used to calculate inflation-adjusted value. Canada's long-term average is ~2%.</p>
+              </div>
+
+              <div class="form-group">
+                <label class="form-label" for="rrsp-balance">Existing RRSP Balance (for HBP)</label>
+                <div class="input-wrapper">
+                  <span class="input-prefix" aria-hidden="true">$</span>
+                  <input type="text" id="rrsp-balance" class="form-input has-prefix" placeholder="0" inputmode="numeric" autocomplete="off" value="0" />
+                </div>
+                <p class="field-help">If you have RRSP savings, you may also use the Home Buyers' Plan to withdraw up to $35,000 tax-free.</p>
+              </div>
+            </div>
+
+            <div class="btn-row">
+              <button type="submit" class="btn btn-primary btn-calculate" id="fhsa-calculate-btn" style="flex:1;">Calculate FHSA Growth</button>
+              <button type="button" id="fhsa-reset-btn" class="btn-reset">Reset</button>
+            </div>
+
+          </form>
+
+          <div style="margin-top:var(--space-6);padding:var(--space-4) var(--space-5);background:#EFF6FF;border:1px solid #BFDBFE;border-radius:var(--radius-md);font-size:var(--text-sm);color:#1E40AF;line-height:1.6;">
+            <strong style="display:block;margin-bottom:var(--space-1);">🇨🇦 FHSA Key Rules</strong>
+            Annual limit: <strong>$8,000</strong> · Lifetime limit: <strong>$40,000</strong> · Carry-forward: max $8,000/year ·
+            Account must close within 15 years or transfer to RRSP tax-free.
+            Find your room in <a href="https://www.canada.ca/en/revenue-agency/services/e-services/digital-services-individuals/account-individuals.html" target="_blank" rel="noopener" style="color:#1E40AF;font-weight:600;">CRA My Account</a>.
+          </div>
+
+        </section>
+
+        <!-- RIGHT: Results -->
+        <section class="calc-panel" aria-labelledby="fhsa-results-heading" aria-live="polite">
+          <h2 id="fhsa-results-heading" class="calc-panel-title">Your Results</h2>
+
+          <div id="fhsa-results-placeholder" class="result-placeholder">
+            <div class="result-placeholder-icon" aria-hidden="true">
+              <svg width="56" height="56" viewBox="0 0 56 56" fill="none">
+                <rect x="10" y="8" width="36" height="40" rx="4" stroke="#D1D5DB" stroke-width="2"/>
+                <path d="M18 20H38M18 28H38M18 36H28" stroke="#D1D5DB" stroke-width="2" stroke-linecap="round"/>
+              </svg>
+            </div>
+            <p>Fill in your details and click <strong>Calculate FHSA Growth</strong> to see your home buying plan.</p>
+          </div>
+
+          <div id="fhsa-results-content" class="hidden">
+
+            <!-- Couple badge -->
+            <div id="couple-result-badge" class="couple-result-badge hidden">💑 Couple Mode — Combined Results</div>
+
+            <!-- Input summary -->
+            <div id="result-summary-box" class="hidden" style="margin-bottom:var(--space-5);padding:var(--space-4);background:var(--color-bg);border:1px solid var(--color-border);border-radius:var(--radius-md);"></div>
+
+            <!-- Celebration -->
+            <div id="result-celebration" class="result-celebration hidden"></div>
+
+            <!-- Big FHSA value -->
+            <div class="result-big">
+              <p class="result-big-label" id="fhsa-value-label">Future FHSA Value</p>
+              <p id="result-future-value" class="result-big-value">—</p>
+            </div>
+
+            <!-- DOWN PAYMENT PROGRESS CARD -->
+            <div class="progress-card">
+              <p class="progress-card-title">🏠 Down Payment Progress</p>
+              <div style="display:flex;justify-content:space-between;align-items:baseline;margin-bottom:var(--space-2);">
+                <p id="progress-pct" class="progress-pct">0%</p>
+                <p id="progress-goal-text" style="font-size:var(--text-xs);color:var(--color-text-muted);">of goal</p>
+              </div>
+              <div class="progress-bar-wrap">
+                <div class="progress-bar-fill" id="progress-bar" style="width:0%"></div>
+              </div>
+              <p id="progress-status" class="progress-status">—</p>
+              <div style="margin-top:var(--space-4);display:flex;flex-direction:column;gap:var(--space-1);">
+                <div class="progress-row"><span class="progress-row-label">Your FHSA savings</span><span class="progress-row-value" id="prog-fhsa">—</span></div>
+                <div class="progress-row"><span class="progress-row-label">Target down payment</span><span class="progress-row-value" id="prog-target">—</span></div>
+                <div class="progress-row"><span class="progress-row-label">Still needed</span><span class="progress-row-value" id="prog-needed" style="color:var(--color-error);">—</span></div>
+                <div class="progress-row"><span class="progress-row-label" id="hbp-label">HBP available (RRSP)</span><span class="progress-row-value is-success" id="prog-hbp">—</span></div>
+              </div>
+            </div>
+
+            <!-- TAX REFUND HERO -->
+            <div class="refund-hero">
+              <p class="refund-hero-label">💰 Estimated Tax Refund This Year</p>
+              <p id="result-tax-refund" class="refund-hero-amount">—</p>
+              <p id="result-refund-pct" class="refund-hero-pct">—</p>
+              <div class="refund-hero-uses">
+                <p style="font-size:var(--text-xs);font-weight:700;color:rgba(255,255,255,0.6);text-transform:uppercase;letter-spacing:0.05em;margin-bottom:var(--space-1);">Put your refund toward:</p>
+                <div class="refund-hero-use">✅ Add it back into your FHSA</div>
+                <div class="refund-hero-use">✅ Boost your TFSA</div>
+                <div class="refund-hero-use">✅ Increase your down payment savings</div>
+                <div class="refund-hero-use">✅ Pay down high-interest debt</div>
+              </div>
+            </div>
+
+            <!-- SUMMARY ROWS -->
+            <div class="result-summary" role="list">
+              <div class="result-row" role="listitem">
+                <span class="result-row-label">Total Contributions</span>
+                <span class="result-row-value" id="result-total-contributions">—</span>
+              </div>
+              <div class="result-row" role="listitem">
+                <span class="result-row-label">Investment Growth</span>
+                <span class="result-row-value is-success" id="result-investment-growth">—</span>
+              </div>
+              <div class="result-row" role="listitem">
+                <span class="result-row-label">Inflation-Adjusted Value</span>
+                <span class="result-row-value" id="result-inflation-adjusted">—</span>
+              </div>
+              <div class="result-row" role="listitem">
+                <span class="result-row-label">Remaining FHSA Room</span>
+                <span class="result-row-value" id="result-remaining-room">—</span>
+              </div>
+              <div class="result-row" role="listitem">
+                <span class="result-row-label">Total Available for Down Payment</span>
+                <span class="result-row-value" id="result-total-downpayment" style="font-weight:800;">—</span>
+              </div>
+            </div>
+
+            <!-- HBP COMBINATION CARD -->
+            <div class="hbp-card" id="hbp-card">
+              <p class="hbp-title">🔗 FHSA + Home Buyers' Plan (HBP) Combined</p>
+              <div class="hbp-row"><span>Your FHSA savings</span><span id="hbp-fhsa-amount">—</span></div>
+              <div class="hbp-row"><span>RRSP HBP (up to $35,000)</span><span id="hbp-rrsp-amount">—</span></div>
+              <div class="hbp-row"><span id="hbp-couple-row" style="display:none">Partner FHSA</span><span id="hbp-partner-amount" style="display:none">—</span></div>
+              <div class="hbp-row"><span>Total down payment available</span><span id="hbp-total">—</span></div>
+            </div>
+
+            <!-- HOME PURCHASE TIMELINE -->
+            <div style="margin-top:var(--space-6);">
+              <p style="font-size:var(--text-sm);font-weight:600;margin-bottom:var(--space-3);">🗓 Home Purchase Savings Timeline</p>
+              <div class="timeline-list">
+                <div class="timeline-item" id="tl-25k">
+                  <div class="timeline-dot"></div>
+                  <div class="timeline-inner">
+                    <div class="timeline-amount">$25,000</div>
+                    <div class="timeline-sub" id="tl-25k-sub">—</div>
+                  </div>
+                  <span class="timeline-year" id="tl-25k-year">—</span>
+                </div>
+                <div class="timeline-item" id="tl-40k">
+                  <div class="timeline-dot"></div>
+                  <div class="timeline-inner">
+                    <div class="timeline-amount">$40,000 <span style="font-size:var(--text-xs);font-weight:400;">(FHSA lifetime max)</span></div>
+                    <div class="timeline-sub" id="tl-40k-sub">—</div>
+                  </div>
+                  <span class="timeline-year" id="tl-40k-year">—</span>
+                </div>
+                <div class="timeline-item" id="tl-50k">
+                  <div class="timeline-dot"></div>
+                  <div class="timeline-inner">
+                    <div class="timeline-amount">$50,000</div>
+                    <div class="timeline-sub" id="tl-50k-sub">—</div>
+                  </div>
+                  <span class="timeline-year" id="tl-50k-year">—</span>
+                </div>
+                <div class="timeline-item" id="tl-75k">
+                  <div class="timeline-dot"></div>
+                  <div class="timeline-inner">
+                    <div class="timeline-amount">$75,000</div>
+                    <div class="timeline-sub" id="tl-75k-sub">—</div>
+                  </div>
+                  <span class="timeline-year" id="tl-75k-year">—</span>
+                </div>
+                <div class="timeline-item" id="tl-target" style="display:none;">
+                  <div class="timeline-dot"></div>
+                  <div class="timeline-inner">
+                    <div class="timeline-amount" id="tl-target-label">Your Goal</div>
+                    <div class="timeline-sub" id="tl-target-sub">—</div>
+                  </div>
+                  <span class="timeline-year" id="tl-target-year">—</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- PRIORITY CARD -->
+            <div class="priority-card">
+              <p class="priority-title">📊 Where Should Your Next Dollar Go?</p>
+              <div id="priority-list">
+                <div class="priority-item">
+                  <div class="priority-num">1</div>
+                  <div><div class="priority-text-main">FHSA</div><div class="priority-text-sub">Tax deduction + tax-free growth for your home</div></div>
+                </div>
+                <div class="priority-item">
+                  <div class="priority-num">2</div>
+                  <div><div class="priority-text-main">Employer RRSP Match</div><div class="priority-text-sub">Free money — always capture the full match first</div></div>
+                </div>
+                <div class="priority-item">
+                  <div class="priority-num">3</div>
+                  <div><div class="priority-text-main">TFSA</div><div class="priority-text-sub">Tax-free growth with full flexibility</div></div>
+                </div>
+                <div class="priority-item">
+                  <div class="priority-num">4</div>
+                  <div><div class="priority-text-main">RRSP</div><div class="priority-text-sub">Great if income is high; also usable via HBP</div></div>
+                </div>
+              </div>
+            </div>
+
+            <!-- STRATEGY CARD -->
+            <div class="strategy-card">
+              <p class="strategy-card-title">💡 Personalized Strategy</p>
+              <p id="strategy-text">—</p>
+            </div>
+
+            <!-- DISCLAIMER -->
+            <div class="calc-disclaimer">
+              Results are estimates based on 2026 FHSA rules and constant return rates. Actual results will vary. This is not financial advice.
+            </div>
+
+            <!-- COPY BUTTON -->
+            <button type="button" id="copy-results-btn" class="copy-btn">📋 Copy Results to Clipboard</button>
+
+          </div>
+        </section>
+      </div>
+
+      <!-- YEAR-BY-YEAR TABLE -->
+      <div class="growth-section" id="growth-section" hidden>
+        <button type="button" class="growth-toggle" id="growth-toggle" aria-expanded="false" aria-controls="growth-table-wrapper">
+          <span>View Year-by-Year Growth</span>
+          <svg class="growth-toggle-icon" width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true">
+            <path d="M5 7.5L10 12.5L15 7.5" stroke="#1F2937" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </button>
+        <div id="growth-table-wrapper" class="growth-table-wrapper">
+          <table class="growth-table" aria-label="Year-by-year FHSA growth">
+            <thead>
+              <tr>
+                <th scope="col">Year</th>
+                <th scope="col">Age</th>
+                <th scope="col">Contribution</th>
+                <th scope="col">Growth</th>
+                <th scope="col">Balance</th>
+                <th scope="col">Room Left</th>
+              </tr>
+            </thead>
+            <tbody id="growth-tbody"></tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- EDUCATIONAL SECTION -->
+      <section style="margin-top:var(--space-16);padding-top:var(--space-10);border-top:1px solid var(--color-border);" aria-labelledby="fhsa-seo-heading">
+        <h2 id="fhsa-seo-heading" style="font-size:var(--text-2xl);font-weight:700;margin-bottom:var(--space-10);">Understanding the FHSA</h2>
+        <div style="display:grid;grid-template-columns:1fr;gap:var(--space-10);">
+
+          <div><h3 style="font-size:var(--text-xl);font-weight:600;margin-bottom:var(--space-3);">🏦 What is an FHSA?</h3>
+          <p style="color:var(--color-text-muted);line-height:1.8;font-size:var(--text-base);">The First Home Savings Account (FHSA) is a registered account introduced by the Canadian government in 2023. It combines the best features of the TFSA (tax-free growth and withdrawals) and the RRSP (tax-deductible contributions). You contribute with pre-tax dollars, your money grows tax-free, and you withdraw tax-free when you buy your first qualifying home. It's one of the most powerful savings tools ever created for first-time buyers in Canada.</p></div>
+
+          <div><h3 style="font-size:var(--text-xl);font-weight:600;margin-bottom:var(--space-3);">👤 Who Qualifies?</h3>
+          <p style="color:var(--color-text-muted);line-height:1.8;font-size:var(--text-base);">To open an FHSA you must: be a Canadian resident, be at least 18 years old, and be a first-time home buyer — meaning you have not owned a qualifying home that you lived in at any time during the current calendar year or the preceding four calendar years. If you owned a home more than 5 years ago, you may qualify again. You also cannot be older than 71 at the time you open the account.</p></div>
+
+          <div><h3 style="font-size:var(--text-xl);font-weight:600;margin-bottom:var(--space-3);">💰 Annual and Lifetime Contribution Limits</h3>
+          <p style="color:var(--color-text-muted);line-height:1.8;font-size:var(--text-base);">You can contribute up to <strong>$8,000 per year</strong> to your FHSA, with a <strong>$40,000 lifetime maximum</strong>. Unused annual room from the prior year carries forward — but only up to a maximum of $8,000 of carry-forward at a time. So if you contribute nothing in year 1, you can contribute up to $16,000 in year 2. Once you've hit $40,000 lifetime, no further contributions are allowed.</p></div>
+
+          <div><h3 style="font-size:var(--text-xl);font-weight:600;margin-bottom:var(--space-3);">📉 How the Tax Deduction Works</h3>
+          <p style="color:var(--color-text-muted);line-height:1.8;font-size:var(--text-base);">Every dollar you contribute to your FHSA is tax-deductible, just like an RRSP. If you're in a 33% combined marginal tax bracket and contribute $8,000, you could receive approximately $2,640 back as a tax refund. Unlike the RRSP, you can also choose to carry forward unused deductions to a future year when your income may be higher.</p></div>
+
+          <div><h3 style="font-size:var(--text-xl);font-weight:600;margin-bottom:var(--space-3);">🏠 Qualifying Home Purchase and Withdrawal Rules</h3>
+          <p style="color:var(--color-text-muted);line-height:1.8;font-size:var(--text-base);">To make a tax-free withdrawal from your FHSA, you must: be a first-time home buyer at the time of withdrawal, have a written agreement to buy or build a qualifying home before October 1 of the year after withdrawal, and intend to occupy the home as your principal residence within one year of purchase. The withdrawal is completely tax-free — no repayment required, unlike the RRSP Home Buyers' Plan.</p></div>
+
+          <div><h3 style="font-size:var(--text-xl);font-weight:600;margin-bottom:var(--space-3);">🔄 FHSA vs RRSP vs TFSA</h3>
+          <p style="color:var(--color-text-muted);line-height:1.8;font-size:var(--text-base);">The FHSA is designed specifically for first-time home buyers and offers the best of both worlds: tax-deductible contributions (like RRSP) and tax-free withdrawals for a home purchase (like TFSA). The TFSA is more flexible — no repayment required and you can withdraw for any reason — but contributions aren't deductible. The RRSP Home Buyers' Plan lets you withdraw up to $35,000 but you must repay it over 15 years. The FHSA has no repayment requirement, making it the preferred starting point for most first-time buyers.</p></div>
+
+          <div><h3 style="font-size:var(--text-xl);font-weight:600;margin-bottom:var(--space-3);">🔗 Can You Combine FHSA and the Home Buyers' Plan?</h3>
+          <p style="color:var(--color-text-muted);line-height:1.8;font-size:var(--text-base);">Yes — and this is one of the most powerful strategies available to Canadian first-time buyers. You can withdraw from your FHSA (up to $40,000 per person, tax-free, no repayment) AND use the RRSP Home Buyers' Plan (up to $35,000 per person, must repay over 15 years) for the same home purchase. As a couple, this could mean up to $150,000 combined for your down payment — $80,000 from two FHSAs plus $70,000 from two RRSPs via HBP.</p></div>
+
+          <div><h3 style="font-size:var(--text-xl);font-weight:600;margin-bottom:var(--space-3);">🚫 What If You Never Buy a House?</h3>
+          <p style="color:var(--color-text-muted);line-height:1.8;font-size:var(--text-base);">If you don't buy a home within 15 years of opening your FHSA, or by December 31 of the year you turn 71, you can transfer all funds to your RRSP or RRIF tax-free without affecting your RRSP contribution room. This makes the FHSA a no-lose proposition — worst case, you get a significant RRSP top-up with tax-deductible contributions and tax-deferred growth.</p></div>
+
+          <div><h3 style="font-size:var(--text-xl);font-weight:600;margin-bottom:var(--space-3);">📅 Important CRA Deadlines</h3>
+          <p style="color:var(--color-text-muted);line-height:1.8;font-size:var(--text-base);">FHSA contributions must be made by December 31 of each calendar year to count toward that year's room (unlike RRSP, there is no 60-day grace period). Your FHSA deduction can be claimed on your tax return for the year of contribution, or carried forward to any future year. Open your account before December 31 to start accumulating contribution room, even if you don't contribute anything right away.</p></div>
+
+          <div><h3 style="font-size:var(--text-xl);font-weight:600;margin-bottom:var(--space-3);">❓ Frequently Asked Questions</h3>
+          <div style="display:flex;flex-direction:column;gap:var(--space-5);">
+            <div><p style="font-weight:600;margin-bottom:var(--space-1);">Can I have multiple FHSAs?</p><p style="color:var(--color-text-muted);font-size:var(--text-sm);line-height:1.7;">Yes, but your combined contributions across all FHSAs cannot exceed $8,000 per year and $40,000 lifetime.</p></div>
+            <div><p style="font-weight:600;margin-bottom:var(--space-1);">Can both partners open an FHSA?</p><p style="color:var(--color-text-muted);font-size:var(--text-sm);line-height:1.7;">Yes — each eligible individual can open their own FHSA and contribute up to $40,000 lifetime. As a couple, you could have up to $80,000 in combined tax-free savings for your down payment.</p></div>
+            <div><p style="font-weight:600;margin-bottom:var(--space-1);">What can I invest in inside an FHSA?</p><p style="color:var(--color-text-muted);font-size:var(--text-sm);line-height:1.7;">Most registered investments qualify: stocks, ETFs, mutual funds, GICs, bonds, and cash. The same rules that apply to RRSPs generally apply to FHSAs.</p></div>
+            <div><p style="font-weight:600;margin-bottom:var(--space-1);">When should I open an FHSA?</p><p style="color:var(--color-text-muted);font-size:var(--text-sm);line-height:1.7;">As soon as possible — even if you're not ready to contribute yet. Opening the account starts the clock on your contribution room and your 15-year window.</p></div>
+          </div></div>
+
+        </div>
+
+        <div style="margin-top:var(--space-10);padding:var(--space-4) var(--space-5);background:var(--color-bg);border:1px solid var(--color-border);border-radius:var(--radius-md);font-size:var(--text-sm);color:var(--color-text-muted);line-height:1.7;">
+          📋 Information is based on 2026 Canadian federal FHSA rules and is for educational purposes only. Rules may change. This is not financial or tax advice — consult a registered financial advisor or the <a href="https://www.canada.ca/en/revenue-agency/services/tax/individuals/topics/first-home-savings-account.html" target="_blank" rel="noopener" style="color:var(--color-primary);">CRA FHSA page</a>.
+        </div>
+      </section>
+
+    </div>
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="site-footer" role="contentinfo">
+    <div class="container footer-inner">
+      <div class="footer-brand">
+        <a href="/" class="logo logo--light" aria-label="Northern Numbers — Home">
+          <span class="logo-icon" aria-hidden="true">
+            <svg width="24" height="24" viewBox="0 0 28 28" fill="none">
+              <path d="M14 2L16.5 8.5H23L17.5 12.5L19.5 19L14 15.5L8.5 19L10.5 12.5L5 8.5H11.5L14 2Z" fill="#D52B1E"/>
+              <rect x="12.5" y="19" width="3" height="5" fill="#D52B1E"/>
+            </svg>
+          </span>
+          <span class="logo-text">Northern Numbers</span>
+        </a>
+        <p class="footer-tagline">Smart Canadian Calculators</p>
+        <p class="footer-desc">Free, accurate financial tools built for Canadians. No sign-up required.</p>
+      </div>
+      <nav class="footer-nav" aria-label="Footer navigation">
+        <div class="footer-nav-col">
+          <h4 class="footer-nav-heading">Calculators</h4>
+          <ul role="list">
+            <li><a href="/mortgage/">Mortgage</a></li>
+            <li><a href="/tfsa/">TFSA</a></li>
+            <li><a href="/rrsp/">RRSP</a></li>
+            <li><a href="/fhsa/">FHSA</a></li>
+            <li><span class="footer-disabled">Compound Interest</span></li>
+          </ul>
+        </div>
+        <div class="footer-nav-col">
+          <h4 class="footer-nav-heading">More Tools</h4>
+          <ul role="list">
+            <li><span class="footer-disabled">Loan Calculator</span></li>
+            <li><span class="footer-disabled">Car Loan</span></li>
+            <li><span class="footer-disabled">Budget</span></li>
+            <li><span class="footer-disabled">Inflation</span></li>
+            <li><span class="footer-disabled">Retirement</span></li>
+          </ul>
+        </div>
+        <div class="footer-nav-col">
+          <h4 class="footer-nav-heading">Site</h4>
+          <ul role="list">
+            <li><a href="/about.html">About</a></li>
+            <li><a href="/contact.html">Contact</a></li>
+            <li><span class="footer-disabled">Privacy Policy</span></li>
+            <li><span class="footer-disabled">Terms of Use</span></li>
+          </ul>
+        </div>
+      </nav>
+    </div>
+    <div class="footer-bottom">
+      <div class="container footer-bottom-inner">
+        <p class="footer-legal">© <span id="footer-year">2026</span> Northern Numbers. All rights reserved. Results are estimates only and do not constitute financial advice.</p>
+        <p class="footer-built">Built for Canadians. 🇨🇦</p>
+      </div>
+    </div>
+  </footer>
+
+  <script src="../script.js" defer></script>
+  <script src="fhsa.js" defer></script>
+
+</body>
+</html>
