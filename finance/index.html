@@ -1,0 +1,418 @@
+<!DOCTYPE html>
+<html lang="en-CA">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Financial Calculators — Northern Numbers</title>
+  <meta name="description" content="Free Canadian financial calculators. TFSA, RRSP, FHSA, Compound Interest, Mortgage and more. Built for Canadians." />
+  <link rel="canonical" href="https://www.northernnumbers.ca/finance/" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Poppins:wght@600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="../styles.css" />
+  <style>
+    .finance-hero {
+      padding: var(--space-16) 0 var(--space-10);
+      text-align: center;
+    }
+    .finance-hero-title {
+      font-family: var(--font-heading);
+      font-size: var(--text-4xl);
+      font-weight: 800;
+      color: var(--color-text);
+      margin-bottom: var(--space-4);
+    }
+    .finance-hero-title span { color: var(--color-primary); }
+    .finance-hero-desc {
+      font-size: var(--text-lg);
+      color: var(--color-text-muted);
+      max-width: 580px;
+      margin: 0 auto;
+      line-height: 1.7;
+    }
+    .finance-section-title {
+      font-family: var(--font-heading);
+      font-size: var(--text-2xl);
+      font-weight: 700;
+      margin-bottom: var(--space-2);
+    }
+    .finance-section-desc {
+      font-size: var(--text-base);
+      color: var(--color-text-muted);
+      margin-bottom: var(--space-8);
+    }
+    .calc-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: var(--space-6);
+      margin-bottom: var(--space-16);
+    }
+    .calc-card {
+      background: var(--color-white);
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-lg);
+      padding: var(--space-6);
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-4);
+      transition: box-shadow var(--transition-fast), transform var(--transition-fast);
+      text-decoration: none;
+      color: inherit;
+    }
+    .calc-card:hover {
+      box-shadow: 0 8px 30px rgba(0,0,0,0.10);
+      transform: translateY(-2px);
+    }
+    .calc-card.is-coming-soon {
+      opacity: 0.65;
+      cursor: default;
+      pointer-events: none;
+    }
+    .calc-card-icon {
+      width: 52px;
+      height: 52px;
+      border-radius: var(--radius-md);
+      background: var(--color-primary-light);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.6rem;
+      flex-shrink: 0;
+    }
+    .calc-card-title {
+      font-family: var(--font-heading);
+      font-size: var(--text-lg);
+      font-weight: 700;
+      color: var(--color-text);
+      margin-bottom: var(--space-1);
+    }
+    .calc-card-desc {
+      font-size: var(--text-sm);
+      color: var(--color-text-muted);
+      line-height: 1.6;
+      flex: 1;
+    }
+    .calc-card-footer {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-top: var(--space-2);
+    }
+    .calc-card-tag {
+      font-size: var(--text-xs);
+      font-weight: 600;
+      padding: 3px 10px;
+      border-radius: var(--radius-full);
+      background: var(--color-primary-light);
+      color: var(--color-primary);
+    }
+    .calc-card-tag.is-coming-soon {
+      background: var(--color-bg);
+      color: var(--color-text-muted);
+    }
+    .calc-card-arrow {
+      color: var(--color-primary);
+      font-size: 1.2rem;
+      font-weight: 700;
+    }
+    .finance-cta {
+      background: var(--color-primary);
+      border-radius: var(--radius-lg);
+      padding: var(--space-10) var(--space-8);
+      text-align: center;
+      margin-bottom: var(--space-16);
+    }
+    .finance-cta-title {
+      font-family: var(--font-heading);
+      font-size: var(--text-2xl);
+      font-weight: 800;
+      color: white;
+      margin-bottom: var(--space-3);
+    }
+    .finance-cta-desc {
+      color: rgba(255,255,255,0.85);
+      font-size: var(--text-base);
+      margin-bottom: var(--space-6);
+      line-height: 1.7;
+    }
+    .finance-cta-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: var(--space-2);
+      background: white;
+      color: var(--color-primary);
+      font-family: var(--font-heading);
+      font-weight: 700;
+      font-size: var(--text-base);
+      padding: var(--space-3) var(--space-8);
+      border-radius: var(--radius-lg);
+      text-decoration: none;
+      transition: opacity var(--transition-fast);
+    }
+    .finance-cta-btn:hover { opacity: 0.9; }
+  </style>
+</head>
+<body>
+
+  <header class="site-header" role="banner">
+    <div class="container header-inner">
+      <a href="/" class="logo" aria-label="Northern Numbers — Home">
+        <span class="logo-icon" aria-hidden="true">
+          <svg width="28" height="28" viewBox="0 0 28 28" fill="none">
+            <path d="M14 2L16.5 8.5H23L17.5 12.5L19.5 19L14 15.5L8.5 19L10.5 12.5L5 8.5H11.5L14 2Z" fill="#D52B1E"/>
+            <rect x="12.5" y="19" width="3" height="5" fill="#D52B1E"/>
+          </svg>
+        </span>
+        <span class="logo-text">Northern Numbers</span>
+      </a>
+      <nav class="main-nav" aria-label="Main navigation">
+        <ul role="list">
+          <li><a href="/" class="nav-link">Home</a></li>
+          <li><a href="/mortgage/" class="nav-link">Mortgage</a></li>
+          <li><a href="/finance/" class="nav-link is-active" aria-current="page">Finance</a></li>
+          <li><a href="/about.html" class="nav-link">About</a></li>
+          <li><a href="/contact.html" class="nav-link">Contact</a></li>
+        </ul>
+      </nav>
+      <button class="nav-toggle" aria-label="Open navigation menu" aria-expanded="false" aria-controls="mobile-menu">
+        <span class="hamburger-line"></span>
+        <span class="hamburger-line"></span>
+        <span class="hamburger-line"></span>
+      </button>
+    </div>
+    <div id="mobile-menu" class="mobile-menu" aria-hidden="true">
+      <nav aria-label="Mobile navigation">
+        <ul role="list">
+          <li><a href="/" class="mobile-nav-link">Home</a></li>
+          <li><a href="/mortgage/" class="mobile-nav-link">Mortgage</a></li>
+          <li><a href="/finance/" class="mobile-nav-link">Finance</a></li>
+          <li><a href="/about.html" class="mobile-nav-link">About</a></li>
+          <li><a href="/contact.html" class="mobile-nav-link">Contact</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main-content">
+    <div class="container">
+
+      <!-- Hero -->
+      <div class="finance-hero">
+        <h1 class="finance-hero-title">Canadian <span>Financial</span> Calculators</h1>
+        <p class="finance-hero-desc">Free, accurate tools built specifically for Canadians. No sign-up, no ads, no nonsense — just the numbers you need.</p>
+      </div>
+
+      <!-- Live Calculators -->
+      <div style="margin-bottom: var(--space-4);">
+        <h2 class="finance-section-title">Live Calculators</h2>
+        <p class="finance-section-desc">Ready to use right now.</p>
+      </div>
+
+      <div class="calc-grid">
+
+        <a href="/mortgage/" class="calc-card">
+          <div class="calc-card-icon">🏠</div>
+          <div>
+            <div class="calc-card-title">Mortgage Calculator</div>
+            <div class="calc-card-desc">Calculate your monthly payments, total interest, and full amortization schedule. Built with Canadian semi-annual compounding and CMHC insurance.</div>
+          </div>
+          <div class="calc-card-footer">
+            <span class="calc-card-tag">Live</span>
+            <span class="calc-card-arrow">→</span>
+          </div>
+        </a>
+
+        <a href="/tfsa/" class="calc-card">
+          <div class="calc-card-icon">💰</div>
+          <div>
+            <div class="calc-card-title">TFSA Calculator</div>
+            <div class="calc-card-desc">Project your Tax-Free Savings Account growth, track contribution room by birth year, and see when you'll hit $100K, $250K, and $500K.</div>
+          </div>
+          <div class="calc-card-footer">
+            <span class="calc-card-tag">Live</span>
+            <span class="calc-card-arrow">→</span>
+          </div>
+        </a>
+
+        <a href="/rrsp/" class="calc-card">
+          <div class="calc-card-icon">📈</div>
+          <div>
+            <div class="calc-card-title">RRSP Calculator</div>
+            <div class="calc-card-desc">Estimate your RRSP growth, calculate your tax refund by province, and compare reinvesting your refund vs not. Includes all 13 provinces.</div>
+          </div>
+          <div class="calc-card-footer">
+            <span class="calc-card-tag">Live</span>
+            <span class="calc-card-arrow">→</span>
+          </div>
+        </a>
+
+        <a href="/fhsa/" class="calc-card">
+          <div class="calc-card-icon">🏡</div>
+          <div>
+            <div class="calc-card-title">FHSA Calculator</div>
+            <div class="calc-card-desc">Plan your first home purchase. Couple mode, down payment tracker, HBP combination, and a home buying timeline. Canada's most comprehensive FHSA tool.</div>
+          </div>
+          <div class="calc-card-footer">
+            <span class="calc-card-tag">Live</span>
+            <span class="calc-card-arrow">→</span>
+          </div>
+        </a>
+
+        <a href="/compound-interest/" class="calc-card">
+          <div class="calc-card-icon">📊</div>
+          <div>
+            <div class="calc-card-title">Compound Interest Calculator</div>
+            <div class="calc-card-desc">See how compound interest grows your investments over time. Includes Rule of 72, milestone tracker, compare two scenarios, and monthly income projection.</div>
+          </div>
+          <div class="calc-card-footer">
+            <span class="calc-card-tag">Live</span>
+            <span class="calc-card-arrow">→</span>
+          </div>
+        </a>
+
+      </div>
+
+      <!-- Coming Soon -->
+      <div style="margin-bottom: var(--space-4);">
+        <h2 class="finance-section-title">Coming Soon</h2>
+        <p class="finance-section-desc">More tools in development.</p>
+      </div>
+
+      <div class="calc-grid">
+
+        <div class="calc-card is-coming-soon">
+          <div class="calc-card-icon">🚗</div>
+          <div>
+            <div class="calc-card-title">Car Loan Calculator</div>
+            <div class="calc-card-desc">Calculate monthly payments, total interest, and true cost of ownership for your next vehicle purchase in Canada.</div>
+          </div>
+          <div class="calc-card-footer">
+            <span class="calc-card-tag is-coming-soon">Coming Soon</span>
+          </div>
+        </div>
+
+        <div class="calc-card is-coming-soon">
+          <div class="calc-card-icon">💳</div>
+          <div>
+            <div class="calc-card-title">Loan Calculator</div>
+            <div class="calc-card-desc">Personal loan, student loan, or line of credit — calculate your payments and total interest for any Canadian loan.</div>
+          </div>
+          <div class="calc-card-footer">
+            <span class="calc-card-tag is-coming-soon">Coming Soon</span>
+          </div>
+        </div>
+
+        <div class="calc-card is-coming-soon">
+          <div class="calc-card-icon">📉</div>
+          <div>
+            <div class="calc-card-title">Inflation Calculator</div>
+            <div class="calc-card-desc">See how inflation erodes purchasing power over time using Canadian CPI data. Find out what $100 today will be worth in 20 years.</div>
+          </div>
+          <div class="calc-card-footer">
+            <span class="calc-card-tag is-coming-soon">Coming Soon</span>
+          </div>
+        </div>
+
+        <div class="calc-card is-coming-soon">
+          <div class="calc-card-icon">🏖</div>
+          <div>
+            <div class="calc-card-title">Retirement Calculator</div>
+            <div class="calc-card-desc">Plan your Canadian retirement with CPP, OAS, and personal savings projections. Find out if you're on track.</div>
+          </div>
+          <div class="calc-card-footer">
+            <span class="calc-card-tag is-coming-soon">Coming Soon</span>
+          </div>
+        </div>
+
+        <div class="calc-card is-coming-soon">
+          <div class="calc-card-icon">🎓</div>
+          <div>
+            <div class="calc-card-title">RESP Calculator</div>
+            <div class="calc-card-desc">Calculate RESP growth with the 20% Canada Education Savings Grant (CESG) and project education savings for your child.</div>
+          </div>
+          <div class="calc-card-footer">
+            <span class="calc-card-tag is-coming-soon">Coming Soon</span>
+          </div>
+        </div>
+
+        <div class="calc-card is-coming-soon">
+          <div class="calc-card-icon">📋</div>
+          <div>
+            <div class="calc-card-title">Budget Calculator</div>
+            <div class="calc-card-desc">Build a monthly budget using the 50/30/20 rule. Track income, expenses, and savings goals with Canadian context.</div>
+          </div>
+          <div class="calc-card-footer">
+            <span class="calc-card-tag is-coming-soon">Coming Soon</span>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- CTA -->
+      <div class="finance-cta">
+        <p class="finance-cta-title">Missing a calculator?</p>
+        <p class="finance-cta-desc">Have a suggestion for a tool you'd like to see? We're always adding new calculators built specifically for Canadians.</p>
+        <a href="/contact.html" class="finance-cta-btn">📬 Send a suggestion</a>
+      </div>
+
+    </div>
+  </main>
+
+  <footer class="site-footer" role="contentinfo">
+    <div class="container footer-inner">
+      <div class="footer-brand">
+        <a href="/" class="logo logo--light" aria-label="Northern Numbers — Home">
+          <span class="logo-icon" aria-hidden="true">
+            <svg width="24" height="24" viewBox="0 0 28 28" fill="none">
+              <path d="M14 2L16.5 8.5H23L17.5 12.5L19.5 19L14 15.5L8.5 19L10.5 12.5L5 8.5H11.5L14 2Z" fill="#D52B1E"/>
+              <rect x="12.5" y="19" width="3" height="5" fill="#D52B1E"/>
+            </svg>
+          </span>
+          <span class="logo-text">Northern Numbers</span>
+        </a>
+        <p class="footer-tagline">Smart Canadian Calculators</p>
+        <p class="footer-desc">Free, accurate financial tools built for Canadians. No sign-up required.</p>
+      </div>
+      <nav class="footer-nav" aria-label="Footer navigation">
+        <div class="footer-nav-col">
+          <h4 class="footer-nav-heading">Calculators</h4>
+          <ul role="list">
+            <li><a href="/mortgage/">Mortgage</a></li>
+            <li><a href="/tfsa/">TFSA</a></li>
+            <li><a href="/rrsp/">RRSP</a></li>
+            <li><a href="/fhsa/">FHSA</a></li>
+            <li><a href="/compound-interest/">Compound Interest</a></li>
+          </ul>
+        </div>
+        <div class="footer-nav-col">
+          <h4 class="footer-nav-heading">More Tools</h4>
+          <ul role="list">
+            <li><span class="footer-disabled">Loan Calculator</span></li>
+            <li><span class="footer-disabled">Car Loan</span></li>
+            <li><span class="footer-disabled">Budget</span></li>
+            <li><span class="footer-disabled">Inflation</span></li>
+            <li><span class="footer-disabled">Retirement</span></li>
+          </ul>
+        </div>
+        <div class="footer-nav-col">
+          <h4 class="footer-nav-heading">Site</h4>
+          <ul role="list">
+            <li><a href="/about.html">About</a></li>
+            <li><a href="/contact.html">Contact</a></li>
+            <li><span class="footer-disabled">Privacy Policy</span></li>
+            <li><span class="footer-disabled">Terms of Use</span></li>
+          </ul>
+        </div>
+      </nav>
+    </div>
+    <div class="footer-bottom">
+      <div class="container footer-bottom-inner">
+        <p class="footer-legal">© <span id="footer-year">2026</span> Northern Numbers. All rights reserved. Results are estimates only and do not constitute financial advice.</p>
+        <p class="footer-built">Built for Canadians. 🇨🇦</p>
+      </div>
+    </div>
+  </footer>
+
+  <script src="../script.js" defer></script>
+</body>
+</html>

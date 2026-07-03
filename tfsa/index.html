@@ -359,7 +359,7 @@
         <ul role="list">
           <li><a href="/" class="nav-link">Home</a></li>
           <li><a href="/mortgage/" class="nav-link">Mortgage</a></li>
-          <li><a href="/#calculators" class="nav-link">Finance</a></li>
+          <li><a href="/finance/" class="nav-link">Finance</a></li>
           <li><a href="/about.html" class="nav-link">About</a></li>
           <li><a href="/contact.html" class="nav-link">Contact</a></li>
         </ul>
@@ -375,7 +375,7 @@
         <ul role="list">
           <li><a href="/" class="mobile-nav-link">Home</a></li>
           <li><a href="/mortgage/" class="mobile-nav-link">Mortgage</a></li>
-          <li><a href="/#calculators" class="mobile-nav-link">Finance</a></li>
+          <li><a href="/finance/" class="mobile-nav-link">Finance</a></li>
           <li><a href="/about.html" class="mobile-nav-link">About</a></li>
           <li><a href="/contact.html" class="mobile-nav-link">Contact</a></li>
         </ul>
@@ -430,7 +430,37 @@
 
           <form id="tfsa-form" novalidate aria-label="TFSA calculator inputs">
 
-            <!-- Current Balance -->
+            <!-- 1. Year of Birth -->
+            <div class="form-group">
+              <label class="form-label" for="birth-year">Year of Birth</label>
+              <div class="input-wrapper">
+                <input type="text" id="birth-year" class="form-input"
+                  placeholder="e.g. 1990" inputmode="numeric" autocomplete="off"
+                  maxlength="4"
+                  aria-describedby="birth-year-hint birth-year-error" />
+              </div>
+              <p id="birth-year-hint" class="field-help">
+                We'll use this to estimate your lifetime TFSA contribution room.
+                TFSA eligibility started in 2009 — if you were born in 1991 or earlier, your room starts from 2009.
+              </p>
+              <p id="birth-year-error" class="form-error-msg" role="alert"></p>
+            </div>
+
+            <!-- 2. Total Past Contributions -->
+            <div class="form-group">
+              <label class="form-label" for="past-contributions">Total Past Contributions</label>
+              <div class="input-wrapper">
+                <span class="input-prefix" aria-hidden="true">$</span>
+                <input type="text" id="past-contributions" class="form-input has-prefix"
+                  placeholder="0" inputmode="numeric" autocomplete="off" value="0" />
+              </div>
+              <p class="field-help">
+                How much you've contributed to your TFSA in total over the years — not your current balance.
+                Investment growth doesn't count. Enter 0 if you've never contributed.
+              </p>
+            </div>
+
+            <!-- Current TFSA Balance (kept for growth projection) -->
             <div class="form-group">
               <label class="form-label" for="current-balance">Current TFSA Balance</label>
               <div class="input-wrapper">
@@ -439,26 +469,11 @@
                   placeholder="0" inputmode="numeric" autocomplete="off" value="0"
                   aria-describedby="current-balance-error" />
               </div>
-              <p class="field-help">Enter 0 if you haven't started yet.</p>
+              <p class="field-help">What's currently sitting in your TFSA today. Used to project future growth. Enter 0 if you're just starting.</p>
               <p id="current-balance-error" class="form-error-msg" role="alert"></p>
             </div>
 
-            <!-- Birth Year → Auto-calculates contribution room -->
-            <div class="form-group">
-              <label class="form-label" for="birth-year">Year of Birth</label>
-              <div class="input-wrapper">
-                <input type="number" id="birth-year" class="form-input"
-                  placeholder="1990" min="1940" max="2008" step="1"
-                  aria-describedby="birth-year-hint birth-year-error" />
-              </div>
-              <p id="birth-year-hint" class="field-help">
-                We'll estimate your TFSA contribution room based on the year you turned 18.
-                TFSA eligibility started in 2009 — if you were born in 1991 or earlier, your room starts from 2009.
-              </p>
-              <p id="birth-year-error" class="form-error-msg" role="alert"></p>
-            </div>
-
-            <!-- Contribution Room — auto-filled from birth year, still editable -->
+            <!-- 3. Available Contribution Room — auto-filled (lifetime room minus balance), still editable -->
             <div class="form-group">
               <label class="form-label" for="contrib-room">
                 Available Contribution Room
@@ -475,10 +490,9 @@
                   aria-describedby="contrib-room-hint contrib-room-error" />
               </div>
               <p id="contrib-room-hint" class="field-help">
-                This is your estimated maximum room if you've never contributed.
-                <strong>Always verify your exact amount in <a href="https://www.canada.ca/en/revenue-agency/services/e-services/digital-services-individuals/account-individuals.html" target="_blank" rel="noopener">CRA My Account</a></strong>
-                — past contributions and withdrawals will reduce this number.
-                You can edit this field to match your actual room.
+                Lifetime room minus your past contributions. Investment growth doesn't affect this.
+                Always verify in <a href="https://www.canada.ca/en/revenue-agency/services/e-services/digital-services-individuals/account-individuals.html" target="_blank" rel="noopener">CRA My Account</a>.
+                You can edit this field directly if your exact room is different.
               </p>
               <p id="contrib-room-error" class="form-error-msg" role="alert"></p>
             </div>
@@ -824,9 +838,9 @@
           <ul role="list">
             <li><a href="/mortgage/">Mortgage</a></li>
             <li><a href="/tfsa/">TFSA</a></li>
-            <li><span class="footer-disabled">RRSP</span></li>
-            <li><span class="footer-disabled">FHSA</span></li>
-            <li><span class="footer-disabled">Compound Interest</span></li>
+            <li><a href="/rrsp/">RRSP</a></li>
+            <li><a href="/fhsa/">FHSA</a></li>
+            <li><a href="/compound-interest/">Compound Interest</a></li>
           </ul>
         </div>
         <div class="footer-nav-col">
