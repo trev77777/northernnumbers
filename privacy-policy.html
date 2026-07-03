@@ -1,0 +1,509 @@
+<!DOCTYPE html>
+<html lang="en-CA">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Privacy Policy — Northern Numbers</title>
+  <meta name="description" content="Privacy Policy for Northern Numbers. Learn how we handle your information on our free Canadian financial calculator website." />
+  <meta name="robots" content="index, follow" />
+  <link rel="canonical" href="https://www.northernnumbers.ca/privacy-policy.html" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Poppins:wght@600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+  <style>
+    .policy-page {
+      max-width: 760px;
+      margin: 0 auto;
+      padding: var(--space-16) var(--space-6);
+    }
+    .policy-header {
+      margin-bottom: var(--space-10);
+      padding-bottom: var(--space-8);
+      border-bottom: 2px solid var(--color-border);
+    }
+    .policy-title {
+      font-family: var(--font-heading);
+      font-size: var(--text-3xl);
+      font-weight: 800;
+      color: var(--color-text);
+      margin-bottom: var(--space-3);
+    }
+    .policy-meta {
+      font-size: var(--text-sm);
+      color: var(--color-text-muted);
+      display: flex;
+      flex-wrap: wrap;
+      gap: var(--space-4);
+    }
+    .policy-meta span {
+      display: flex;
+      align-items: center;
+      gap: var(--space-1);
+    }
+    .policy-intro {
+      font-size: var(--text-base);
+      color: var(--color-text-muted);
+      line-height: 1.8;
+      margin-top: var(--space-4);
+      padding: var(--space-5);
+      background: var(--color-primary-light);
+      border-left: 4px solid var(--color-primary);
+      border-radius: 0 var(--radius-md) var(--radius-md) 0;
+    }
+    .policy-toc {
+      background: var(--color-bg);
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-md);
+      padding: var(--space-5) var(--space-6);
+      margin-bottom: var(--space-10);
+    }
+    .policy-toc-title {
+      font-family: var(--font-heading);
+      font-size: var(--text-base);
+      font-weight: 700;
+      margin-bottom: var(--space-3);
+      color: var(--color-text);
+    }
+    .policy-toc ol {
+      list-style: decimal;
+      padding-left: var(--space-5);
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-2);
+    }
+    .policy-toc ol li a {
+      font-size: var(--text-sm);
+      color: var(--color-primary);
+      text-decoration: none;
+    }
+    .policy-toc ol li a:hover { text-decoration: underline; }
+    .policy-section {
+      margin-bottom: var(--space-10);
+      padding-bottom: var(--space-10);
+      border-bottom: 1px solid var(--color-border);
+    }
+    .policy-section:last-of-type { border-bottom: none; }
+    .policy-section-title {
+      font-family: var(--font-heading);
+      font-size: var(--text-xl);
+      font-weight: 700;
+      color: var(--color-text);
+      margin-bottom: var(--space-4);
+      display: flex;
+      align-items: center;
+      gap: var(--space-3);
+    }
+    .policy-section-num {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      background: var(--color-primary);
+      color: white;
+      font-size: var(--text-sm);
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+    .policy-section p {
+      font-size: var(--text-base);
+      color: var(--color-text-muted);
+      line-height: 1.8;
+      margin-bottom: var(--space-4);
+    }
+    .policy-section p:last-child { margin-bottom: 0; }
+    .policy-section ul {
+      list-style: disc;
+      padding-left: var(--space-6);
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-2);
+      margin-bottom: var(--space-4);
+    }
+    .policy-section ul li {
+      font-size: var(--text-base);
+      color: var(--color-text-muted);
+      line-height: 1.7;
+    }
+    .policy-section a {
+      color: var(--color-primary);
+      text-decoration: underline;
+    }
+    .policy-highlight {
+      background: #EFF6FF;
+      border: 1px solid #BFDBFE;
+      border-radius: var(--radius-md);
+      padding: var(--space-4) var(--space-5);
+      margin-top: var(--space-4);
+    }
+    .policy-highlight p {
+      color: #1E40AF !important;
+      margin-bottom: 0 !important;
+      font-size: var(--text-sm) !important;
+    }
+    .policy-disclaimer-box {
+      background: #FFFBEB;
+      border: 1px solid #FDE68A;
+      border-radius: var(--radius-md);
+      padding: var(--space-5);
+      margin-bottom: var(--space-10);
+    }
+    .policy-disclaimer-box p {
+      font-size: var(--text-sm);
+      color: #92400E;
+      line-height: 1.7;
+      margin-bottom: var(--space-2);
+    }
+    .policy-disclaimer-box p:last-child { margin-bottom: 0; }
+    .policy-disclaimer-box strong { color: #78350F; }
+    .contact-card {
+      background: var(--color-primary);
+      border-radius: var(--radius-lg);
+      padding: var(--space-8);
+      text-align: center;
+      margin-top: var(--space-10);
+    }
+    .contact-card-title {
+      font-family: var(--font-heading);
+      font-size: var(--text-xl);
+      font-weight: 700;
+      color: white;
+      margin-bottom: var(--space-2);
+    }
+    .contact-card p {
+      color: rgba(255,255,255,0.85);
+      font-size: var(--text-sm);
+      margin-bottom: var(--space-5);
+      line-height: 1.7;
+    }
+    .contact-card-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: var(--space-2);
+      background: white;
+      color: var(--color-primary);
+      font-family: var(--font-heading);
+      font-weight: 700;
+      font-size: var(--text-base);
+      padding: var(--space-3) var(--space-8);
+      border-radius: var(--radius-lg);
+      text-decoration: none;
+      transition: opacity var(--transition-fast);
+    }
+    .contact-card-btn:hover { opacity: 0.9; }
+  </style>
+</head>
+<body>
+
+  <!-- HEADER -->
+  <header class="site-header" role="banner">
+    <div class="container header-inner">
+      <a href="/" class="logo" aria-label="Northern Numbers — Home">
+        <span class="logo-icon" aria-hidden="true">
+          <svg width="28" height="28" viewBox="0 0 28 28" fill="none">
+            <path d="M14 2L16.5 8.5H23L17.5 12.5L19.5 19L14 15.5L8.5 19L10.5 12.5L5 8.5H11.5L14 2Z" fill="#D52B1E"/>
+            <rect x="12.5" y="19" width="3" height="5" fill="#D52B1E"/>
+          </svg>
+        </span>
+        <span class="logo-text">Northern Numbers</span>
+      </a>
+      <nav class="main-nav" aria-label="Main navigation">
+        <ul role="list">
+          <li><a href="/" class="nav-link">Home</a></li>
+          <li><a href="/mortgage/" class="nav-link">Mortgage</a></li>
+          <li><a href="/finance/" class="nav-link">Finance</a></li>
+          <li><a href="/about.html" class="nav-link">About</a></li>
+          <li><a href="/contact.html" class="nav-link">Contact</a></li>
+        </ul>
+      </nav>
+      <button class="nav-toggle" aria-label="Open navigation menu" aria-expanded="false" aria-controls="mobile-menu">
+        <span class="hamburger-line"></span>
+        <span class="hamburger-line"></span>
+        <span class="hamburger-line"></span>
+      </button>
+    </div>
+    <div id="mobile-menu" class="mobile-menu" aria-hidden="true">
+      <nav aria-label="Mobile navigation">
+        <ul role="list">
+          <li><a href="/" class="mobile-nav-link">Home</a></li>
+          <li><a href="/mortgage/" class="mobile-nav-link">Mortgage</a></li>
+          <li><a href="/finance/" class="mobile-nav-link">Finance</a></li>
+          <li><a href="/about.html" class="mobile-nav-link">About</a></li>
+          <li><a href="/contact.html" class="mobile-nav-link">Contact</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <!-- MAIN -->
+  <main id="main-content">
+    <div class="policy-page">
+
+      <nav class="calc-breadcrumb" aria-label="Breadcrumb">
+        <a href="/">Home</a>
+        <span class="calc-breadcrumb-sep" aria-hidden="true">›</span>
+        <span aria-current="page">Privacy Policy</span>
+      </nav>
+
+      <!-- Header -->
+      <div class="policy-header">
+        <h1 class="policy-title">Privacy Policy</h1>
+        <div class="policy-meta">
+          <span>📅 Effective date: July 2, 2026</span>
+          <span>🔄 Last updated: July 2, 2026</span>
+          <span>🇨🇦 Governed by PIPEDA</span>
+        </div>
+        <div class="policy-intro">
+          Northern Numbers is committed to protecting your privacy. This policy explains what information we collect, how we use it, and what rights you have. We've written it in plain English — no legal jargon.
+        </div>
+      </div>
+
+      <!-- Disclaimer box -->
+      <div class="policy-disclaimer-box">
+        <p><strong>⚠️ Calculator Disclaimer</strong></p>
+        <p>All calculators on Northern Numbers are provided for <strong>educational and informational purposes only</strong>. Results are estimates based on the inputs you provide and assumptions built into the calculator. They do not constitute financial, tax, legal, or investment advice. Northern Numbers is not a registered financial advisor. Always consult a qualified professional before making financial decisions.</p>
+        <p>Calculator inputs you enter are processed entirely in your browser and are <strong>never transmitted to our servers or stored anywhere</strong>.</p>
+      </div>
+
+      <!-- Table of contents -->
+      <div class="policy-toc">
+        <p class="policy-toc-title">📋 Contents</p>
+        <ol>
+          <li><a href="#who-we-are">Who We Are</a></li>
+          <li><a href="#information-collected">Information We Collect</a></li>
+          <li><a href="#calculator-data">Calculator Data</a></li>
+          <li><a href="#contact-form">Contact Form</a></li>
+          <li><a href="#analytics">Google Analytics</a></li>
+          <li><a href="#cookies">Cookies</a></li>
+          <li><a href="#advertising">Advertising</a></li>
+          <li><a href="#third-party">Third-Party Links</a></li>
+          <li><a href="#minors">Minors</a></li>
+          <li><a href="#data-retention">Data Retention</a></li>
+          <li><a href="#your-rights">Your Rights</a></li>
+          <li><a href="#changes">Changes to This Policy</a></li>
+          <li><a href="#contact">Contact Us</a></li>
+        </ol>
+      </div>
+
+      <!-- Section 1 -->
+      <div class="policy-section" id="who-we-are">
+        <h2 class="policy-section-title"><span class="policy-section-num">1</span> Who We Are</h2>
+        <p>Northern Numbers (<strong>northernnumbers.ca</strong>) is a free Canadian website providing financial calculators for personal use. We are based in Canada and operate in accordance with Canada's federal privacy legislation, the <strong>Personal Information Protection and Electronic Documents Act (PIPEDA)</strong>.</p>
+        <p>We are not a financial institution, investment dealer, or registered financial advisor. We provide tools to help Canadians understand and estimate their financial situations — nothing more.</p>
+      </div>
+
+      <!-- Section 2 -->
+      <div class="policy-section" id="information-collected">
+        <h2 class="policy-section-title"><span class="policy-section-num">2</span> Information We Collect</h2>
+        <p>We collect minimal information. Here is a complete list of what we may collect:</p>
+        <ul>
+          <li><strong>Contact form submissions</strong> — name, email address, and message (only when you voluntarily contact us)</li>
+          <li><strong>Analytics data</strong> — anonymous usage data collected by Google Analytics (pages visited, time on site, device type, general location)</li>
+          <li><strong>Cookie data</strong> — small files stored in your browser for analytics and future advertising purposes</li>
+        </ul>
+        <p>We do <strong>not</strong> collect:</p>
+        <ul>
+          <li>Financial information entered into our calculators</li>
+          <li>Names, emails, or personal details unless you provide them via the contact form</li>
+          <li>Payment or billing information of any kind</li>
+          <li>Social insurance numbers or government identification</li>
+        </ul>
+      </div>
+
+      <!-- Section 3 -->
+      <div class="policy-section" id="calculator-data">
+        <h2 class="policy-section-title"><span class="policy-section-num">3</span> Calculator Data</h2>
+        <p>All calculations performed on Northern Numbers happen <strong>entirely within your browser</strong>. When you enter numbers into a calculator — your income, mortgage amount, RRSP balance, or any other financial information — that data:</p>
+        <ul>
+          <li>Never leaves your device</li>
+          <li>Is never sent to our servers</li>
+          <li>Is never stored in a database</li>
+          <li>Is never shared with any third party</li>
+          <li>Disappears when you close or refresh the page</li>
+        </ul>
+        <div class="policy-highlight">
+          <p>💡 Your financial data belongs to you. We built our calculators this way intentionally — your numbers are private and stay on your device at all times.</p>
+        </div>
+      </div>
+
+      <!-- Section 4 -->
+      <div class="policy-section" id="contact-form">
+        <h2 class="policy-section-title"><span class="policy-section-num">4</span> Contact Form</h2>
+        <p>If you contact us through the contact form on our website, we collect only the information you voluntarily provide: your name, email address, and message.</p>
+        <p>We use this information solely to respond to your inquiry. We will not:</p>
+        <ul>
+          <li>Add you to a mailing list without your explicit consent</li>
+          <li>Share your contact information with any third party</li>
+          <li>Use your email for marketing or promotional purposes</li>
+        </ul>
+        <p>Contact form submissions may be stored in our email inbox for a reasonable period in order to maintain a record of our correspondence.</p>
+      </div>
+
+      <!-- Section 5 -->
+      <div class="policy-section" id="analytics">
+        <h2 class="policy-section-title"><span class="policy-section-num">5</span> Google Analytics</h2>
+        <p>We use <strong>Google Analytics</strong> to understand how visitors use Northern Numbers. This helps us improve our calculators and content. Google Analytics may collect the following anonymous information:</p>
+        <ul>
+          <li>Pages visited and time spent on each page</li>
+          <li>How you arrived at the site (search engine, direct link, etc.)</li>
+          <li>Device type and browser (e.g. iPhone, Chrome)</li>
+          <li>General geographic location (country and city — not your exact address)</li>
+          <li>New vs. returning visitor status</li>
+        </ul>
+        <p>This data is aggregated and anonymous. Google Analytics does not identify you personally. Google may use this data in accordance with their own privacy policy.</p>
+        <p>For more information, see <a href="https://policies.google.com/privacy" target="_blank" rel="noopener">Google's Privacy Policy</a> and <a href="https://tools.google.com/dlpage/gaoptout" target="_blank" rel="noopener">Google Analytics Opt-out Browser Add-on</a>.</p>
+      </div>
+
+      <!-- Section 6 -->
+      <div class="policy-section" id="cookies">
+        <h2 class="policy-section-title"><span class="policy-section-num">6</span> Cookies</h2>
+        <p>Cookies are small text files stored in your browser. Northern Numbers may use cookies for the following purposes:</p>
+        <ul>
+          <li><strong>Analytics cookies</strong> — Used by Google Analytics to track anonymous usage data (as described above)</li>
+          <li><strong>Advertising cookies</strong> — May be used in the future by advertising partners (such as Google AdSense) to show relevant ads based on your interests</li>
+          <li><strong>Functional cookies</strong> — May be used to remember your preferences on the site</li>
+        </ul>
+        <p>You can control cookies through your browser settings. Most browsers allow you to block or delete cookies. Note that disabling cookies may affect some features of the site. To learn more about managing cookies, visit <a href="https://www.allaboutcookies.org" target="_blank" rel="noopener">allaboutcookies.org</a>.</p>
+      </div>
+
+      <!-- Section 7 -->
+      <div class="policy-section" id="advertising">
+        <h2 class="policy-section-title"><span class="policy-section-num">7</span> Advertising</h2>
+        <p>Northern Numbers does not currently display paid advertisements. However, we may display advertisements in the future through third-party advertising networks such as <strong>Google AdSense</strong>.</p>
+        <p>If and when advertising is enabled:</p>
+        <ul>
+          <li>Advertising partners may use cookies (including Google's DoubleClick cookie) to serve ads based on your prior visits to this and other websites</li>
+          <li>You can opt out of personalized advertising by visiting <a href="https://www.google.com/settings/ads" target="_blank" rel="noopener">Google's Ads Settings</a></li>
+          <li>You can also opt out through the <a href="https://www.networkadvertising.org/choices/" target="_blank" rel="noopener">Network Advertising Initiative opt-out page</a></li>
+        </ul>
+        <p>Northern Numbers will never allow advertising that is deceptive, inappropriate, or that compromises the integrity of our calculators. Our results are never influenced by advertisers.</p>
+      </div>
+
+      <!-- Section 8 -->
+      <div class="policy-section" id="third-party">
+        <h2 class="policy-section-title"><span class="policy-section-num">8</span> Third-Party Links</h2>
+        <p>Our calculators and educational content may include links to third-party websites such as the Canada Revenue Agency (CRA), Government of Canada pages, or financial institutions.</p>
+        <p>These websites are governed by their own privacy policies. Northern Numbers is not responsible for the privacy practices or content of any third-party websites. We encourage you to review the privacy policy of any site you visit.</p>
+      </div>
+
+      <!-- Section 9 -->
+      <div class="policy-section" id="minors">
+        <h2 class="policy-section-title"><span class="policy-section-num">9</span> Minors</h2>
+        <p>Northern Numbers is not directed at or intended for use by minors. We do not knowingly collect personal information from anyone under the age of 18.</p>
+        <p>If you are a parent or guardian and believe your child has provided us with personal information, please contact us and we will promptly delete that information.</p>
+      </div>
+
+      <!-- Section 10 -->
+      <div class="policy-section" id="data-retention">
+        <h2 class="policy-section-title"><span class="policy-section-num">10</span> Data Retention</h2>
+        <p>We retain personal information only as long as necessary for the purpose it was collected:</p>
+        <ul>
+          <li><strong>Calculator data</strong> — Not retained at all. It exists only in your browser session.</li>
+          <li><strong>Contact form messages</strong> — Retained in our email inbox for as long as needed to address your inquiry, then deleted.</li>
+          <li><strong>Analytics data</strong> — Retained by Google Analytics for 26 months by default, after which it is automatically deleted.</li>
+        </ul>
+      </div>
+
+      <!-- Section 11 -->
+      <div class="policy-section" id="your-rights">
+        <h2 class="policy-section-title"><span class="policy-section-num">11</span> Your Rights</h2>
+        <p>Under PIPEDA and applicable Canadian privacy law, you have the right to:</p>
+        <ul>
+          <li><strong>Access</strong> — Request access to any personal information we hold about you</li>
+          <li><strong>Correction</strong> — Request that we correct inaccurate information</li>
+          <li><strong>Withdrawal of consent</strong> — Withdraw consent for us to use your information at any time</li>
+          <li><strong>Deletion</strong> — Request that we delete your personal information, subject to legal retention requirements</li>
+          <li><strong>Complaint</strong> — File a complaint with the <a href="https://www.priv.gc.ca" target="_blank" rel="noopener">Office of the Privacy Commissioner of Canada</a> if you believe your privacy rights have been violated</li>
+        </ul>
+        <p>To exercise any of these rights, please contact us using the information in Section 13.</p>
+      </div>
+
+      <!-- Section 12 -->
+      <div class="policy-section" id="changes">
+        <h2 class="policy-section-title"><span class="policy-section-num">12</span> Changes to This Policy</h2>
+        <p>We may update this Privacy Policy from time to time to reflect changes in our practices, technology, or legal requirements. When we do:</p>
+        <ul>
+          <li>The updated policy will be posted on this page</li>
+          <li>The "Last updated" date at the top of this page will be revised</li>
+          <li>Significant changes will be noted prominently</li>
+        </ul>
+        <p>We encourage you to review this page periodically. Your continued use of Northern Numbers after any changes constitutes your acceptance of the updated policy.</p>
+      </div>
+
+      <!-- Section 13 -->
+      <div class="policy-section" id="contact">
+        <h2 class="policy-section-title"><span class="policy-section-num">13</span> Contact Us</h2>
+        <p>If you have any questions, concerns, or requests regarding this Privacy Policy or how we handle your information, please get in touch.</p>
+      </div>
+
+      <!-- Contact CTA -->
+      <div class="contact-card">
+        <p class="contact-card-title">Questions about your privacy?</p>
+        <p>We're happy to answer any questions about how Northern Numbers handles your information. Send us a message and we'll respond as soon as possible.</p>
+        <a href="/contact.html" class="contact-card-btn">📬 Contact Us</a>
+      </div>
+
+    </div>
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="site-footer" role="contentinfo">
+    <div class="container footer-inner">
+      <div class="footer-brand">
+        <a href="/" class="logo logo--light" aria-label="Northern Numbers — Home">
+          <span class="logo-icon" aria-hidden="true">
+            <svg width="24" height="24" viewBox="0 0 28 28" fill="none">
+              <path d="M14 2L16.5 8.5H23L17.5 12.5L19.5 19L14 15.5L8.5 19L10.5 12.5L5 8.5H11.5L14 2Z" fill="#D52B1E"/>
+              <rect x="12.5" y="19" width="3" height="5" fill="#D52B1E"/>
+            </svg>
+          </span>
+          <span class="logo-text">Northern Numbers</span>
+        </a>
+        <p class="footer-tagline">Smart Canadian Calculators</p>
+        <p class="footer-desc">Free, accurate financial tools built for Canadians. No sign-up required.</p>
+      </div>
+      <nav class="footer-nav" aria-label="Footer navigation">
+        <div class="footer-nav-col">
+          <h4 class="footer-nav-heading">Calculators</h4>
+          <ul role="list">
+            <li><a href="/mortgage/">Mortgage</a></li>
+            <li><a href="/tfsa/">TFSA</a></li>
+            <li><a href="/rrsp/">RRSP</a></li>
+            <li><a href="/fhsa/">FHSA</a></li>
+            <li><a href="/compound-interest/">Compound Interest</a></li>
+          </ul>
+        </div>
+        <div class="footer-nav-col">
+          <h4 class="footer-nav-heading">More Tools</h4>
+          <ul role="list">
+            <li><span class="footer-disabled">Loan Calculator</span></li>
+            <li><span class="footer-disabled">Car Loan</span></li>
+            <li><span class="footer-disabled">Budget</span></li>
+            <li><span class="footer-disabled">Inflation</span></li>
+            <li><span class="footer-disabled">Retirement</span></li>
+          </ul>
+        </div>
+        <div class="footer-nav-col">
+          <h4 class="footer-nav-heading">Site</h4>
+          <ul role="list">
+            <li><a href="/about.html">About</a></li>
+            <li><a href="/contact.html">Contact</a></li>
+            <li><a href="/privacy-policy.html">Privacy Policy</a></li>
+            <li><span class="footer-disabled">Terms of Use</span></li>
+          </ul>
+        </div>
+      </nav>
+    </div>
+    <div class="footer-bottom">
+      <div class="container footer-bottom-inner">
+        <p class="footer-legal">© <span id="footer-year">2026</span> Northern Numbers. All rights reserved. Results are estimates only and do not constitute financial advice.</p>
+        <p class="footer-built">Built for Canadians. 🇨🇦</p>
+      </div>
+    </div>
+  </footer>
+
+  <script src="script.js" defer></script>
+</body>
+</html>
