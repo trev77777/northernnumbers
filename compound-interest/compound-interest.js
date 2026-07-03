@@ -306,22 +306,28 @@ function yearsToGoal(initial, annualContrib, rate, n, goal, maxYears = 60) {
 /* =============================================
    9. RENDER MILESTONE
    ============================================= */
-function renderMilestone(id, yearId, subId, year, finalBalance, threshold) {
+function renderMilestone(id, yearId, subId, year, finalBalance, threshold, initialBalance) {
   const card   = document.getElementById(id);
   const yearEl = document.getElementById(yearId);
   const subEl  = document.getElementById(subId);
   if (!card || !yearEl) return;
 
-  const reached   = finalBalance >= threshold;
-  const yearsAway = year ? year - CURRENT_YEAR : null;
+  // "Already reached" only if the starting balance TODAY exceeds the threshold
+  const alreadyReached = (initialBalance || 0) >= threshold;
+  const willReach      = finalBalance >= threshold;
+  const yearsAway      = year ? year - CURRENT_YEAR : null;
 
-  if (year) {
+  if (alreadyReached) {
+    yearEl.textContent = '✓';
+    if (subEl) subEl.textContent = 'Already reached';
+    card.classList.add('is-reached');
+  } else if (year) {
     yearEl.textContent = year;
-    if (subEl) subEl.textContent = reached ? 'Already reached ✓' : `${yearsAway} year${yearsAway === 1 ? '' : 's'} from now`;
-    card.classList.toggle('is-reached', reached);
+    if (subEl) subEl.textContent = `Projected in ${yearsAway} year${yearsAway === 1 ? '' : 's'}`;
+    card.classList.toggle('is-reached', false);
   } else {
     yearEl.textContent = 'N/A';
-    if (subEl) subEl.textContent = 'beyond your timeline';
+    if (subEl) subEl.textContent = 'Beyond your timeline';
     card.classList.remove('is-reached');
   }
 }
@@ -604,12 +610,13 @@ function calculate() {
   }
 
   // Milestones
-  renderMilestone('tl-25k',  'tl-25k-year',  'tl-25k-sub',  milestones[25000],   finalBalance, 25000);
-  renderMilestone('tl-50k',  'tl-50k-year',  'tl-50k-sub',  milestones[50000],   finalBalance, 50000);
-  renderMilestone('tl-100k', 'tl-100k-year', 'tl-100k-sub', milestones[100000],  finalBalance, 100000);
-  renderMilestone('tl-250k', 'tl-250k-year', 'tl-250k-sub', milestones[250000],  finalBalance, 250000);
-  renderMilestone('tl-500k', 'tl-500k-year', 'tl-500k-sub', milestones[500000],  finalBalance, 500000);
-  renderMilestone('tl-1m',   'tl-1m-year',   'tl-1m-sub',   milestones[1000000], finalBalance, 1000000);
+  const initialBalance = parseInputNumber(initialEl.value);
+  renderMilestone('tl-25k',  'tl-25k-year',  'tl-25k-sub',  milestones[25000],   finalBalance, 25000,   initialBalance);
+  renderMilestone('tl-50k',  'tl-50k-year',  'tl-50k-sub',  milestones[50000],   finalBalance, 50000,   initialBalance);
+  renderMilestone('tl-100k', 'tl-100k-year', 'tl-100k-sub', milestones[100000],  finalBalance, 100000,  initialBalance);
+  renderMilestone('tl-250k', 'tl-250k-year', 'tl-250k-sub', milestones[250000],  finalBalance, 250000,  initialBalance);
+  renderMilestone('tl-500k', 'tl-500k-year', 'tl-500k-sub', milestones[500000],  finalBalance, 500000,  initialBalance);
+  renderMilestone('tl-1m',   'tl-1m-year',   'tl-1m-sub',   milestones[1000000], finalBalance, 1000000, initialBalance);
 
   // Compare mode
   if (compareMode) {
