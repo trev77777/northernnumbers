@@ -11,6 +11,13 @@
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Poppins:wght@600;700;800&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="../styles.css" />
   <style>
+    /* Guarantee Finance nav link is active/red on this page */
+    a[href="/finance/"].nav-link {
+      color: var(--color-primary) !important;
+      font-weight: 600 !important;
+    }
+  </style>
+  <style>
     .finance-hero {
       padding: var(--space-16) 0 var(--space-10);
       text-align: center;
