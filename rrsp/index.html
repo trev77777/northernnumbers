@@ -4,26 +4,26 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-  <title>Canadian TFSA Calculator 2026 — Northern Numbers</title>
-  <meta name="description" content="Free Canadian TFSA calculator. Project your tax-free savings growth, calculate contribution room, and see when your TFSA reaches $100K, $250K, and $500K." />
-  <meta name="keywords" content="TFSA calculator, TFSA contribution room 2026, tax-free savings account calculator Canada, TFSA growth calculator, CRA TFSA limit" />
+  <title>Canadian RRSP Calculator 2026 — Northern Numbers</title>
+  <meta name="description" content="Free Canadian RRSP calculator. Estimate your tax refund, project RRSP growth, compare RRSP vs TFSA, and plan your retirement. Built for Canadians." />
+  <meta name="keywords" content="RRSP calculator Canada, RRSP contribution room 2026, RRSP tax refund calculator, Canadian retirement calculator, RRSP vs TFSA" />
   <meta name="author" content="Northern Numbers" />
   <meta name="robots" content="index, follow" />
-  <link rel="canonical" href="https://www.northernnumbers.ca/tfsa/" />
+  <link rel="canonical" href="https://www.northernnumbers.ca/rrsp/" />
 
-  <meta property="og:title" content="Canadian TFSA Calculator 2026 — Northern Numbers" />
-  <meta property="og:description" content="Project your TFSA growth, check contribution room, and plan your tax-free savings. Free and built for Canadians." />
+  <meta property="og:title" content="Canadian RRSP Calculator 2026 — Northern Numbers" />
+  <meta property="og:description" content="Project your RRSP growth, estimate your tax refund, and plan your retirement. Free and built for Canadians." />
   <meta property="og:type" content="website" />
-  <meta property="og:url" content="https://www.northernnumbers.ca/tfsa/" />
+  <meta property="og:url" content="https://www.northernnumbers.ca/rrsp/" />
   <meta property="og:locale" content="en_CA" />
 
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
     "@type": "WebApplication",
-    "name": "Canadian TFSA Calculator",
-    "url": "https://www.northernnumbers.ca/tfsa/",
-    "description": "Free Canadian TFSA calculator. Project tax-free savings growth and contribution room.",
+    "name": "Canadian RRSP Calculator",
+    "url": "https://www.northernnumbers.ca/rrsp/",
+    "description": "Free Canadian RRSP calculator with tax refund estimation and retirement planning.",
     "applicationCategory": "FinanceApplication",
     "offers": { "@type": "Offer", "price": "0", "priceCurrency": "CAD" },
     "provider": { "@type": "Organization", "name": "Northern Numbers", "url": "https://www.northernnumbers.ca" }
@@ -36,7 +36,7 @@
   <link rel="stylesheet" href="../styles.css" />
 
   <style>
-    /* Quick Start */
+    /* Quick start */
     .quick-start {
       background: var(--color-primary-light);
       border: 1px solid rgba(213,43,30,0.15);
@@ -61,19 +61,10 @@
       flex-direction: column;
       gap: var(--space-2);
     }
-    .quick-start ol li {
-      font-size: var(--text-sm);
-      color: var(--color-text);
-      line-height: 1.5;
-    }
+    .quick-start ol li { font-size: var(--text-sm); color: var(--color-text); line-height: 1.5; }
 
-    /* Preset buttons */
-    .preset-group {
-      display: flex;
-      flex-wrap: wrap;
-      gap: var(--space-2);
-      margin-bottom: var(--space-6);
-    }
+    /* Presets */
+    .preset-group { display: flex; flex-wrap: wrap; gap: var(--space-2); margin-bottom: var(--space-6); }
     .preset-btn {
       padding: var(--space-2) var(--space-4);
       font-size: var(--text-sm);
@@ -91,7 +82,11 @@
       background: var(--color-primary-light);
     }
 
-    /* Advanced settings toggle */
+    /* Field help */
+    .field-help { font-size: var(--text-xs); color: var(--color-text-muted); margin-top: var(--space-1); line-height: 1.5; }
+    .field-help a { color: var(--color-primary); text-decoration: underline; }
+
+    /* Advanced settings */
     .advanced-toggle {
       display: flex;
       align-items: center;
@@ -111,30 +106,10 @@
       transition: color var(--transition-fast);
     }
     .advanced-toggle:hover { color: var(--color-text); }
-    .advanced-toggle-icon {
-      margin-left: auto;
-      transition: transform var(--transition-base);
-    }
-    .advanced-toggle[aria-expanded="true"] .advanced-toggle-icon {
-      transform: rotate(180deg);
-    }
-    .advanced-fields {
-      display: none;
-      padding-top: var(--space-4);
-    }
+    .advanced-toggle-icon { margin-left: auto; transition: transform var(--transition-base); }
+    .advanced-toggle[aria-expanded="true"] .advanced-toggle-icon { transform: rotate(180deg); }
+    .advanced-fields { display: none; padding-top: var(--space-4); }
     .advanced-fields.is-open { display: block; }
-
-    /* CRA help link */
-    .field-help {
-      font-size: var(--text-xs);
-      color: var(--color-text-muted);
-      margin-top: var(--space-1);
-      line-height: 1.5;
-    }
-    .field-help a {
-      color: var(--color-primary);
-      text-decoration: underline;
-    }
 
     /* Over-contribution warning */
     .over-contrib-warning {
@@ -150,46 +125,126 @@
     }
     .over-contrib-warning.is-visible { display: block; }
 
-    /* CRA note */
-    .cra-note {
-      margin-top: var(--space-6);
+    /* Summary pills */
+    .summary-tag {
+      display: inline-flex;
+      align-items: center;
+      padding: var(--space-2) var(--space-4);
+      background: var(--color-primary-light);
+      border: 1px solid rgba(213,43,30,0.2);
+      border-radius: var(--radius-full);
+      font-size: var(--text-sm);
+      font-weight: 600;
+      color: var(--color-primary);
+    }
+
+    /* Celebration */
+    .result-celebration {
+      margin-bottom: var(--space-5);
       padding: var(--space-4) var(--space-5);
+      background: linear-gradient(135deg, #F0FDF4, #DCFCE7);
+      border: 1px solid var(--color-success);
+      border-radius: var(--radius-md);
+      font-size: var(--text-sm);
+      color: #166534;
+      line-height: 1.6;
+    }
+
+    /* Result big */
+    .result-big { text-align: center; padding: var(--space-6) 0; border-bottom: 2px solid var(--color-border); margin-bottom: var(--space-6); }
+    .result-big-label { font-size: var(--text-sm); color: var(--color-text-muted); margin-bottom: var(--space-2); }
+    .result-big-value { font-family: var(--font-heading); font-size: 2.75rem; font-weight: 800; color: var(--color-primary); line-height: 1; }
+
+    /* Tax refund card */
+    .refund-card {
+      margin-top: var(--space-6);
+      padding: var(--space-5);
+      background: linear-gradient(135deg, #F0FDF4, #DCFCE7);
+      border: 1px solid var(--color-success);
+      border-radius: var(--radius-md);
+    }
+    .refund-card-title {
+      font-family: var(--font-heading);
+      font-size: var(--text-base);
+      font-weight: 700;
+      color: #166534;
+      margin-bottom: var(--space-1);
+    }
+    .refund-amount {
+      font-family: var(--font-heading);
+      font-size: var(--text-3xl);
+      font-weight: 800;
+      color: var(--color-success);
+      margin-bottom: var(--space-4);
+      line-height: 1;
+    }
+    .refund-uses { display: flex; flex-direction: column; gap: var(--space-2); }
+    .refund-use-item {
+      display: flex;
+      align-items: center;
+      gap: var(--space-2);
+      font-size: var(--text-sm);
+      color: #166534;
+    }
+
+    /* Strategy card */
+    .strategy-card {
+      margin-top: var(--space-4);
+      padding: var(--space-5);
       background: #EFF6FF;
       border: 1px solid #BFDBFE;
       border-radius: var(--radius-md);
-      font-size: var(--text-sm);
-      color: #1E40AF;
-      line-height: 1.6;
     }
-    .cra-note strong { display: block; margin-bottom: var(--space-1); }
-
-    /* Result big */
-    .result-big {
-      text-align: center;
-      padding: var(--space-6) 0;
-      border-bottom: 2px solid var(--color-border);
-      margin-bottom: var(--space-6);
-    }
-    .result-big-label {
-      font-size: var(--text-sm);
-      color: var(--color-text-muted);
-      margin-bottom: var(--space-2);
-    }
-    .result-big-value {
+    .strategy-card-title {
       font-family: var(--font-heading);
-      font-size: 2.75rem;
-      font-weight: 800;
-      color: var(--color-primary);
-      line-height: 1;
+      font-size: var(--text-base);
+      font-weight: 700;
+      color: #1E40AF;
+      margin-bottom: var(--space-3);
     }
+    .strategy-card p { font-size: var(--text-sm); color: #1E40AF; line-height: 1.7; }
+
+    /* RRSP vs TFSA comparison */
+    .comparison-card {
+      margin-top: var(--space-4);
+      padding: var(--space-5);
+      background: var(--color-bg);
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-md);
+    }
+    .comparison-card-title {
+      font-family: var(--font-heading);
+      font-size: var(--text-base);
+      font-weight: 700;
+      color: var(--color-text);
+      margin-bottom: var(--space-3);
+    }
+    .comparison-winner {
+      display: flex;
+      align-items: center;
+      gap: var(--space-2);
+      font-size: var(--text-sm);
+      font-weight: 600;
+      color: var(--color-success);
+      margin-bottom: var(--space-3);
+    }
+    .comparison-card p { font-size: var(--text-sm); color: var(--color-text-muted); line-height: 1.7; }
+
+    /* Retirement income */
+    .retirement-income-card {
+      margin-top: var(--space-4);
+      padding: var(--space-5);
+      background: var(--color-primary-light);
+      border: 1px solid rgba(213,43,30,0.2);
+      border-radius: var(--radius-md);
+      text-align: center;
+    }
+    .retirement-income-label { font-size: var(--text-sm); color: var(--color-primary); font-weight: 600; margin-bottom: var(--space-2); }
+    .retirement-income-value { font-family: var(--font-heading); font-size: var(--text-3xl); font-weight: 800; color: var(--color-primary); line-height: 1; margin-bottom: var(--space-1); }
+    .retirement-income-note { font-size: var(--text-xs); color: var(--color-text-muted); }
 
     /* Milestones */
-    .milestone-list {
-      display: flex;
-      flex-direction: column;
-      gap: var(--space-3);
-      margin-top: var(--space-4);
-    }
+    .milestone-list { display: flex; flex-direction: column; gap: var(--space-3); margin-top: var(--space-4); }
     .milestone-item {
       display: flex;
       align-items: center;
@@ -200,27 +255,11 @@
       border-radius: var(--radius-md);
       font-size: var(--text-sm);
     }
-    .milestone-item.is-reached {
-      background: var(--color-success-light);
-      border-color: var(--color-success);
-    }
-    .milestone-dot {
-      width: 10px;
-      height: 10px;
-      border-radius: 50%;
-      background: var(--color-text-light);
-      flex-shrink: 0;
-    }
+    .milestone-item.is-reached { background: var(--color-success-light); border-color: var(--color-success); }
+    .milestone-dot { width: 10px; height: 10px; border-radius: 50%; background: var(--color-text-light); flex-shrink: 0; }
     .milestone-item.is-reached .milestone-dot { background: var(--color-success); }
     .milestone-text { flex: 1; color: var(--color-text); line-height: 1.4; }
-    .milestone-text strong { font-weight: 700; }
-    .milestone-year-badge {
-      font-family: var(--font-heading);
-      font-size: var(--text-base);
-      font-weight: 800;
-      color: var(--color-text-muted);
-      white-space: nowrap;
-    }
+    .milestone-year-badge { font-family: var(--font-heading); font-size: var(--text-base); font-weight: 800; color: var(--color-text-muted); white-space: nowrap; }
     .milestone-item.is-reached .milestone-year-badge { color: var(--color-success); }
 
     /* Growth table */
@@ -244,38 +283,42 @@
     .growth-toggle:hover { background: var(--color-border); }
     .growth-toggle-icon { transition: transform var(--transition-base); }
     .growth-toggle[aria-expanded="true"] .growth-toggle-icon { transform: rotate(180deg); }
-    .growth-table-wrapper {
-      display: none;
-      overflow-x: auto;
-      margin-top: var(--space-4);
-      border: 1px solid var(--color-border);
-      border-radius: var(--radius-md);
-    }
+    .growth-table-wrapper { display: none; overflow-x: auto; margin-top: var(--space-4); border: 1px solid var(--color-border); border-radius: var(--radius-md); }
     .growth-table-wrapper.is-open { display: block; }
     .growth-table { width: 100%; border-collapse: collapse; font-size: var(--text-sm); }
-    .growth-table th {
-      background: var(--color-bg);
-      padding: var(--space-3) var(--space-4);
-      text-align: right;
-      font-weight: 600;
-      font-size: var(--text-xs);
-      color: var(--color-text-muted);
-      text-transform: uppercase;
-      letter-spacing: 0.05em;
-      border-bottom: 2px solid var(--color-border);
-      white-space: nowrap;
-    }
+    .growth-table th { background: var(--color-bg); padding: var(--space-3) var(--space-4); text-align: right; font-weight: 600; font-size: var(--text-xs); color: var(--color-text-muted); text-transform: uppercase; letter-spacing: 0.05em; border-bottom: 2px solid var(--color-border); white-space: nowrap; }
     .growth-table th:first-child { text-align: left; }
-    .growth-table td {
-      padding: var(--space-3) var(--space-4);
-      text-align: right;
-      border-bottom: 1px solid var(--color-border);
-      white-space: nowrap;
-    }
+    .growth-table td { padding: var(--space-3) var(--space-4); text-align: right; border-bottom: 1px solid var(--color-border); white-space: nowrap; }
     .growth-table td:first-child { text-align: left; font-weight: 600; }
     .growth-table tr:last-child td { border-bottom: none; }
     .growth-table tr:nth-child(even) { background: rgba(248,249,250,0.6); }
     .growth-table .td-growth { color: var(--color-success); }
+
+    /* Button row */
+    .btn-row { display: flex; gap: var(--space-3); align-items: center; margin-top: var(--space-4); }
+    .btn-reset {
+      padding: var(--space-3) var(--space-5);
+      font-size: var(--text-base);
+      font-weight: 600;
+      color: var(--color-text-muted);
+      background: var(--color-white);
+      border: 2px solid var(--color-border);
+      border-radius: var(--radius-lg);
+      cursor: pointer;
+      transition: border-color var(--transition-fast), color var(--transition-fast);
+    }
+    .btn-reset:hover { border-color: var(--color-text-muted); color: var(--color-text); }
+
+    /* Auto-calculated badge */
+    .auto-badge {
+      font-size: var(--text-xs);
+      font-weight: 600;
+      color: var(--color-success);
+      background: var(--color-success-light);
+      padding: 2px 8px;
+      border-radius: var(--radius-full);
+      margin-left: var(--space-2);
+    }
 
     /* Disclaimer */
     .calc-disclaimer {
@@ -289,54 +332,164 @@
       line-height: 1.6;
     }
 
-    /* Input summary tags shown above results */
-    .summary-tag {
-      display: inline-flex;
-      align-items: center;
-      padding: var(--space-2) var(--space-4);
-      background: var(--color-primary-light);
-      border: 1px solid rgba(213,43,30,0.2);
-      border-radius: var(--radius-full);
+    /* Contribution slider */
+    .contrib-slider-wrapper {
+      margin-top: var(--space-3);
+    }
+    .contrib-slider-labels {
+      display: flex;
+      justify-content: space-between;
+      font-size: var(--text-xs);
+      color: var(--color-text-muted);
+      margin-bottom: var(--space-1);
+    }
+    #contrib-slider {
+      width: 100%;
+      accent-color: var(--color-primary);
+      cursor: pointer;
+    }
+
+    /* Hero tax refund card */
+    .refund-hero {
+      background: linear-gradient(135deg, #065F46, #047857);
+      border-radius: var(--radius-md);
+      padding: var(--space-6);
+      margin-bottom: var(--space-5);
+      color: white;
+      text-align: center;
+    }
+    .refund-hero-label {
       font-size: var(--text-sm);
       font-weight: 600;
-      color: var(--color-primary);
+      color: rgba(255,255,255,0.8);
+      margin-bottom: var(--space-2);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
     }
-
-    /* Celebration message */
-    .result-celebration {
-      margin-bottom: var(--space-5);
-      padding: var(--space-4) var(--space-5);
-      background: linear-gradient(135deg, #F0FDF4, #DCFCE7);
-      border: 1px solid var(--color-success);
-      border-radius: var(--radius-md);
+    .refund-hero-amount {
+      font-family: var(--font-heading);
+      font-size: 3rem;
+      font-weight: 800;
+      color: white;
+      line-height: 1;
+      margin-bottom: var(--space-2);
+    }
+    .refund-hero-pct {
       font-size: var(--text-sm);
-      color: #166534;
-      line-height: 1.6;
+      color: rgba(255,255,255,0.75);
+      margin-bottom: var(--space-5);
     }
-
-    /* Button row for calculate + reset */
-    .btn-row {
+    .refund-hero-uses {
       display: flex;
-      gap: var(--space-3);
+      flex-direction: column;
+      gap: var(--space-2);
+      text-align: left;
+      background: rgba(255,255,255,0.1);
+      border-radius: var(--radius-md);
+      padding: var(--space-4);
+    }
+    .refund-hero-use {
+      font-size: var(--text-sm);
+      color: rgba(255,255,255,0.9);
+      display: flex;
       align-items: center;
-      margin-top: var(--space-4);
+      gap: var(--space-2);
     }
 
-    .btn-reset {
-      padding: var(--space-3) var(--space-5);
+    /* Tax savings comparison */
+    .tax-savings-card {
+      margin-bottom: var(--space-5);
+      padding: var(--space-5);
+      background: var(--color-bg);
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-md);
+    }
+    .tax-savings-title {
+      font-family: var(--font-heading);
       font-size: var(--text-base);
+      font-weight: 700;
+      color: var(--color-text);
+      margin-bottom: var(--space-4);
+    }
+    .tax-savings-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: var(--space-3) 0;
+      border-bottom: 1px solid var(--color-border);
+      font-size: var(--text-sm);
+    }
+    .tax-savings-row:last-child { border-bottom: none; }
+    .tax-savings-label { color: var(--color-text-muted); }
+    .tax-savings-value { font-weight: 700; }
+    .tax-savings-value.is-bad  { color: var(--color-error); }
+    .tax-savings-value.is-good { color: var(--color-success); }
+    .tax-savings-value.is-win  { color: var(--color-success); font-size: var(--text-lg); }
+
+    /* Refund reinvestment card */
+    .reinvest-card {
+      margin-top: var(--space-4);
+      padding: var(--space-5);
+      background: linear-gradient(135deg, #EFF6FF, #DBEAFE);
+      border: 1px solid #BFDBFE;
+      border-radius: var(--radius-md);
+    }
+    .reinvest-title {
+      font-family: var(--font-heading);
+      font-size: var(--text-base);
+      font-weight: 700;
+      color: #1E40AF;
+      margin-bottom: var(--space-4);
+    }
+    .reinvest-row {
+      display: flex;
+      justify-content: space-between;
+      padding: var(--space-2) 0;
+      font-size: var(--text-sm);
+      color: #1E40AF;
+      border-bottom: 1px solid rgba(37,99,235,0.15);
+    }
+    .reinvest-row:last-child { border-bottom: none; font-weight: 700; font-size: var(--text-base); }
+    .reinvest-extra { color: var(--color-success); font-weight: 700; }
+
+    /* Improved milestone cards */
+    .milestone-item-inner {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+    .milestone-sub { font-size: var(--text-xs); color: var(--color-text-muted); }
+    .milestone-item.is-reached .milestone-sub { color: var(--color-success); }
+
+    /* Copy results button */
+    .copy-btn {
+      display: flex;
+      align-items: center;
+      gap: var(--space-2);
+      padding: var(--space-3) var(--space-5);
+      font-size: var(--text-sm);
       font-weight: 600;
       color: var(--color-text-muted);
       background: var(--color-white);
       border: 2px solid var(--color-border);
       border-radius: var(--radius-lg);
       cursor: pointer;
-      transition: border-color var(--transition-fast), color var(--transition-fast);
+      transition: all var(--transition-fast);
+      margin-top: var(--space-4);
+      width: 100%;
+      justify-content: center;
     }
-
-    .btn-reset:hover {
-      border-color: var(--color-text-muted);
-      color: var(--color-text);
+    .copy-btn:hover { border-color: var(--color-text); color: var(--color-text); }
+    .copy-btn.copied { border-color: var(--color-success); color: var(--color-success); }
+      margin-top: var(--space-4);
+      padding: var(--space-3) var(--space-4);
+      background: #FFFBEB;
+      border: 1px solid #FDE68A;
+      border-radius: var(--radius-md);
+      font-size: var(--text-xs);
+      color: #92400E;
+      line-height: 1.6;
     }
   </style>
 </head>
@@ -390,31 +543,29 @@
       <nav class="calc-breadcrumb" aria-label="Breadcrumb">
         <a href="/">Home</a>
         <span class="calc-breadcrumb-sep" aria-hidden="true">›</span>
-        <span aria-current="page">TFSA Calculator</span>
+        <span aria-current="page">RRSP Calculator</span>
       </nav>
 
       <div class="calc-page-header">
-        <h1 class="calc-page-title">Canadian TFSA Calculator</h1>
-        <p class="calc-page-desc">Project your tax-free savings growth, check your contribution room, and find out when your TFSA reaches your goals.</p>
+        <h1 class="calc-page-title">Canadian RRSP Calculator</h1>
+        <p class="calc-page-desc">Project your RRSP growth, estimate your tax refund, and build a retirement plan — all in one place.</p>
       </div>
 
       <div class="calc-layout">
 
         <!-- LEFT: Inputs -->
-        <section class="calc-panel" aria-labelledby="tfsa-inputs-heading">
-          <h2 id="tfsa-inputs-heading" class="calc-panel-title">Your TFSA Details</h2>
+        <section class="calc-panel" aria-labelledby="rrsp-inputs-heading">
+          <h2 id="rrsp-inputs-heading" class="calc-panel-title">Your RRSP Details</h2>
 
           <!-- Quick Start -->
-          <div class="quick-start" role="note" aria-label="How to use this calculator">
-            <p class="quick-start-title">
-              <span aria-hidden="true">📋</span> How to use this calculator
-            </p>
+          <div class="quick-start" role="note">
+            <p class="quick-start-title"><span aria-hidden="true">📋</span> How to use this calculator</p>
             <ol>
-              <li>Enter your current TFSA balance (enter 0 if you're just starting).</li>
-              <li>Enter your birth year — we'll estimate your contribution room automatically.</li>
-              <li>Enter how much you plan to contribute and how often.</li>
-              <li>Set your expected annual return (6% is a common long-term estimate for index funds).</li>
-              <li>Click <strong>Calculate TFSA Growth</strong>.</li>
+              <li>Enter your annual income and province — we'll calculate your tax refund.</li>
+              <li>Enter your current age and planned retirement age.</li>
+              <li>Enter your RRSP balance and available contribution room.</li>
+              <li>Choose how much you plan to contribute and how often.</li>
+              <li>Click <strong>Calculate RRSP Growth</strong>.</li>
             </ol>
           </div>
 
@@ -422,123 +573,146 @@
           <div style="margin-bottom:var(--space-2);">
             <p style="font-size:var(--text-sm);font-weight:600;color:var(--color-text-muted);margin-bottom:var(--space-2);">Quick start with a preset:</p>
             <div class="preset-group" role="group" aria-label="Preset scenarios">
-              <button type="button" class="preset-btn" data-preset="beginner">🌱 Beginner Investor</button>
-              <button type="button" class="preset-btn" data-preset="average">🍁 Average Canadian</button>
-              <button type="button" class="preset-btn" data-preset="growth">📈 Growth Investor</button>
+              <button type="button" class="preset-btn" data-preset="graduate">🎓 First Job</button>
+              <button type="button" class="preset-btn" data-preset="average">👨‍💼 Average Canadian</button>
+              <button type="button" class="preset-btn" data-preset="highincome">💰 High Earner</button>
+              <button type="button" class="preset-btn" data-preset="nearretirement">🏖 Near Retirement</button>
             </div>
           </div>
 
-          <form id="tfsa-form" novalidate aria-label="TFSA calculator inputs">
+          <form id="rrsp-form" novalidate aria-label="RRSP calculator inputs">
 
-            <!-- 1. Year of Birth -->
+            <!-- Income -->
             <div class="form-group">
-              <label class="form-label" for="birth-year">Year of Birth</label>
-              <div class="input-wrapper">
-                <input type="text" id="birth-year" class="form-input"
-                  placeholder="e.g. 1990" inputmode="numeric" autocomplete="off"
-                  maxlength="4"
-                  aria-describedby="birth-year-hint birth-year-error" />
-              </div>
-              <p id="birth-year-hint" class="field-help">
-                We'll use this to estimate your lifetime TFSA contribution room.
-                TFSA eligibility started in 2009 — if you were born in 1991 or earlier, your room starts from 2009.
-              </p>
-              <p id="birth-year-error" class="form-error-msg" role="alert"></p>
-            </div>
-
-            <!-- 2. Total Past Contributions -->
-            <div class="form-group">
-              <label class="form-label" for="past-contributions">Total Past Contributions</label>
+              <label class="form-label" for="annual-income">Current Annual Income</label>
               <div class="input-wrapper">
                 <span class="input-prefix" aria-hidden="true">$</span>
-                <input type="text" id="past-contributions" class="form-input has-prefix"
-                  placeholder="0" inputmode="numeric" autocomplete="off" value="0" />
+                <input type="text" id="annual-income" class="form-input has-prefix"
+                  placeholder="85,000" inputmode="numeric" autocomplete="off" value="85,000"
+                  aria-describedby="annual-income-error" />
               </div>
-              <p class="field-help">
-                How much you've contributed to your TFSA in total over the years — not your current balance.
-                Investment growth doesn't count. Enter 0 if you've never contributed.
-              </p>
+              <p class="field-help">Used to estimate your marginal tax rate and RRSP tax refund.</p>
+              <p id="annual-income-error" class="form-error-msg" role="alert"></p>
             </div>
 
-            <!-- Current TFSA Balance (kept for growth projection) -->
+            <!-- Province -->
             <div class="form-group">
-              <label class="form-label" for="current-balance">Current TFSA Balance</label>
+              <label class="form-label" for="province">Province or Territory</label>
+              <select id="province" class="form-select">
+                <option value="ON" selected>Ontario</option>
+                <option value="AB">Alberta</option>
+                <option value="BC">British Columbia</option>
+                <option value="MB">Manitoba</option>
+                <option value="SK">Saskatchewan</option>
+                <option value="QC">Quebec</option>
+                <option value="NB">New Brunswick</option>
+                <option value="NS">Nova Scotia</option>
+                <option value="PE">Prince Edward Island</option>
+                <option value="NL">Newfoundland & Labrador</option>
+                <option value="YT">Yukon</option>
+                <option value="NT">Northwest Territories</option>
+                <option value="NU">Nunavut</option>
+              </select>
+              <p class="field-help">Provincial tax rates vary — this affects your estimated tax refund.</p>
+            </div>
+
+            <!-- Current Age -->
+            <div class="form-group">
+              <label class="form-label" for="current-age">Current Age</label>
+              <div class="input-wrapper">
+                <input type="number" id="current-age" class="form-input has-suffix"
+                  placeholder="35" min="18" max="70" step="1" value="35"
+                  aria-describedby="current-age-error" />
+                <span class="input-suffix" aria-hidden="true">yrs</span>
+              </div>
+              <p id="current-age-error" class="form-error-msg" role="alert"></p>
+            </div>
+
+            <!-- Retirement Age -->
+            <div class="form-group">
+              <label class="form-label" for="retirement-age">Planned Retirement Age</label>
+              <div class="input-wrapper">
+                <input type="number" id="retirement-age" class="form-input has-suffix"
+                  placeholder="65" min="50" max="71" step="1" value="65"
+                  aria-describedby="retirement-age-hint retirement-age-error" />
+                <span class="input-suffix" aria-hidden="true">yrs</span>
+              </div>
+              <p id="retirement-age-hint" class="field-help">
+                RRSP must be converted to a RRIF by December 31 of the year you turn 71.
+              </p>
+              <p id="retirement-age-error" class="form-error-msg" role="alert"></p>
+            </div>
+
+            <!-- Current RRSP Balance -->
+            <div class="form-group">
+              <label class="form-label" for="rrsp-balance">Current RRSP Balance</label>
               <div class="input-wrapper">
                 <span class="input-prefix" aria-hidden="true">$</span>
-                <input type="text" id="current-balance" class="form-input has-prefix"
+                <input type="text" id="rrsp-balance" class="form-input has-prefix"
                   placeholder="0" inputmode="numeric" autocomplete="off" value="0"
-                  aria-describedby="current-balance-error" />
+                  aria-describedby="rrsp-balance-error" />
               </div>
-              <p class="field-help">What's currently sitting in your TFSA today. Used to project future growth. Enter 0 if you're just starting.</p>
-              <p id="current-balance-error" class="form-error-msg" role="alert"></p>
+              <p class="field-help">Total currently in all your RRSPs. Enter 0 if you're just starting.</p>
+              <p id="rrsp-balance-error" class="form-error-msg" role="alert"></p>
             </div>
 
-            <!-- 3. Available Contribution Room — auto-filled (lifetime room minus balance), still editable -->
+            <!-- Available RRSP Room -->
             <div class="form-group">
-              <label class="form-label" for="contrib-room">
-                Available Contribution Room
-                <span id="room-auto-badge" class="hidden" style="
-                  font-size:var(--text-xs);font-weight:600;color:var(--color-success);
-                  background:var(--color-success-light);padding:2px 8px;
-                  border-radius:var(--radius-full);margin-left:var(--space-2);
-                ">Auto-calculated</span>
+              <label class="form-label" for="rrsp-room">
+                Available RRSP Contribution Room
+                <span id="room-auto-badge" class="auto-badge hidden">Auto-estimated</span>
               </label>
               <div class="input-wrapper">
                 <span class="input-prefix" aria-hidden="true">$</span>
-                <input type="text" id="contrib-room" class="form-input has-prefix"
-                  placeholder="95,000" inputmode="numeric" autocomplete="off" value="95,000"
-                  aria-describedby="contrib-room-hint contrib-room-error" />
+                <input type="text" id="rrsp-room" class="form-input has-prefix"
+                  placeholder="29,000" inputmode="numeric" autocomplete="off"
+                  aria-describedby="rrsp-room-hint rrsp-room-error" />
               </div>
-              <p id="contrib-room-hint" class="field-help">
-                Lifetime room minus your past contributions. Investment growth doesn't affect this.
-                Always verify in <a href="https://www.canada.ca/en/revenue-agency/services/e-services/digital-services-individuals/account-individuals.html" target="_blank" rel="noopener">CRA My Account</a>.
-                You can edit this field directly if your exact room is different.
+              <p id="rrsp-room-hint" class="field-help">
+                Your 2026 RRSP room = 18% of your 2025 earned income, up to $32,490, plus unused room from prior years.
+                Find your exact amount in <a href="https://www.canada.ca/en/revenue-agency/services/e-services/digital-services-individuals/account-individuals.html" target="_blank" rel="noopener">CRA My Account</a>
+                or on your latest Notice of Assessment. You can edit this field.
               </p>
-              <p id="contrib-room-error" class="form-error-msg" role="alert"></p>
+              <p id="rrsp-room-error" class="form-error-msg" role="alert"></p>
             </div>
 
-            <!-- Contribution Amount -->
+            <!-- Planned Contribution -->
             <div class="form-group">
-              <label class="form-label" for="contribution">Contribution Amount</label>
+              <label class="form-label" for="rrsp-contribution">Planned Contribution Amount</label>
               <div class="input-wrapper">
                 <span class="input-prefix" aria-hidden="true">$</span>
-                <input type="text" id="contribution" class="form-input has-prefix"
+                <input type="text" id="rrsp-contribution" class="form-input has-prefix"
                   placeholder="7,000" inputmode="numeric" autocomplete="off" value="7,000"
-                  aria-describedby="contribution-error" />
+                  aria-describedby="rrsp-contribution-error" />
               </div>
-              <div id="over-contrib-warning" class="over-contrib-warning" role="alert" aria-live="polite">
-                ⚠️ <strong>Heads up — possible over-contribution in year 1.</strong>
-                Your planned contributions this year may exceed your current available room.
-                The CRA charges 1% per month on the excess. Double-check your room in CRA My Account before contributing.
+              <!-- Contribution slider -->
+              <div class="contrib-slider-wrapper">
+                <div class="contrib-slider-labels">
+                  <span>$0</span>
+                  <span id="slider-mid-label">$16,245</span>
+                  <span>$32,490</span>
+                </div>
+                <input type="range" id="contrib-slider" min="0" max="32490" step="100" value="7000" aria-label="Contribution amount slider" />
               </div>
-              <p id="contribution-error" class="form-error-msg" role="alert"></p>
+              <!-- Over-contribution warning -->
+              <div id="over-contrib-warning" class="over-contrib-warning" role="alert" aria-live="polite"></div>
+              <p id="rrsp-contribution-error" class="form-error-msg" role="alert"></p>
             </div>
 
-            <!-- Year 1 Lump Sum (optional) -->
+            <!-- Year 1 Lump Sum -->
             <div class="form-group">
               <label class="form-label" for="lump-sum">
                 Year 1 Lump Sum <span class="form-hint">(optional)</span>
               </label>
               <div class="input-wrapper">
                 <span class="input-prefix" aria-hidden="true">$</span>
-                <input
-                  type="text"
-                  id="lump-sum"
-                  class="form-input has-prefix"
-                  placeholder="0"
-                  inputmode="numeric"
-                  autocomplete="off"
-                  value="0"
-                />
+                <input type="text" id="lump-sum" class="form-input has-prefix"
+                  placeholder="0" inputmode="numeric" autocomplete="off" value="0" />
               </div>
-              <p class="field-help">
-                Use this to contribute your full available room upfront in year 1 (e.g. $27,000),
-                then switch to a smaller recurring amount from year 2 onward.
-                Leave as 0 if not needed.
-              </p>
+              <p class="field-help">Contribute your full available room upfront in year 1, then switch to a smaller recurring amount from year 2 onward. Leave as 0 if not needed.</p>
             </div>
 
-            <!-- Frequency -->
+            <!-- Contribution Frequency -->
             <div class="form-group">
               <label class="form-label" for="contrib-frequency">How often will you contribute?</label>
               <select id="contrib-frequency" class="form-select">
@@ -550,7 +724,7 @@
               </select>
             </div>
 
-            <!-- Annual Return -->
+            <!-- Expected Return -->
             <div class="form-group">
               <label class="form-label" for="annual-return">Expected Annual Return</label>
               <div class="input-wrapper">
@@ -559,22 +733,8 @@
                   aria-describedby="annual-return-hint annual-return-error" />
                 <span class="input-suffix" aria-hidden="true">%</span>
               </div>
-              <p class="field-help" id="annual-return-hint">
-                6% is a commonly used long-term estimate for a diversified index fund portfolio. Conservative investors might use 4–5%; aggressive investors 7–9%.
-              </p>
+              <p class="field-help" id="annual-return-hint">Conservative portfolios often target 4–5%, balanced 6–7%, growth portfolios 8–10%.</p>
               <p id="annual-return-error" class="form-error-msg" role="alert"></p>
-            </div>
-
-            <!-- Time Horizon -->
-            <div class="form-group">
-              <label class="form-label" for="time-horizon">How many years will you invest?</label>
-              <div class="input-wrapper">
-                <input type="number" id="time-horizon" class="form-input has-suffix"
-                  placeholder="20" min="1" max="60" step="1" value="20"
-                  aria-describedby="time-horizon-error" />
-                <span class="input-suffix" aria-hidden="true">years</span>
-              </div>
-              <p id="time-horizon-error" class="form-error-msg" role="alert"></p>
             </div>
 
             <!-- Advanced Settings -->
@@ -587,19 +747,6 @@
             </button>
 
             <div id="advanced-fields" class="advanced-fields">
-              <!-- Annual TFSA Limit -->
-              <div class="form-group">
-                <label class="form-label" for="annual-limit">Annual TFSA Limit</label>
-                <div class="input-wrapper">
-                  <span class="input-prefix" aria-hidden="true">$</span>
-                  <input type="text" id="annual-limit" class="form-input has-prefix"
-                    placeholder="7,000" inputmode="numeric" autocomplete="off" value="7,000" />
-                </div>
-                <p class="field-help">
-                  The 2026 CRA limit is $7,000. Only change this if you're modelling future years when the limit may increase.
-                </p>
-              </div>
-
               <!-- Inflation Rate -->
               <div class="form-group">
                 <label class="form-label" for="inflation-rate">Inflation Rate</label>
@@ -608,104 +755,240 @@
                     placeholder="2.1" min="0" max="20" step="0.1" value="2.1" />
                   <span class="input-suffix" aria-hidden="true">%</span>
                 </div>
-                <p class="field-help">
-                  Used to calculate the inflation-adjusted (real) value of your TFSA. Canada's long-term average is about 2%.
-                </p>
+                <p class="field-help">Used to calculate inflation-adjusted (real) value of your RRSP. Canada's long-term average is about 2%.</p>
+              </div>
+
+              <!-- Salary Growth -->
+              <div class="form-group">
+                <label class="form-label" for="salary-growth">Annual Salary Growth</label>
+                <div class="input-wrapper">
+                  <input type="number" id="salary-growth" class="form-input has-suffix"
+                    placeholder="2" min="0" max="20" step="0.1" value="2" />
+                  <span class="input-suffix" aria-hidden="true">%</span>
+                </div>
+                <p class="field-help">Used to estimate how your RRSP room grows over time as your income increases.</p>
+              </div>
+
+              <!-- Employer Match -->
+              <div class="form-group">
+                <label class="form-label" for="employer-match">Employer RRSP Match</label>
+                <div class="input-wrapper">
+                  <input type="number" id="employer-match" class="form-input has-suffix"
+                    placeholder="0" min="0" max="100" step="0.5" value="0" />
+                  <span class="input-suffix" aria-hidden="true">%</span>
+                </div>
+                <p class="field-help">If your employer matches RRSP contributions, enter the match percentage here. E.g. 50% means they add $0.50 for every $1 you contribute.</p>
+              </div>
+
+              <!-- Retirement Tax Rate -->
+              <div class="form-group">
+                <label class="form-label" for="retirement-tax-rate">Expected Retirement Tax Rate</label>
+                <div class="input-wrapper">
+                  <input type="number" id="retirement-tax-rate" class="form-input has-suffix"
+                    placeholder="20" min="0" max="60" step="1" value="20" />
+                  <span class="input-suffix" aria-hidden="true">%</span>
+                </div>
+                <p class="field-help">Estimated marginal tax rate in retirement. Most retirees pay a lower rate than during their working years.</p>
               </div>
             </div>
 
+            <!-- Buttons -->
             <div class="btn-row">
-              <button type="submit" class="btn btn-primary btn-calculate" id="tfsa-calculate-btn" style="flex:1;">
-                Calculate TFSA Growth
+              <button type="submit" class="btn btn-primary btn-calculate" id="rrsp-calculate-btn" style="flex:1;">
+                Calculate RRSP Growth
               </button>
-              <button type="button" id="tfsa-reset-btn" class="btn-reset">
-                Reset
-              </button>
+              <button type="button" id="rrsp-reset-btn" class="btn-reset">Reset</button>
             </div>
 
           </form>
 
-          <div class="cra-note" role="note">
-            <strong>🇨🇦 Important: CRA My Account may be out of date</strong>
-            CRA My Account does not immediately reflect contributions or withdrawals made during the current year.
-            Financial institutions report transactions once a year. Always verify your exact contribution room
-            using your own records before contributing — over-contributions are penalized at 1% per month.
+          <!-- CRA note -->
+          <div style="margin-top:var(--space-6);padding:var(--space-4) var(--space-5);background:#EFF6FF;border:1px solid #BFDBFE;border-radius:var(--radius-md);font-size:var(--text-sm);color:#1E40AF;line-height:1.6;">
+            <strong style="display:block;margin-bottom:var(--space-1);">🇨🇦 Find your exact RRSP room</strong>
+            Your exact contribution room is on your latest CRA Notice of Assessment, or in
+            <a href="https://www.canada.ca/en/revenue-agency/services/e-services/digital-services-individuals/account-individuals.html" target="_blank" rel="noopener" style="color:#1E40AF;font-weight:600;">CRA My Account</a>.
+            The 2026 RRSP deadline is March 2, 2026 for the 2025 tax year.
           </div>
 
         </section>
 
         <!-- RIGHT: Results -->
-        <section class="calc-panel" aria-labelledby="tfsa-results-heading" aria-live="polite">
-          <h2 id="tfsa-results-heading" class="calc-panel-title">Your Results</h2>
+        <section class="calc-panel" aria-labelledby="rrsp-results-heading" aria-live="polite">
+          <h2 id="rrsp-results-heading" class="calc-panel-title">Your Results</h2>
 
-          <div id="tfsa-results-placeholder" class="result-placeholder">
+          <!-- Placeholder -->
+          <div id="rrsp-results-placeholder" class="result-placeholder">
             <div class="result-placeholder-icon" aria-hidden="true">
               <svg width="56" height="56" viewBox="0 0 56 56" fill="none">
                 <rect x="10" y="8" width="36" height="40" rx="4" stroke="#D1D5DB" stroke-width="2"/>
                 <path d="M18 20H38M18 28H38M18 36H28" stroke="#D1D5DB" stroke-width="2" stroke-linecap="round"/>
               </svg>
             </div>
-            <p>Fill in your details on the left and click <strong>Calculate TFSA Growth</strong> to see your projection.</p>
+            <p>Fill in your details and click <strong>Calculate RRSP Growth</strong> to see your projection.</p>
           </div>
 
-          <div id="tfsa-results-content" class="hidden">
+          <!-- Results -->
+          <div id="rrsp-results-content" class="hidden">
 
-            <!-- Input summary — confirms what the user entered -->
+            <!-- Input summary -->
             <div id="result-summary-box" class="hidden" style="margin-bottom:var(--space-5);padding:var(--space-4);background:var(--color-bg);border:1px solid var(--color-border);border-radius:var(--radius-md);"></div>
 
-            <!-- Celebration message — shown for results over $100k -->
+            <!-- Celebration -->
             <div id="result-celebration" class="result-celebration hidden"></div>
 
+            <!-- 1. HERO TAX REFUND — top of results, most prominent -->
+            <div class="refund-hero" id="refund-hero">
+              <p class="refund-hero-label">💰 Estimated Tax Refund This Year</p>
+              <p id="result-tax-refund" class="refund-hero-amount">—</p>
+              <p id="result-refund-pct" class="refund-hero-pct">—</p>
+              <div class="refund-hero-uses">
+                <p style="font-size:var(--text-xs);font-weight:700;color:rgba(255,255,255,0.6);text-transform:uppercase;letter-spacing:0.05em;margin-bottom:var(--space-1);">Your refund could be used to:</p>
+                <div class="refund-hero-use">✅ Reinvest into your RRSP next year</div>
+                <div class="refund-hero-use">✅ Max out your TFSA</div>
+                <div class="refund-hero-use">✅ Pay down high-interest debt</div>
+              </div>
+            </div>
+
+            <!-- 2. TAX SAVINGS COMPARISON -->
+            <div class="tax-savings-card">
+              <p class="tax-savings-title">📊 Your Tax Savings This Year</p>
+              <div class="tax-savings-row">
+                <span class="tax-savings-label">Without RRSP contribution</span>
+                <span class="tax-savings-value is-bad" id="result-tax-without">—</span>
+              </div>
+              <div class="tax-savings-row">
+                <span class="tax-savings-label">With RRSP contribution</span>
+                <span class="tax-savings-value" id="result-tax-with">—</span>
+              </div>
+              <div class="tax-savings-row">
+                <span class="tax-savings-label" style="font-weight:600;">You save</span>
+                <span class="tax-savings-value is-win" id="result-tax-saved">—</span>
+              </div>
+            </div>
+
+            <!-- 3. BIG FUTURE VALUE -->
             <div class="result-big">
-              <p class="result-big-label">Future TFSA Value</p>
+              <p class="result-big-label">Future RRSP Value at Retirement</p>
               <p id="result-future-value" class="result-big-value">—</p>
             </div>
 
+            <!-- 4. SUMMARY ROWS -->
             <div class="result-summary" role="list">
               <div class="result-row" role="listitem">
                 <span class="result-row-label">Total Contributions</span>
                 <span class="result-row-value" id="result-total-contributions">—</span>
               </div>
               <div class="result-row" role="listitem">
-                <span class="result-row-label">Investment Growth (Tax-Free)</span>
+                <span class="result-row-label">Employer Match Added</span>
+                <span class="result-row-value is-success" id="result-employer-match">—</span>
+              </div>
+              <div class="result-row" role="listitem">
+                <span class="result-row-label">Investment Growth</span>
                 <span class="result-row-value is-success" id="result-investment-growth">—</span>
+              </div>
+              <div class="result-row" role="listitem">
+                <span class="result-row-label">Inflation-Adjusted Value</span>
+                <span class="result-row-value" id="result-inflation-adjusted">—</span>
               </div>
               <div class="result-row" role="listitem">
                 <span class="result-row-label">Remaining Contribution Room</span>
                 <span class="result-row-value" id="result-remaining-room">—</span>
               </div>
               <div class="result-row" role="listitem">
-                <span class="result-row-label">Inflation-Adjusted Value</span>
-                <span class="result-row-value" id="result-inflation-adjusted">—</span>
+                <span class="result-row-label">RRIF Conversion Year</span>
+                <span class="result-row-value" id="result-rrif-year">—</span>
               </div>
             </div>
 
-            <!-- Improved milestones -->
+            <!-- 5. RETIREMENT INCOME -->
+            <div class="retirement-income-card" style="margin-top:var(--space-4);">
+              <p class="retirement-income-label">📊 Estimated Annual Retirement Income (4% Rule)</p>
+              <p id="result-retirement-income" class="retirement-income-value">—</p>
+              <p class="retirement-income-note">Based on withdrawing 4% of your RRSP annually at retirement.</p>
+            </div>
+
+            <!-- 6. REFUND REINVESTMENT COMPARISON -->
+            <div class="reinvest-card">
+              <p class="reinvest-title">🔄 What if you reinvested your tax refund every year?</p>
+              <div class="reinvest-row">
+                <span>Without reinvesting refund</span>
+                <span id="result-no-reinvest">—</span>
+              </div>
+              <div class="reinvest-row">
+                <span>Reinvesting refund annually</span>
+                <span id="result-with-reinvest">—</span>
+              </div>
+              <div class="reinvest-row">
+                <span>Extra wealth from reinvesting</span>
+                <span class="reinvest-extra" id="result-reinvest-extra">—</span>
+              </div>
+            </div>
+
+            <!-- 7. STRATEGY CARD -->
+            <div class="strategy-card" id="strategy-card">
+              <p class="strategy-card-title">💡 Personalized Strategy</p>
+              <p id="strategy-text">—</p>
+            </div>
+
+            <!-- 8. RRSP vs TFSA -->
+            <div class="comparison-card" id="comparison-card">
+              <p class="comparison-card-title">⚖️ Should You Use an RRSP or TFSA?</p>
+              <p class="comparison-winner" id="comparison-winner">—</p>
+              <p id="comparison-text">—</p>
+            </div>
+
+            <!-- 9. MILESTONES -->
             <div style="margin-top:var(--space-6);">
               <p style="font-size:var(--text-sm);font-weight:600;margin-bottom:var(--space-3);">Your Savings Milestones</p>
               <div class="milestone-list">
                 <div class="milestone-item" id="milestone-100k">
                   <div class="milestone-dot"></div>
-                  <span class="milestone-text" id="milestone-100k-text">You could reach <strong>$100,000</strong> in —</span>
+                  <div class="milestone-item-inner">
+                    <span class="milestone-text" id="milestone-100k-text"><strong>$100,000</strong></span>
+                    <span class="milestone-sub" id="milestone-100k-sub">—</span>
+                  </div>
                   <span class="milestone-year-badge" id="milestone-100k-year">—</span>
                 </div>
                 <div class="milestone-item" id="milestone-250k">
                   <div class="milestone-dot"></div>
-                  <span class="milestone-text" id="milestone-250k-text">You could reach <strong>$250,000</strong> in —</span>
+                  <div class="milestone-item-inner">
+                    <span class="milestone-text" id="milestone-250k-text"><strong>$250,000</strong></span>
+                    <span class="milestone-sub" id="milestone-250k-sub">—</span>
+                  </div>
                   <span class="milestone-year-badge" id="milestone-250k-year">—</span>
                 </div>
                 <div class="milestone-item" id="milestone-500k">
                   <div class="milestone-dot"></div>
-                  <span class="milestone-text" id="milestone-500k-text">You could reach <strong>$500,000</strong> in —</span>
+                  <div class="milestone-item-inner">
+                    <span class="milestone-text" id="milestone-500k-text"><strong>$500,000</strong></span>
+                    <span class="milestone-sub" id="milestone-500k-sub">—</span>
+                  </div>
                   <span class="milestone-year-badge" id="milestone-500k-year">—</span>
+                </div>
+                <div class="milestone-item" id="milestone-1m">
+                  <div class="milestone-dot"></div>
+                  <div class="milestone-item-inner">
+                    <span class="milestone-text" id="milestone-1m-text"><strong>$1,000,000</strong></span>
+                    <span class="milestone-sub" id="milestone-1m-sub">—</span>
+                  </div>
+                  <span class="milestone-year-badge" id="milestone-1m-year">—</span>
                 </div>
               </div>
             </div>
 
+            <!-- RRIF note -->
+            <div class="rrif-note" id="rrif-note" style="display:none;margin-top:var(--space-4);">
+              ⚠️ <strong>RRIF conversion required.</strong> You must convert your RRSP to a RRIF by December 31 of the year you turn 71. Minimum withdrawals are required annually and are taxable income.
+            </div>
+
+            <!-- 10. COPY RESULTS BUTTON -->
+            <button type="button" id="copy-results-btn" class="copy-btn">
+              📋 Copy Results to Clipboard
+            </button>
+
+            <!-- Disclaimer -->
             <div class="calc-disclaimer">
-              Results are estimates based on a constant annual return and do not account for market volatility,
-              management fees, or future changes to TFSA contribution limits. This is not financial advice.
-              Consult a registered financial advisor for personalized guidance.
+              Results are estimates based on constant rates of return and 2026 tax rules. Actual results will vary. This is not financial advice.
             </div>
 
           </div>
@@ -721,15 +1004,16 @@
             <path d="M5 7.5L10 12.5L15 7.5" stroke="#1F2937" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
           </svg>
         </button>
-        <div id="growth-table-wrapper" class="growth-table-wrapper" aria-live="polite">
-          <table class="growth-table" aria-label="Year-by-year TFSA growth">
+        <div id="growth-table-wrapper" class="growth-table-wrapper">
+          <table class="growth-table" aria-label="Year-by-year RRSP growth">
             <thead>
               <tr>
                 <th scope="col">Year</th>
+                <th scope="col">Age</th>
                 <th scope="col">Contribution</th>
+                <th scope="col">Employer Match</th>
                 <th scope="col">Growth</th>
                 <th scope="col">Balance</th>
-                <th scope="col">Room Remaining</th>
               </tr>
             </thead>
             <tbody id="growth-tbody"></tbody>
@@ -737,80 +1021,57 @@
         </div>
       </div>
 
-      <!-- SEO CONTENT -->
-      <section style="margin-top:var(--space-16);padding-top:var(--space-10);border-top:1px solid var(--color-border);" aria-labelledby="tfsa-seo-heading">
-        <h2 id="tfsa-seo-heading" style="font-size:var(--text-2xl);font-weight:700;margin-bottom:var(--space-10);">Understanding Your TFSA</h2>
+      <!-- SEO EDUCATIONAL SECTION -->
+      <section style="margin-top:var(--space-16);padding-top:var(--space-10);border-top:1px solid var(--color-border);" aria-labelledby="rrsp-seo-heading">
+        <h2 id="rrsp-seo-heading" style="font-size:var(--text-2xl);font-weight:700;margin-bottom:var(--space-10);">Understanding Your RRSP</h2>
         <div style="display:grid;grid-template-columns:1fr;gap:var(--space-10);">
 
           <div>
-            <h3 style="font-size:var(--text-xl);font-weight:600;margin-bottom:var(--space-3);">💰 What is TFSA Contribution Room?</h3>
-            <p style="color:var(--color-text-muted);line-height:1.8;font-size:var(--text-base);">
-              Your TFSA contribution room is the maximum amount you can deposit into all your TFSAs combined.
-              It accumulates every year starting at age 18 (as long as you're a Canadian resident with a SIN),
-              regardless of whether you actually have a TFSA open. If you were 18 or older in 2009, your
-              lifetime contribution room in 2026 is $95,000.
-            </p>
+            <h3 style="font-size:var(--text-xl);font-weight:600;margin-bottom:var(--space-3);">🏦 What is an RRSP?</h3>
+            <p style="color:var(--color-text-muted);line-height:1.8;font-size:var(--text-base);">A Registered Retirement Savings Plan (RRSP) is a government-registered account that lets you save for retirement while reducing your taxable income today. Every dollar you contribute reduces your taxable income by that amount — meaning you pay less tax now, and your investments grow tax-free inside the account until withdrawal.</p>
           </div>
 
           <div>
-            <h3 style="font-size:var(--text-xl);font-weight:600;margin-bottom:var(--space-3);">📅 Annual TFSA Limits (2009–2026)</h3>
-            <p style="color:var(--color-text-muted);line-height:1.8;font-size:var(--text-base);">
-              The CRA sets a new annual TFSA limit each year, indexed to inflation and rounded to the nearest $500.
-              The limit has been $7,000 for 2024, 2025, and 2026. Unused room from previous years carries forward
-              indefinitely — you never lose it, even if you've never opened a TFSA.
-            </p>
+            <h3 style="font-size:var(--text-xl);font-weight:600;margin-bottom:var(--space-3);">📐 How is RRSP Contribution Room Calculated?</h3>
+            <p style="color:var(--color-text-muted);line-height:1.8;font-size:var(--text-base);">Your annual RRSP contribution room is 18% of your previous year's earned income, up to the annual maximum ($32,490 for 2026). Any unused room from previous years carries forward indefinitely. Your exact room appears on your Notice of Assessment from the CRA each year.</p>
           </div>
 
           <div>
-            <h3 style="font-size:var(--text-xl);font-weight:600;margin-bottom:var(--space-3);">🔄 Withdrawals and Re-contributions</h3>
-            <p style="color:var(--color-text-muted);line-height:1.8;font-size:var(--text-base);">
-              When you withdraw from your TFSA, that amount is added back to your contribution room — but not
-              until January 1 of the following year. Re-contributing in the same calendar year without the
-              available room will trigger a 1% per month penalty on the excess amount.
-            </p>
+            <h3 style="font-size:var(--text-xl);font-weight:600;margin-bottom:var(--space-3);">💸 How RRSP Tax Deductions Work</h3>
+            <p style="color:var(--color-text-muted);line-height:1.8;font-size:var(--text-base);">When you contribute to an RRSP, you receive a tax deduction equal to your contribution. If you're in the 43% marginal bracket and contribute $10,000, you could receive roughly $4,300 back as a tax refund. The strategy works best when you contribute during high-income years and withdraw during lower-income retirement years.</p>
           </div>
 
           <div>
-            <h3 style="font-size:var(--text-xl);font-weight:600;margin-bottom:var(--space-3);">⚠️ Over-Contribution Penalties</h3>
-            <p style="color:var(--color-text-muted);line-height:1.8;font-size:var(--text-base);">
-              The CRA charges 1% per month on the highest excess TFSA amount for every month the excess remains.
-              Because CRA My Account may not reflect current-year contributions until the following spring, always
-              track your own contributions carefully and verify with your financial institution before making
-              large deposits.
-            </p>
+            <h3 style="font-size:var(--text-xl);font-weight:600;margin-bottom:var(--space-3);">⚖️ RRSP vs TFSA — Which is Better?</h3>
+            <p style="color:var(--color-text-muted);line-height:1.8;font-size:var(--text-base);">Generally, RRSPs are better when your current income is higher than your expected retirement income — you get a large deduction now and pay less tax on withdrawal later. TFSAs are often better for lower-income earners, or when you expect your retirement income to be similar to or higher than your working income. Many Canadians benefit from using both.</p>
           </div>
 
           <div>
-            <h3 style="font-size:var(--text-xl);font-weight:600;margin-bottom:var(--space-3);">📈 What annual return should I use?</h3>
-            <p style="color:var(--color-text-muted);line-height:1.8;font-size:var(--text-base);">
-              The right return depends on how you invest. As a general guide:
-            </p>
-            <div style="margin-top:var(--space-4);display:grid;grid-template-columns:1fr;gap:var(--space-3);">
-              <div style="padding:var(--space-4);background:var(--color-bg);border:1px solid var(--color-border);border-radius:var(--radius-md);">
-                <p style="font-weight:700;font-size:var(--text-base);margin-bottom:var(--space-1);">Conservative — 4–5%</p>
-                <p style="font-size:var(--text-sm);color:var(--color-text-muted);">GICs, savings accounts, bond-heavy portfolios. Lower risk, lower growth.</p>
-              </div>
-              <div style="padding:var(--space-4);background:var(--color-bg);border:1px solid var(--color-border);border-radius:var(--radius-md);">
-                <p style="font-weight:700;font-size:var(--text-base);margin-bottom:var(--space-1);">Balanced — 6–7%</p>
-                <p style="font-size:var(--text-sm);color:var(--color-text-muted);">A mix of stocks and bonds. Common long-term estimate for a diversified portfolio. This is the default in this calculator.</p>
-              </div>
-              <div style="padding:var(--space-4);background:var(--color-bg);border:1px solid var(--color-border);border-radius:var(--radius-md);">
-                <p style="font-weight:700;font-size:var(--text-base);margin-bottom:var(--space-1);">Growth — 8–10%</p>
-                <p style="font-size:var(--text-sm);color:var(--color-text-muted);">All-equity index fund portfolios (e.g. XEQT, VEQT). Higher long-term growth potential with more short-term volatility.</p>
-              </div>
-            </div>
-            <p style="color:var(--color-text-muted);line-height:1.8;font-size:var(--text-sm);margin-top:var(--space-4);">
-              Past returns are not a guarantee of future performance. These are estimates for planning purposes only.
-            </p>
+            <h3 style="font-size:var(--text-xl);font-weight:600;margin-bottom:var(--space-3);">🔄 RRIF Conversion (Age 71)</h3>
+            <p style="color:var(--color-text-muted);line-height:1.8;font-size:var(--text-base);">You must convert your RRSP to a Registered Retirement Income Fund (RRIF) or purchase an annuity by December 31 of the year you turn 71. After conversion, you must withdraw a minimum percentage each year — these withdrawals are taxable income. Planning your withdrawal strategy before conversion is important for minimizing taxes.</p>
+          </div>
+
+          <div>
+            <h3 style="font-size:var(--text-xl);font-weight:600;margin-bottom:var(--space-3);">🏠 Home Buyers' Plan (HBP)</h3>
+            <p style="color:var(--color-text-muted);line-height:1.8;font-size:var(--text-base);">First-time home buyers can withdraw up to $35,000 from their RRSP tax-free to buy or build a qualifying home. If buying with a partner, each person can withdraw up to $35,000, for a combined total of $70,000. You must repay the withdrawn amount back into your RRSP over 15 years, starting two years after the withdrawal year.</p>
+          </div>
+
+          <div>
+            <h3 style="font-size:var(--text-xl);font-weight:600;margin-bottom:var(--space-3);">🎓 Lifelong Learning Plan (LLP)</h3>
+            <p style="color:var(--color-text-muted);line-height:1.8;font-size:var(--text-base);">The LLP allows you to withdraw up to $10,000 per year (to a maximum of $20,000 total) from your RRSP to fund full-time education for yourself or your spouse. Withdrawals are tax-free if repaid within 10 years. This makes the RRSP a flexible tool for Canadians returning to school mid-career.</p>
+          </div>
+
+          <div>
+            <h3 style="font-size:var(--text-xl);font-weight:600;margin-bottom:var(--space-3);">⚠️ Over-Contribution Rules</h3>
+            <p style="color:var(--color-text-muted);line-height:1.8;font-size:var(--text-base);">The CRA allows a lifetime over-contribution buffer of $2,000 before penalties apply. Beyond that, excess contributions are penalized at 1% per month on the over-contributed amount until it is withdrawn. Always check your available room before contributing — your Notice of Assessment or CRA My Account shows your exact room.</p>
           </div>
 
         </div>
 
         <!-- Bottom disclaimer -->
         <div style="margin-top:var(--space-10);padding:var(--space-4) var(--space-5);background:var(--color-bg);border:1px solid var(--color-border);border-radius:var(--radius-md);font-size:var(--text-sm);color:var(--color-text-muted);line-height:1.7;">
-          📋 Information on this page is based on current CRA TFSA rules as of 2026 and is provided for educational purposes only. Contribution limits, rules, and tax treatment may change. This is not financial or tax advice — consult a registered financial advisor or the <a href="https://www.canada.ca/en/revenue-agency/services/tax/individuals/topics/tax-free-savings-account.html" target="_blank" rel="noopener" style="color:var(--color-primary);">CRA website</a> for your specific situation.
+          📋 Information on this page is based on 2026 Canadian federal and provincial tax rules and is provided for educational purposes only. Tax rates, contribution limits, and RRSP rules may change. This is not financial or tax advice — consult a registered financial advisor or the <a href="https://www.canada.ca/en/revenue-agency/services/tax/individuals/topics/rrsps-related-plans.html" target="_blank" rel="noopener" style="color:var(--color-primary);">CRA website</a> for your specific situation.
         </div>
-
       </section>
 
     </div>
@@ -873,7 +1134,7 @@
   </footer>
 
   <script src="../script.js" defer></script>
-  <script src="tfsa.js" defer></script>
+  <script src="rrsp.js" defer></script>
 
 </body>
 </html>
