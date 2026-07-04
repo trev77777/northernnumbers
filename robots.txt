@@ -2,3 +2,9 @@ User-agent: *
 Allow: /
 
 Sitemap: https://www.northernnumbers.ca/sitemap.xml
+
+# Block internal framework files from indexing
+Disallow: /template/
+Disallow: /data/
+Disallow: /shared/
+Disallow: /tests/

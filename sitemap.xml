@@ -1,36 +1,37 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="https://www.sitemaps.org/schemas/sitemap/0.9">
+<!--
+  Northern Numbers Sitemap
+  Auto-update by adding URLs below when new calculators go live.
+  Match URLs to nn-calculators.js registry.
+-->
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 
-  <url>
-    <loc>https://www.northernnumbers.ca/</loc>
-  </url>
+  <!-- Core pages -->
+  <url><loc>https://www.northernnumbers.ca/</loc><lastmod>2026-07-03</lastmod><changefreq>weekly</changefreq><priority>1.0</priority></url>
+  <url><loc>https://www.northernnumbers.ca/finance/</loc><lastmod>2026-07-03</lastmod><changefreq>weekly</changefreq><priority>0.9</priority></url>
+  <url><loc>https://www.northernnumbers.ca/about.html</loc><lastmod>2026-07-03</lastmod><changefreq>monthly</changefreq><priority>0.5</priority></url>
+  <url><loc>https://www.northernnumbers.ca/contact.html</loc><lastmod>2026-07-03</lastmod><changefreq>monthly</changefreq><priority>0.5</priority></url>
 
-  <url>
-    <loc>https://www.northernnumbers.ca/mortgage/</loc>
-  </url>
+  <!-- Active Calculators -->
+  <url><loc>https://www.northernnumbers.ca/mortgage/</loc><lastmod>2026-07-03</lastmod><changefreq>monthly</changefreq><priority>0.9</priority></url>
+  <url><loc>https://www.northernnumbers.ca/tfsa/</loc><lastmod>2026-07-03</lastmod><changefreq>yearly</changefreq><priority>0.9</priority></url>
+  <url><loc>https://www.northernnumbers.ca/rrsp/</loc><lastmod>2026-07-03</lastmod><changefreq>yearly</changefreq><priority>0.9</priority></url>
+  <url><loc>https://www.northernnumbers.ca/fhsa/</loc><lastmod>2026-07-03</lastmod><changefreq>yearly</changefreq><priority>0.9</priority></url>
+  <url><loc>https://www.northernnumbers.ca/compound-interest/</loc><lastmod>2026-07-03</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
 
-  <url>
-    <loc>https://www.northernnumbers.ca/fhsa/</loc>
-  </url>
+  <!-- Legal -->
+  <url><loc>https://www.northernnumbers.ca/privacy-policy.html</loc><lastmod>2026-07-03</lastmod><changefreq>yearly</changefreq><priority>0.3</priority></url>
+  <url><loc>https://www.northernnumbers.ca/terms-of-use.html</loc><lastmod>2026-07-03</lastmod><changefreq>yearly</changefreq><priority>0.3</priority></url>
+  <url><loc>https://www.northernnumbers.ca/disclaimer.html</loc><lastmod>2026-07-03</lastmod><changefreq>yearly</changefreq><priority>0.3</priority></url>
 
+  <!--
+  ADD NEW CALCULATORS HERE:
   <url>
-    <loc>https://www.northernnumbers.ca/compound%20interest/</loc>
+    <loc>https://www.northernnumbers.ca/car-loan/</loc>
+    <lastmod>YYYY-MM-DD</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
   </url>
-
-  <url>
-    <loc>https://www.northernnumbers.ca/tfsa/</loc>
-  </url>
-
-  <url>
-    <loc>https://www.northernnumbers.ca/rrsp/</loc>
-  </url>
-
-  <url>
-    <loc>https://www.northernnumbers.ca/about.html</loc>
-  </url>
-
-  <url>
-    <loc>https://www.northernnumbers.ca/contact.html</loc>
-  </url>
+  -->
 
 </urlset>
