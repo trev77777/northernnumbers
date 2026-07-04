@@ -197,7 +197,7 @@ h1, h2, h3, h4, h5, h6 {
 .site-header {
   position: sticky;
   top: 0;
-  z-index: 100;
+  z-index: 1000;
   background: var(--color-white);
   border-bottom: 1px solid var(--color-border);
   box-shadow: var(--shadow-sm);
@@ -307,6 +307,9 @@ h1, h2, h3, h4, h5, h6 {
   background: var(--color-white);
   border-top: 1px solid var(--color-border);
   padding: var(--space-4) 0;
+  position: relative;
+  z-index: 999;
+  width: 100%;
 }
 
 .mobile-menu.is-open {
@@ -315,11 +318,14 @@ h1, h2, h3, h4, h5, h6 {
 
 .mobile-nav-link {
   display: block;
-  padding: var(--space-3) var(--space-6);
+  padding: var(--space-4) var(--space-6);
   font-size: var(--text-base);
   font-weight: 500;
   color: var(--color-text);
   transition: background-color var(--transition-fast), color var(--transition-fast);
+  min-height: 44px;
+  display: flex;
+  align-items: center;
 }
 
 .mobile-nav-link:hover {
@@ -943,13 +949,13 @@ h1, h2, h3, h4, h5, h6 {
 /* Footer nav */
 .footer-nav {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(2, 1fr);
   gap: var(--space-6);
 }
 
-@media (max-width: 480px) {
+@media (min-width: 600px) {
   .footer-nav {
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns: repeat(4, 1fr);
   }
 }
 
@@ -1087,7 +1093,13 @@ h1, h2, h3, h4, h5, h6 {
   border: 1px solid var(--color-border);
   border-radius: var(--radius-md);
   box-shadow: var(--shadow-card);
-  padding: var(--space-8);
+  padding: var(--space-5);
+}
+
+@media (min-width: 600px) {
+  .calc-panel {
+    padding: var(--space-8);
+  }
 }
 
 .calc-panel-title {
@@ -1140,6 +1152,14 @@ h1, h2, h3, h4, h5, h6 {
   border-color: var(--color-primary);
   box-shadow: 0 0 0 3px rgba(213, 43, 30, 0.12);
 }
+
+/* Suppress scroll-wheel on number inputs — prevents page scroll hijack on mobile */
+input[type=number]::-webkit-outer-spin-button,
+input[type=number]::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+input[type=number] { -moz-appearance: textfield; }
 
 .form-input.is-error {
   border-color: var(--color-error);
@@ -1275,7 +1295,9 @@ h1, h2, h3, h4, h5, h6 {
 .result-row {
   display: flex;
   justify-content: space-between;
-  align-items: center;
+  align-items: baseline;
+  flex-wrap: wrap;
+  gap: var(--space-1);
   padding: var(--space-3) 0;
   border-bottom: 1px solid var(--color-border);
   font-size: var(--text-sm);
@@ -1334,3 +1356,230 @@ h1, h2, h3, h4, h5, h6 {
 .mb-6  { margin-bottom: var(--space-6); }
 
 .hidden { display: none !important; }
+
+
+/* =============================================
+   15. MOBILE FIXES & TOUCH IMPROVEMENTS
+   All mobile-specific overrides in one place.
+   Last updated: July 2026
+   ============================================= */
+
+/* ── Prevent horizontal overflow site-wide ── */
+html, body {
+  overflow-x: hidden;
+  -webkit-text-size-adjust: 100%;
+}
+
+/* ── Minimum touch target size (Apple HIG: 44px) ── */
+button,
+.btn,
+.btn-primary,
+.btn-reset,
+.freq-btn,
+.toggle-btn,
+.preset-btn,
+.nav-link,
+.copy-btn,
+.print-btn,
+.advanced-toggle,
+.amort-toggle,
+.chart-toggle,
+.growth-toggle {
+  min-height: 44px;
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* Freq and toggle button groups — ensure tap height */
+.freq-btn,
+.toggle-btn {
+  min-height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding-top: 10px;
+  padding-bottom: 10px;
+}
+
+/* Preset buttons — comfortable tap size */
+.preset-btn {
+  min-height: 40px;
+  display: inline-flex;
+  align-items: center;
+}
+
+/* ── Range sliders — iOS needs explicit height ── */
+input[type=range],
+input[type=range].nn-slider,
+input[type=range].ci-slider,
+input[type=range].form-range {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 100%;
+  height: 6px;
+  background: var(--color-border);
+  border-radius: 3px;
+  accent-color: var(--color-primary);
+  cursor: pointer;
+  touch-action: pan-y; /* allow vertical scroll, horizontal slider */
+  margin-top: var(--space-2);
+  margin-bottom: var(--space-1);
+}
+
+input[type=range]::-webkit-slider-thumb,
+input[type=range].nn-slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background: var(--color-primary);
+  cursor: pointer;
+  border: 2px solid white;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.2);
+}
+
+input[type=range]::-moz-range-thumb {
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background: var(--color-primary);
+  cursor: pointer;
+  border: 2px solid white;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.2);
+}
+
+/* ── Form inputs — larger tap area on mobile ── */
+@media (max-width: 767px) {
+  .form-input,
+  .form-select {
+    font-size: 16px; /* prevents iOS auto-zoom on focus */
+    min-height: 44px;
+  }
+
+  /* Calc panel — reduce padding further on very small screens */
+  .calc-panel {
+    padding: var(--space-4);
+    border-radius: var(--radius-md);
+  }
+
+  /* Btn row — stack on tiny screens if needed */
+  .btn-row {
+    flex-wrap: wrap;
+  }
+
+  .btn-row .btn-reset {
+    min-width: 80px;
+  }
+
+  /* Summary pills — wrap gracefully */
+  div[id="result-summary-box"] > div {
+    gap: var(--space-2) !important;
+  }
+
+  .summary-tag {
+    font-size: 0.72rem;
+    padding: 4px 10px;
+  }
+
+  /* Result big value — prevent overflow */
+  .result-big-value,
+  [id="result-future-value"],
+  [id="result-payment"],
+  [id="result-primary"] {
+    font-size: clamp(1.6rem, 7vw, 2.75rem) !important;
+    word-break: break-word;
+  }
+
+  /* Amort/growth tables — horizontal scroll indicator */
+  .amort-table-wrapper,
+  .growth-table-wrapper {
+    -webkit-overflow-scrolling: touch;
+    overflow-x: auto;
+  }
+
+  /* Breadcrumb — don't overflow */
+  .calc-breadcrumb {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  /* Page header — tighter on mobile */
+  .calc-page-header {
+    margin-bottom: var(--space-5);
+  }
+
+  /* Related calculator links — wrap nicely */
+  #nn-related > div,
+  [id="nn-related"] > div {
+    gap: var(--space-2) !important;
+  }
+
+  /* Footer nav — ensure 2 cols on small mobile */
+  .footer-nav {
+    grid-template-columns: repeat(2, 1fr) !important;
+    gap: var(--space-4);
+  }
+
+  /* Footer brand — less margin */
+  .footer-brand {
+    margin-bottom: var(--space-2);
+  }
+}
+
+/* ── Landscape mobile (e.g. iPhone SE landscape) ── */
+@media (max-width: 767px) and (orientation: landscape) {
+  .hero-section {
+    padding-top: var(--space-8);
+    padding-bottom: var(--space-8);
+  }
+}
+
+/* ── Prevent invisible overlays blocking taps ── */
+/* Any absolute-positioned decorative elements must not intercept taps */
+.btn-coming-soon::before,
+.btn-coming-soon::after,
+.search-icon,
+.input-prefix,
+.input-suffix {
+  pointer-events: none !important;
+}
+
+/* ── iOS Safari: fix sticky header not re-rendering ── */
+@supports (-webkit-touch-callout: none) {
+  .site-header {
+    -webkit-transform: translateZ(0);
+  }
+}
+
+/* ── Footer links — bigger tap targets ── */
+.footer-nav-col a,
+.footer-nav-col span.footer-disabled {
+  display: block;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  min-height: 36px;
+  display: flex;
+  align-items: center;
+}
+
+/* ── Calc page layout — single col on mobile, side-by-side on 900px+ ── */
+/* (already set, this reinforces no overflow) */
+@media (max-width: 899px) {
+  .calc-layout {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ── Advanced toggle — full tap width ── */
+.advanced-toggle {
+  padding-top: var(--space-3);
+  padding-bottom: var(--space-3);
+}
+
+/* ── Print — hide mobile-only elements ── */
+@media print {
+  .mobile-menu,
+  .nav-toggle {
+    display: none !important;
+  }
+}

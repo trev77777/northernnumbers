@@ -10,55 +10,63 @@
    1. MOBILE NAVIGATION
    ============================================= */
 (function initMobileNav() {
-  const toggle   = document.querySelector('.nav-toggle');
-  const menu     = document.getElementById('mobile-menu');
-  const navLinks = document.querySelectorAll('.mobile-nav-link');
+  // Use event delegation so this works even when header is
+  // rendered dynamically by nn-components.js after DOMContentLoaded
+  function setup() {
+    const toggle = document.querySelector('.nav-toggle');
+    const menu   = document.getElementById('mobile-menu');
+    if (!toggle || !menu) return;
 
-  if (!toggle || !menu) return;
-
-  function openMenu() {
-    toggle.setAttribute('aria-expanded', 'true');
-    toggle.setAttribute('aria-label', 'Close navigation menu');
-    menu.classList.add('is-open');
-    menu.setAttribute('aria-hidden', 'false');
-    document.body.style.overflow = 'hidden'; // prevent background scroll
-  }
-
-  function closeMenu() {
-    toggle.setAttribute('aria-expanded', 'false');
-    toggle.setAttribute('aria-label', 'Open navigation menu');
-    menu.classList.remove('is-open');
-    menu.setAttribute('aria-hidden', 'true');
-    document.body.style.overflow = '';
-  }
-
-  function toggleMenu() {
-    const isOpen = toggle.getAttribute('aria-expanded') === 'true';
-    isOpen ? closeMenu() : openMenu();
-  }
-
-  // Toggle on hamburger click
-  toggle.addEventListener('click', toggleMenu);
-
-  // Close when a nav link is clicked
-  navLinks.forEach(link => {
-    link.addEventListener('click', closeMenu);
-  });
-
-  // Close on Escape key
-  document.addEventListener('keydown', function (e) {
-    if (e.key === 'Escape' && toggle.getAttribute('aria-expanded') === 'true') {
-      closeMenu();
-      toggle.focus(); // return focus to toggle button
+    function openMenu() {
+      toggle.setAttribute('aria-expanded', 'true');
+      toggle.setAttribute('aria-label', 'Close navigation menu');
+      menu.classList.add('is-open');
+      menu.setAttribute('aria-hidden', 'false');
+      document.body.style.overflow = 'hidden';
     }
-  });
 
-  // Close if window resizes past mobile breakpoint
-  window.addEventListener('resize', function () {
-    if (window.innerWidth >= 768) {
-      closeMenu();
+    function closeMenu() {
+      toggle.setAttribute('aria-expanded', 'false');
+      toggle.setAttribute('aria-label', 'Open navigation menu');
+      menu.classList.remove('is-open');
+      menu.setAttribute('aria-hidden', 'true');
+      document.body.style.overflow = '';
     }
-  });
+
+    function toggleMenu() {
+      const isOpen = toggle.getAttribute('aria-expanded') === 'true';
+      isOpen ? closeMenu() : openMenu();
+    }
+
+    toggle.addEventListener('click', toggleMenu);
+
+    // Event delegation — catches links even if added by nn-components.js
+    menu.addEventListener('click', function(e) {
+      if (e.target.closest('.mobile-nav-link')) closeMenu();
+    });
+
+    document.addEventListener('keydown', function(e) {
+      if (e.key === 'Escape' && toggle.getAttribute('aria-expanded') === 'true') {
+        closeMenu();
+        toggle.focus();
+      }
+    });
+
+    window.addEventListener('resize', function() {
+      if (window.innerWidth >= 768) closeMenu();
+    }, { passive: true });
+  }
+
+  // Run immediately for static headers
+  setup();
+
+  // Also run after DOM settles for dynamic headers (nn-components.js)
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', setup);
+  } else {
+    // If already loaded, give nn-components a tick to render
+    setTimeout(setup, 0);
+  }
 })();
 
 
