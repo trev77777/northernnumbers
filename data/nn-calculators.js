@@ -45,7 +45,7 @@ window.NNRegistry = {
       description: 'Calculate monthly payments, total interest, and full amortization. Built with Canadian semi-annual compounding and CMHC insurance.',
       keywords: ['mortgage calculator Canada','canadian mortgage calculator','cmhc calculator','mortgage payment calculator'],
       status: 'active', priority: 1,
-      showInFooter: true, showOnHomepage: true,
+      showInFooter: true, footerSection: 'calculators', showOnHomepage: true,
       related: ['tfsa','fhsa','compound-interest']
     },
 
@@ -56,7 +56,7 @@ window.NNRegistry = {
       description: 'Project your Tax-Free Savings Account growth, track contribution room by birth year, and see when you\'ll hit $100K, $250K, and $500K.',
       keywords: ['tfsa calculator','tfsa contribution room 2026','tfsa calculator canada','tax free savings account calculator'],
       status: 'active', priority: 2,
-      showInFooter: true, showOnHomepage: true,
+      showInFooter: true, footerSection: 'calculators', showOnHomepage: true,
       related: ['rrsp','fhsa','compound-interest']
     },
 
@@ -67,7 +67,7 @@ window.NNRegistry = {
       description: 'Estimate your RRSP growth, calculate your tax refund by province, and compare reinvesting your refund vs not.',
       keywords: ['rrsp calculator','rrsp tax refund calculator canada','rrsp contribution limit 2026','rrsp calculator canada'],
       status: 'active', priority: 3,
-      showInFooter: true, showOnHomepage: true,
+      showInFooter: true, footerSection: 'calculators', showOnHomepage: true,
       related: ['tfsa','fhsa','compound-interest','retirement']
     },
 
@@ -78,7 +78,7 @@ window.NNRegistry = {
       description: 'Plan your first home purchase with couple mode, down payment tracker, HBP combination, and home buying timeline.',
       keywords: ['fhsa calculator','first home savings account calculator','fhsa 2026','fhsa canada calculator'],
       status: 'active', priority: 4,
-      showInFooter: true, showOnHomepage: true,
+      showInFooter: true, footerSection: 'calculators', showOnHomepage: true,
       related: ['mortgage','tfsa','rrsp']
     },
 
@@ -89,7 +89,7 @@ window.NNRegistry = {
       description: 'See how compound interest grows your investments over time. Includes Rule of 72, milestone tracker, two-scenario comparison, and monthly income projection.',
       keywords: ['compound interest calculator canada','investment growth calculator','compound interest calculator','future value calculator canada'],
       status: 'active', priority: 5,
-      showInFooter: true, showOnHomepage: true,
+      showInFooter: true, footerSection: 'calculators', showOnHomepage: true,
       related: ['tfsa','rrsp','retirement']
     },
 
@@ -100,7 +100,7 @@ window.NNRegistry = {
       description: 'Calculate monthly payments, total interest, and true cost of ownership for your next vehicle purchase in Canada.',
       keywords: ['car loan calculator canada','auto loan calculator canada','vehicle loan calculator'],
       status: 'active', priority: 6,
-      showInFooter: false, showOnHomepage: true,
+      showInFooter: true, footerSection: 'moreTools', showOnHomepage: true,
       related: ['loan','mortgage','budget','compound-interest']
     },
     {
@@ -109,7 +109,7 @@ window.NNRegistry = {
       description: 'Calculate payments and total interest for any personal loan, student loan, or line of credit in Canada.',
       keywords: ['loan calculator canada','personal loan calculator','line of credit calculator canada'],
       status: 'active', priority: 7,
-      showInFooter: false, showOnHomepage: true,
+      showInFooter: true, footerSection: 'moreTools', showOnHomepage: true,
       related: ['car-loan','mortgage','budget','compound-interest']
     },
     {

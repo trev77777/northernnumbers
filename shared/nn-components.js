@@ -94,30 +94,49 @@ NNComponents.renderFooter = function(containerId) {
   if (!el) return;
   const year = new Date().getFullYear();
 
-  // Pull footer calculators from registry if available, else fallback
-  let footerCalcs;
+  // ── Pull from registry (single source of truth) ──────────────
+  // To add a calculator to the footer: set showInFooter:true in nn-calculators.js
+  // footerSection:'calculators' → left column
+  // footerSection:'moreTools'   → right column (coming soon style if not active)
+  //
+  // Footer stays clean at 200+ calculators because showInFooter is false by default.
+  // Only calculators explicitly marked showInFooter:true appear here.
+
+  let calcColLinks  = '';
+  let moreColLinks  = '';
+
   if (window.NNRegistry) {
-    footerCalcs = NNRegistry.getFooterCalcs();
+    const footerCalcs = NNRegistry.getFooterCalcs(); // active + showInFooter:true
+
+    // Split by footerSection
+    const mainCalcs = footerCalcs.filter(c => c.footerSection !== 'moreTools');
+    const moreCalcs = footerCalcs.filter(c => c.footerSection === 'moreTools');
+
+    // Planned calcs that aren't in footer yet → show as disabled in More Tools
+    const plannedNames = NNRegistry.getPlanned()
+      .filter(c => !moreCalcs.find(m => m.id === c.id))
+      .slice(0, Math.max(0, 5 - moreCalcs.length))
+      .map(c => c.name);
+
+    calcColLinks = mainCalcs.map(c => `<li><a href="${c.url}">${c.name}</a></li>`).join('');
+    moreColLinks = [
+      ...moreCalcs.map(c => `<li><a href="${c.url}">${c.name}</a></li>`),
+      ...plannedNames.map(n => `<li><span class="footer-disabled">${n}</span></li>`)
+    ].join('');
+
   } else {
-    footerCalcs = [
+    // Hardcoded fallback — only used if nn-calculators.js fails to load
+    calcColLinks = [
       {name:'Mortgage',          url:'/mortgage/'},
       {name:'TFSA',              url:'/tfsa/'},
       {name:'RRSP',              url:'/rrsp/'},
       {name:'FHSA',              url:'/fhsa/'},
       {name:'Compound Interest', url:'/compound-interest/'}
-    ];
+    ].map(c => `<li><a href="${c.url}">${c.name}</a></li>`).join('');
+    moreColLinks = ['Car Loan','Loan Calculator','Budget','Inflation','Retirement']
+      .map(n => `<li><span class="footer-disabled">${n}</span></li>`).join('');
   }
 
-  // Pull planned/coming soon from registry if available
-  let comingSoon;
-  if (window.NNRegistry) {
-    comingSoon = NNRegistry.getPlanned().slice(0,5).map(c => c.name);
-  } else {
-    comingSoon = ['Loan Calculator','Car Loan','Budget','Inflation','Retirement'];
-  }
-
-  const calcLinks   = footerCalcs.map(c => `<li><a href="${c.url}">${c.name}</a></li>`).join('');
-  const moreLinks   = comingSoon.map(n => `<li><span class="footer-disabled">${n}</span></li>`).join('');
   const legalLinks  = NNComponents.FOOTER_LEGAL.map(l => `<li><a href="${l.href}">${l.label}</a></li>`).join('');
 
   el.innerHTML = `
@@ -133,11 +152,11 @@ NNComponents.renderFooter = function(containerId) {
       <nav class="footer-nav" aria-label="Footer navigation">
         <div class="footer-nav-col">
           <h4 class="footer-nav-heading">Calculators</h4>
-          <ul role="list">${calcLinks}</ul>
+          <ul role="list">${calcColLinks}</ul>
         </div>
         <div class="footer-nav-col">
           <h4 class="footer-nav-heading">More Tools</h4>
-          <ul role="list">${moreLinks}</ul>
+          <ul role="list">${moreColLinks}</ul>
         </div>
         <div class="footer-nav-col">
           <h4 class="footer-nav-heading">Site</h4>
