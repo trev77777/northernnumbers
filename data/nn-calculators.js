@@ -99,9 +99,9 @@ window.NNRegistry = {
       url: '/car-loan/', icon: '🚗',
       description: 'Calculate monthly payments, total interest, and true cost of ownership for your next vehicle purchase in Canada.',
       keywords: ['car loan calculator canada','auto loan calculator canada','vehicle loan calculator'],
-      status: 'planned', priority: 6,
+      status: 'active', priority: 6,
       showInFooter: false, showOnHomepage: true,
-      related: ['loan','mortgage']
+      related: ['loan','mortgage','budget','compound-interest']
     },
     {
       id: 'loan', name: 'Loan Calculator', category: 'loans',

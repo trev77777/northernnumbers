@@ -1,0 +1,510 @@
+<!DOCTYPE html>
+<html lang="en-CA">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Car Loan Calculator Canada 2026 — Northern Numbers</title>
+  <meta name="description" content="Calculate your car loan payments, total interest, and true cost of ownership. Free Canadian auto loan calculator with HST/GST, trade-in value, and full amortization schedule." />
+  <meta name="keywords" content="car loan calculator canada, auto loan calculator canada, vehicle loan calculator, car payment calculator canada, car financing calculator" />
+  <link rel="canonical" href="https://www.northernnumbers.ca/car-loan/" />
+  <meta property="og:title" content="Car Loan Calculator Canada 2026 — Northern Numbers" />
+  <meta property="og:description" content="Calculate your car loan payments, total interest, and true cost of ownership. Free Canadian auto loan calculator." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://www.northernnumbers.ca/car-loan/" />
+  <meta property="og:locale" content="en_CA" />
+  <meta property="og:site_name" content="Northern Numbers" />
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Car Loan Calculator Canada 2026 — Northern Numbers" />
+  <meta name="twitter:description" content="Calculate your Canadian car loan payments with tax, trade-in, and full amortization schedule." />
+  <meta name="robots" content="index, follow" />
+  <meta name="author" content="Northern Numbers" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Poppins:wght@600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="../styles.css" />
+
+  <style>
+    /* Car loan specific styles */
+    .quick-start{background:var(--color-primary-light);border:1px solid rgba(213,43,30,.15);border-radius:var(--radius-md);padding:var(--space-5) var(--space-6);margin-bottom:var(--space-6)}
+    .quick-start-title{font-family:var(--font-heading);font-size:var(--text-base);font-weight:700;color:var(--color-primary);margin-bottom:var(--space-3);display:flex;align-items:center;gap:var(--space-2)}
+    .quick-start ol{list-style:decimal;padding-left:var(--space-5);display:flex;flex-direction:column;gap:var(--space-2)}
+    .quick-start ol li{font-size:var(--text-sm);color:var(--color-text);line-height:1.5}
+    .preset-group{display:flex;flex-wrap:wrap;gap:var(--space-2);margin-bottom:var(--space-5)}
+    .preset-btn{padding:var(--space-2) var(--space-4);font-size:var(--text-sm);font-weight:600;border:2px solid var(--color-border);border-radius:var(--radius-lg);background:var(--color-white);color:var(--color-text-muted);cursor:pointer;transition:all var(--transition-fast)}
+    .preset-btn:hover,.preset-btn.is-active{border-color:var(--color-primary);color:var(--color-primary);background:var(--color-primary-light)}
+    .field-help{font-size:var(--text-xs);color:var(--color-text-muted);margin-top:var(--space-1);line-height:1.5}
+    .advanced-toggle{display:flex;align-items:center;gap:var(--space-2);background:none;border:none;font-family:var(--font-body);font-size:var(--text-sm);font-weight:600;color:var(--color-text-muted);cursor:pointer;padding:var(--space-3) 0;width:100%;text-align:left;border-top:1px solid var(--color-border);margin-top:var(--space-2);transition:color var(--transition-fast)}
+    .advanced-toggle:hover{color:var(--color-text)}
+    .advanced-toggle-icon{margin-left:auto;transition:transform var(--transition-base)}
+    .advanced-toggle[aria-expanded="true"] .advanced-toggle-icon{transform:rotate(180deg)}
+    .advanced-fields{display:none;padding-top:var(--space-4)}
+    .advanced-fields.is-open{display:block}
+    .summary-tag{display:inline-flex;align-items:center;padding:var(--space-2) var(--space-4);background:var(--color-primary-light);border:1px solid rgba(213,43,30,.2);border-radius:var(--radius-full);font-size:var(--text-sm);font-weight:600;color:var(--color-primary)}
+    .result-celebration{margin-bottom:var(--space-5);padding:var(--space-4) var(--space-5);background:linear-gradient(135deg,#F0FDF4,#DCFCE7);border:1px solid var(--color-success);border-radius:var(--radius-md);font-size:var(--text-sm);color:#166534;line-height:1.6}
+    .result-big{text-align:center;padding:var(--space-6) 0;border-bottom:2px solid var(--color-border);margin-bottom:var(--space-6)}
+    .result-big-label{font-size:var(--text-sm);color:var(--color-text-muted);margin-bottom:var(--space-2)}
+    .result-big-value{font-family:var(--font-heading);font-size:2.75rem;font-weight:800;color:var(--color-primary);line-height:1}
+    .result-big-sub{font-size:var(--text-sm);color:var(--color-text-muted);margin-top:var(--space-2)}
+
+    /* Breakdown bar */
+    .breakdown-card{margin-top:var(--space-5);padding:var(--space-5);background:var(--color-bg);border:1px solid var(--color-border);border-radius:var(--radius-md)}
+    .breakdown-card-title{font-family:var(--font-heading);font-size:var(--text-base);font-weight:700;margin-bottom:var(--space-4)}
+    .breakdown-bar-wrap{height:16px;background:var(--color-border);border-radius:var(--radius-full);overflow:hidden;margin-bottom:var(--space-3);display:flex}
+    .breakdown-bar-principal{background:var(--color-primary);height:100%;transition:width .6s ease}
+    .breakdown-bar-interest{background:var(--color-error);height:100%;transition:width .6s ease}
+    .breakdown-legend{display:flex;gap:var(--space-5);flex-wrap:wrap;font-size:var(--text-xs);color:var(--color-text-muted)}
+    .legend-dot{display:inline-block;width:10px;height:10px;border-radius:2px;margin-right:4px;vertical-align:middle}
+
+    /* Cost summary card */
+    .cost-card{margin-top:var(--space-4);padding:var(--space-5);background:linear-gradient(135deg,#F0FDF4,#DCFCE7);border:1px solid var(--color-success);border-radius:var(--radius-md)}
+    .cost-card-title{font-family:var(--font-heading);font-size:var(--text-base);font-weight:700;color:#166534;margin-bottom:var(--space-3)}
+    .cost-row{display:flex;justify-content:space-between;padding:var(--space-2) 0;border-bottom:1px solid rgba(22,163,74,.2);font-size:var(--text-sm);color:#166534}
+    .cost-row:last-child{border-bottom:none;font-weight:700;font-size:var(--text-base)}
+
+    /* Rate alert card */
+    .rate-card{margin-top:var(--space-4);padding:var(--space-4) var(--space-5);background:#FFFBEB;border:1px solid #FDE68A;border-radius:var(--radius-md);font-size:var(--text-sm);color:#92400E;line-height:1.6}
+    .rate-card strong{color:#78350F}
+
+    /* Amort table */
+    .amort-section{margin-top:var(--space-8)}
+    .amort-toggle{display:flex;align-items:center;justify-content:space-between;width:100%;padding:var(--space-4) var(--space-6);background:var(--color-bg);border:1px solid var(--color-border);border-radius:var(--radius-md);font-family:var(--font-heading);font-size:var(--text-base);font-weight:600;color:var(--color-text);cursor:pointer;transition:background-color var(--transition-fast)}
+    .amort-toggle:hover{background:var(--color-border)}
+    .amort-toggle-icon{transition:transform var(--transition-base)}
+    .amort-toggle[aria-expanded="true"] .amort-toggle-icon{transform:rotate(180deg)}
+    .amort-table-wrapper{display:none;overflow-x:auto;margin-top:var(--space-4);border:1px solid var(--color-border);border-radius:var(--radius-md)}
+    .amort-table-wrapper.is-open{display:block}
+    .amort-table{width:100%;border-collapse:collapse;font-size:var(--text-sm)}
+    .amort-table th{background:var(--color-bg);padding:var(--space-3) var(--space-4);text-align:right;font-weight:600;font-size:var(--text-xs);color:var(--color-text-muted);text-transform:uppercase;letter-spacing:.05em;border-bottom:2px solid var(--color-border);white-space:nowrap}
+    .amort-table th:first-child{text-align:left}
+    .amort-table td{padding:var(--space-3) var(--space-4);text-align:right;border-bottom:1px solid var(--color-border);white-space:nowrap}
+    .amort-table td:first-child{text-align:left;font-weight:600}
+    .amort-table tr:last-child td{border-bottom:none}
+    .amort-table tr:nth-child(even){background:rgba(248,249,250,.6)}
+    .amort-table .td-interest{color:var(--color-error)}
+
+    /* Buttons */
+    .btn-row{display:flex;gap:var(--space-3);align-items:center;margin-top:var(--space-4)}
+    .btn-reset{padding:var(--space-3) var(--space-5);font-size:var(--text-base);font-weight:600;color:var(--color-text-muted);background:var(--color-white);border:2px solid var(--color-border);border-radius:var(--radius-lg);cursor:pointer;transition:all var(--transition-fast)}
+    .btn-reset:hover{border-color:var(--color-text-muted);color:var(--color-text)}
+    .copy-btn{display:flex;align-items:center;gap:var(--space-2);padding:var(--space-3) var(--space-5);font-size:var(--text-sm);font-weight:600;color:var(--color-text-muted);background:var(--color-white);border:2px solid var(--color-border);border-radius:var(--radius-lg);cursor:pointer;transition:all var(--transition-fast);margin-top:var(--space-3);width:100%;justify-content:center}
+    .copy-btn:hover{border-color:var(--color-text);color:var(--color-text)}
+    .copy-btn.copied{border-color:var(--color-success);color:var(--color-success)}
+    .print-btn{display:flex;align-items:center;gap:var(--space-2);padding:var(--space-3) var(--space-5);font-size:var(--text-sm);font-weight:600;color:var(--color-text-muted);background:var(--color-white);border:2px solid var(--color-border);border-radius:var(--radius-lg);cursor:pointer;transition:all var(--transition-fast);margin-top:var(--space-3);width:100%;justify-content:center}
+    .print-btn:hover{border-color:var(--color-text);color:var(--color-text)}
+    .calc-disclaimer{margin-top:var(--space-6);padding:var(--space-3) var(--space-4);background:var(--color-bg);border:1px solid var(--color-border);border-radius:var(--radius-md);font-size:var(--text-xs);color:var(--color-text-muted);line-height:1.6}
+
+    /* Rate slider */
+    .slider-wrap{margin-top:var(--space-2)}
+    .slider-labels{display:flex;justify-content:space-between;font-size:var(--text-xs);color:var(--color-text-muted);margin-bottom:var(--space-1)}
+    input[type=range].nn-slider{width:100%;accent-color:var(--color-primary);cursor:pointer}
+
+    /* Freq toggle */
+    .freq-group{display:flex;border:2px solid var(--color-border);border-radius:var(--radius-lg);overflow:hidden}
+    .freq-btn{flex:1;padding:var(--space-2) var(--space-3);font-size:var(--text-sm);font-weight:600;border:none;background:var(--color-white);color:var(--color-text-muted);cursor:pointer;transition:all var(--transition-fast);border-right:1px solid var(--color-border)}
+    .freq-btn:last-child{border-right:none}
+    .freq-btn.is-active{background:var(--color-primary);color:white}
+
+    @media print{
+      .site-header,.site-footer,.calc-panel:first-of-type,.amort-section,
+      .copy-btn,.print-btn,.btn-row,.quick-start,.preset-group,
+      .advanced-toggle,.advanced-fields,.calc-breadcrumb,.calc-page-desc,
+      #results-placeholder,nav,button{display:none!important}
+      body{font-size:12pt;color:#000}
+      .calc-layout{display:block}
+      .calc-panel{box-shadow:none;border:none;padding:0}
+      #results-content{display:block!important}
+      .result-big-value{font-size:28pt}
+      @page{margin:1.5cm;size:A4}
+    }
+  </style>
+</head>
+<body>
+
+  <header class="site-header" id="nn-header" role="banner"></header>
+
+  <main id="main-content" class="calc-page">
+    <div class="container">
+
+      <nav class="calc-breadcrumb" aria-label="Breadcrumb">
+        <a href="/">Home</a>
+        <span class="calc-breadcrumb-sep" aria-hidden="true">›</span>
+        <span aria-current="page">Car Loan Calculator</span>
+      </nav>
+
+      <div class="calc-page-header">
+        <h1 class="calc-page-title">Canadian Car Loan Calculator</h1>
+        <p class="calc-page-desc">Calculate your monthly, bi-weekly, or weekly car payments with tax, trade-in value, fees, and a full amortization schedule. Built for Canadian auto financing.</p>
+      </div>
+
+      <div class="calc-layout">
+
+        <!-- LEFT: Inputs -->
+        <section class="calc-panel" aria-labelledby="inputs-heading">
+          <h2 id="inputs-heading" class="calc-panel-title">Your Loan Details</h2>
+
+          <div class="quick-start" role="note">
+            <p class="quick-start-title"><span aria-hidden="true">📋</span> How to use this calculator</p>
+            <ol>
+              <li>Enter the vehicle price and your down payment.</li>
+              <li>Add your trade-in value and any fees (delivery, admin, etc.).</li>
+              <li>Select your province to auto-fill the correct tax rate.</li>
+              <li>Enter your interest rate and loan term.</li>
+              <li>Click <strong>Calculate Payments</strong>.</li>
+            </ol>
+          </div>
+
+          <!-- Presets -->
+          <div style="margin-bottom:var(--space-5)">
+            <p style="font-size:var(--text-sm);font-weight:600;color:var(--color-text-muted);margin-bottom:var(--space-2)">Quick start with a preset:</p>
+            <div class="preset-group" role="group">
+              <button type="button" class="preset-btn" data-preset="firstcar">🚗 First Car</button>
+              <button type="button" class="preset-btn" data-preset="average">🇨🇦 Average Canadian</button>
+              <button type="button" class="preset-btn" data-preset="used">🔧 Used Car</button>
+              <button type="button" class="preset-btn" data-preset="truck">🛻 Truck/SUV</button>
+            </div>
+          </div>
+
+          <form id="car-loan-form" novalidate aria-label="Car loan calculator inputs">
+
+            <!-- Vehicle Price -->
+            <div class="form-group">
+              <label class="form-label" for="vehicle-price">Vehicle Price (CAD)</label>
+              <div class="input-wrapper">
+                <span class="input-prefix" aria-hidden="true">$</span>
+                <input type="text" id="vehicle-price" class="form-input has-prefix"
+                  placeholder="35,000" inputmode="numeric" autocomplete="off" />
+              </div>
+              <p class="field-help">The purchase price before taxes and fees.</p>
+              <p id="vehicle-price-error" class="form-error-msg" role="alert"></p>
+            </div>
+
+            <!-- Down Payment -->
+            <div class="form-group">
+              <label class="form-label" for="down-payment">Down Payment</label>
+              <div class="input-wrapper">
+                <span class="input-prefix" aria-hidden="true">$</span>
+                <input type="text" id="down-payment" class="form-input has-prefix"
+                  placeholder="5,000" inputmode="numeric" autocomplete="off" />
+              </div>
+              <div class="slider-wrap">
+                <div class="slider-labels"><span>$0</span><span>$25,000</span><span>$50,000</span></div>
+                <input type="range" id="down-slider" class="nn-slider" min="0" max="50000" step="500" value="5000" aria-label="Down payment slider" />
+              </div>
+              <p class="field-help">A larger down payment reduces your loan amount and total interest.</p>
+            </div>
+
+            <!-- Trade-in Value -->
+            <div class="form-group">
+              <label class="form-label" for="trade-in">Trade-in Value</label>
+              <div class="input-wrapper">
+                <span class="input-prefix" aria-hidden="true">$</span>
+                <input type="text" id="trade-in" class="form-input has-prefix"
+                  placeholder="0" inputmode="numeric" autocomplete="off" value="0" />
+              </div>
+              <p class="field-help">Your current vehicle's trade-in value. This reduces the taxable amount in most provinces.</p>
+            </div>
+
+            <!-- Interest Rate -->
+            <div class="form-group">
+              <label class="form-label" for="interest-rate">Annual Interest Rate</label>
+              <div class="input-wrapper">
+                <input type="number" id="interest-rate" class="form-input has-suffix"
+                  placeholder="6.99" min="0" max="30" step="0.01" value="6.99" />
+                <span class="input-suffix" aria-hidden="true">%</span>
+              </div>
+              <div class="slider-wrap">
+                <div class="slider-labels"><span>0%</span><span>10%</span><span>30%</span></div>
+                <input type="range" id="rate-slider" class="nn-slider" min="0" max="30" step="0.1" value="6.99" aria-label="Interest rate slider" />
+              </div>
+              <p class="field-help">New cars: 5–8% · Used cars: 7–12% · Excellent credit: as low as 0–4%.</p>
+              <p id="interest-rate-error" class="form-error-msg" role="alert"></p>
+            </div>
+
+            <!-- Loan Term -->
+            <div class="form-group">
+              <label class="form-label" for="loan-term">Loan Term</label>
+              <select id="loan-term" class="form-select">
+                <option value="24">24 months (2 years)</option>
+                <option value="36">36 months (3 years)</option>
+                <option value="48">48 months (4 years)</option>
+                <option value="60" selected>60 months (5 years)</option>
+                <option value="72">72 months (6 years)</option>
+                <option value="84">84 months (7 years)</option>
+                <option value="96">96 months (8 years)</option>
+              </select>
+              <p class="field-help">Longer terms mean lower payments but significantly more interest paid overall.</p>
+            </div>
+
+            <!-- Payment Frequency -->
+            <div class="form-group">
+              <label class="form-label">Payment Frequency</label>
+              <div class="freq-group" role="group" aria-label="Payment frequency">
+                <button type="button" class="freq-btn is-active" data-freq="monthly">Monthly</button>
+                <button type="button" class="freq-btn" data-freq="biweekly">Bi-Weekly</button>
+                <button type="button" class="freq-btn" data-freq="weekly">Weekly</button>
+              </div>
+            </div>
+
+            <!-- Province (tax) -->
+            <div class="form-group">
+              <label class="form-label" for="province">Province / Territory</label>
+              <select id="province" class="form-select"></select>
+              <p class="field-help">Used to calculate the correct sales tax on your vehicle purchase.</p>
+            </div>
+
+            <!-- Advanced Settings -->
+            <button type="button" class="advanced-toggle" id="advanced-toggle"
+              aria-expanded="false" aria-controls="advanced-fields">
+              <span>⚙️ Additional Fees &amp; Options</span>
+              <svg class="advanced-toggle-icon" width="18" height="18" viewBox="0 0 20 20" fill="none" aria-hidden="true">
+                <path d="M5 7.5L10 12.5L15 7.5" stroke="#6B7280" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </button>
+            <div id="advanced-fields" class="advanced-fields">
+              <div class="form-group">
+                <label class="form-label" for="fees">Additional Fees</label>
+                <div class="input-wrapper">
+                  <span class="input-prefix" aria-hidden="true">$</span>
+                  <input type="text" id="fees" class="form-input has-prefix"
+                    placeholder="0" inputmode="numeric" autocomplete="off" value="0" />
+                </div>
+                <p class="field-help">Delivery, documentation, admin, or dealer fees added to the loan amount.</p>
+              </div>
+              <div class="form-group">
+                <label class="form-label" for="custom-tax">Custom Tax Rate (optional)</label>
+                <div class="input-wrapper">
+                  <input type="number" id="custom-tax" class="form-input has-suffix"
+                    placeholder="Auto from province" min="0" max="20" step="0.1" />
+                  <span class="input-suffix" aria-hidden="true">%</span>
+                </div>
+                <p class="field-help">Override the auto-calculated tax rate if your situation is different (e.g. used car private sale).</p>
+              </div>
+            </div>
+
+            <div class="btn-row">
+              <button type="submit" class="btn btn-primary btn-calculate" id="calc-btn" style="flex:1">
+                Calculate Payments
+              </button>
+              <button type="button" id="reset-btn" class="btn-reset">Reset</button>
+            </div>
+
+          </form>
+
+          <!-- Canadian auto info note -->
+          <div style="margin-top:var(--space-6);padding:var(--space-4) var(--space-5);background:#EFF6FF;border:1px solid #BFDBFE;border-radius:var(--radius-md);font-size:var(--text-sm);color:#1E40AF;line-height:1.6">
+            <strong style="display:block;margin-bottom:var(--space-1)">🇨🇦 How Canadian car loans work</strong>
+            Unlike mortgages, Canadian auto loans use simple monthly compounding — the same formula used across most lenders. Tax is calculated on the vehicle price minus your trade-in value in most provinces.
+          </div>
+        </section>
+
+        <!-- RIGHT: Results -->
+        <section class="calc-panel" aria-labelledby="results-heading" aria-live="polite">
+          <h2 id="results-heading" class="calc-panel-title">Your Results</h2>
+
+          <div id="results-placeholder" class="result-placeholder">
+            <div class="result-placeholder-icon" aria-hidden="true">
+              <svg width="56" height="56" viewBox="0 0 56 56" fill="none">
+                <rect x="10" y="8" width="36" height="40" rx="4" stroke="#D1D5DB" stroke-width="2"/>
+                <path d="M18 20H38M18 28H38M18 36H28" stroke="#D1D5DB" stroke-width="2" stroke-linecap="round"/>
+              </svg>
+            </div>
+            <p>Enter your loan details and click <strong>Calculate Payments</strong> to see your results.</p>
+          </div>
+
+          <div id="results-content" class="hidden">
+
+            <!-- Summary pills -->
+            <div id="result-summary-box" class="hidden"
+              style="margin-bottom:var(--space-5);padding:var(--space-4);background:var(--color-bg);border:1px solid var(--color-border);border-radius:var(--radius-md)">
+            </div>
+
+            <!-- Celebration -->
+            <div id="result-celebration" class="result-celebration hidden"></div>
+
+            <!-- Primary result -->
+            <div class="result-big">
+              <p class="result-big-label" id="payment-label">Monthly Payment</p>
+              <p id="result-payment" class="result-big-value">—</p>
+              <p id="result-payment-sub" class="result-big-sub">—</p>
+            </div>
+
+            <!-- Summary rows -->
+            <div class="result-summary" role="list">
+              <div class="result-row" role="listitem">
+                <span class="result-row-label">Vehicle Price</span>
+                <span class="result-row-value" id="result-price">—</span>
+              </div>
+              <div class="result-row" role="listitem">
+                <span class="result-row-label">Sales Tax</span>
+                <span class="result-row-value" id="result-tax">—</span>
+              </div>
+              <div class="result-row" role="listitem">
+                <span class="result-row-label">Amount Financed</span>
+                <span class="result-row-value" id="result-financed">—</span>
+              </div>
+              <div class="result-row" role="listitem">
+                <span class="result-row-label">Total Interest Paid</span>
+                <span class="result-row-value is-error" id="result-interest">—</span>
+              </div>
+              <div class="result-row" role="listitem">
+                <span class="result-row-label">Total Loan Payments</span>
+                <span class="result-row-value" id="result-total-payments">—</span>
+              </div>
+              <div class="result-row" role="listitem">
+                <span class="result-row-label">Total Cost of Vehicle</span>
+                <span class="result-row-value" id="result-total-cost">—</span>
+              </div>
+            </div>
+
+            <!-- Breakdown bar -->
+            <div class="breakdown-card">
+              <p class="breakdown-card-title">Principal vs. Interest</p>
+              <div class="breakdown-bar-wrap">
+                <div class="breakdown-bar-principal" id="bar-principal" style="width:70%"></div>
+                <div class="breakdown-bar-interest" id="bar-interest" style="width:30%"></div>
+              </div>
+              <div class="breakdown-legend">
+                <span><span class="legend-dot" style="background:var(--color-primary)"></span>Principal (<span id="principal-pct">—</span>)</span>
+                <span><span class="legend-dot" style="background:var(--color-error)"></span>Interest (<span id="interest-pct">—</span>)</span>
+              </div>
+            </div>
+
+            <!-- Total cost summary card -->
+            <div class="cost-card" id="cost-card">
+              <p class="cost-card-title">💰 Your Complete Cost Breakdown</p>
+              <div class="cost-row"><span>Down payment</span><span id="cost-down">—</span></div>
+              <div class="cost-row"><span>Trade-in value</span><span id="cost-tradein">—</span></div>
+              <div class="cost-row"><span>Loan payments</span><span id="cost-loan">—</span></div>
+              <div class="cost-row"><span>Total interest paid</span><span id="cost-interest">—</span></div>
+              <div class="cost-row"><span>Total vehicle cost</span><span id="cost-total">—</span></div>
+            </div>
+
+            <!-- Rate insight card -->
+            <div class="rate-card" id="rate-card">
+              <strong>💡 Rate Insight</strong><br />
+              <span id="rate-insight-text">—</span>
+            </div>
+
+            <div id="nn-disclaimer"></div>
+
+            <button type="button" id="copy-results-btn" class="copy-btn">📋 Copy Results to Clipboard</button>
+            <button type="button" class="print-btn" onclick="window.print()">🖨️ Download / Print as PDF</button>
+
+          </div>
+        </section>
+      </div>
+
+      <!-- Amortization Table -->
+      <div class="amort-section" id="amort-section" hidden>
+        <button type="button" class="amort-toggle" id="amort-toggle"
+          aria-expanded="false" aria-controls="amort-table-wrapper">
+          <span>View Full Amortization Schedule</span>
+          <svg class="amort-toggle-icon" width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true">
+            <path d="M5 7.5L10 12.5L15 7.5" stroke="#1F2937" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </button>
+        <div id="amort-table-wrapper" class="amort-table-wrapper">
+          <table class="amort-table" aria-label="Loan amortization schedule">
+            <thead>
+              <tr>
+                <th scope="col">Period</th>
+                <th scope="col">Payment</th>
+                <th scope="col">Principal</th>
+                <th scope="col">Interest</th>
+                <th scope="col">Balance</th>
+              </tr>
+            </thead>
+            <tbody id="amort-tbody"></tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- Educational Section -->
+      <section style="margin-top:var(--space-16);padding-top:var(--space-10);border-top:1px solid var(--color-border)"
+        aria-labelledby="edu-heading">
+        <h2 id="edu-heading" style="font-size:var(--text-2xl);font-weight:700;margin-bottom:var(--space-10)">
+          Understanding Car Loans in Canada
+        </h2>
+        <div style="display:grid;grid-template-columns:1fr;gap:var(--space-10)">
+
+          <div>
+            <h3 style="font-size:var(--text-xl);font-weight:600;margin-bottom:var(--space-3)">🔢 How Car Loan Payments Are Calculated</h3>
+            <p style="color:var(--color-text-muted);line-height:1.8;font-size:var(--text-base)">Canadian auto loan payments use a standard amortization formula. Your monthly payment is calculated so that each payment covers both principal (the amount you borrowed) and interest (the cost of borrowing). In early payments, more of your money goes toward interest. As the loan progresses, more goes toward principal. Unlike Canadian mortgages — which compound semi-annually by law — auto loans use simple monthly compounding, the same formula used by most banks and dealerships across Canada.</p>
+          </div>
+
+          <div>
+            <h3 style="font-size:var(--text-xl);font-weight:600;margin-bottom:var(--space-3)">🚘 New vs. Used Car Financing in Canada</h3>
+            <p style="color:var(--color-text-muted);line-height:1.8;font-size:var(--text-base)">New cars typically qualify for lower interest rates — often as low as 0–4% through manufacturer promotions — but have higher sticker prices. Used car loans typically carry higher rates (7–15%) because the vehicle is harder to repossess and sell if payments stop. Used cars also depreciate less dramatically. In Canada, financing through your bank or credit union often produces better rates than dealer financing, especially for used vehicles. Always compare at least two lenders before accepting a dealer's rate.</p>
+          </div>
+
+          <div>
+            <h3 style="font-size:var(--text-xl);font-weight:600;margin-bottom:var(--space-3)">💰 How Down Payments Affect Your Loan</h3>
+            <p style="color:var(--color-text-muted);line-height:1.8;font-size:var(--text-base)">A larger down payment reduces your loan principal, which reduces your monthly payment and total interest paid. It also reduces the risk of being "upside down" — owing more than the car is worth. This is especially important in Canada because most vehicles depreciate 15–25% in the first year. A down payment of at least 20% is generally recommended to avoid negative equity. If you have a trade-in, it typically reduces the taxable purchase amount in most provinces, saving you additional money on sales tax.</p>
+          </div>
+
+          <div>
+            <h3 style="font-size:var(--text-xl);font-weight:600;margin-bottom:var(--space-3)">📅 Loan Term vs. Total Cost</h3>
+            <p style="color:var(--color-text-muted);line-height:1.8;font-size:var(--text-base)">Choosing a longer loan term lowers your monthly payment but dramatically increases the total interest you pay. For example, a $30,000 loan at 7% costs about $3,200 in interest over 48 months, but over $5,400 over 72 months — 70% more. Longer terms also increase the risk of negative equity since the car depreciates faster than you're paying it down. Financial advisors generally recommend keeping auto loan terms to 60 months or less, and buying a car where total auto costs (payment + insurance + fuel) stay under 15–20% of your monthly take-home pay.</p>
+          </div>
+
+          <div>
+            <h3 style="font-size:var(--text-xl);font-weight:600;margin-bottom:var(--space-3)">🇨🇦 Sales Tax on Vehicles in Canada</h3>
+            <p style="color:var(--color-text-muted);line-height:1.8;font-size:var(--text-base)">In Canada, provincial sales tax (HST, GST+PST, or GST only) applies to vehicle purchases. Most provinces calculate tax on the vehicle price minus the trade-in value — meaning your trade-in saves you tax money. Ontario charges 13% HST on the full purchase price minus trade-in. Alberta charges only 5% GST. Quebec charges both GST and QST (≈14.98%). Private sales may have different tax rules than dealership purchases — always check your province's rules. This calculator auto-fills the correct combined rate based on your selected province.</p>
+          </div>
+
+          <div>
+            <h3 style="font-size:var(--text-xl);font-weight:600;margin-bottom:var(--space-3)">❓ Frequently Asked Questions</h3>
+            <div style="display:flex;flex-direction:column;gap:var(--space-5)">
+              <div>
+                <p style="font-weight:600;margin-bottom:var(--space-1)">What is a good car loan interest rate in Canada?</p>
+                <p style="color:var(--color-text-muted);font-size:var(--text-sm);line-height:1.7">In 2026, good rates for new cars from major banks range from 5–8%. Excellent credit (750+) may qualify for 0–4% manufacturer promotions. Used car rates typically run 7–12%. Credit unions often offer rates 1–2% lower than banks. Always compare your bank's rate against the dealer's offer before signing.</p>
+              </div>
+              <div>
+                <p style="font-weight:600;margin-bottom:var(--space-1)">How much car can I afford in Canada?</p>
+                <p style="color:var(--color-text-muted);font-size:var(--text-sm);line-height:1.7">A common Canadian guideline is to keep total vehicle costs (payment + insurance + fuel + maintenance) under 15–20% of your monthly take-home pay. For a household earning $80,000/year (~$5,400/month after tax), that's roughly $800–$1,100/month maximum. If insurance and gas cost $400/month, your loan payment should stay under $400–$700.</p>
+              </div>
+              <div>
+                <p style="font-weight:600;margin-bottom:var(--space-1)">Is it better to finance through the dealer or my bank?</p>
+                <p style="color:var(--color-text-muted);font-size:var(--text-sm);line-height:1.7">It depends. Dealers occasionally offer manufacturer-subsidized 0% financing that banks can't match. However, for most used car purchases, your bank or credit union typically offers lower rates than dealer financing. Get pre-approved by your bank before visiting a dealership — it gives you a benchmark and negotiating power.</p>
+              </div>
+              <div>
+                <p style="font-weight:600;margin-bottom:var(--space-1)">Does paying bi-weekly save money vs monthly?</p>
+                <p style="color:var(--color-text-muted);font-size:var(--text-sm);line-height:1.7">For car loans, the savings from bi-weekly vs monthly payments are minimal compared to mortgages, because auto loans are shorter. The bigger impact comes from the total term and interest rate. That said, bi-weekly payments can help you build a habit and pay down the loan slightly faster.</p>
+              </div>
+              <div>
+                <p style="font-weight:600;margin-bottom:var(--space-1)">Can I pay off my car loan early in Canada?</p>
+                <p style="color:var(--color-text-muted);font-size:var(--text-sm);line-height:1.7">Most Canadian auto loans allow early repayment without penalty, but always confirm with your lender. Paying extra toward principal each month can save significant interest. Even one extra payment per year can shorten a 60-month loan by several months and save hundreds of dollars in interest.</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Related calculators -->
+          <div>
+            <h3 style="font-size:var(--text-xl);font-weight:600;margin-bottom:var(--space-3)">🔗 Related Calculators</h3>
+            <div id="nn-related"></div>
+          </div>
+
+        </div>
+
+        <div style="margin-top:var(--space-10);padding:var(--space-4) var(--space-5);background:var(--color-bg);border:1px solid var(--color-border);border-radius:var(--radius-md);font-size:var(--text-sm);color:var(--color-text-muted);line-height:1.7">
+          📋 Results are estimates based on the inputs provided and standard amortization formulas. Actual loan terms, tax rates, and fees may vary by lender and province. This calculator does not account for prepayment penalties, balloon payments, or variable rate changes. For educational purposes only — not financial advice. See our <a href="/disclaimer.html" style="color:var(--color-primary)">full disclaimer</a>.
+        </div>
+      </section>
+
+    </div>
+  </main>
+
+  <footer class="site-footer" id="nn-footer" role="contentinfo"></footer>
+
+  <script src="../script.js" defer></script>
+  <script src="../data/nn-constants.js" defer></script>
+  <script src="../data/nn-calculators.js" defer></script>
+  <script src="../shared/nn-utils.js" defer></script>
+  <script src="../shared/nn-seo.js" defer></script>
+  <script src="../shared/nn-analytics.js" defer></script>
+  <script src="../shared/nn-ads.js" defer></script>
+  <script src="../shared/nn-components.js" defer></script>
+  <script src="car-loan.js" defer></script>
+</body>
+</html>
