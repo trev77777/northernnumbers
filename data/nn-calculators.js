@@ -108,9 +108,9 @@ window.NNRegistry = {
       url: '/loan/', icon: '💳',
       description: 'Calculate payments and total interest for any personal loan, student loan, or line of credit in Canada.',
       keywords: ['loan calculator canada','personal loan calculator','line of credit calculator canada'],
-      status: 'planned', priority: 7,
+      status: 'active', priority: 7,
       showInFooter: false, showOnHomepage: true,
-      related: ['car-loan','mortgage']
+      related: ['car-loan','mortgage','budget','compound-interest']
     },
     {
       id: 'retirement', name: 'Retirement Calculator', category: 'retirement',
