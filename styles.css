@@ -92,7 +92,7 @@ html {
   font-size: 16px;
   scroll-behavior: smooth;
   -webkit-text-size-adjust: 100%;
-  overscroll-behavior: none;
+  /* overscroll-behavior intentionally not set — breaks wheel scroll on desktop */
 }
 
 body {
@@ -103,7 +103,7 @@ body {
   line-height: 1.6;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  overscroll-behavior-y: none;
+  /* overscroll-behavior-y intentionally not set — breaks wheel scroll on desktop */
 }
 
 /* Respect reduced motion preferences */
@@ -1365,9 +1365,14 @@ input[type=number] { -moz-appearance: textfield; }
    ============================================= */
 
 /* ── Prevent horizontal overflow site-wide ── */
-html, body {
+/* IMPORTANT: overflow-x: hidden on html breaks mouse wheel scroll on desktop.
+   Use clip on html + overflow-x hidden on body only (safe combination). */
+html {
+  overflow-x: clip; /* prevents horizontal scroll without breaking wheel events */
+}
+body {
   overflow-x: hidden;
-  -webkit-text-size-adjust: 100%;
+  position: relative;
 }
 
 /* ── Minimum touch target size (Apple HIG: 44px) ── */
