@@ -360,12 +360,25 @@
         observer.unobserve(entry.target);
       }
     });
-  }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+  }, {
+    threshold: 0.05,
+    // No negative bottom margin — cards near the fold (e.g. last card on mobile)
+    // were staying at opacity:0 because they never crossed the -40px threshold
+    rootMargin: '0px 0px 0px 0px'
+  });
 
   cards.forEach(function (card, i) {
+    // Safety net: if card is already in viewport on load (e.g. above fold),
+    // make it visible immediately rather than waiting for observer callback
+    const rect = card.getBoundingClientRect();
+    if (rect.top < window.innerHeight && rect.bottom > 0) {
+      card.style.opacity = '1';
+      card.style.transform = 'translateY(0)';
+      return; // don't observe cards already visible
+    }
     card.style.opacity = '0';
     card.style.transform = 'translateY(20px)';
-    card.style.transition = `opacity 0.4s ease ${i * 50}ms, transform 0.4s ease ${i * 50}ms`;
+    card.style.transition = `opacity 0.4s ease ${i * 30}ms, transform 0.4s ease ${i * 30}ms`;
     observer.observe(card);
   });
 })();
