@@ -216,6 +216,12 @@ document.addEventListener('DOMContentLoaded', function() {
 
   // Update all footer years
   document.querySelectorAll('#footer-year').forEach(el => el.textContent = new Date().getFullYear());
+
+  // Fire mobile nav setup AFTER header is rendered
+  // This ensures the hamburger button exists before script.js tries to bind to it
+  if (typeof window._nnNavSetup === 'function') {
+    window._nnNavSetup();
+  }
 });
 
 window.NNComponents = NNComponents;

@@ -10,12 +10,12 @@
    1. MOBILE NAVIGATION
    ============================================= */
 (function initMobileNav() {
-  // Use event delegation so this works even when header is
-  // rendered dynamically by nn-components.js after DOMContentLoaded
   function setup() {
     const toggle = document.querySelector('.nav-toggle');
     const menu   = document.getElementById('mobile-menu');
     if (!toggle || !menu) return;
+    if (toggle._nnNavReady) return; // prevent double-binding
+    toggle._nnNavReady = true;
 
     function openMenu() {
       toggle.setAttribute('aria-expanded', 'true');
@@ -33,14 +33,11 @@
       document.body.style.overflow = '';
     }
 
-    function toggleMenu() {
+    toggle.addEventListener('click', function() {
       const isOpen = toggle.getAttribute('aria-expanded') === 'true';
       isOpen ? closeMenu() : openMenu();
-    }
+    });
 
-    toggle.addEventListener('click', toggleMenu);
-
-    // Event delegation — catches links even if added by nn-components.js
     menu.addEventListener('click', function(e) {
       if (e.target.closest('.mobile-nav-link')) closeMenu();
     });
@@ -57,16 +54,14 @@
     }, { passive: true });
   }
 
-  // Run immediately for static headers
-  setup();
+  // Expose globally so nn-components.js can call it after rendering the header
+  window._nnNavSetup = setup;
 
-  // Also run after DOM settles for dynamic headers (nn-components.js)
-  if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', setup);
-  } else {
-    // If already loaded, give nn-components a tick to render
-    setTimeout(setup, 0);
-  }
+  // Also try on DOMContentLoaded as fallback for static headers
+  document.addEventListener('DOMContentLoaded', function() {
+    setup();
+    setTimeout(setup, 100); // safety net
+  });
 })();
 
 
