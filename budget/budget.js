@@ -275,15 +275,24 @@ document.addEventListener('DOMContentLoaded', function () {
 
   /* ── HEALTH SCORE ────────────────────────── */
   function healthScore(income, needs, wants, savings, remaining) {
-    if (income <= 0) return 50;
-    const savPct   = savings / income * 100;
+    if (income <= 0) return 0;
+
+    // Cap savings_pct at 100% — entering annual values monthly creates
+    // impossibly high savings percentages that would otherwise inflate the score
+    const savPct   = Math.min(savings / income * 100, 100);
     const needsPct = needs   / income * 100;
     const wantsPct = wants   / income * 100;
+
     const sScore = Math.min(40, savPct * 2);
     const nScore = needsPct <= 50 ? 30 : Math.max(0, 30 - (needsPct - 50) * 1.0);
     const wScore = wantsPct <= 30 ? 20 : Math.max(0, 20 - (wantsPct - 30) * 1.0);
     const rScore = remaining > 0 ? 10 : (remaining === 0 ? 5 : 0);
-    return Math.round(sScore + nScore + wScore + rScore);
+    const raw    = Math.round(sScore + nScore + wScore + rScore);
+
+    // A budget in deficit can never be healthy — hard cap at 30
+    // This prevents the score from praising impossible savings with negative remaining
+    if (remaining < 0) return Math.min(raw, 30);
+    return raw;
   }
 
   function healthLabel(score) {
