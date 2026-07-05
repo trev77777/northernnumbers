@@ -260,7 +260,7 @@
           </article>
 
           <!-- Loan Calculator -->
-          <article class="calc-card" role="listitem" data-category="finance" data-tags="loan personal payment interest rate" data-coming-soon="true">
+          <article class="calc-card" role="listitem" data-category="finance" data-tags="loan personal payment interest rate">
             <div class="calc-card-icon" aria-hidden="true">
               <svg width="28" height="28" viewBox="0 0 28 28" fill="none">
                 <rect x="3" y="6" width="22" height="16" rx="2" stroke="#D52B1E" stroke-width="2"/>
@@ -276,7 +276,7 @@
           </article>
 
           <!-- Car Loan Calculator -->
-          <article class="calc-card" role="listitem" data-category="finance" data-tags="car loan auto vehicle payment financing" data-coming-soon="true">
+          <article class="calc-card" role="listitem" data-category="finance" data-tags="car loan auto vehicle payment financing">
             <div class="calc-card-icon" aria-hidden="true">
               <svg width="28" height="28" viewBox="0 0 28 28" fill="none">
                 <path d="M5 17H23V20H5V17Z" stroke="#D52B1E" stroke-width="2" stroke-linejoin="round"/>
@@ -502,5 +502,28 @@
   <script src="shared/nn-analytics.js" defer></script>
   <script src="shared/nn-ads.js" defer></script>
   <script src="shared/nn-components.js" defer></script>
+
+  <!-- Sync homepage cards with nn-calculators.js registry -->
+  <!-- When a calc moves from planned→active in the registry, this removes coming-soon automatically -->
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      if (typeof NNRegistry === 'undefined') return;
+      const cards = document.querySelectorAll('.calc-card[data-coming-soon="true"]');
+      cards.forEach(function(card) {
+        // Find this card's calculator link
+        const link = card.querySelector('a.btn-calc');
+        if (!link) return;
+        const href = link.getAttribute('href');
+        // Look it up in the registry
+        const calc = NNRegistry.calculators.find(function(c) {
+          return c.url === href && c.status === 'active';
+        });
+        // If registry says active, remove coming-soon
+        if (calc) {
+          card.removeAttribute('data-coming-soon');
+        }
+      });
+    });
+  </script>
 </body>
 </html>
