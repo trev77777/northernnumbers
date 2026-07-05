@@ -86,6 +86,42 @@ NNComponents.renderHeader = function(containerId) {
     <div id="mobile-menu" class="mobile-menu" aria-hidden="true">
       <nav aria-label="Mobile navigation"><ul role="list">${mobileItems}</ul></nav>
     </div>`;
+
+  // ── Wire up hamburger immediately after rendering ──────────────
+  // Do NOT rely on script.js timing. Bind here, right now.
+  const toggle = el.querySelector('.nav-toggle');
+  const menu   = el.querySelector('#mobile-menu');
+
+  if (toggle && menu) {
+    function openMenu() {
+      toggle.setAttribute('aria-expanded', 'true');
+      toggle.setAttribute('aria-label', 'Close navigation menu');
+      menu.classList.add('is-open');
+      menu.setAttribute('aria-hidden', 'false');
+      document.body.style.overflow = 'hidden';
+    }
+    function closeMenu() {
+      toggle.setAttribute('aria-expanded', 'false');
+      toggle.setAttribute('aria-label', 'Open navigation menu');
+      menu.classList.remove('is-open');
+      menu.setAttribute('aria-hidden', 'true');
+      document.body.style.overflow = '';
+    }
+    toggle.addEventListener('click', function() {
+      toggle.getAttribute('aria-expanded') === 'true' ? closeMenu() : openMenu();
+    });
+    menu.addEventListener('click', function(e) {
+      if (e.target.closest('.mobile-nav-link')) closeMenu();
+    });
+    document.addEventListener('keydown', function(e) {
+      if (e.key === 'Escape' && toggle.getAttribute('aria-expanded') === 'true') {
+        closeMenu(); toggle.focus();
+      }
+    });
+    window.addEventListener('resize', function() {
+      if (window.innerWidth >= 768) closeMenu();
+    }, { passive: true });
+  }
 };
 
 /* ─── RENDER FOOTER ──────────────────────── */

@@ -10,11 +10,12 @@
    1. MOBILE NAVIGATION
    ============================================= */
 (function initMobileNav() {
+  // nn-components.js handles nav for all calculator pages.
+  // This is a fallback for any page with a static (non-dynamic) header.
   function setup() {
     const toggle = document.querySelector('.nav-toggle');
     const menu   = document.getElementById('mobile-menu');
-    if (!toggle || !menu) return;
-    if (toggle._nnNavReady) return; // prevent double-binding
+    if (!toggle || !menu || toggle._nnNavReady) return;
     toggle._nnNavReady = true;
 
     function openMenu() {
@@ -24,7 +25,6 @@
       menu.setAttribute('aria-hidden', 'false');
       document.body.style.overflow = 'hidden';
     }
-
     function closeMenu() {
       toggle.setAttribute('aria-expanded', 'false');
       toggle.setAttribute('aria-label', 'Open navigation menu');
@@ -32,36 +32,23 @@
       menu.setAttribute('aria-hidden', 'true');
       document.body.style.overflow = '';
     }
-
     toggle.addEventListener('click', function() {
-      const isOpen = toggle.getAttribute('aria-expanded') === 'true';
-      isOpen ? closeMenu() : openMenu();
+      toggle.getAttribute('aria-expanded') === 'true' ? closeMenu() : openMenu();
     });
-
     menu.addEventListener('click', function(e) {
       if (e.target.closest('.mobile-nav-link')) closeMenu();
     });
-
     document.addEventListener('keydown', function(e) {
       if (e.key === 'Escape' && toggle.getAttribute('aria-expanded') === 'true') {
-        closeMenu();
-        toggle.focus();
+        closeMenu(); toggle.focus();
       }
     });
-
     window.addEventListener('resize', function() {
       if (window.innerWidth >= 768) closeMenu();
     }, { passive: true });
   }
 
-  // Expose globally so nn-components.js can call it after rendering the header
-  window._nnNavSetup = setup;
-
-  // Also try on DOMContentLoaded as fallback for static headers
-  document.addEventListener('DOMContentLoaded', function() {
-    setup();
-    setTimeout(setup, 100); // safety net
-  });
+  document.addEventListener('DOMContentLoaded', setup);
 })();
 
 
