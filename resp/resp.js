@@ -340,28 +340,45 @@ document.addEventListener('DOMContentLoaded', function () {
 
     // Primary result
     document.getElementById('result-final').textContent     = NNUtils.formatCAD(d.final);
+    const startYear = new Date().getFullYear();
     document.getElementById('result-final-sub').textContent =
-      `Over ${years} year${years !== 1 ? 's' : ''} · Payoff in ${v.withdrawAge}`;
+      `Over ${years} year${years !== 1 ? 's' : ''} · Ready in ${startYear + years} when your child turns ${v.withdrawAge}`;
 
     // Summary rows
     document.getElementById('result-contrib').textContent    = NNUtils.formatCAD(d.totalContrib);
     document.getElementById('result-cesg').textContent       = v.cesgOn
       ? `${NNUtils.formatCAD(d.totalCesg)} (free government grant)`
       : '$0.00 — CESG disabled';
-    document.getElementById('result-provincial').textContent = d.totalProv > 0
-      ? NNUtils.formatCAD(d.totalProv)
-      : v.provOn ? 'Not available in your province' : '—';
+    // Provincial grants — clear messaging for each case
+    const provEl = document.getElementById('result-provincial');
+    if (provEl) {
+      if (d.totalProv > 0) {
+        provEl.textContent = NNUtils.formatCAD(d.totalProv);
+      } else if (!v.provOn) {
+        provEl.textContent = '—';
+      } else if (v.province === 'BC' && v.childAge > 9) {
+        provEl.textContent = 'BCTESG — child must be age 6–9 to apply';
+      } else if (!['BC', 'QC'].includes(v.province)) {
+        provEl.textContent = 'No provincial grant in ' + (NN.PROV_NAMES[v.province] || v.province);
+      } else {
+        provEl.textContent = '—';
+      }
+    }
     document.getElementById('result-growth').textContent     = NNUtils.formatCAD(d.totalGrowth);
     document.getElementById('result-inflation').textContent  = NNUtils.formatCAD(d.inflFinal);
     document.getElementById('result-years').textContent      = `${years} year${years !== 1 ? 's' : ''}`;
 
-    // CESG grant card
-    document.getElementById('cesg-annual').textContent    = NNUtils.formatCAD(d.cesgAnnualMax) + '/yr';
-    document.getElementById('cesg-years').textContent     =
-      `${d.cesgYears} year${d.cesgYears !== 1 ? 's' : ''} (${NNUtils.formatCAD(d.totalCesg)} total)`;
-    document.getElementById('cesg-remaining').textContent =
-      d.cesgRemain > 0 ? `${NNUtils.formatCAD(d.cesgRemain)} unclaimed` : 'Lifetime maximum reached ✓';
-    document.getElementById('cesg-total').textContent     = NNUtils.formatCAD(d.totalCesg);
+    // CESG grant card — only show when CESG is enabled
+    const cesgCardEl = document.getElementById('cesg-card');
+    if (cesgCardEl) cesgCardEl.style.display = v.cesgOn ? '' : 'none';
+    if (v.cesgOn) {
+      document.getElementById('cesg-annual').textContent    = NNUtils.formatCAD(d.cesgAnnualMax) + '/yr';
+      document.getElementById('cesg-years').textContent     =
+        `${d.cesgYears} year${d.cesgYears !== 1 ? 's' : ''} (${NNUtils.formatCAD(d.totalCesg)} total)`;
+      document.getElementById('cesg-remaining').textContent =
+        d.cesgRemain > 0 ? `${NNUtils.formatCAD(d.cesgRemain)} unclaimed` : 'Lifetime maximum reached ✓';
+      document.getElementById('cesg-total').textContent     = NNUtils.formatCAD(d.totalCesg);
+    }
 
     // Breakdown bar
     const total = d.final || 1;
@@ -385,7 +402,7 @@ document.addEventListener('DOMContentLoaded', function () {
       const extraCesg = gap * 0.20;
       insight = `You're contributing ${NNUtils.formatCAD(v.contrib)}/year. Adding just ${NNUtils.formatCAD(gap)} more per year would maximize your ${NNUtils.formatCAD(d.cesgAnnualMax)} CESG grant — the government would give you ${NNUtils.formatCAD(extraCesg)} more per year for free.`;
     } else if (v.contrib === 0 && v.lump === 0) {
-      insight = 'Enter a contribution amount to see your RESP projection.';
+      insight = 'Add an annual contribution or lump sum to see your full RESP projection with CESG grants.';
     } else if (d.hitLifetimeLimit) {
       insight = `⚠️ Your contributions reach the $50,000 RESP lifetime limit before your child turns ${v.withdrawAge}. Consider spreading contributions over more years or reducing the annual amount.`;
     } else if (d.cesgRemain > 0 && v.childAge > 9) {

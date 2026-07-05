@@ -173,7 +173,7 @@
               <label class="form-label" for="child-age">Child's Current Age</label>
               <div class="input-wrapper">
                 <input type="number" id="child-age" class="form-input has-suffix"
-                  placeholder="0" min="0" max="17" step="1" value="0" />
+                  placeholder="0" min="0" max="17" step="1" value="0" inputmode="numeric" />
                 <span class="input-suffix" aria-hidden="true">yrs</span>
               </div>
               <p class="field-help">Age 0 = newborn. CESG is available until age 17 (with some conditions).</p>
@@ -218,6 +218,7 @@
                   placeholder="0" inputmode="numeric" autocomplete="off" value="0" />
               </div>
               <p class="field-help">One-time contribution today. This also qualifies for CESG if under the annual limit.</p>
+              <p id="lump-sum-error" class="form-error-msg" role="alert"></p>
             </div>
 
             <!-- Annual Return -->
@@ -417,7 +418,7 @@
           </svg>
         </button>
         <div id="chart-wrapper" class="chart-wrapper">
-          <canvas id="resp-chart" class="chart-canvas" aria-label="RESP growth chart"></canvas>
+          <canvas id="resp-chart" class="chart-canvas" role="img" aria-label="RESP growth chart — shows portfolio balance growing over time compared to total contributions and grants"></canvas>
           <div class="chart-legend">
             <div class="chart-legend-item"><div class="chart-legend-dot" style="background:#D52B1E"></div>RESP Balance</div>
             <div class="chart-legend-item"><div class="chart-legend-dot" style="background:var(--color-primary-light);border:1px solid #D52B1E"></div>Contributions + Grants</div>
