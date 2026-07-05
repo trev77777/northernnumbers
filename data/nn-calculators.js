@@ -126,9 +126,9 @@ window.NNRegistry = {
       url: '/resp/', icon: '🎓',
       description: 'Calculate RESP growth with the 20% Canada Education Savings Grant (CESG) and project education savings for your child.',
       keywords: ['resp calculator canada','cesg calculator','education savings calculator canada'],
-      status: 'planned', priority: 9,
-      showInFooter: false, showOnHomepage: true,
-      related: ['tfsa','compound-interest']
+      status: 'active', priority: 9,
+      showInFooter: false, footerSection: 'moreTools', showOnHomepage: true,
+      related: ['tfsa','compound-interest','rrsp','fhsa']
     },
     {
       id: 'budget', name: 'Budget Calculator', category: 'personal',

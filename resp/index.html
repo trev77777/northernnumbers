@@ -1,0 +1,545 @@
+<!DOCTYPE html>
+<html lang="en-CA">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>RESP Calculator Canada 2026 — Northern Numbers</title>
+  <meta name="description" content="Free Canadian RESP calculator. Calculate education savings growth, CESG government grants, and projected university fund. Plan your child's future with Canada's best RESP tool." />
+  <meta name="keywords" content="resp calculator canada, resp calculator 2026, cesg calculator, education savings calculator canada, registered education savings plan calculator" />
+  <link rel="canonical" href="https://www.northernnumbers.ca/resp/" />
+  <meta property="og:title" content="RESP Calculator Canada 2026 — Northern Numbers" />
+  <meta property="og:description" content="Calculate your RESP growth, CESG government grants, and projected education fund. Free Canadian RESP calculator." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://www.northernnumbers.ca/resp/" />
+  <meta property="og:locale" content="en_CA" />
+  <meta property="og:site_name" content="Northern Numbers" />
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="RESP Calculator Canada 2026 — Northern Numbers" />
+  <meta name="twitter:description" content="Calculate RESP growth and CESG grants for your child's education savings." />
+  <meta name="robots" content="index, follow" />
+  <meta name="author" content="Northern Numbers" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Poppins:wght@600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="../styles.css" />
+
+  <style>
+    .quick-start{background:var(--color-primary-light);border:1px solid rgba(213,43,30,.15);border-radius:var(--radius-md);padding:var(--space-5) var(--space-6);margin-bottom:var(--space-6)}
+    .quick-start-title{font-family:var(--font-heading);font-size:var(--text-base);font-weight:700;color:var(--color-primary);margin-bottom:var(--space-3);display:flex;align-items:center;gap:var(--space-2)}
+    .quick-start ol{list-style:decimal;padding-left:var(--space-5);display:flex;flex-direction:column;gap:var(--space-2)}
+    .quick-start ol li{font-size:var(--text-sm);color:var(--color-text);line-height:1.5}
+    .preset-group{display:flex;flex-wrap:wrap;gap:var(--space-2);margin-bottom:var(--space-5)}
+    .preset-btn{padding:var(--space-2) var(--space-4);font-size:var(--text-sm);font-weight:600;border:2px solid var(--color-border);border-radius:var(--radius-lg);background:var(--color-white);color:var(--color-text-muted);cursor:pointer;transition:all var(--transition-fast)}
+    .preset-btn:hover,.preset-btn.is-active{border-color:var(--color-primary);color:var(--color-primary);background:var(--color-primary-light)}
+    .field-help{font-size:var(--text-xs);color:var(--color-text-muted);margin-top:var(--space-1);line-height:1.5}
+    .advanced-toggle{display:flex;align-items:center;gap:var(--space-2);background:none;border:none;font-family:var(--font-body);font-size:var(--text-sm);font-weight:600;color:var(--color-text-muted);cursor:pointer;padding:var(--space-3) 0;width:100%;text-align:left;border-top:1px solid var(--color-border);margin-top:var(--space-2);transition:color var(--transition-fast);min-height:44px}
+    .advanced-toggle:hover{color:var(--color-text)}
+    .advanced-toggle-icon{margin-left:auto;transition:transform var(--transition-base)}
+    .advanced-toggle[aria-expanded="true"] .advanced-toggle-icon{transform:rotate(180deg)}
+    .advanced-fields{display:none;padding-top:var(--space-4)}
+    .advanced-fields.is-open{display:block}
+    .summary-tag{display:inline-flex;align-items:center;padding:var(--space-2) var(--space-4);background:var(--color-primary-light);border:1px solid rgba(213,43,30,.2);border-radius:var(--radius-full);font-size:var(--text-sm);font-weight:600;color:var(--color-primary)}
+    .result-celebration{margin-bottom:var(--space-5);padding:var(--space-4) var(--space-5);background:linear-gradient(135deg,#F0FDF4,#DCFCE7);border:1px solid var(--color-success);border-radius:var(--radius-md);font-size:var(--text-sm);color:#166534;line-height:1.6}
+    .result-big{text-align:center;padding:var(--space-6) 0;border-bottom:2px solid var(--color-border);margin-bottom:var(--space-6)}
+    .result-big-label{font-size:var(--text-sm);color:var(--color-text-muted);margin-bottom:var(--space-2)}
+    .result-big-value{font-family:var(--font-heading);font-size:clamp(2rem,6vw,2.75rem);font-weight:800;color:var(--color-primary);line-height:1}
+    .result-big-sub{font-size:var(--text-sm);color:var(--color-text-muted);margin-top:var(--space-2)}
+    /* CESG grant hero card */
+    .cesg-card{margin-top:var(--space-5);padding:var(--space-5);background:linear-gradient(135deg,#EFF6FF,#DBEAFE);border:1px solid #BFDBFE;border-radius:var(--radius-md)}
+    .cesg-card-title{font-family:var(--font-heading);font-size:var(--text-base);font-weight:700;color:#1E40AF;margin-bottom:var(--space-4)}
+    .cesg-row{display:flex;justify-content:space-between;padding:var(--space-2) 0;border-bottom:1px solid rgba(37,99,235,.15);font-size:var(--text-sm);color:#1E40AF}
+    .cesg-row:last-child{border-bottom:none;font-weight:700;font-size:var(--text-base)}
+    /* Breakdown bar */
+    .breakdown-card{margin-top:var(--space-5);padding:var(--space-5);background:var(--color-bg);border:1px solid var(--color-border);border-radius:var(--radius-md)}
+    .breakdown-card-title{font-family:var(--font-heading);font-size:var(--text-base);font-weight:700;margin-bottom:var(--space-4)}
+    .breakdown-bar-wrap{height:16px;background:var(--color-border);border-radius:var(--radius-full);overflow:hidden;margin-bottom:var(--space-3);display:flex}
+    .breakdown-bar-contrib{background:var(--color-primary);height:100%;transition:width .6s ease}
+    .breakdown-bar-cesg{background:#3B82F6;height:100%;transition:width .6s ease}
+    .breakdown-bar-growth{background:var(--color-success);height:100%;transition:width .6s ease}
+    .breakdown-legend{display:flex;gap:var(--space-4);flex-wrap:wrap;font-size:var(--text-xs);color:var(--color-text-muted)}
+    .legend-dot{display:inline-block;width:10px;height:10px;border-radius:2px;margin-right:4px;vertical-align:middle}
+    /* Rate insight */
+    .insight-card{margin-top:var(--space-4);padding:var(--space-4) var(--space-5);background:#FFFBEB;border:1px solid #FDE68A;border-radius:var(--radius-md);font-size:var(--text-sm);color:#92400E;line-height:1.6}
+    /* Year-by-year table */
+    .growth-section{margin-top:var(--space-8)}
+    .growth-toggle{display:flex;align-items:center;justify-content:space-between;width:100%;padding:var(--space-4) var(--space-6);background:var(--color-bg);border:1px solid var(--color-border);border-radius:var(--radius-md);font-family:var(--font-heading);font-size:var(--text-base);font-weight:600;color:var(--color-text);cursor:pointer;transition:background-color var(--transition-fast);min-height:44px}
+    .growth-toggle:hover{background:var(--color-border)}
+    .growth-toggle-icon{transition:transform var(--transition-base)}
+    .growth-toggle[aria-expanded="true"] .growth-toggle-icon{transform:rotate(180deg)}
+    .growth-table-wrapper{display:none;overflow-x:auto;margin-top:var(--space-4);border:1px solid var(--color-border);border-radius:var(--radius-md);-webkit-overflow-scrolling:touch}
+    .growth-table-wrapper.is-open{display:block}
+    .growth-table{width:100%;border-collapse:collapse;font-size:var(--text-sm)}
+    .growth-table th{background:var(--color-bg);padding:var(--space-3) var(--space-4);text-align:right;font-weight:600;font-size:var(--text-xs);color:var(--color-text-muted);text-transform:uppercase;letter-spacing:.05em;border-bottom:2px solid var(--color-border);white-space:nowrap}
+    .growth-table th:first-child{text-align:left}
+    .growth-table td{padding:var(--space-3) var(--space-4);text-align:right;border-bottom:1px solid var(--color-border);white-space:nowrap}
+    .growth-table td:first-child{text-align:left;font-weight:600}
+    .growth-table tr:last-child td{border-bottom:none}
+    .growth-table tr:nth-child(even){background:rgba(248,249,250,.6)}
+    .growth-table .td-cesg{color:#3B82F6;font-weight:600}
+    .growth-table .td-growth{color:var(--color-success)}
+    /* Chart */
+    .chart-section{margin-top:var(--space-8)}
+    .chart-toggle{display:flex;align-items:center;justify-content:space-between;width:100%;padding:var(--space-4) var(--space-6);background:var(--color-bg);border:1px solid var(--color-border);border-radius:var(--radius-md);font-family:var(--font-heading);font-size:var(--text-base);font-weight:600;color:var(--color-text);cursor:pointer;transition:background-color var(--transition-fast);min-height:44px}
+    .chart-toggle:hover{background:var(--color-border)}
+    .chart-toggle-icon{transition:transform var(--transition-base)}
+    .chart-toggle[aria-expanded="true"] .chart-toggle-icon{transform:rotate(180deg)}
+    .chart-wrapper{display:none;margin-top:var(--space-4);padding:var(--space-5);background:var(--color-white);border:1px solid var(--color-border);border-radius:var(--radius-md)}
+    .chart-wrapper.is-open{display:block}
+    .chart-canvas{width:100%;height:280px;display:block}
+    .chart-legend{display:flex;gap:var(--space-5);justify-content:center;margin-top:var(--space-3);flex-wrap:wrap}
+    .chart-legend-item{display:flex;align-items:center;gap:var(--space-2);font-size:var(--text-xs);color:var(--color-text-muted)}
+    .chart-legend-dot{width:12px;height:12px;border-radius:2px;flex-shrink:0}
+    /* Buttons */
+    .btn-row{display:flex;gap:var(--space-3);align-items:center;margin-top:var(--space-4)}
+    .btn-reset{padding:var(--space-3) var(--space-5);font-size:var(--text-base);font-weight:600;color:var(--color-text-muted);background:var(--color-white);border:2px solid var(--color-border);border-radius:var(--radius-lg);cursor:pointer;transition:all var(--transition-fast);min-height:44px}
+    .btn-reset:hover{border-color:var(--color-text-muted);color:var(--color-text)}
+    .copy-btn,.print-btn{display:flex;align-items:center;gap:var(--space-2);padding:var(--space-3) var(--space-5);font-size:var(--text-sm);font-weight:600;color:var(--color-text-muted);background:var(--color-white);border:2px solid var(--color-border);border-radius:var(--radius-lg);cursor:pointer;transition:all var(--transition-fast);margin-top:var(--space-3);width:100%;justify-content:center;min-height:44px}
+    .copy-btn:hover,.print-btn:hover{border-color:var(--color-text);color:var(--color-text)}
+    .copy-btn.copied{border-color:var(--color-success);color:var(--color-success)}
+    .calc-disclaimer{margin-top:var(--space-6);padding:var(--space-3) var(--space-4);background:var(--color-bg);border:1px solid var(--color-border);border-radius:var(--radius-md);font-size:var(--text-xs);color:var(--color-text-muted);line-height:1.6}
+    .slider-wrap{margin-top:var(--space-2)}
+    .slider-labels{display:flex;justify-content:space-between;font-size:var(--text-xs);color:var(--color-text-muted);margin-bottom:var(--space-1)}
+    input[type=range].nn-slider{width:100%;accent-color:var(--color-primary);cursor:pointer}
+    /* Toggle switch */
+    .toggle-switch-wrap{display:flex;align-items:center;justify-content:space-between;padding:var(--space-3) 0;cursor:pointer}
+    .toggle-switch-label{font-size:var(--text-sm);font-weight:600;color:var(--color-text)}
+    .toggle-switch-track{width:44px;height:24px;background:var(--color-border);border-radius:var(--radius-full);position:relative;transition:background var(--transition-fast);flex-shrink:0}
+    .toggle-switch-track::after{content:'';position:absolute;width:18px;height:18px;background:white;border-radius:50%;top:3px;left:3px;transition:transform var(--transition-fast)}
+    .toggle-switch-track.is-on{background:var(--color-primary)}
+    .toggle-switch-track.is-on::after{transform:translateX(20px)}
+    @media print{
+      .site-header,.site-footer,.calc-panel:first-of-type,.chart-section,.growth-section,
+      .copy-btn,.print-btn,.btn-row,.quick-start,.preset-group,.advanced-toggle,.advanced-fields,
+      .calc-breadcrumb,.calc-page-desc,#results-placeholder,nav,button{display:none!important}
+      body{font-size:12pt;color:#000}
+      .calc-layout{display:block}
+      .calc-panel{box-shadow:none;border:none;padding:0}
+      #results-content{display:block!important}
+      @page{margin:1.5cm;size:A4}
+    }
+  </style>
+</head>
+<body>
+
+  <header class="site-header" id="nn-header" role="banner"></header>
+
+  <main id="main-content" class="calc-page">
+    <div class="container">
+
+      <nav class="calc-breadcrumb" aria-label="Breadcrumb">
+        <a href="/">Home</a>
+        <span class="calc-breadcrumb-sep" aria-hidden="true">›</span>
+        <span aria-current="page">RESP Calculator</span>
+      </nav>
+
+      <div class="calc-page-header">
+        <h1 class="calc-page-title">Canadian RESP Calculator</h1>
+        <p class="calc-page-desc">Calculate your child's education savings growth, government CESG grants, and projected university fund. Built for Canadian RESP rules.</p>
+      </div>
+
+      <div class="calc-layout">
+
+        <!-- LEFT: Inputs -->
+        <section class="calc-panel" aria-labelledby="inputs-heading">
+          <h2 id="inputs-heading" class="calc-panel-title">Your RESP Details</h2>
+
+          <div class="quick-start" role="note">
+            <p class="quick-start-title"><span aria-hidden="true">📋</span> How to use this calculator</p>
+            <ol>
+              <li>Enter your child's current age and the age when they'll start school.</li>
+              <li>Enter your annual RESP contribution (max $50,000 lifetime per child).</li>
+              <li>Toggle CESG on — the government adds 20% on the first $2,500/year.</li>
+              <li>Set your expected annual return.</li>
+              <li>Click <strong>Calculate RESP</strong>.</li>
+            </ol>
+          </div>
+
+          <!-- Presets -->
+          <div style="margin-bottom:var(--space-5)">
+            <p style="font-size:var(--text-sm);font-weight:600;color:var(--color-text-muted);margin-bottom:var(--space-2)">Quick start with a preset:</p>
+            <div class="preset-group" role="group">
+              <button type="button" class="preset-btn" data-preset="newborn">👶 Newborn</button>
+              <button type="button" class="preset-btn" data-preset="toddler">🧒 Toddler (Age 3)</button>
+              <button type="button" class="preset-btn" data-preset="school">🏫 School Age (Age 6)</button>
+              <button type="button" class="preset-btn" data-preset="late">⏰ Late Start (Age 10)</button>
+            </div>
+          </div>
+
+          <form id="resp-form" novalidate aria-label="RESP calculator inputs">
+
+            <!-- Child's Current Age -->
+            <div class="form-group">
+              <label class="form-label" for="child-age">Child's Current Age</label>
+              <div class="input-wrapper">
+                <input type="number" id="child-age" class="form-input has-suffix"
+                  placeholder="0" min="0" max="17" step="1" value="0" />
+                <span class="input-suffix" aria-hidden="true">yrs</span>
+              </div>
+              <p class="field-help">Age 0 = newborn. CESG is available until age 17 (with some conditions).</p>
+              <p id="child-age-error" class="form-error-msg" role="alert"></p>
+            </div>
+
+            <!-- Withdrawal Age -->
+            <div class="form-group">
+              <label class="form-label" for="withdraw-age">Age When Education Begins</label>
+              <select id="withdraw-age" class="form-select">
+                <option value="17">17 (early college/trade)</option>
+                <option value="18" selected>18 (university — standard)</option>
+                <option value="19">19</option>
+                <option value="20">20</option>
+                <option value="21">21</option>
+              </select>
+              <p class="field-help">When your child plans to start post-secondary education.</p>
+            </div>
+
+            <!-- Annual Contribution -->
+            <div class="form-group">
+              <label class="form-label" for="annual-contrib">Annual RESP Contribution</label>
+              <div class="input-wrapper">
+                <span class="input-prefix" aria-hidden="true">$</span>
+                <input type="text" id="annual-contrib" class="form-input has-prefix"
+                  placeholder="2,500" inputmode="numeric" autocomplete="off" />
+              </div>
+              <div class="slider-wrap">
+                <div class="slider-labels"><span>$0</span><span>$2,500</span><span>$5,000</span></div>
+                <input type="range" id="contrib-slider" class="nn-slider" min="0" max="5000" step="100" value="2500" aria-label="Annual contribution slider" />
+              </div>
+              <p class="field-help">Contributing $2,500/year maximizes the $500 annual CESG grant. Lifetime limit is $50,000 per child.</p>
+              <p id="annual-contrib-error" class="form-error-msg" role="alert"></p>
+            </div>
+
+            <!-- Lump Sum -->
+            <div class="form-group">
+              <label class="form-label" for="lump-sum">Starting Lump Sum (Optional)</label>
+              <div class="input-wrapper">
+                <span class="input-prefix" aria-hidden="true">$</span>
+                <input type="text" id="lump-sum" class="form-input has-prefix"
+                  placeholder="0" inputmode="numeric" autocomplete="off" value="0" />
+              </div>
+              <p class="field-help">One-time contribution today. This also qualifies for CESG if under the annual limit.</p>
+            </div>
+
+            <!-- Annual Return -->
+            <div class="form-group">
+              <label class="form-label" for="annual-return">Expected Annual Return</label>
+              <div class="input-wrapper">
+                <input type="number" id="annual-return" class="form-input has-suffix"
+                  placeholder="5" min="0" max="20" step="0.1" value="5" />
+                <span class="input-suffix" aria-hidden="true">%</span>
+              </div>
+              <div class="slider-wrap">
+                <div class="slider-labels"><span>0%</span><span>7%</span><span>15%</span></div>
+                <input type="range" id="return-slider" class="nn-slider" min="0" max="15" step="0.1" value="5" aria-label="Annual return slider" />
+              </div>
+              <p class="field-help">Conservative: 3–4% · Balanced: 5–6% · Growth: 7–9%. Most RESP portfolios target 5–7%.</p>
+              <p id="annual-return-error" class="form-error-msg" role="alert"></p>
+            </div>
+
+            <!-- CESG Toggle -->
+            <div class="form-group">
+              <label class="toggle-switch-wrap" for="cesg-toggle" style="padding:var(--space-3) 0">
+                <div>
+                  <p class="toggle-switch-label">🇨🇦 Include CESG Government Grant</p>
+                  <p style="font-size:var(--text-xs);color:var(--color-text-muted);margin-top:2px">20% on first $2,500/yr = up to $500/yr · Lifetime max $7,200</p>
+                </div>
+                <div class="toggle-switch-track is-on" id="cesg-track" aria-hidden="true"></div>
+                <input type="checkbox" id="cesg-toggle" style="position:absolute;opacity:0;width:0;height:0" checked aria-label="Include CESG grant" />
+              </label>
+            </div>
+
+            <!-- Advanced Settings -->
+            <button type="button" class="advanced-toggle" id="advanced-toggle"
+              aria-expanded="false" aria-controls="advanced-fields">
+              <span>⚙️ Advanced Options</span>
+              <svg class="advanced-toggle-icon" width="18" height="18" viewBox="0 0 20 20" fill="none" aria-hidden="true">
+                <path d="M5 7.5L10 12.5L15 7.5" stroke="#6B7280" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </button>
+            <div id="advanced-fields" class="advanced-fields">
+
+              <div class="form-group">
+                <label class="form-label" for="yearly-increase">Annual Contribution Increase</label>
+                <div class="input-wrapper">
+                  <input type="number" id="yearly-increase" class="form-input has-suffix"
+                    placeholder="0" min="0" max="10" step="0.5" value="0" />
+                  <span class="input-suffix" aria-hidden="true">%</span>
+                </div>
+                <p class="field-help">Increase your contribution each year as your income grows. 2–3% keeps pace with inflation.</p>
+              </div>
+
+              <div class="form-group">
+                <label class="form-label" for="inflation-rate">Inflation Rate</label>
+                <div class="input-wrapper">
+                  <input type="number" id="inflation-rate" class="form-input has-suffix"
+                    placeholder="2" min="0" max="10" step="0.1" value="2" />
+                  <span class="input-suffix" aria-hidden="true">%</span>
+                </div>
+                <p class="field-help">Used to calculate inflation-adjusted real value of the fund.</p>
+              </div>
+
+              <div class="form-group">
+                <label class="toggle-switch-wrap" for="provincial-toggle" style="padding:var(--space-3) 0">
+                  <div>
+                    <p class="toggle-switch-label">Include Provincial Grants</p>
+                    <p style="font-size:var(--text-xs);color:var(--color-text-muted);margin-top:2px">BC BCTESG $1,200 · Quebec QESI · Saskatchewan SAGES</p>
+                  </div>
+                  <div class="toggle-switch-track" id="provincial-track" aria-hidden="true"></div>
+                  <input type="checkbox" id="provincial-toggle" style="position:absolute;opacity:0;width:0;height:0" aria-label="Include provincial grants" />
+                </label>
+              </div>
+
+              <div class="form-group">
+                <label class="form-label" for="province-select">Province (for provincial grants)</label>
+                <select id="province-select" class="form-select"></select>
+              </div>
+
+            </div>
+
+            <div class="btn-row">
+              <button type="submit" class="btn btn-primary btn-calculate" id="calc-btn" style="flex:1">
+                Calculate RESP
+              </button>
+              <button type="button" id="reset-btn" class="btn-reset">Reset</button>
+            </div>
+
+          </form>
+
+          <div style="margin-top:var(--space-6);padding:var(--space-4) var(--space-5);background:#EFF6FF;border:1px solid #BFDBFE;border-radius:var(--radius-md);font-size:var(--text-sm);color:#1E40AF;line-height:1.6">
+            <strong style="display:block;margin-bottom:var(--space-1)">🇨🇦 Free government money — don't leave it on the table</strong>
+            The CESG adds 20% on your first $2,500 contributed each year — that's $500 in free money annually, up to $7,200 over your child's lifetime. Contributing $2,500/year from birth maximizes this grant entirely.
+          </div>
+        </section>
+
+        <!-- RIGHT: Results -->
+        <section class="calc-panel" aria-labelledby="results-heading" aria-live="polite">
+          <h2 id="results-heading" class="calc-panel-title">Your Results</h2>
+
+          <div id="results-placeholder" class="result-placeholder">
+            <div class="result-placeholder-icon" aria-hidden="true">
+              <svg width="56" height="56" viewBox="0 0 56 56" fill="none">
+                <rect x="10" y="8" width="36" height="40" rx="4" stroke="#D1D5DB" stroke-width="2"/>
+                <path d="M18 20H38M18 28H38M18 36H28" stroke="#D1D5DB" stroke-width="2" stroke-linecap="round"/>
+              </svg>
+            </div>
+            <p>Enter your child's details and click <strong>Calculate RESP</strong> to see your education fund projection.</p>
+          </div>
+
+          <div id="results-content" class="hidden">
+
+            <div id="result-summary-box" class="hidden"
+              style="margin-bottom:var(--space-5);padding:var(--space-4);background:var(--color-bg);border:1px solid var(--color-border);border-radius:var(--radius-md)">
+            </div>
+
+            <div id="result-celebration" class="result-celebration hidden"></div>
+
+            <!-- Primary result -->
+            <div class="result-big">
+              <p class="result-big-label">Projected Education Fund</p>
+              <p id="result-final" class="result-big-value">—</p>
+              <p id="result-final-sub" class="result-big-sub">—</p>
+            </div>
+
+            <!-- Summary rows -->
+            <div class="result-summary" role="list">
+              <div class="result-row" role="listitem">
+                <span class="result-row-label">Your Contributions</span>
+                <span class="result-row-value" id="result-contrib">—</span>
+              </div>
+              <div class="result-row" role="listitem">
+                <span class="result-row-label">Government CESG Grants</span>
+                <span class="result-row-value" id="result-cesg" style="color:#3B82F6;font-weight:700">—</span>
+              </div>
+              <div class="result-row" role="listitem">
+                <span class="result-row-label">Provincial Grants</span>
+                <span class="result-row-value" id="result-provincial">—</span>
+              </div>
+              <div class="result-row" role="listitem">
+                <span class="result-row-label">Investment Growth</span>
+                <span class="result-row-value is-success" id="result-growth">—</span>
+              </div>
+              <div class="result-row" role="listitem">
+                <span class="result-row-label">Inflation-Adjusted Value</span>
+                <span class="result-row-value" id="result-inflation">—</span>
+              </div>
+              <div class="result-row" role="listitem">
+                <span class="result-row-label">Investment Years</span>
+                <span class="result-row-value" id="result-years">—</span>
+              </div>
+            </div>
+
+            <!-- CESG grant card -->
+            <div class="cesg-card" id="cesg-card">
+              <p class="cesg-card-title">🇨🇦 Government Grant Summary</p>
+              <div class="cesg-row"><span>Annual CESG (20% on first $2,500)</span><span id="cesg-annual">—</span></div>
+              <div class="cesg-row"><span>Years of CESG received</span><span id="cesg-years">—</span></div>
+              <div class="cesg-row"><span>CESG lifetime remaining</span><span id="cesg-remaining">—</span></div>
+              <div class="cesg-row"><span>Total government grants</span><span id="cesg-total">—</span></div>
+            </div>
+
+            <!-- Breakdown bar -->
+            <div class="breakdown-card">
+              <p class="breakdown-card-title">Contributions vs. Grants vs. Growth</p>
+              <div class="breakdown-bar-wrap">
+                <div class="breakdown-bar-contrib" id="bar-contrib" style="width:50%"></div>
+                <div class="breakdown-bar-cesg" id="bar-cesg" style="width:15%"></div>
+                <div class="breakdown-bar-growth" id="bar-growth" style="width:35%"></div>
+              </div>
+              <div class="breakdown-legend">
+                <span><span class="legend-dot" style="background:var(--color-primary)"></span>Contributions (<span id="pct-contrib">—</span>)</span>
+                <span><span class="legend-dot" style="background:#3B82F6"></span>Grants (<span id="pct-cesg">—</span>)</span>
+                <span><span class="legend-dot" style="background:var(--color-success)"></span>Growth (<span id="pct-growth">—</span>)</span>
+              </div>
+            </div>
+
+            <!-- Insight card -->
+            <div class="insight-card">
+              <strong>💡 RESP Insight</strong><br />
+              <span id="insight-text">—</span>
+            </div>
+
+            <div id="nn-disclaimer"></div>
+
+            <button type="button" id="copy-results-btn" class="copy-btn">📋 Copy Results to Clipboard</button>
+            <button type="button" class="print-btn" onclick="window.print()">🖨️ Download / Print as PDF</button>
+
+          </div>
+        </section>
+      </div>
+
+      <!-- Chart -->
+      <div class="chart-section" id="chart-section" hidden>
+        <button type="button" class="chart-toggle" id="chart-toggle"
+          aria-expanded="false" aria-controls="chart-wrapper">
+          <span>📈 View RESP Growth Chart</span>
+          <svg class="chart-toggle-icon" width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true">
+            <path d="M5 7.5L10 12.5L15 7.5" stroke="#1F2937" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </button>
+        <div id="chart-wrapper" class="chart-wrapper">
+          <canvas id="resp-chart" class="chart-canvas" aria-label="RESP growth chart"></canvas>
+          <div class="chart-legend">
+            <div class="chart-legend-item"><div class="chart-legend-dot" style="background:#D52B1E"></div>RESP Balance</div>
+            <div class="chart-legend-item"><div class="chart-legend-dot" style="background:var(--color-primary-light);border:1px solid #D52B1E"></div>Contributions + Grants</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Year-by-year table -->
+      <div class="growth-section" id="growth-section" hidden>
+        <button type="button" class="growth-toggle" id="growth-toggle"
+          aria-expanded="false" aria-controls="growth-table-wrapper">
+          <span>View Year-by-Year Breakdown</span>
+          <svg class="growth-toggle-icon" width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true">
+            <path d="M5 7.5L10 12.5L15 7.5" stroke="#1F2937" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </button>
+        <div id="growth-table-wrapper" class="growth-table-wrapper">
+          <table class="growth-table" aria-label="RESP year-by-year breakdown">
+            <thead>
+              <tr>
+                <th scope="col">Year</th>
+                <th scope="col">Child's Age</th>
+                <th scope="col">Contribution</th>
+                <th scope="col">CESG Grant</th>
+                <th scope="col">Growth</th>
+                <th scope="col">Balance</th>
+              </tr>
+            </thead>
+            <tbody id="growth-tbody"></tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- Educational section -->
+      <section style="margin-top:var(--space-16);padding-top:var(--space-10);border-top:1px solid var(--color-border)"
+        aria-labelledby="edu-heading">
+        <h2 id="edu-heading" style="font-size:var(--text-2xl);font-weight:700;margin-bottom:var(--space-10)">
+          Understanding RESPs in Canada
+        </h2>
+        <div style="display:grid;grid-template-columns:1fr;gap:var(--space-10)">
+
+          <div>
+            <h3 style="font-size:var(--text-xl);font-weight:600;margin-bottom:var(--space-3)">🎓 What is an RESP?</h3>
+            <p style="color:var(--color-text-muted);line-height:1.8;font-size:var(--text-base)">A Registered Education Savings Plan (RESP) is a tax-sheltered savings account designed specifically to fund a child's post-secondary education in Canada. Contributions are not tax-deductible, but the investment grows tax-free inside the plan. When the money is withdrawn for education, it's taxed in the student's hands — and since most students have low income, the tax is minimal or zero. The biggest advantage is the Canada Education Savings Grant (CESG), which adds free government money on top of your contributions.</p>
+          </div>
+
+          <div>
+            <h3 style="font-size:var(--text-xl);font-weight:600;margin-bottom:var(--space-3)">🇨🇦 The CESG — Free Government Money</h3>
+            <p style="color:var(--color-text-muted);line-height:1.8;font-size:var(--text-base)">The Canada Education Savings Grant (CESG) is the most powerful feature of an RESP. The government matches 20% of your annual contributions on the first $2,500 — that's $500 in free money each year. The lifetime CESG maximum is $7,200 per child. If you miss a year, you can carry forward one year's worth of grant room the following year. CESG is available until December 31 of the year your child turns 17, with some conditions for children over 16.</p>
+          </div>
+
+          <div>
+            <h3 style="font-size:var(--text-xl);font-weight:600;margin-bottom:var(--space-3)">📅 Why Starting Early Matters</h3>
+            <p style="color:var(--color-text-muted);line-height:1.8;font-size:var(--text-base)">Opening an RESP at birth gives you 18 years of tax-free compounding and 18 years of CESG grants. At $2,500/year with a 5% return, starting at birth produces approximately $86,000 by age 18 — compared to about $36,000 if you start at age 10. Every year you delay costs significantly more than just the missed contribution — you also lose the compound growth on 18 years of future grants and returns.</p>
+          </div>
+
+          <div>
+            <h3 style="font-size:var(--text-xl);font-weight:600;margin-bottom:var(--space-3)">💰 RESP Contribution Rules</h3>
+            <p style="color:var(--color-text-muted);line-height:1.8;font-size:var(--text-base)">There is no annual contribution limit, but the lifetime contribution limit is $50,000 per beneficiary. To maximize the CESG, contribute at least $2,500 per year. You can contribute more, but the CESG only applies to the first $2,500. Unused grant room carries forward, so if you contribute $5,000 in one year after missing the previous year, you can receive $1,000 in CESG (two years' worth). Contributions can be made in any combination of lump sums and regular payments.</p>
+          </div>
+
+          <div>
+            <h3 style="font-size:var(--text-xl);font-weight:600;margin-bottom:var(--space-3)">🏛 Provincial RESP Grants</h3>
+            <p style="color:var(--color-text-muted);line-height:1.8;font-size:var(--text-base)">Several provinces offer additional grants on top of the federal CESG. British Columbia offers the BC Training and Education Savings Grant (BCTESG) — a one-time $1,200 grant for children born on or after January 1, 2006 who are residents of BC. Quebec offers the Quebec Education Savings Incentive (QESI), which adds 10% on the first $2,500 contributed annually. Saskatchewan previously offered SAGES, though it has been discontinued for new grants. Always check your province's current program status.</p>
+          </div>
+
+          <div>
+            <h3 style="font-size:var(--text-xl);font-weight:600;margin-bottom:var(--space-3)">📊 What Happens When Withdrawals Begin</h3>
+            <p style="color:var(--color-text-muted);line-height:1.8;font-size:var(--text-base)">When your child enrols in a qualifying post-secondary program, you can start withdrawals. Your original contributions come back to you tax-free. The CESG grants and investment earnings come out as Educational Assistance Payments (EAPs) — these are taxed in the student's hands. Since most students have little other income, they often pay little or no tax on EAPs. There are annual EAP limits in the first 13 weeks ($8,000 for full-time, $4,000 for part-time), with no limits after that.</p>
+          </div>
+
+          <div>
+            <h3 style="font-size:var(--text-xl);font-weight:600;margin-bottom:var(--space-3)">❓ Frequently Asked Questions</h3>
+            <div style="display:flex;flex-direction:column;gap:var(--space-5)">
+              <div>
+                <p style="font-weight:600;margin-bottom:var(--space-1)">How much should I contribute to an RESP each year?</p>
+                <p style="color:var(--color-text-muted);font-size:var(--text-sm);line-height:1.7">$2,500/year maximizes the $500 annual CESG grant. If you can't afford $2,500, contribute whatever you can — the CESG matches 20% of any amount up to $2,500. Even $1,000/year earns $200 in free government money.</p>
+              </div>
+              <div>
+                <p style="font-weight:600;margin-bottom:var(--space-1)">What happens if my child doesn't go to post-secondary school?</p>
+                <p style="color:var(--color-text-muted);font-size:var(--text-sm);line-height:1.7">You have options: transfer to a sibling's RESP, transfer up to $50,000 to your RRSP (if you have room), or close the plan. If you close the plan, you return the CESG grants, and the investment earnings are taxed as income plus a 20% penalty. The plan can stay open for 36 years, so there's no rush to close it.</p>
+              </div>
+              <div>
+                <p style="font-weight:600;margin-bottom:var(--space-1)">Can I open an RESP for a child who is not my own?</p>
+                <p style="color:var(--color-text-muted);font-size:var(--text-sm);line-height:1.7">Yes. Any Canadian resident can open an RESP for any child with a Social Insurance Number. Grandparents, aunts, uncles, and family friends can all open RESPs for a child. However, a child can only have a total of $50,000 in lifetime RESP contributions across all plans combined.</p>
+              </div>
+              <div>
+                <p style="font-weight:600;margin-bottom:var(--space-1)">What investments can I hold in an RESP?</p>
+                <p style="color:var(--color-text-muted);font-size:var(--text-sm);line-height:1.7">A self-directed RESP at a bank or discount broker can hold stocks, ETFs, mutual funds, GICs, and bonds. Most Canadians use low-cost ETFs (like XEQT or VEQT) that automatically shift to a conservative allocation as the child approaches university age. Avoid scholarship/group plans, which often have high fees and rigid rules.</p>
+              </div>
+              <div>
+                <p style="font-weight:600;margin-bottom:var(--space-1)">Is RESP income taxable?</p>
+                <p style="color:var(--color-text-muted);font-size:var(--text-sm);line-height:1.7">Your original contributions come out tax-free. The grants and investment earnings (EAPs) are taxable as income in the student's hands. Most students have little or no other income, so they pay very little or no tax on EAPs. This makes an RESP one of the most tax-efficient savings vehicles available to Canadian families.</p>
+              </div>
+            </div>
+          </div>
+
+          <div>
+            <h3 style="font-size:var(--text-xl);font-weight:600;margin-bottom:var(--space-3)">🔗 Related Calculators</h3>
+            <div id="nn-related"></div>
+          </div>
+
+        </div>
+
+        <div style="margin-top:var(--space-10);padding:var(--space-4) var(--space-5);background:var(--color-bg);border:1px solid var(--color-border);border-radius:var(--radius-md);font-size:var(--text-sm);color:var(--color-text-muted);line-height:1.7">
+          📋 Results are projections based on constant rates of return and current CRA RESP rules. Actual results will vary. Grant eligibility, provincial programs, and tax rules may change. This calculator is for educational purposes only and does not constitute financial advice. See our <a href="/disclaimer.html" style="color:var(--color-primary)">full disclaimer</a>.
+        </div>
+      </section>
+
+    </div>
+  </main>
+
+  <footer class="site-footer" id="nn-footer" role="contentinfo"></footer>
+
+  <script src="../script.js" defer></script>
+  <script src="../data/nn-constants.js" defer></script>
+  <script src="../data/nn-calculators.js" defer></script>
+  <script src="../shared/nn-utils.js" defer></script>
+  <script src="../shared/nn-seo.js" defer></script>
+  <script src="../shared/nn-analytics.js" defer></script>
+  <script src="../shared/nn-ads.js" defer></script>
+  <script src="../shared/nn-components.js" defer></script>
+  <script src="resp.js" defer></script>
+</body>
+</html>
