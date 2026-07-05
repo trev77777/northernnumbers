@@ -135,9 +135,9 @@ window.NNRegistry = {
       url: '/budget/', icon: '📋',
       description: 'Build a monthly budget using the 50/30/20 rule. Track income, expenses, and savings goals with Canadian context.',
       keywords: ['budget calculator canada','50 30 20 budget canada','monthly budget calculator'],
-      status: 'planned', priority: 10,
-      showInFooter: false, showOnHomepage: true,
-      related: ['compound-interest','tfsa']
+      status: 'active', priority: 10,
+      showInFooter: true, footerSection: 'moreTools', showOnHomepage: true,
+      related: ['tfsa','rrsp','fhsa','compound-interest']
     },
     {
       id: 'inflation', name: 'Inflation Calculator', category: 'personal',
