@@ -447,9 +447,10 @@ document.addEventListener('DOMContentLoaded', function () {
     const inc = v.totalIncome;
     const needsPct    = inc > 0 ? v.needs   / inc * 100 : 0;
     const wantsPct    = inc > 0 ? v.wants   / inc * 100 : 0;
-    const savPct      = inc > 0 ? v.savings / inc * 100 : 0;
-    const remPct      = inc > 0 ? Math.max(0, v.remaining) / inc * 100 : 0;
-    const savRateReal = inc > 0 ? (v.savings + Math.max(0, v.remaining)) / inc * 100 : 0;
+    // ONE canonical savings rate: dedicated savings ÷ income
+    // Used everywhere — pills, rows, chart, health score, insights, copy
+    const savPct = inc > 0 ? v.savings / inc * 100 : 0;
+    const remPct = inc > 0 ? Math.max(0, v.remaining) / inc * 100 : 0;
 
     /* Summary pills */
     NNUtils.renderSummaryPills('result-summary-box', [
@@ -479,7 +480,7 @@ document.addEventListener('DOMContentLoaded', function () {
     document.getElementById('result-income').textContent         = NNUtils.formatCAD(inc);
     document.getElementById('result-expenses').textContent       = NNUtils.formatCAD(v.totalExpenses);
     document.getElementById('result-savings').textContent        = NNUtils.formatCAD(v.savings);
-    document.getElementById('result-savings-rate').textContent   = `${savRateReal.toFixed(1)}%`;
+    document.getElementById('result-savings-rate').textContent   = `${savPct.toFixed(1)}%`;
     document.getElementById('result-annual-savings').textContent = NNUtils.formatCAD((v.savings + Math.max(0, v.remaining)) * 12);
 
     /* Health score */
@@ -552,7 +553,7 @@ document.addEventListener('DOMContentLoaded', function () {
         : '<div class="insight-item"><span class="insight-icon">✅</span><span>Your budget looks well-balanced. Keep up the good work!</span></div>';
     }
 
-    window._budgetResults = { v, score, inc, needsPct, wantsPct, savPct, savRateReal };
+    window._budgetResults = { v, score, inc, needsPct, wantsPct, savPct };
 
     if (window.NNAnalytics) NNAnalytics.trackCalculator('Budget Calculator', { score, income: inc });
 
@@ -571,7 +572,7 @@ document.addEventListener('DOMContentLoaded', function () {
   document.getElementById('copy-results-btn')?.addEventListener('click', function () {
     const r = window._budgetResults;
     if (!r) return;
-    const { v, score, inc, needsPct, wantsPct, savPct, savRateReal } = r;
+    const { v, score, inc, needsPct, wantsPct, savPct } = r;
     NNUtils.copyResults(this, [
       `💵 Monthly Income:      ${NNUtils.formatCAD(inc)}`,
       `📊 Total Expenses:      ${NNUtils.formatCAD(v.totalExpenses)}`,
@@ -581,7 +582,7 @@ document.addEventListener('DOMContentLoaded', function () {
       `💰 Savings:             ${NNUtils.formatCAD(v.savings)} (${savPct.toFixed(1)}%)`,
       `💸 Remaining:           ${NNUtils.formatCAD(v.remaining)}`,
       `─────────────────────────`,
-      `📈 Savings Rate:        ${savRateReal.toFixed(1)}%`,
+      `📈 Savings Rate:        ${savPct.toFixed(1)}%`,
       `🏆 Budget Health Score: ${score}/100`,
       `🗓 Annual Savings:      ${NNUtils.formatCAD((v.savings + Math.max(0, v.remaining)) * 12)}`
     ], 'Budget Calculator');

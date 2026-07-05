@@ -1519,10 +1519,10 @@ input[type=range]::-moz-range-thumb {
     gap: var(--space-2) !important;
   }
 
-  /* Footer nav — ensure 2 cols on small mobile */
+  /* Footer nav — 2 cols on mobile */
   .footer-nav {
     grid-template-columns: repeat(2, 1fr) !important;
-    gap: var(--space-4);
+    gap: var(--space-5) var(--space-4);
   }
 
   /* Footer brand — less margin */
@@ -1559,12 +1559,11 @@ input[type=range]::-moz-range-thumb {
 /* ── Footer links — bigger tap targets ── */
 .footer-nav-col a,
 .footer-nav-col span.footer-disabled {
-  display: block;
+  display: flex;
+  align-items: center;
   padding-top: 4px;
   padding-bottom: 4px;
   min-height: 36px;
-  display: flex;
-  align-items: center;
 }
 
 /* ── Calc page layout — single col on mobile, side-by-side on 900px+ ── */
