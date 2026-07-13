@@ -147,6 +147,11 @@
       .budget-input-wrap{width:110px}
       .budget-input{padding-left:var(--space-5)}
     }
+    /* iOS Safari: inputs <16px trigger page zoom, breaking touch targets */
+    @media(max-width:767px){
+      .budget-input{font-size:16px}
+      .income-input{font-size:16px}
+    }
     @media print{
       .site-header,.site-footer,.calc-panel:first-of-type,.copy-btn,.print-btn,.btn-row,
       .quick-start,.preset-group,.advanced-toggle,.advanced-fields,

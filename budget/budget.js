@@ -557,7 +557,16 @@ document.addEventListener('DOMContentLoaded', function () {
 
     if (window.NNAnalytics) NNAnalytics.trackCalculator('Budget Calculator', { score, income: inc });
 
-    NNUtils.scrollToResults('results-heading', wasHidden);
+    // Always scroll to results after a successful calculation (Bug 2 fix).
+    // NNUtils.scrollToResults only scrolls on first calculate (wasHidden guard).
+    // Budget needs to scroll every time so user sees updated results on mobile.
+    (function() {
+      const el = document.getElementById('results-heading');
+      if (!el) return;
+      // 80px clears the sticky header on both desktop and mobile
+      const top = el.getBoundingClientRect().top + window.scrollY - 80;
+      window.scrollTo({ top: Math.max(0, top), behavior: 'smooth' });
+    })();
   }
 
   /* ── LIVE UPDATE ─────────────────────────── */
