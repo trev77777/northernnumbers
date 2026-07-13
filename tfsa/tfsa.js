@@ -110,6 +110,27 @@ attachFormatter(annualLimitEl);
 const lumpSumEl = document.getElementById('lump-sum');
 if (lumpSumEl) attachFormatter(lumpSumEl);
 
+// ── Return slider (two-way sync) ──────────────────────────────
+const returnSlider   = document.getElementById('return-slider');
+const returnCaution  = document.getElementById('return-high-caution');
+
+function syncReturnSlider() {
+  const val = parseFloat(returnEl.value);
+  if (!isNaN(val)) {
+    if (returnSlider) returnSlider.value = Math.min(Math.max(val, 0), 15);
+    if (returnCaution) returnCaution.classList.toggle('hidden', val <= 10);
+  }
+}
+
+if (returnSlider) {
+  returnSlider.addEventListener('input', function () {
+    returnEl.value = this.value;
+    if (returnCaution) returnCaution.classList.toggle('hidden', parseFloat(this.value) <= 10);
+  });
+}
+
+returnEl.addEventListener('input', syncReturnSlider);
+
 const pastContribEl = document.getElementById('past-contributions');
 if (pastContribEl) attachFormatter(pastContribEl);
 
@@ -222,6 +243,8 @@ document.querySelectorAll('.preset-btn').forEach(btn => {
     roomEl.value          = formatInputNumber(preset.room);
     contributionEl.value  = formatInputNumber(preset.contribution);
     returnEl.value        = preset.annualReturn;
+    if (returnSlider) returnSlider.value = preset.annualReturn;
+    if (returnCaution) returnCaution.classList.toggle('hidden', preset.annualReturn <= 10);
     horizonEl.value       = preset.horizon;
     if (lumpSumEl) lumpSumEl.value = formatInputNumber(0);
     if (pastContribEl) pastContribEl.value = formatInputNumber(0);
@@ -478,10 +501,10 @@ if (lumpSumEl) lumpSumEl.addEventListener('input', checkOverContrib);
    Shows a plain-English summary of what the user entered
    before the big result number.
    ============================================= */
-function renderSummaryBox(contribution, frequency, horizon, annualReturn) {
+function renderSummaryBox(contribution, frequency, horizon, annualReturn, lumpSum) {
   if (!resultSummaryBox) return;
 
-  // Plain English frequency labels (cleaner than dropdown labels)
+  // Plain English frequency labels
   const freqLabel = {
     yearly:  'annually',
     monthly: 'monthly',
@@ -490,10 +513,24 @@ function renderSummaryBox(contribution, frequency, horizon, annualReturn) {
     onetime: 'one-time'
   }[frequency] || 'annually';
 
-  // Format contribution with frequency naturally
-  const contribText = frequency === 'onetime'
-    ? `${formatCAD(contribution)} one-time contribution`
-    : `${formatCAD(contribution)} / ${freqLabel}`;
+  // Build contribution tag(s)
+  const tags = [];
+
+  // One-time contribution today — always show if non-zero
+  if (lumpSum > 0) {
+    tags.push(`<span class="summary-tag">💵 ${formatCAD(lumpSum)} today</span>`);
+  }
+
+  // Annual contribution (starting Year 2 when lump sum is used)
+  if (frequency !== 'onetime' && contribution > 0) {
+    const startLabel = lumpSum > 0 ? 'from Year 2' : freqLabel;
+    tags.push(`<span class="summary-tag">💰 ${formatCAD(contribution)} / ${startLabel}</span>`);
+  } else if (frequency === 'onetime' && !lumpSum) {
+    tags.push(`<span class="summary-tag">💰 ${formatCAD(contribution)} one-time</span>`);
+  }
+
+  tags.push(`<span class="summary-tag">📈 ${annualReturn}% return</span>`);
+  tags.push(`<span class="summary-tag">📅 ${horizon} years</span>`);
 
   resultSummaryBox.innerHTML = `
     <p style="font-size:var(--text-xs);font-weight:600;color:var(--color-text-muted);
@@ -501,9 +538,8 @@ function renderSummaryBox(contribution, frequency, horizon, annualReturn) {
       Your projection is based on
     </p>
     <div style="display:flex;flex-wrap:wrap;gap:var(--space-3);">
-      <span class="summary-tag">💰 ${contribText}</span>
-      <span class="summary-tag">📅 ${horizon} years</span>
-      <span class="summary-tag">📈 ${annualReturn}% annual return</span>
+      ${tags.join('
+      ')}
     </div>
   `;
   resultSummaryBox.classList.remove('hidden');
@@ -576,7 +612,7 @@ function renderResults(data, values) {
   resultsContent.classList.remove('hidden');
 
   // Summary box
-  renderSummaryBox(contribution, frequency, horizon, annualReturn);
+  renderSummaryBox(contribution, frequency, horizon, annualReturn, lumpSum);
 
   // Main numbers
   resultFutureValue.textContent    = formatCAD(finalBalance);
@@ -665,6 +701,8 @@ if (resetBtn) {
     contributionEl.value = formatInputNumber(7000);
     frequencyEl.value    = 'yearly';
     returnEl.value       = '6';
+    if (returnSlider) returnSlider.value = '6';
+    if (returnCaution) returnCaution.classList.add('hidden');
     horizonEl.value      = '20';
     annualLimitEl.value  = formatInputNumber(7000);
     inflationEl.value    = '2.1';

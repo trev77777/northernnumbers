@@ -67,6 +67,11 @@
       line-height: 1.5;
     }
 
+    /* Return slider */
+    .slider-wrap { margin-top: var(--space-2); }
+    .slider-labels { display:flex; justify-content:space-between; font-size:var(--text-xs); color:var(--color-text-muted); margin-bottom:var(--space-1); }
+    .nn-slider { width:100%; accent-color:var(--color-primary); cursor:pointer; touch-action:pan-y; }
+
     /* Preset buttons */
     .preset-group {
       display: flex;
@@ -410,11 +415,13 @@
               <span aria-hidden="true">📋</span> How to use this calculator
             </p>
             <ol>
-              <li>Enter your current TFSA balance (enter 0 if you're just starting).</li>
-              <li>Enter your birth year — we'll estimate your contribution room automatically.</li>
-              <li>Enter how much you plan to contribute and how often.</li>
-              <li>Set your expected annual return (6% is a common long-term estimate for index funds).</li>
-              <li>Click <strong>Calculate TFSA Growth</strong>.</li>
+              <li>Enter your birth year — we'll estimate your available contribution room automatically.</li>
+              <li>Enter total past contributions (not your balance — just what you've deposited over the years).</li>
+              <li>Enter your current TFSA balance (your existing invested capital).</li>
+              <li>Confirm or adjust your available contribution room.</li>
+              <li><strong>Optional:</strong> enter a one-time contribution today using your current room.</li>
+              <li>Enter an annual contribution for Year 2 onward (new CRA room opens every January).</li>
+              <li>Set your expected annual return and investment period, then click <strong>Calculate TFSA Growth</strong>.</li>
             </ol>
           </div>
 
@@ -555,12 +562,23 @@
               <label class="form-label" for="annual-return">Expected Annual Return</label>
               <div class="input-wrapper">
                 <input type="number" id="annual-return" class="form-input has-suffix"
-                  placeholder="6" min="0" max="30" step="0.1" value="6"
+                  placeholder="6" min="0" max="15" step="0.1" value="6"
                   aria-describedby="annual-return-hint annual-return-error" />
                 <span class="input-suffix" aria-hidden="true">%</span>
               </div>
+              <div class="slider-wrap">
+                <div class="slider-labels">
+                  <span>0%</span><span>7%</span><span>15%</span>
+                </div>
+                <input type="range" id="return-slider" class="nn-slider"
+                  min="0" max="15" step="0.1" value="6"
+                  aria-label="Expected annual return slider" />
+              </div>
               <p class="field-help" id="annual-return-hint">
-                6% is a commonly used long-term estimate for a diversified index fund portfolio. Conservative investors might use 4–5%; aggressive investors 7–9%.
+                6% is a commonly used long-term estimate for a diversified index fund portfolio. Conservative: 4–5% · Balanced: 6–7% · Growth-oriented: 8–9%.
+              </p>
+              <p id="return-high-caution" class="field-help hidden" style="color:var(--color-text-muted);">
+                ⚠️ Returns above 10% are optimistic and may not be sustainable over long periods.
               </p>
               <p id="annual-return-error" class="form-error-msg" role="alert"></p>
             </div>
