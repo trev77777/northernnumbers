@@ -962,19 +962,25 @@ if (contribSlider) {
 const returnSlider = document.getElementById('return-slider');
 
 if (returnSlider) {
-  // Slider → updates number input
+  // Initialise slider to match the input's default value
+  returnSlider.value = Math.min(Math.max(parseFloat(returnEl.value) || 6, 0), 15);
+
+  // Slider → updates number input immediately
   returnSlider.addEventListener('input', function () {
     returnEl.value = this.value;
     if (!resultsContent.classList.contains('hidden')) calculate();
   });
 
-  // Number input → updates slider (clamp to slider range 0–15)
-  returnEl.addEventListener('input', function () {
-    const val = parseFloat(this.value);
+  // Number input → updates slider
+  // Bind both 'input' (desktop) and 'change' (iOS Safari dismisses keyboard on change)
+  function syncReturnInputToSlider() {
+    const val = parseFloat(returnEl.value);
     if (!isNaN(val) && val >= 0 && val <= 15) {
       returnSlider.value = val;
     }
-  });
+  }
+  returnEl.addEventListener('input',  syncReturnInputToSlider);
+  returnEl.addEventListener('change', syncReturnInputToSlider);
 }
 
 
