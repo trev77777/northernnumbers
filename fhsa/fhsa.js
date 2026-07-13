@@ -300,6 +300,7 @@ document.querySelectorAll('.preset-btn').forEach(btn => {
     lumpSumEl.value        = formatInputNumber(0);
     frequencyEl.value      = p.freq;
     returnEl.value         = p.return;
+    if (returnSlider) returnSlider.value = Math.min(p.return || 6, 15);
     homePriceEl.value      = formatInputNumber(p.homePrice);
     downPaymentPctEl.value = p.dp;
     if (contribSlider) contribSlider.value = Math.min(p.contrib, FHSA_ANNUAL_LIMIT);
@@ -871,6 +872,26 @@ if (copyBtn) {
 /* =============================================
    18. RESET
    ============================================= */
+/* ── Return slider — same pattern as contrib-slider ── */
+const returnSlider = document.getElementById('return-slider');
+if (returnSlider) {
+  returnSlider.value = Math.min(Math.max(parseFloat(returnEl.value) || 6, 0), 15);
+  returnSlider.addEventListener('input', function () {
+    returnEl.value = this.value;
+    if (document.getElementById('fhsa-results-content') &&
+        !document.getElementById('fhsa-results-content').classList.contains('hidden')) {
+      calculate();
+    }
+  });
+  function syncReturnToSlider() {
+    const val = parseFloat(returnEl.value);
+    if (!isNaN(val) && val >= 0 && val <= 15) returnSlider.value = val;
+  }
+  returnEl.addEventListener('input',  syncReturnToSlider);
+  returnEl.addEventListener('change', syncReturnToSlider);
+}
+
+
 document.getElementById('fhsa-reset-btn')?.addEventListener('click', function () {
   incomeEl.value         = formatInputNumber(85000);
   provinceEl.value       = 'ON';
@@ -882,6 +903,7 @@ document.getElementById('fhsa-reset-btn')?.addEventListener('click', function ()
   lumpSumEl.value        = formatInputNumber(0);
   frequencyEl.value      = 'yearly';
   returnEl.value         = '6';
+  if (returnSlider) returnSlider.value = '6';
   homePriceEl.value      = formatInputNumber(650000);
   downPaymentPctEl.value = '10';
   if (contribSlider) contribSlider.value = 8000;

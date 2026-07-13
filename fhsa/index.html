@@ -291,7 +291,7 @@
     /* Contribution slider */
     .contrib-slider-wrapper { margin-top:var(--space-3); }
     .contrib-slider-labels { display:flex;justify-content:space-between;font-size:var(--text-xs);color:var(--color-text-muted);margin-bottom:var(--space-1); }
-    #contrib-slider { width:100%;accent-color:var(--color-primary);cursor:pointer; }
+    #contrib-slider, #return-slider { width:100%;accent-color:var(--color-primary);cursor:pointer;touch-action:pan-y; }
 
     /* Deadline banner */
     .deadline-banner { display:flex;align-items:center;gap:var(--space-3);padding:var(--space-3) var(--space-4);background:#FFFBEB;border:1px solid #FDE68A;border-radius:var(--radius-md);margin-bottom:var(--space-6);font-size:var(--text-sm);color:#92400E; }
@@ -520,6 +520,10 @@
               <div class="input-wrapper">
                 <input type="number" id="annual-return" class="form-input has-suffix" placeholder="6" min="0" max="30" step="0.1" value="6" />
                 <span class="input-suffix" aria-hidden="true">%</span>
+              </div>
+              <div class="contrib-slider-wrapper">
+                <div class="contrib-slider-labels"><span>0%</span><span>7%</span><span>15%</span></div>
+                <input type="range" id="return-slider" min="0" max="15" step="0.1" value="6" aria-label="Expected annual return slider" />
               </div>
               <p class="field-help">Conservative portfolios 4–5%, balanced 6–7%, growth 8–10%. For a shorter timeline, consider more conservative investments.</p>
               <p id="annual-return-error" class="form-error-msg" role="alert"></p>
@@ -972,7 +976,6 @@
   </footer>
 
   <script src="../script.js" defer></script>
-  <script src="fhsa.js" defer></script>
 
   <!-- Northern Numbers shared modules — DO NOT REMOVE OR REORDER -->
   <script src="../data/nn-constants.js" defer></script>
@@ -982,5 +985,6 @@
   <script src="../shared/nn-analytics.js" defer></script>
   <script src="../shared/nn-ads.js" defer></script>
   <script src="../shared/nn-components.js" defer></script>
+  <script src="fhsa.js" defer></script>
 </body>
 </html>
