@@ -346,6 +346,7 @@ document.querySelectorAll('.preset-btn').forEach(btn => {
     contributionEl.value  = formatInputNumber(preset.contribution);
     frequencyEl.value     = preset.frequency;
     returnEl.value        = preset.annualReturn;
+    if (returnSlider) returnSlider.value = Math.min(preset.annualReturn, 15);
     lumpSumEl.value       = formatInputNumber(0);
     roomAutoBadge.classList.add('hidden');
 
@@ -902,6 +903,7 @@ if (resetBtn) {
     lumpSumEl.value       = formatInputNumber(0);
     frequencyEl.value     = 'yearly';
     returnEl.value        = '6';
+    if (returnSlider) returnSlider.value = '6';
     inflationEl.value     = '2.1';
     salaryGrowthEl.value  = '2';
     employerMatchEl.value = '0';
@@ -949,6 +951,29 @@ if (contribSlider) {
   roomEl.addEventListener('input', function () {
     const room = parseInputNumber(this.value);
     if (room > 0 && room <= 32490) contribSlider.max = room;
+  });
+}
+
+
+/* =============================================
+   17b. RETURN SLIDER
+   Same pattern as contrib-slider above.
+   ============================================= */
+const returnSlider = document.getElementById('return-slider');
+
+if (returnSlider) {
+  // Slider → updates number input
+  returnSlider.addEventListener('input', function () {
+    returnEl.value = this.value;
+    if (!resultsContent.classList.contains('hidden')) calculate();
+  });
+
+  // Number input → updates slider (clamp to slider range 0–15)
+  returnEl.addEventListener('input', function () {
+    const val = parseFloat(this.value);
+    if (!isNaN(val) && val >= 0 && val <= 15) {
+      returnSlider.value = val;
+    }
   });
 }
 

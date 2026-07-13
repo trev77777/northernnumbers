@@ -733,6 +733,13 @@
                   aria-describedby="annual-return-hint annual-return-error" />
                 <span class="input-suffix" aria-hidden="true">%</span>
               </div>
+              <div class="contrib-slider-wrapper">
+                <div class="contrib-slider-labels">
+                  <span>0%</span><span>7%</span><span>15%</span>
+                </div>
+                <input type="range" id="return-slider" min="0" max="15" step="0.1" value="6"
+                  aria-label="Expected annual return slider" />
+              </div>
               <p class="field-help" id="annual-return-hint">Conservative portfolios often target 4–5%, balanced 6–7%, growth portfolios 8–10%.</p>
               <p id="annual-return-error" class="form-error-msg" role="alert"></p>
             </div>
@@ -1140,7 +1147,6 @@
   </footer>
 
   <script src="../script.js" defer></script>
-  <script src="rrsp.js" defer></script>
 
   <!-- Northern Numbers shared modules — DO NOT REMOVE OR REORDER -->
   <script src="../data/nn-constants.js" defer></script>
@@ -1150,5 +1156,6 @@
   <script src="../shared/nn-analytics.js" defer></script>
   <script src="../shared/nn-ads.js" defer></script>
   <script src="../shared/nn-components.js" defer></script>
+  <script src="rrsp.js" defer></script>
 </body>
 </html>
