@@ -494,24 +494,21 @@ document.addEventListener('DOMContentLoaded', function () {
     document.getElementById('health-label').style.color     = hMeta.color;
 
     /* 50/30/20 */
-    function ruleBadge(actual, target, direction) {
-      const ok = direction === 'max' ? actual <= target : actual >= target;
-      const warn = direction === 'max' ? actual <= target + 10 : actual >= target - 10;
-      if (ok)   return '<span class="rule-badge badge-ok">✓ On track</span>';
-      if (warn) return '<span class="rule-badge badge-warn">⚠ Close</span>';
-      return '<span class="rule-badge badge-over">✗ Over</span>';
-    }
     document.getElementById('rule-needs').textContent  = `${needsPct.toFixed(1)}%`;
     document.getElementById('rule-wants').textContent  = `${wantsPct.toFixed(1)}%`;
     document.getElementById('rule-savings').textContent= `${savPct.toFixed(1)}%`;
-    document.getElementById('badge-needs').outerHTML   = ruleBadge(needsPct,  50, 'max').replace('id=""','id="badge-needs"');
-    document.getElementById('badge-wants').outerHTML   = ruleBadge(wantsPct,  30, 'max').replace('id=""','id="badge-wants"');
-    document.getElementById('badge-savings').outerHTML = ruleBadge(savPct,    20, 'min').replace('id=""','id="badge-savings"');
-    // Re-query since outerHTML replacement
-    ['badge-needs','badge-wants','badge-savings'].forEach(id => {
-      const span = document.querySelector(`[id="${id}"]`);
-      if (span) span.id = id;
-    });
+    // Set badge class and text directly — never use outerHTML (destroys element id)
+    function applyBadge(id, actual, target, direction) {
+      const el = document.getElementById(id);
+      if (!el) return;
+      const ok   = direction === 'max' ? actual <= target      : actual >= target;
+      const warn = direction === 'max' ? actual <= target + 10 : actual >= target - 10;
+      el.className = 'rule-badge ' + (ok ? 'badge-ok' : warn ? 'badge-warn' : 'badge-over');
+      el.textContent = ok ? '✓ On track' : warn ? '⚠ Close' : '✗ Over';
+    }
+    applyBadge('badge-needs',   needsPct, 50, 'max');
+    applyBadge('badge-wants',   wantsPct, 30, 'max');
+    applyBadge('badge-savings', savPct,   20, 'min');
 
     /* Breakdown bar */
     const safeNeedsP  = Math.min(100, Math.max(0, needsPct));
