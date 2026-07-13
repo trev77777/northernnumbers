@@ -407,38 +407,63 @@ function checkOverContrib() {
   const contribution = parseInputNumber(contributionEl.value);
   const frequency    = frequencyEl.value;
   const lumpSum      = parseInputNumber(lumpSumEl?.value || '0');
+  const annualLimit  = parseInputNumber(annualLimitEl?.value || '7000') || 7000;
 
-  // Don't warn if no room or no contribution entered
+  // Clear warning and exit if nothing entered
   if (!room || (!contribution && !lumpSum)) {
     overContribWarning.classList.remove('is-visible');
+    overContribWarning.innerHTML = '';
     return;
   }
 
-  // Year 1 total = lump sum + annual recurring contributions
-  const annualContrib  = frequency === 'onetime'
+  const annualContrib = frequency === 'onetime'
     ? contribution
     : toAnnualContribution(contribution, frequency);
-  const year1Total = lumpSum + annualContrib;
-  const isOver     = year1Total > room;
 
-  if (isOver) {
-    const fmt = (n) => new Intl.NumberFormat('en-CA', {
-      style: 'currency', currency: 'CAD',
-      minimumFractionDigits: 0, maximumFractionDigits: 0
-    }).format(n);
+  const fmt = (n) => new Intl.NumberFormat('en-CA', {
+    style: 'currency', currency: 'CAD',
+    minimumFractionDigits: 0, maximumFractionDigits: 0
+  }).format(n);
 
-    let msg = `⚠️ <strong>Heads up — possible over-contribution in year 1.</strong> `;
-    if (lumpSum > 0 && annualContrib > 0) {
-      msg += `Your lump sum (${fmt(lumpSum)}) plus recurring contributions (${fmt(annualContrib)}/year) total <strong>${fmt(year1Total)}</strong>, which exceeds your available room of <strong>${fmt(room)}</strong>.`;
-    } else if (lumpSum > 0) {
-      msg += `Your lump sum of <strong>${fmt(lumpSum)}</strong> exceeds your available room of <strong>${fmt(room)}</strong>.`;
-    } else {
-      msg += `At this frequency, your contributions total <strong>${fmt(annualContrib)}/year</strong>, which exceeds your available room of <strong>${fmt(room)}</strong>.`;
-    }
-    msg += ` The CRA charges 1% per month on the excess. Verify your room before contributing.`;
-    overContribWarning.innerHTML = msg;
+  // ── Intended pattern: lump sum today + new CRA room next year ──
+  // If the lump sum covers (or is within) available room AND the annual
+  // contribution is within the new CRA annual limit, this is correct usage.
+  // The annual contribution begins in Year 2, not Year 1 — no warning needed.
+  const lumpSumFitsInRoom     = lumpSum <= room + 0.01; // small float tolerance
+  const annualFitsInNewRoom   = annualContrib <= annualLimit + 0.01;
+  const isIntendedPattern     = lumpSum > 0 && lumpSumFitsInRoom && annualFitsInNewRoom;
+
+  if (isIntendedPattern) {
+    overContribWarning.classList.remove('is-visible');
+    overContribWarning.innerHTML = '';
+    return;
   }
 
+  // ── Warn for genuine over-contribution risks ────────────────────
+  let isOver = false;
+  let msg = '';
+
+  if (lumpSum > room) {
+    // Lump sum alone exceeds available room
+    isOver = true;
+    msg = `⚠️ <strong>Heads up — possible over-contribution.</strong> `
+        + `Your one-time contribution of <strong>${fmt(lumpSum)}</strong> exceeds your available room of <strong>${fmt(room)}</strong>. `
+        + `The CRA charges 1% per month on the excess. Reduce the amount or verify your room in CRA My Account.`;
+  } else if (lumpSum === 0 && annualContrib > room) {
+    // No lump sum, but annual contribution exceeds room
+    isOver = true;
+    msg = `⚠️ <strong>Heads up — possible over-contribution in Year 1.</strong> `
+        + `Your annual contributions total <strong>${fmt(annualContrib)}/year</strong>, which exceeds your available room of <strong>${fmt(room)}</strong>. `
+        + `The CRA charges 1% per month on the excess. Verify your room before contributing.`;
+  } else if (lumpSum > 0 && !annualFitsInNewRoom) {
+    // Lump sum is fine but annual contribution exceeds the new CRA annual limit
+    isOver = true;
+    msg = `⚠️ <strong>Heads up — annual contribution may exceed new CRA room.</strong> `
+        + `After your one-time contribution, the CRA adds <strong>${fmt(annualLimit)}</strong> in new room each January. `
+        + `Your planned annual contribution of <strong>${fmt(annualContrib)}</strong> exceeds this. Reduce your annual amount or confirm you have carry-forward room.`;
+  }
+
+  overContribWarning.innerHTML = msg;
   overContribWarning.classList.toggle('is-visible', isOver);
 }
 

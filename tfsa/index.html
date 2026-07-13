@@ -497,27 +497,27 @@
               <p id="contrib-room-error" class="form-error-msg" role="alert"></p>
             </div>
 
-            <!-- Contribution Amount -->
+            <!-- Annual Contribution -->
             <div class="form-group">
-              <label class="form-label" for="contribution">Contribution Amount</label>
+              <label class="form-label" for="contribution">Annual Contribution <span class="form-hint">(Starting Next Year)</span></label>
               <div class="input-wrapper">
                 <span class="input-prefix" aria-hidden="true">$</span>
                 <input type="text" id="contribution" class="form-input has-prefix"
                   placeholder="7,000" inputmode="numeric" autocomplete="off" value="7,000"
-                  aria-describedby="contribution-error" />
+                  aria-describedby="contribution-hint contribution-error" />
               </div>
-              <div id="over-contrib-warning" class="over-contrib-warning" role="alert" aria-live="polite">
-                ⚠️ <strong>Heads up — possible over-contribution in year 1.</strong>
-                Your planned contributions this year may exceed your current available room.
-                The CRA charges 1% per month on the excess. Double-check your room in CRA My Account before contributing.
-              </div>
+              <p class="field-help" id="contribution-hint">
+                The amount you plan to contribute each year going forward, starting in Year 2.
+                The CRA adds new contribution room every January — $7,000 in 2026.
+              </p>
+              <div id="over-contrib-warning" class="over-contrib-warning" role="alert" aria-live="polite"></div>
               <p id="contribution-error" class="form-error-msg" role="alert"></p>
             </div>
 
-            <!-- Year 1 Lump Sum (optional) -->
+            <!-- One-Time Contribution Today (optional) -->
             <div class="form-group">
               <label class="form-label" for="lump-sum">
-                Year 1 Lump Sum <span class="form-hint">(optional)</span>
+                One-Time Contribution Today <span class="form-hint">(optional)</span>
               </label>
               <div class="input-wrapper">
                 <span class="input-prefix" aria-hidden="true">$</span>
@@ -532,9 +532,9 @@
                 />
               </div>
               <p class="field-help">
-                Use this to contribute your full available room upfront in year 1 (e.g. $27,000),
-                then switch to a smaller recurring amount from year 2 onward.
-                Leave as 0 if not needed.
+                Contribute your full available room now (shown above). Your annual contributions
+                will begin in Year 2, when the CRA adds new room each January.
+                Leave as 0 to start with regular contributions only.
               </p>
             </div>
 
