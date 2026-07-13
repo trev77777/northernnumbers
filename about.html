@@ -19,47 +19,7 @@
 <body>
 
   <!-- HEADER -->
-  <header class="site-header" id="nn-header" role="banner">
-    <div class="container header-inner">
-      <a href="/" class="logo" aria-label="Northern Numbers — Home">
-        <span class="logo-icon" aria-hidden="true">
-          <svg width="28" height="28" viewBox="0 0 28 28" fill="none" aria-hidden="true">
-            <path d="M14 2L16.5 8.5H23L17.5 12.5L19.5 19L14 15.5L8.5 19L10.5 12.5L5 8.5H11.5L14 2Z" fill="#D52B1E"/>
-            <rect x="12.5" y="19" width="3" height="5" fill="#D52B1E"/>
-          </svg>
-        </span>
-        <span class="logo-text">Northern Numbers</span>
-      </a>
-
-      <nav class="main-nav" aria-label="Main navigation">
-        <ul role="list">
-          <li><a href="/" class="nav-link">Home</a></li>
-          <li><a href="/mortgage/" class="nav-link">Mortgage</a></li>
-          <li><a href="/finance/" class="nav-link">Finance</a></li>
-          <li><a href="/about.html" class="nav-link active" aria-current="page">About</a></li>
-          <li><a href="/contact.html" class="nav-link">Contact</a></li>
-        </ul>
-      </nav>
-
-      <button class="nav-toggle" aria-label="Open navigation menu" aria-expanded="false" aria-controls="mobile-menu">
-        <span class="hamburger-line"></span>
-        <span class="hamburger-line"></span>
-        <span class="hamburger-line"></span>
-      </button>
-    </div>
-
-    <div id="mobile-menu" class="mobile-menu" aria-hidden="true">
-      <nav aria-label="Mobile navigation">
-        <ul role="list">
-          <li><a href="/" class="mobile-nav-link">Home</a></li>
-          <li><a href="/mortgage/" class="mobile-nav-link">Mortgage</a></li>
-          <li><a href="/finance/" class="mobile-nav-link">Finance</a></li>
-          <li><a href="/about.html" class="mobile-nav-link">About</a></li>
-          <li><a href="/contact.html" class="mobile-nav-link">Contact</a></li>
-        </ul>
-      </nav>
-    </div>
-  </header>
+  <header class="site-header" id="nn-header" role="banner"></header>
 
   <!-- MAIN -->
   <main id="main-content" class="calc-page">
@@ -95,81 +55,48 @@
         </p>
 
         <p style="margin-bottom: var(--space-5);">
-          There's no sign-up, no email collection, and no paywall. Your numbers stay on your device.
-          We don't sell your data because we don't collect it in the first place.
+          There's no sign-up required and no paywall. Your calculations stay on your device and are never sent to our servers. We take privacy seriously and will always be transparent about what we collect.
         </p>
 
         <p>
           Have a calculator you'd like to see built? <a href="/contact.html" style="color: var(--color-primary); font-weight: 600;">Let us know.</a>
         </p>
+
+        <div style="margin-top: var(--space-8); padding-top: var(--space-6); border-top: 1px solid var(--color-border);">
+          <h2 style="font-size: var(--text-lg); font-weight: 700; margin-bottom: var(--space-4);">Trusted Canadian Sources</h2>
+          <p style="color: var(--color-text-muted); margin-bottom: var(--space-4); font-size: var(--text-sm); line-height: 1.7;">
+            Every calculator on Northern Numbers is built and verified against official Canadian sources. We update our data annually when CRA and government rates are published.
+          </p>
+          <ul style="list-style: none; display: flex; flex-direction: column; gap: var(--space-3);">
+            <li style="font-size: var(--text-sm); color: var(--color-text-muted);">
+              🇨🇦 <strong>Canada Revenue Agency (CRA)</strong> — Tax brackets, TFSA limits, RRSP limits, FHSA rules, RESP/CESG, CPP and EI rates
+            </li>
+            <li style="font-size: var(--text-sm); color: var(--color-text-muted);">
+              🏠 <strong>Canada Mortgage and Housing Corporation (CMHC)</strong> — Mortgage insurance premiums, stress test rates, amortization rules
+            </li>
+            <li style="font-size: var(--text-sm); color: var(--color-text-muted);">
+              🏦 <strong>Bank of Canada</strong> — Inflation targets, historical rate data, monetary policy
+            </li>
+            <li style="font-size: var(--text-sm); color: var(--color-text-muted);">
+              📋 <strong>Employment and Social Development Canada (ESDC)</strong> — OAS, GIS, CPP benefit amounts, EI premium rates
+            </li>
+            <li style="font-size: var(--text-sm); color: var(--color-text-muted);">
+              🏛 <strong>Office of the Superintendent of Financial Institutions (OSFI)</strong> — Mortgage stress test qualifying rates
+            </li>
+          </ul>
+        </div>
+
+        <p style="margin-top: var(--space-6); font-size: var(--text-xs); color: var(--color-text-muted);">
+          Last updated: July 2026
+        </p>
+
       </div>
 
     </div>
   </main>
 
   <!-- FOOTER -->
-  <footer class="site-footer" id="nn-footer" role="contentinfo">
-    <div class="container footer-inner">
-      <div class="footer-brand">
-        <a href="/" class="logo logo--light" aria-label="Northern Numbers — Home">
-          <span class="logo-icon" aria-hidden="true">
-            <svg width="24" height="24" viewBox="0 0 28 28" fill="none">
-              <path d="M14 2L16.5 8.5H23L17.5 12.5L19.5 19L14 15.5L8.5 19L10.5 12.5L5 8.5H11.5L14 2Z" fill="#D52B1E"/>
-              <rect x="12.5" y="19" width="3" height="5" fill="#D52B1E"/>
-            </svg>
-          </span>
-          <span class="logo-text">Northern Numbers</span>
-        </a>
-        <p class="footer-tagline">Smart Canadian Calculators</p>
-        <p class="footer-desc">Free, accurate financial tools built for Canadians. No sign-up required.</p>
-      </div>
-
-      <nav class="footer-nav" aria-label="Footer navigation">
-        <div class="footer-nav-col">
-          <h4 class="footer-nav-heading">Calculators</h4>
-          <ul role="list">
-            <li><a href="/mortgage/">Mortgage</a></li>
-            <li><a href="/tfsa/">TFSA</a></li>
-            <li><a href="/rrsp/">RRSP</a></li>
-            <li><a href="/fhsa/">FHSA</a></li>
-            <li><a href="/compound-interest/">Compound Interest</a></li>
-          </ul>
-        </div>
-        <div class="footer-nav-col">
-          <h4 class="footer-nav-heading">More Tools</h4>
-          <ul role="list">
-            <li><span class="footer-disabled">Loan Calculator</span></li>
-            <li><span class="footer-disabled">Car Loan</span></li>
-            <li><span class="footer-disabled">Budget</span></li>
-            <li><span class="footer-disabled">Inflation</span></li>
-            <li><span class="footer-disabled">Retirement</span></li>
-          </ul>
-        </div>
-        <div class="footer-nav-col">
-          <h4 class="footer-nav-heading">Site</h4>
-          <ul role="list">
-            <li><a href="/about.html">About</a></li>
-            <li><a href="/contact.html">Contact</a></li>
-          </ul>
-        </div>
-        <div class="footer-nav-col">
-          <h4 class="footer-nav-heading">Legal</h4>
-          <ul role="list">
-            <li><a href="/privacy-policy.html">Privacy Policy</a></li>
-            <li><a href="/terms-of-use.html">Terms of Use</a></li>
-            <li><a href="/disclaimer.html">Disclaimer</a></li>
-          </ul>
-        </div>
-      </nav>
-    </div>
-
-    <div class="footer-bottom">
-      <div class="container footer-bottom-inner">
-        <p class="footer-legal">© <span id="footer-year">2026</span> Northern Numbers. All rights reserved.</p>
-        <p class="footer-built">Built for Canadians. <span style="color:#D52B1E;font-weight:700;">&#x2665;</span></p>
-      </div>
-    </div>
-  </footer>
+  <footer class="site-footer" id="nn-footer" role="contentinfo"></footer>
 
   <script src="script.js" defer></script>
 

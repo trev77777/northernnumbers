@@ -19,47 +19,7 @@
 <body>
 
   <!-- HEADER -->
-  <header class="site-header" id="nn-header" role="banner">
-    <div class="container header-inner">
-      <a href="/" class="logo" aria-label="Northern Numbers — Home">
-        <span class="logo-icon" aria-hidden="true">
-          <svg width="28" height="28" viewBox="0 0 28 28" fill="none" aria-hidden="true">
-            <path d="M14 2L16.5 8.5H23L17.5 12.5L19.5 19L14 15.5L8.5 19L10.5 12.5L5 8.5H11.5L14 2Z" fill="#D52B1E"/>
-            <rect x="12.5" y="19" width="3" height="5" fill="#D52B1E"/>
-          </svg>
-        </span>
-        <span class="logo-text">Northern Numbers</span>
-      </a>
-
-      <nav class="main-nav" aria-label="Main navigation">
-        <ul role="list">
-          <li><a href="/" class="nav-link">Home</a></li>
-          <li><a href="/mortgage/" class="nav-link">Mortgage</a></li>
-          <li><a href="/finance/" class="nav-link">Finance</a></li>
-          <li><a href="/about.html" class="nav-link">About</a></li>
-          <li><a href="/contact.html" class="nav-link active" aria-current="page">Contact</a></li>
-        </ul>
-      </nav>
-
-      <button class="nav-toggle" aria-label="Open navigation menu" aria-expanded="false" aria-controls="mobile-menu">
-        <span class="hamburger-line"></span>
-        <span class="hamburger-line"></span>
-        <span class="hamburger-line"></span>
-      </button>
-    </div>
-
-    <div id="mobile-menu" class="mobile-menu" aria-hidden="true">
-      <nav aria-label="Mobile navigation">
-        <ul role="list">
-          <li><a href="/" class="mobile-nav-link">Home</a></li>
-          <li><a href="/mortgage/" class="mobile-nav-link">Mortgage</a></li>
-          <li><a href="/finance/" class="mobile-nav-link">Finance</a></li>
-          <li><a href="/about.html" class="mobile-nav-link">About</a></li>
-          <li><a href="/contact.html" class="mobile-nav-link">Contact</a></li>
-        </ul>
-      </nav>
-    </div>
-  </header>
+  <header class="site-header" id="nn-header" role="banner"></header>
 
   <!-- MAIN -->
   <main id="main-content" class="calc-page">
@@ -74,6 +34,7 @@
       <div class="calc-page-header">
         <h1 class="calc-page-title">Contact Us</h1>
         <p class="calc-page-desc">Suggest a calculator, report an issue, or ask a question.</p>
+        <p style="font-size:var(--text-sm);color:var(--color-text-muted);margin-top:var(--space-2)">We typically respond within 24–48 hours.</p>
       </div>
 
       <div class="calc-panel">
@@ -111,77 +72,18 @@
           <button type="submit" class="btn btn-primary btn-calculate">Send Message</button>
         </form>
 
-        <p id="contact-success" class="hidden" style="margin-top: var(--space-5); padding: var(--space-4); background: var(--color-success-light); color: var(--color-success); border-radius: var(--radius-md); font-weight: 600; text-align: center;">
-          Thanks! We'll get back to you soon.
-        </p>
+        <div id="contact-success" class="hidden" style="margin-top: var(--space-5); padding: var(--space-5); background: #F0FDF4; border: 1px solid #86EFAC; border-radius: var(--radius-md); text-align: center;">
+          <p style="font-size: 1.5rem; margin-bottom: var(--space-2)">✅</p>
+          <p style="font-weight: 700; color: #166534; margin-bottom: var(--space-1)">Message sent successfully!</p>
+          <p style="font-size: var(--text-sm); color: #166534;">Thank you for reaching out. We typically respond within 24–48 hours.</p>
+        </div>
       </div>
 
     </div>
   </main>
 
   <!-- FOOTER -->
-  <footer class="site-footer" id="nn-footer" role="contentinfo">
-    <div class="container footer-inner">
-      <div class="footer-brand">
-        <a href="/" class="logo logo--light" aria-label="Northern Numbers — Home">
-          <span class="logo-icon" aria-hidden="true">
-            <svg width="24" height="24" viewBox="0 0 28 28" fill="none">
-              <path d="M14 2L16.5 8.5H23L17.5 12.5L19.5 19L14 15.5L8.5 19L10.5 12.5L5 8.5H11.5L14 2Z" fill="#D52B1E"/>
-              <rect x="12.5" y="19" width="3" height="5" fill="#D52B1E"/>
-            </svg>
-          </span>
-          <span class="logo-text">Northern Numbers</span>
-        </a>
-        <p class="footer-tagline">Smart Canadian Calculators</p>
-        <p class="footer-desc">Free, accurate financial tools built for Canadians. No sign-up required.</p>
-      </div>
-
-      <nav class="footer-nav" aria-label="Footer navigation">
-        <div class="footer-nav-col">
-          <h4 class="footer-nav-heading">Calculators</h4>
-          <ul role="list">
-            <li><a href="/mortgage/">Mortgage</a></li>
-            <li><a href="/tfsa/">TFSA</a></li>
-            <li><a href="/rrsp/">RRSP</a></li>
-            <li><a href="/fhsa/">FHSA</a></li>
-            <li><a href="/compound-interest/">Compound Interest</a></li>
-          </ul>
-        </div>
-        <div class="footer-nav-col">
-          <h4 class="footer-nav-heading">More Tools</h4>
-          <ul role="list">
-            <li><span class="footer-disabled">Loan Calculator</span></li>
-            <li><span class="footer-disabled">Car Loan</span></li>
-            <li><span class="footer-disabled">Budget</span></li>
-            <li><span class="footer-disabled">Inflation</span></li>
-            <li><span class="footer-disabled">Retirement</span></li>
-          </ul>
-        </div>
-        <div class="footer-nav-col">
-          <h4 class="footer-nav-heading">Site</h4>
-          <ul role="list">
-            <li><a href="/about.html">About</a></li>
-            <li><a href="/contact.html">Contact</a></li>
-          </ul>
-        </div>
-        <div class="footer-nav-col">
-          <h4 class="footer-nav-heading">Legal</h4>
-          <ul role="list">
-            <li><a href="/privacy-policy.html">Privacy Policy</a></li>
-            <li><a href="/terms-of-use.html">Terms of Use</a></li>
-            <li><a href="/disclaimer.html">Disclaimer</a></li>
-          </ul>
-        </div>
-      </nav>
-    </div>
-
-    <div class="footer-bottom">
-      <div class="container footer-bottom-inner">
-        <p class="footer-legal">© <span id="footer-year">2026</span> Northern Numbers. All rights reserved.</p>
-        <p class="footer-built">Built for Canadians. <span style="color:#D52B1E;font-weight:700;">&#x2665;</span></p>
-      </div>
-    </div>
-  </footer>
+  <footer class="site-footer" id="nn-footer" role="contentinfo"></footer>
 
   <script src="script.js" defer></script>
   <script>
