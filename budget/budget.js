@@ -22,25 +22,29 @@
 
 document.addEventListener('DOMContentLoaded', function () {
 
-  /* ── SEO ─────────────────────────────────── */
-  NNSeo.init({
-    title:       'Monthly Budget Calculator Canada',
-    description: 'Free Canadian monthly budget calculator. Track income vs expenses, calculate your savings rate, and get a Budget Health Score with 50/30/20 analysis and personalized insights.',
-    keywords:    'monthly budget calculator canada, budget calculator canada, 50 30 20 budget calculator canada, budget planner canada, personal budget calculator',
-    slug:        'budget'
-  });
-  NNSeo.injectSchema({
-    title:       'Monthly Budget Calculator Canada',
-    slug:        'budget',
-    description: 'Free Canadian monthly budget calculator with Budget Health Score, 50/30/20 analysis, and personalized financial insights.'
-  });
-  NNSeo.injectFAQSchema([
-    { question: 'What is a good savings rate in Canada?', answer: 'A savings rate of 20% or more is excellent. 10–19% is good. Under 10% means slow financial progress. Aim for 15–20% of take-home pay.' },
-    { question: 'How does the 50/30/20 rule work in Canada?', answer: '50% of after-tax income goes to needs (housing, groceries, transportation), 30% to wants (dining, entertainment, travel), and 20% to savings and debt repayment. In high-cost cities like Toronto or Vancouver, a 60/20/20 split is more realistic.' },
-    { question: 'How much should I spend on housing in Canada?', answer: 'The CMHC recommends no more than 30–35% of gross income on housing. If housing exceeds this, focus on reducing discretionary spending and building savings toward homeownership through an FHSA.' },
-    { question: 'Should I pay off debt or invest?', answer: 'If your debt rate is above 6–7%, pay it off first. For debt under 5%, invest simultaneously. Always maximize employer RRSP matching first — it\'s an instant 50–100% return.' },
-    { question: 'How large should my emergency fund be?', answer: 'Aim for 3–6 months of essential expenses. Single-income households and those with irregular income should target 6 months. A TFSA HISA is the ideal account for an emergency fund in Canada.' }
-  ]);
+  /* ── SEO — guarded so any shared-script failure can't break the calculator ── */
+  if (window.NNSeo) {
+    try {
+      NNSeo.init({
+        title:       'Monthly Budget Calculator Canada',
+        description: 'Free Canadian monthly budget calculator. Track income vs expenses, calculate your savings rate, and get a Budget Health Score with 50/30/20 analysis and personalized insights.',
+        keywords:    'monthly budget calculator canada, budget calculator canada, 50 30 20 budget calculator canada, budget planner canada, personal budget calculator',
+        slug:        'budget'
+      });
+      NNSeo.injectSchema({
+        title:       'Monthly Budget Calculator Canada',
+        slug:        'budget',
+        description: 'Free Canadian monthly budget calculator with Budget Health Score, 50/30/20 analysis, and personalized financial insights.'
+      });
+      NNSeo.injectFAQSchema([
+        { question: 'What is a good savings rate in Canada?', answer: 'A savings rate of 20% or more is excellent. 10–19% is good. Under 10% means slow financial progress. Aim for 15–20% of take-home pay.' },
+        { question: 'How does the 50/30/20 rule work in Canada?', answer: '50% of after-tax income goes to needs (housing, groceries, transportation), 30% to wants (dining, entertainment, travel), and 20% to savings and debt repayment. In high-cost cities like Toronto or Vancouver, a 60/20/20 split is more realistic.' },
+        { question: 'How much should I spend on housing in Canada?', answer: 'The CMHC recommends no more than 30–35% of gross income on housing. If housing exceeds this, focus on reducing discretionary spending and building savings toward homeownership through an FHSA.' },
+        { question: 'Should I pay off debt or invest?', answer: 'If your debt rate is above 6–7%, pay it off first. For debt under 5%, invest simultaneously. Always maximize employer RRSP matching first — it\'s an instant 50–100% return.' },
+        { question: 'How large should my emergency fund be?', answer: 'Aim for 3–6 months of essential expenses. Single-income households and those with irregular income should target 6 months. A TFSA HISA is the ideal account for an emergency fund in Canada.' }
+      ]);
+    } catch(e) { /* SEO enhancement failed — calculator still works */ }
+  }
 
   /* ── FIELD DEFINITIONS ───────────────────── */
   // Maps field id → { section: string, type: 'needs'|'wants'|'savings' }
@@ -107,8 +111,12 @@ document.addEventListener('DOMContentLoaded', function () {
   const placeholder= document.getElementById('results-placeholder');
   const resultsContent = document.getElementById('results-content');
 
+  // Attach submit listener FIRST — before any other code that could throw.
+  // This guarantees the Calculate button always works even if SEO/analytics fail.
+  if (form) form.addEventListener('submit', function(e) { e.preventDefault(); calculate(); });
+
   /* ── RELATED CALCULATORS ─────────────────── */
-  NNComponents.renderRelated('nn-related', ['tfsa', 'rrsp', 'fhsa', 'compound-interest']);
+  if (window.NNComponents) try { NNComponents.renderRelated('nn-related', ['tfsa', 'rrsp', 'fhsa', 'compound-interest']); } catch(e) {}
 
   /* ── ATTACH FORMATTERS ───────────────────── */
   NNUtils.attachFormatter(incomeEl);
@@ -129,7 +137,7 @@ document.addEventListener('DOMContentLoaded', function () {
     if (el) { NNUtils.attachFormatter(el); el.addEventListener('input', liveUpdate); }
   });
 
-  incomeEl.addEventListener('input', liveUpdate);
+  if (incomeEl) incomeEl.addEventListener('input', liveUpdate);
 
   /* ── SECTION TOTALS ──────────────────────── */
   function updateSectionTotal(section) {
@@ -552,7 +560,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
     window._budgetResults = { v, score, inc, needsPct, wantsPct, savPct };
 
-    if (window.NNAnalytics) NNAnalytics.trackCalculator('Budget Calculator', { score, income: inc });
+    if (window.NNAnalytics) try { NNAnalytics.trackCalculator('Budget Calculator', { score, income: inc }); } catch(e) {}
 
     // Always scroll to results after a successful calculation (Bug 2 fix).
     // NNUtils.scrollToResults only scrolls on first calculate (wasHidden guard).
@@ -572,7 +580,7 @@ document.addEventListener('DOMContentLoaded', function () {
   }
 
   /* ── FORM SUBMIT ─────────────────────────── */
-  form.addEventListener('submit', e => { e.preventDefault(); calculate(); });
+  // Note: submit listener is attached above at the top of DOMContentLoaded
 
   /* ── COPY RESULTS ────────────────────────── */
   document.getElementById('copy-results-btn')?.addEventListener('click', function () {
