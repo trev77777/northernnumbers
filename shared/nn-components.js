@@ -292,11 +292,20 @@ document.addEventListener('DOMContentLoaded', function() {
   // Render calculator grids — use setTimeout to ensure NNRegistry is fully ready
   // nn-calculators.js sets window.NNRegistry at parse time, but defer order
   // guarantees it runs before nn-components.js, so NNRegistry exists here.
-  if (document.getElementById('nn-calc-grid'))    NNComponents.renderCalcGrid('nn-calc-grid');
-  if (document.getElementById('nn-finance-grid')) NNComponents.renderFinanceGrid('nn-finance-grid');
+  // Render grids — use requestAnimationFrame to ensure all defer scripts
+  // have finished executing before we try to read NNRegistry
+  function renderGrids() {
+    if (document.getElementById('nn-calc-grid'))    NNComponents.renderCalcGrid('nn-calc-grid');
+    if (document.getElementById('nn-finance-grid')) NNComponents.renderFinanceGrid('nn-finance-grid');
+    if (typeof window._nnCardAnimation === 'function') window._nnCardAnimation();
+  }
 
-  // Re-run card animation after dynamic grids are populated
-  if (typeof window._nnCardAnimation === 'function') window._nnCardAnimation();
+  if (window.NNRegistry) {
+    renderGrids();
+  } else {
+    // Fallback: wait one tick for nn-calculators.js to finish
+    setTimeout(renderGrids, 0);
+  }
 
   // Update all footer years
   document.querySelectorAll('#footer-year').forEach(el => el.textContent = new Date().getFullYear());
