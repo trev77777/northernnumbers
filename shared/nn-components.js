@@ -242,6 +242,46 @@ NNComponents.renderRelated = function(containerId, relatedIds) {
   el.innerHTML = `<div style="display:flex;flex-wrap:wrap;gap:var(--space-3)">${links}</div>`;
 };
 
+/* ─── CALCULATOR GRID RENDERING ─────────────────────────────────────── */
+/* Renders all active calculators dynamically from the registry.
+   Used by index.html (home) and finance/index.html.
+   Adding a new calculator only requires updating nn-calculators.js. */
+
+NNComponents.renderCalcGrid = function(containerId) {
+  const el = document.getElementById(containerId);
+  if (!el || !window.NNRegistry) return;
+  const calcs = NNRegistry.calculators.filter(c => c.status === 'active' && c.showOnHomepage !== false);
+  calcs.sort((a,b) => (a.priority||99) - (b.priority||99));
+  el.innerHTML = calcs.map(c => `
+    <article class="calc-card" role="listitem" data-category="${c.category||'finance'}" data-tags="${(c.keywords||[]).join(' ')} ${c.name.toLowerCase()}">
+      <div class="calc-card-icon" aria-hidden="true" style="font-size:1.75rem;line-height:1">${c.icon||'🧮'}</div>
+      <div class="calc-card-body">
+        <h3 class="calc-card-title">${c.name}</h3>
+        <p class="calc-card-desc">${c.description||''}</p>
+      </div>
+      <a href="${c.url}" class="btn btn-calc" aria-label="Open ${c.name}">Calculate →</a>
+    </article>`).join('');
+};
+
+NNComponents.renderFinanceGrid = function(containerId) {
+  const el = document.getElementById(containerId);
+  if (!el || !window.NNRegistry) return;
+  const calcs = NNRegistry.calculators.filter(c => c.status === 'active');
+  calcs.sort((a,b) => (a.priority||99) - (b.priority||99));
+  el.innerHTML = calcs.map(c => `
+    <a href="${c.url}" class="calc-card">
+      <div class="calc-card-icon">${c.icon||'🧮'}</div>
+      <div>
+        <div class="calc-card-title">${c.name}</div>
+        <div class="calc-card-desc">${c.description||''}</div>
+      </div>
+      <div class="calc-card-footer">
+        <span class="calc-card-tag">Live</span>
+        <span class="calc-card-arrow">→</span>
+      </div>
+    </a>`).join('');
+};
+
 /* ─── AUTO-INIT ──────────────────────────── */
 document.addEventListener('DOMContentLoaded', function() {
   // Render header/footer/disclaimer if placeholders exist
@@ -249,6 +289,8 @@ document.addEventListener('DOMContentLoaded', function() {
   if (document.getElementById('nn-footer'))     NNComponents.renderFooter('nn-footer');
   if (document.getElementById('nn-disclaimer')) NNComponents.renderDisclaimer('nn-disclaimer');
   if (document.getElementById('nn-related'))    NNComponents.renderRelated('nn-related');
+  if (document.getElementById('nn-calc-grid'))   NNComponents.renderCalcGrid('nn-calc-grid');
+  if (document.getElementById('nn-finance-grid'))NNComponents.renderFinanceGrid('nn-finance-grid');
 
   // Update all footer years
   document.querySelectorAll('#footer-year').forEach(el => el.textContent = new Date().getFullYear());
