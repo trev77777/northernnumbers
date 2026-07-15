@@ -61,69 +61,17 @@
 
   if (!searchInput || !resultsBox) return;
 
-  // All calculators — extend this list as new calcs are added
-  const calculators = [
-    {
-      name: 'Mortgage Calculator',
-      desc: 'Monthly payments, amortization schedule, total interest',
-      href: '/mortgage/',
-      tags: 'mortgage home house payment amortization interest rate down payment'
-    },
-    {
-      name: 'TFSA Calculator',
-      desc: 'Contribution room and tax-free growth projections',
-      href: '/tfsa/',
-      tags: 'tfsa savings tax-free investment contribution room'
-    },
-    {
-      name: 'RRSP Calculator',
-      desc: 'Contribution limit, tax refund, retirement growth',
-      href: '/rrsp/',
-      tags: 'rrsp retirement savings deduction tax refund'
-    },
-    {
-      name: 'FHSA Calculator',
-      desc: 'First Home Savings Account planning',
-      href: '/fhsa/',
-      tags: 'fhsa first home savings account buyer'
-    },
-    {
-      name: 'Compound Interest Calculator',
-      desc: 'See how money grows with compounding',
-      href: '/compound-interest/',
-      tags: 'compound interest growth investment savings'
-    },
-    {
-      name: 'Loan Calculator',
-      desc: 'Monthly payments and total cost for any loan',
-      href: '/loan/',
-      tags: 'loan personal payment interest rate borrow'
-    },
-    {
-      name: 'Car Loan Calculator',
-      desc: 'Monthly car payments including HST and trade-in',
-      href: '/car-loan/',
-      tags: 'car loan auto vehicle payment financing hst'
-    },
-    {
-      name: 'Budget Calculator',
-      desc: 'Monthly income vs expenses breakdown',
-      href: '/budget/',
-      tags: 'budget income expenses savings monthly spending'
-    },
-    {
-      name: 'Inflation Calculator',
-      desc: 'Compare purchasing power using Canadian CPI data',
-      href: '/inflation/',
-      tags: 'inflation purchasing power cpi cost of living canada'
-    },
-    {
-      name: 'Retirement Calculator',
-      desc: 'CPP, OAS, and RRSP retirement projections',
-      href: '/retirement/',
-      tags: 'retirement savings cpp oas nest egg projection'
-    }
-  ];
+  // Build calculator list from registry (auto-includes all active calculators)
+  // Falls back to empty array if registry not loaded
+  const calculators = (window.NNRegistry && window.NNRegistry.calculators
+    ? window.NNRegistry.calculators.filter(c => c.status === 'active')
+    : []
+  ).map(c => ({
+    name: c.name,
+    desc: c.description || '',
+    href: c.url,
+    tags: (c.keywords || []).join(' ') + ' ' + c.name.toLowerCase()
+  }));
 
   /**
    * Filters calculators by query string.
@@ -345,7 +293,7 @@
 /* =============================================
    6. CALC CARD — Animate on scroll into view
    ============================================= */
-(function initCardAnimation() {
+window._nnCardAnimation = function initCardAnimation() {
   const cards = document.querySelectorAll('.calc-card');
   if (!cards.length) return;
 
@@ -381,4 +329,5 @@
     card.style.transition = `opacity 0.4s ease ${i * 30}ms, transform 0.4s ease ${i * 30}ms`;
     observer.observe(card);
   });
-})();
+};
+window._nnCardAnimation(); // run on initial load

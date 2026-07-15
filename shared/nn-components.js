@@ -250,7 +250,7 @@ NNComponents.renderRelated = function(containerId, relatedIds) {
 NNComponents.renderCalcGrid = function(containerId) {
   const el = document.getElementById(containerId);
   if (!el || !window.NNRegistry) return;
-  const calcs = NNRegistry.calculators.filter(c => c.status === 'active' && c.showOnHomepage !== false);
+  const calcs = window.NNRegistry.calculators.filter(c => c.status === 'active' && c.showOnHomepage !== false);
   calcs.sort((a,b) => (a.priority||99) - (b.priority||99));
   el.innerHTML = calcs.map(c => `
     <article class="calc-card" role="listitem" data-category="${c.category||'finance'}" data-tags="${(c.keywords||[]).join(' ')} ${c.name.toLowerCase()}">
@@ -266,7 +266,7 @@ NNComponents.renderCalcGrid = function(containerId) {
 NNComponents.renderFinanceGrid = function(containerId) {
   const el = document.getElementById(containerId);
   if (!el || !window.NNRegistry) return;
-  const calcs = NNRegistry.calculators.filter(c => c.status === 'active');
+  const calcs = window.NNRegistry.calculators.filter(c => c.status === 'active');
   calcs.sort((a,b) => (a.priority||99) - (b.priority||99));
   el.innerHTML = calcs.map(c => `
     <a href="${c.url}" class="calc-card">
@@ -289,8 +289,14 @@ document.addEventListener('DOMContentLoaded', function() {
   if (document.getElementById('nn-footer'))     NNComponents.renderFooter('nn-footer');
   if (document.getElementById('nn-disclaimer')) NNComponents.renderDisclaimer('nn-disclaimer');
   if (document.getElementById('nn-related'))    NNComponents.renderRelated('nn-related');
-  if (document.getElementById('nn-calc-grid'))   NNComponents.renderCalcGrid('nn-calc-grid');
-  if (document.getElementById('nn-finance-grid'))NNComponents.renderFinanceGrid('nn-finance-grid');
+  // Render calculator grids — use setTimeout to ensure NNRegistry is fully ready
+  // nn-calculators.js sets window.NNRegistry at parse time, but defer order
+  // guarantees it runs before nn-components.js, so NNRegistry exists here.
+  if (document.getElementById('nn-calc-grid'))    NNComponents.renderCalcGrid('nn-calc-grid');
+  if (document.getElementById('nn-finance-grid')) NNComponents.renderFinanceGrid('nn-finance-grid');
+
+  // Re-run card animation after dynamic grids are populated
+  if (typeof window._nnCardAnimation === 'function') window._nnCardAnimation();
 
   // Update all footer years
   document.querySelectorAll('#footer-year').forEach(el => el.textContent = new Date().getFullYear());
