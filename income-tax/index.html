@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="en-CA">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Canadian Income Tax Calculator 2026 — Northern Numbers</title>
+  <meta name="description" content="Free Canadian income tax calculator for 2026. Calculate federal and provincial income tax, CPP, EI, marginal rate, effective rate, and after-tax income for all 13 provinces and territories." />
+  <meta name="keywords" content="income tax calculator canada 2026, canadian tax calculator, provincial tax calculator, marginal tax rate canada, effective tax rate canada" />
+  <link rel="canonical" href="https://www.northernnumbers.ca/income-tax/" />
+  <meta property="og:title" content="Canadian Income Tax Calculator 2026 — Northern Numbers" />
+  <meta property="og:description" content="Calculate your federal and provincial income tax, CPP, EI, marginal rate, and after-tax income for all 13 Canadian provinces and territories." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://www.northernnumbers.ca/income-tax/" />
+  <meta property="og:locale" content="en_CA" />
+  <meta property="og:site_name" content="Northern Numbers" />
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Canadian Income Tax Calculator 2026 — Northern Numbers" />
+  <meta name="twitter:description" content="Calculate your Canadian income tax, CPP, EI, marginal rate, and after-tax income for all provinces." />
+  <meta name="robots" content="index, follow" />
+  <meta name="author" content="Northern Numbers" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Poppins:wght@600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="../styles.css" />
+</head>
+<body>
+
+  <header class="site-header" id="nn-header" role="banner"></header>
+
+  <main id="main-content" class="calc-page">
+    <div class="container">
+
+      <nav class="calc-breadcrumb" aria-label="Breadcrumb">
+        <a href="/">Home</a>
+        <span class="calc-breadcrumb-sep" aria-hidden="true">›</span>
+        <a href="/finance/">Calculators</a>
+        <span class="calc-breadcrumb-sep" aria-hidden="true">›</span>
+        <span aria-current="page">Income Tax Calculator</span>
+      </nav>
+
+      <div class="calc-page-header">
+        <h1 class="calc-page-title">Canadian Income Tax Calculator 2026</h1>
+        <p class="calc-page-desc">Calculate your federal and provincial income tax, CPP, EI, marginal rate, effective rate, and after-tax income for all 13 Canadian provinces and territories.</p>
+      </div>
+
+      <div class="calc-layout">
+
+        <!-- LEFT: Inputs -->
+        <section class="calc-panel" aria-labelledby="inputs-heading">
+          <h2 id="inputs-heading" class="calc-panel-title">Your Tax Details</h2>
+
+          <div class="quick-start" role="note">
+            <p class="quick-start-title">How to use this calculator</p>
+            <ol>
+              <li>Enter your <strong>total employment income</strong> for 2026.</li>
+              <li>Select your <strong>province or territory</strong>.</li>
+              <li>Add any <strong>RRSP deductions</strong> to reduce taxable income.</li>
+              <li>Click <strong>Calculate Tax</strong> to see your full breakdown.</li>
+            </ol>
+          </div>
+
+          <form id="tax-form" novalidate aria-label="Income tax calculator inputs">
+
+            <!-- Income -->
+            <div class="form-group">
+              <label class="form-label" for="gross-income">Employment Income</label>
+              <div class="input-wrapper">
+                <span class="input-prefix" aria-hidden="true">$</span>
+                <input type="text" id="gross-income" class="form-input has-prefix"
+                  placeholder="85,000" inputmode="numeric" autocomplete="off" value="85,000"
+                  aria-describedby="gross-income-hint gross-income-error" />
+              </div>
+              <p class="field-help" id="gross-income-hint">Your total gross employment income before any deductions.</p>
+              <p id="gross-income-error" class="form-error-msg" role="alert"></p>
+            </div>
+
+            <!-- Province -->
+            <div class="form-group">
+              <label class="form-label" for="province">Province / Territory</label>
+              <div class="select-wrapper">
+                <select id="province" class="form-select" aria-describedby="province-hint">
+                  <option value="ON" selected>Ontario</option>
+                  <option value="AB">Alberta</option>
+                  <option value="BC">British Columbia</option>
+                  <option value="MB">Manitoba</option>
+                  <option value="SK">Saskatchewan</option>
+                  <option value="QC">Quebec</option>
+                  <option value="NB">New Brunswick</option>
+                  <option value="NS">Nova Scotia</option>
+                  <option value="PE">Prince Edward Island</option>
+                  <option value="NL">Newfoundland &amp; Labrador</option>
+                  <option value="YT">Yukon</option>
+                  <option value="NT">Northwest Territories</option>
+                  <option value="NU">Nunavut</option>
+                </select>
+              </div>
+              <p class="field-help" id="province-hint">Select the province or territory where you reside on December 31, 2026.</p>
+            </div>
+
+            <!-- RRSP Deduction -->
+            <div class="form-group">
+              <label class="form-label" for="rrsp-deduction">RRSP Deduction <span class="form-hint">(optional)</span></label>
+              <div class="input-wrapper">
+                <span class="input-prefix" aria-hidden="true">$</span>
+                <input type="text" id="rrsp-deduction" class="form-input has-prefix"
+                  placeholder="0" inputmode="numeric" autocomplete="off" value="0"
+                  aria-describedby="rrsp-hint" />
+              </div>
+              <p class="field-help" id="rrsp-hint">RRSP contributions reduce your taxable income dollar-for-dollar.</p>
+            </div>
+
+            <!-- Other deductions -->
+            <div class="form-group">
+              <label class="form-label" for="other-deductions">Other Deductions <span class="form-hint">(optional)</span></label>
+              <div class="input-wrapper">
+                <span class="input-prefix" aria-hidden="true">$</span>
+                <input type="text" id="other-deductions" class="form-input has-prefix"
+                  placeholder="0" inputmode="numeric" autocomplete="off" value="0"
+                  aria-describedby="other-deductions-hint" />
+              </div>
+              <p class="field-help" id="other-deductions-hint">Union dues, professional fees, childcare, moving expenses, etc.</p>
+            </div>
+
+            <!-- Employment type -->
+            <div class="form-group">
+              <label class="form-label" for="employment-type">Employment Type</label>
+              <div class="select-wrapper">
+                <select id="employment-type" class="form-select">
+                  <option value="employed" selected>Employed (CPP + EI apply)</option>
+                  <option value="self-employed">Self-Employed (CPP × 2, no EI)</option>
+                  <option value="retired">Retired / No CPP or EI</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="btn-row">
+              <button type="submit" class="btn btn-primary btn-calculate" id="calc-btn" style="flex:1">
+                Calculate Tax
+              </button>
+              <button type="button" id="reset-btn" class="btn btn-secondary">Reset</button>
+            </div>
+
+          </form>
+        </section>
+
+        <!-- RIGHT: Results -->
+        <section class="calc-panel" aria-labelledby="results-heading" aria-live="polite">
+          <h2 id="results-heading" class="calc-panel-title">Your Results</h2>
+
+          <div id="results-placeholder" class="result-placeholder">
+            <div class="result-placeholder-icon" aria-hidden="true">
+              <svg width="56" height="56" viewBox="0 0 56 56" fill="none">
+                <rect x="8" y="8" width="40" height="40" rx="4" stroke="#D1D5DB" stroke-width="2"/>
+                <path d="M16 28H40M16 20H32M16 36H24" stroke="#D1D5DB" stroke-width="2" stroke-linecap="round"/>
+              </svg>
+            </div>
+            <p>Enter your income and click <strong>Calculate Tax</strong> to see your full tax breakdown.</p>
+          </div>
+
+          <div id="results-content" class="hidden">
+
+            <!-- Hero: After-Tax Income -->
+            <div class="result-hero">
+              <p class="result-hero-label">Annual After-Tax Income</p>
+              <p class="result-hero-value" id="result-after-tax">—</p>
+              <p class="result-hero-sub" id="result-monthly">— per month</p>
+            </div>
+
+            <!-- Summary rows -->
+            <div class="result-summary" role="list">
+              <div class="result-row" role="listitem">
+                <span class="result-row-label">Gross Income</span>
+                <span class="result-row-value" id="result-gross">—</span>
+              </div>
+              <div class="result-row" role="listitem">
+                <span class="result-row-label">Taxable Income</span>
+                <span class="result-row-value" id="result-taxable">—</span>
+              </div>
+              <div class="result-row result-row--divider" role="listitem">
+                <span class="result-row-label">Federal Income Tax</span>
+                <span class="result-row-value is-error" id="result-fed-tax">—</span>
+              </div>
+              <div class="result-row" role="listitem">
+                <span class="result-row-label">Provincial Income Tax</span>
+                <span class="result-row-value is-error" id="result-prov-tax">—</span>
+              </div>
+              <div class="result-row" role="listitem">
+                <span class="result-row-label">CPP Contributions</span>
+                <span class="result-row-value is-error" id="result-cpp">—</span>
+              </div>
+              <div class="result-row" role="listitem">
+                <span class="result-row-label">EI Premiums</span>
+                <span class="result-row-value is-error" id="result-ei">—</span>
+              </div>
+              <div class="result-row result-row--total" role="listitem">
+                <span class="result-row-label">Total Deductions</span>
+                <span class="result-row-value is-error" id="result-total-tax">—</span>
+              </div>
+            </div>
+
+            <!-- Rate cards -->
+            <div class="milestone-grid" style="margin-top:var(--space-6)">
+              <div class="milestone-card">
+                <p class="milestone-label">Marginal Tax Rate</p>
+                <p class="milestone-value" id="result-marginal">—</p>
+                <p class="milestone-sub">Rate on your next dollar</p>
+              </div>
+              <div class="milestone-card">
+                <p class="milestone-label">Effective Tax Rate</p>
+                <p class="milestone-value" id="result-effective">—</p>
+                <p class="milestone-sub">Average rate on all income</p>
+              </div>
+              <div class="milestone-card">
+                <p class="milestone-label">Monthly Take-Home</p>
+                <p class="milestone-value" id="result-monthly-card">—</p>
+                <p class="milestone-sub">After all deductions</p>
+              </div>
+              <div class="milestone-card">
+                <p class="milestone-label">Tax Savings (RRSP)</p>
+                <p class="milestone-value" id="result-rrsp-savings">—</p>
+                <p class="milestone-sub">From your RRSP deduction</p>
+              </div>
+            </div>
+
+            <!-- Tax bracket breakdown -->
+            <div style="margin-top:var(--space-6);padding:var(--space-5);background:var(--color-bg);border:1px solid var(--color-border);border-radius:var(--radius-md)">
+              <p style="font-family:var(--font-heading);font-size:var(--text-base);font-weight:700;margin-bottom:var(--space-4)">Federal Tax Bracket Breakdown</p>
+              <div id="fed-bracket-breakdown"></div>
+            </div>
+
+            <div id="nn-disclaimer" style="margin-top:var(--space-5)"></div>
+
+            <button type="button" id="copy-btn" class="copy-btn" style="margin-top:var(--space-4)">
+              📋 Copy Results to Clipboard
+            </button>
+
+          </div>
+        </section>
+      </div>
+
+      <!-- Educational content -->
+      <section style="margin-top:var(--space-16);padding-top:var(--space-10);border-top:1px solid var(--color-border)">
+        <h2 style="font-size:var(--text-2xl);font-weight:700;margin-bottom:var(--space-8)">Understanding Canadian Income Tax</h2>
+        <div style="display:grid;gap:var(--space-8)">
+
+          <div>
+            <h3 style="font-size:var(--text-xl);font-weight:600;margin-bottom:var(--space-3)">🇨🇦 How Canadian Income Tax Works</h3>
+            <p style="color:var(--color-text-muted);line-height:1.8">Canada uses a progressive tax system — you pay higher rates only on income above each bracket threshold, not on your entire income. Federal tax applies to all Canadians, while provincial tax rates and brackets vary by province. Both use the same progressive structure with non-refundable tax credits like the Basic Personal Amount reducing your tax owing.</p>
+          </div>
+
+          <div>
+            <h3 style="font-size:var(--text-xl);font-weight:600;margin-bottom:var(--space-3)">📊 2026 Federal Tax Brackets</h3>
+            <div style="overflow-x:auto">
+              <table style="width:100%;border-collapse:collapse;font-size:var(--text-sm)">
+                <thead>
+                  <tr style="background:var(--color-bg);border-bottom:2px solid var(--color-border)">
+                    <th style="padding:var(--space-3);text-align:left;font-weight:600">Income Range</th>
+                    <th style="padding:var(--space-3);text-align:right;font-weight:600">Federal Rate</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr style="border-bottom:1px solid var(--color-border)"><td style="padding:var(--space-3)">$0 – $57,375</td><td style="padding:var(--space-3);text-align:right">15%</td></tr>
+                  <tr style="border-bottom:1px solid var(--color-border);background:var(--color-bg)"><td style="padding:var(--space-3)">$57,375 – $114,750</td><td style="padding:var(--space-3);text-align:right">20.5%</td></tr>
+                  <tr style="border-bottom:1px solid var(--color-border)"><td style="padding:var(--space-3)">$114,750 – $158,519</td><td style="padding:var(--space-3);text-align:right">26%</td></tr>
+                  <tr style="border-bottom:1px solid var(--color-border);background:var(--color-bg)"><td style="padding:var(--space-3)">$158,519 – $220,000</td><td style="padding:var(--space-3);text-align:right">29%</td></tr>
+                  <tr><td style="padding:var(--space-3)">Over $220,000</td><td style="padding:var(--space-3);text-align:right">33%</td></tr>
+                </tbody>
+              </table>
+            </div>
+            <p style="font-size:var(--text-sm);color:var(--color-text-muted);margin-top:var(--space-2)">Federal Basic Personal Amount: $16,129 (15% credit = $2,419 reduction)</p>
+          </div>
+
+          <div>
+            <h3 style="font-size:var(--text-xl);font-weight:600;margin-bottom:var(--space-3)">💡 Marginal vs Effective Rate</h3>
+            <p style="color:var(--color-text-muted);line-height:1.8"><strong>Marginal rate</strong> is the rate you pay on your next dollar of income — useful for deciding whether to earn more, contribute to RRSP, or time income. <strong>Effective rate</strong> is your total tax divided by total income — your true average tax burden. The effective rate is always lower than the marginal rate in a progressive system.</p>
+          </div>
+
+          <div>
+            <h3 style="font-size:var(--text-xl);font-weight:600;margin-bottom:var(--space-3)">💰 How RRSP Reduces Your Tax</h3>
+            <p style="color:var(--color-text-muted);line-height:1.8">Every dollar contributed to an RRSP reduces your taxable income by one dollar. The tax saving equals your marginal rate times your contribution. At a 40% marginal rate, a $10,000 RRSP contribution saves $4,000 in taxes. This makes RRSP contributions most valuable for high earners — and you should maximize contributions before the March 1 deadline to claim the deduction on your current year's return.</p>
+          </div>
+
+          <div>
+            <h3 style="font-size:var(--text-xl);font-weight:600;margin-bottom:var(--space-3)">🔗 Related Calculators</h3>
+            <div id="nn-related"></div>
+          </div>
+
+        </div>
+
+        <div style="margin-top:var(--space-8);padding:var(--space-4) var(--space-5);background:var(--color-bg);border:1px solid var(--color-border);border-radius:var(--radius-md);font-size:var(--text-sm);color:var(--color-text-muted);line-height:1.7">
+          📋 This calculator provides estimates based on 2026 federal and provincial tax rates. It does not account for all possible deductions, credits, or surtaxes. Always consult the CRA or a tax professional for your specific situation. See our <a href="/disclaimer.html" style="color:var(--color-primary)">full disclaimer</a>.
+        </div>
+      </section>
+
+    </div>
+  </main>
+
+  <footer class="site-footer" id="nn-footer" role="contentinfo"></footer>
+
+  <script src="../script.js" defer></script>
+  <script src="../data/nn-constants.js" defer></script>
+  <script src="../data/nn-calculators.js" defer></script>
+  <script src="../shared/nn-utils.js" defer></script>
+  <script src="../shared/nn-seo.js" defer></script>
+  <script src="../shared/nn-analytics.js" defer></script>
+  <script src="../shared/nn-ads.js" defer></script>
+  <script src="../shared/nn-components.js" defer></script>
+  <script src="income-tax.js" defer></script>
+</body>
+</html>

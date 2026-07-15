@@ -171,9 +171,9 @@ window.NNRegistry = {
       url: '/income-tax/', icon: '📊',
       description: 'Calculate your federal and provincial income tax, marginal rate, effective rate, and after-tax income for all 13 provinces.',
       keywords: ['income tax calculator canada','tax calculator canada 2026','provincial tax calculator'],
-      status: 'planned', priority: 14,
-      showInFooter: false, showOnHomepage: false,
-      related: ['rrsp','tfsa','cpp']
+      status: 'active', priority: 14,
+      showInFooter: true, footerSection: 'moreTools', showOnHomepage: true,
+      related: ['rrsp','tfsa','budget','cpp']
     },
     {
       id: 'gst-hst', name: 'GST/HST Calculator', category: 'taxes',
