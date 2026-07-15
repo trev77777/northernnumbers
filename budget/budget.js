@@ -22,6 +22,17 @@
 
 document.addEventListener('DOMContentLoaded', function () {
 
+  /* ── DOM REFS + SUBMIT LISTENER FIRST ───────────────────────────────────────
+     These MUST come before anything else. If NNSeo, NNComponents or any other
+     shared script throws, the calculate button still works.
+  ── */
+  const incomeEl      = document.getElementById('income');
+  const form          = document.getElementById('budget-form');
+  const placeholder   = document.getElementById('results-placeholder');
+  const resultsContent= document.getElementById('results-content');
+
+  if (form) form.addEventListener('submit', function(e) { e.preventDefault(); calculate(); });
+
   /* ── SEO — guarded so any shared-script failure can't break the calculator ── */
   if (window.NNSeo) {
     try {
@@ -106,14 +117,7 @@ document.addEventListener('DOMContentLoaded', function () {
   };
 
   /* ── DOM REFS ────────────────────────────── */
-  const incomeEl   = document.getElementById('income');
-  const form       = document.getElementById('budget-form');
-  const placeholder= document.getElementById('results-placeholder');
-  const resultsContent = document.getElementById('results-content');
-
-  // Attach submit listener FIRST — before any other code that could throw.
-  // This guarantees the Calculate button always works even if SEO/analytics fail.
-  if (form) form.addEventListener('submit', function(e) { e.preventDefault(); calculate(); });
+  // (DOM refs and submit listener declared above at top of DOMContentLoaded)
 
   /* ── RELATED CALCULATORS ─────────────────── */
   if (window.NNComponents) try { NNComponents.renderRelated('nn-related', ['tfsa', 'rrsp', 'fhsa', 'compound-interest']); } catch(e) {}
