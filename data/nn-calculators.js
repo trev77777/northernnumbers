@@ -152,10 +152,10 @@ window.NNRegistry = {
       id: 'cpp', name: 'CPP Calculator', category: 'retirement',
       url: '/cpp/', icon: '🇨🇦',
       description: 'Estimate your Canada Pension Plan benefits at age 60, 65, or 70 based on your contributions.',
-      keywords: ['cpp calculator','canada pension plan calculator','cpp benefit calculator 2026'],
-      status: 'planned', priority: 12,
-      showInFooter: false, showOnHomepage: false,
-      related: ['oas','retirement','rrsp']
+      keywords: ['cpp calculator','canada pension plan calculator','cpp benefit calculator 2026','when to take cpp'],
+      status: 'active', priority: 12,
+      showInFooter: true, footerSection: 'moreTools', showOnHomepage: true,
+      related: ['oas','retirement','rrsp','income-tax']
     },
     {
       id: 'oas', name: 'OAS Calculator', category: 'retirement',
