@@ -143,7 +143,18 @@ document.addEventListener('DOMContentLoaded', function () {
     document.getElementById('result-marginal').textContent    = marginalRate.toFixed(1) + '%';
     document.getElementById('result-effective').textContent   = effectiveRate.toFixed(1) + '%';
     document.getElementById('result-monthly-card').textContent= NNUtils.formatCAD(monthly);
-    document.getElementById('result-rrsp-savings').textContent= rrsp > 0 ? NNUtils.formatCAD(rrspSavings) : '—';
+    document.getElementById('result-net-income').textContent    = NNUtils.formatCAD(afterTax);
+    document.getElementById('result-total-taxes-card').textContent = NNUtils.formatCAD(totalTax);
+    document.getElementById('result-rrsp-savings').textContent = rrsp > 0 ? NNUtils.formatCAD(rrspSavings) : '—';
+    const rrspSubEl = document.getElementById('rrsp-savings-sub');
+    if (rrspSubEl) {
+      rrspSubEl.textContent = rrsp > 0
+        ? `You saved ${NNUtils.formatCAD(rrspSavings)} in taxes from your RRSP contribution`
+        : 'Enter an RRSP deduction above';
+      rrspSubEl.style.color = rrsp > 0 ? 'var(--color-success)' : '';
+    }
+    const rrspCard = document.getElementById('rrsp-savings-card');
+    if (rrspCard) rrspCard.style.background = rrsp > 0 ? '#F0FDF4' : '';
 
     /* Federal bracket breakdown */
     const breakdownEl = document.getElementById('fed-bracket-breakdown');
@@ -169,6 +180,34 @@ document.addEventListener('DOMContentLoaded', function () {
         <span style="color:var(--color-primary)">${NNUtils.formatCAD(fedTax)}</span>
       </div>`;
       breakdownEl.innerHTML = html;
+    }
+
+    /* Provincial bracket breakdown */
+    const provBreakdownEl = document.getElementById('prov-bracket-breakdown');
+    const provLabelEl     = document.getElementById('prov-bracket-label');
+    if (provBreakdownEl) {
+      const provName = (window.NN && NN.PROV_NAMES && NN.PROV_NAMES[province]) || province;
+      if (provLabelEl) provLabelEl.textContent = `${provName} — Basic Personal Amount: ${NNUtils.formatCAD0(provBPA)} (credit: ${NNUtils.formatCAD(provCredit)})`;
+      let phtml = '';
+      for (const b of provBrackets) {
+        if (taxable <= b.min) break;
+        const taxed = Math.min(taxable, b.max) - b.min;
+        const tax_in = taxed * b.rate;
+        const maxL = b.max === Infinity ? '+' : NNUtils.formatCAD0(b.max);
+        phtml += `<div style="display:flex;justify-content:space-between;padding:var(--space-2) 0;border-bottom:1px solid var(--color-border);font-size:var(--text-sm)">
+          <span style="color:var(--color-text-muted)">${(b.rate*100).toFixed(2)}% on ${NNUtils.formatCAD0(b.min)}–${maxL}</span>
+          <span style="font-weight:600">${NNUtils.formatCAD(tax_in)}</span>
+        </div>`;
+      }
+      phtml += `<div style="display:flex;justify-content:space-between;padding:var(--space-2) 0;font-size:var(--text-sm)">
+        <span style="color:var(--color-text-muted)">Less: Provincial Basic Personal Amount credit</span>
+        <span style="font-weight:600;color:var(--color-success)">–${NNUtils.formatCAD(provCredit)}</span>
+      </div>`;
+      phtml += `<div style="display:flex;justify-content:space-between;padding:var(--space-3) 0 var(--space-2);border-top:2px solid var(--color-border);margin-top:var(--space-2);font-weight:700">
+        <span>Provincial Tax Owing</span>
+        <span style="color:var(--color-primary)">${NNUtils.formatCAD(provTax)}</span>
+      </div>`;
+      provBreakdownEl.innerHTML = phtml;
     }
 
     /* Summary pills */
