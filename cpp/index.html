@@ -80,7 +80,7 @@
                   placeholder="35" min="1" max="39" step="1" value="35"
                   aria-describedby="years-hint years-error" />
               </div>
-              <p class="field-help" id="years-hint">CPP uses your best 39 years between ages 18–65. Most Canadians contribute 35–39 years. Check your Statement of Contributions at My Service Canada.</p>
+              <p class="field-help" id="years-hint">CPP is calculated based on your contributory period — generally ages 18 to 65. The formula excludes certain low-income years through dropout provisions (up to 17% of your lowest-earning months). Most Canadians effectively contribute 30–39 qualifying years. This calculator uses a simplified estimate — your actual benefit may differ based on your full history.</p>
               <p id="years-error" class="form-error-msg" role="alert"></p>
             </div>
 
@@ -172,6 +172,10 @@
                 <span class="result-row-label">Estimated Lifetime Total</span>
                 <span class="result-row-value is-success" id="result-lifetime">—</span>
               </div>
+              <div class="result-row" role="listitem">
+                <span class="result-row-label">Estimated Income Replacement</span>
+                <span class="result-row-value" id="result-replacement">—</span>
+              </div>
             </div>
 
             <!-- Age comparison -->
@@ -186,6 +190,10 @@
               <div id="breakeven-analysis"></div>
             </div>
 
+            <div style="margin-top:var(--space-5);padding:var(--space-4);background:var(--color-bg);border:1px solid var(--color-border);border-radius:var(--radius-md);font-size:var(--text-sm);color:var(--color-text-muted);line-height:1.6">
+              <p style="margin-bottom:var(--space-2)">ℹ️ <strong>CPP benefits depend on your actual contribution history.</strong> This calculator provides an estimate based on the information entered.</p>
+              <p>CPP does not include Old Age Security (OAS). Use our <a href="/oas/" style="color:var(--color-primary);font-weight:600;">OAS Calculator</a> for a complete retirement income estimate.</p>
+            </div>
             <div id="nn-disclaimer" style="margin-top:var(--space-5)"></div>
 
             <button type="button" id="copy-btn" class="copy-btn" style="margin-top:var(--space-4)">
@@ -203,7 +211,7 @@
 
           <div>
             <h3 style="font-size:var(--text-xl);font-weight:600;margin-bottom:var(--space-3)">🇨🇦 What is the Canada Pension Plan?</h3>
-            <p style="color:var(--color-text-muted);line-height:1.8">The Canada Pension Plan is a mandatory contributory retirement benefit for employed Canadians. You contribute 5.95% of your employment income (between $3,500 and $68,500) each year, and your employer matches that contribution. In 2026, the maximum annual CPP contribution is $3,867.50. Self-employed Canadians pay both shares — 11.9% — up to $7,735 per year.</p>
+            <p style="color:var(--color-text-muted);line-height:1.8">The Canada Pension Plan is a mandatory contributory retirement benefit for employed Canadians. You contribute 5.95% of your employment income (between $3,500 and $68,500) each year, and your employer matches that contribution. In 2026, the maximum annual CPP contribution is $3,867.50. Self-employed Canadians pay both shares — 11.9% — up to $7,735 per year. To get your personalized CPP estimate based on your actual contribution history, log into your My Service Canada Account and request a Statement of Contributions.</p>
           </div>
 
           <div>

@@ -119,6 +119,11 @@ document.addEventListener('DOMContentLoaded', function () {
     document.getElementById('result-years-until').textContent = yearsUntil === 0 ? 'Now' : yearsUntil + ' years';
     document.getElementById('result-lifetime').textContent    = NNUtils.formatCAD(lifetimeTotal) + ` (to age ${lifeExpect})`;
 
+    // Income replacement rate
+    const replacementRate = avgIncome > 0 ? (r.annual / avgIncome * 100) : 0;
+    const replacementEl = document.getElementById('result-replacement');
+    if (replacementEl) replacementEl.textContent = replacementRate.toFixed(1) + '%';
+
     /* Age comparison table */
     const compEl = document.getElementById('age-comparison');
     if (compEl) {
@@ -203,7 +208,8 @@ document.addEventListener('DOMContentLoaded', function () {
       `💵 Monthly CPP:          ${NNUtils.formatCAD(r.r.monthly)}`,
       `📆 Annual CPP:           ${NNUtils.formatCAD(r.r.annual)}`,
       `📈 Age Adjustment:       ${r.r.factor > 100 ? '+' : ''}${(r.r.factor - 100).toFixed(1)}%`,
-      `🏦 Lifetime Total:       ${NNUtils.formatCAD(r.lifetimeTotal)} (to age 85)`
+      `🏦 Lifetime Total:       ${NNUtils.formatCAD(r.lifetimeTotal)} (to age 85)`,
+      `💼 Income Replacement:   ${(r.r.annual / r.avgIncome * 100).toFixed(1)}%`
     ], 'CPP Calculator');
   });
 
