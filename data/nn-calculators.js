@@ -232,3 +232,19 @@ window.NNRegistry = {
       .map(c => ({ url: c.url, priority: (1 - (c.priority * 0.05)).toFixed(1) }));
   }
 };
+
+/* ── Render calculator grids as soon as registry is ready ──────────────
+   nn-calculators.js loads before nn-components.js (defer order).
+   We use DOMContentLoaded here so the DOM elements exist,
+   and NNRegistry is guaranteed set since we're at the bottom of this file.
+   ──────────────────────────────────────────────────────────────────── */
+document.addEventListener('DOMContentLoaded', function() {
+  if (window.NNComponents) {
+    if (document.getElementById('nn-calc-grid'))    NNComponents.renderCalcGrid('nn-calc-grid');
+    if (document.getElementById('nn-finance-grid')) NNComponents.renderFinanceGrid('nn-finance-grid');
+    if (typeof window._nnCardAnimation === 'function') window._nnCardAnimation();
+  } else {
+    // nn-components.js loads after this file — wait for it then render
+    window._nnPendingGridRender = true;
+  }
+});
