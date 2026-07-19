@@ -160,11 +160,11 @@ window.NNRegistry = {
     {
       id: 'oas', name: 'OAS Calculator', category: 'retirement',
       url: '/oas/', icon: '🏅',
-      description: 'Calculate your Old Age Security and GIS benefits, clawback threshold, and deferral bonuses.',
-      keywords: ['oas calculator canada','old age security calculator','gis calculator canada'],
-      status: 'planned', priority: 13,
-      showInFooter: false, showOnHomepage: false,
-      related: ['cpp','retirement','gis']
+      description: 'Calculate your Old Age Security pension, GIS eligibility, clawback amount, and deferral bonus.',
+      keywords: ['oas calculator canada','old age security calculator','oas clawback calculator','gis calculator canada'],
+      status: 'active', priority: 13,
+      showInFooter: true, footerSection: 'moreTools', showOnHomepage: true,
+      related: ['cpp','rrsp','retirement','income-tax']
     },
     {
       id: 'income-tax', name: 'Income Tax Calculator', category: 'taxes',

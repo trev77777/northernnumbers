@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="en-CA">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>OAS Calculator Canada 2026 — Northern Numbers</title>
+  <meta name="description" content="Free Old Age Security calculator for 2026. Calculate your monthly OAS benefit, GIS eligibility, clawback amount, and deferral bonus. Includes partial OAS for newcomers." />
+  <meta name="keywords" content="oas calculator canada 2026, old age security calculator, oas clawback calculator, gis calculator canada, oas deferral calculator" />
+  <link rel="canonical" href="https://www.northernnumbers.ca/oas/" />
+  <meta property="og:title" content="OAS Calculator Canada 2026 — Northern Numbers" />
+  <meta property="og:description" content="Calculate your OAS benefit, GIS eligibility, clawback amount, and deferral bonus for 2026." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://www.northernnumbers.ca/oas/" />
+  <meta property="og:locale" content="en_CA" />
+  <meta property="og:site_name" content="Northern Numbers" />
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="OAS Calculator Canada 2026 — Northern Numbers" />
+  <meta name="twitter:description" content="Calculate your OAS benefit, GIS eligibility, clawback amount, and deferral bonus." />
+  <meta name="robots" content="index, follow" />
+  <meta name="author" content="Northern Numbers" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Poppins:wght@600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="../styles.css" />
+</head>
+<body>
+
+  <header class="site-header" id="nn-header" role="banner"></header>
+
+  <main id="main-content" class="calc-page">
+    <div class="container">
+
+      <nav class="calc-breadcrumb" aria-label="Breadcrumb">
+        <a href="/">Home</a>
+        <span class="calc-breadcrumb-sep" aria-hidden="true">›</span>
+        <a href="/finance/">Calculators</a>
+        <span class="calc-breadcrumb-sep" aria-hidden="true">›</span>
+        <span aria-current="page">OAS Calculator</span>
+      </nav>
+
+      <div class="calc-page-header">
+        <h1 class="calc-page-title">OAS Calculator Canada 2026</h1>
+        <p class="calc-page-desc">Calculate your Old Age Security pension, Guaranteed Income Supplement eligibility, clawback amount, and deferral bonus based on your situation.</p>
+      </div>
+
+      <div class="calc-layout">
+
+        <!-- Inputs -->
+        <section class="calc-panel" aria-labelledby="inputs-heading">
+          <h2 id="inputs-heading" class="calc-panel-title">Your OAS Details</h2>
+
+          <div class="quick-start" role="note">
+            <p class="quick-start-title">How to use this calculator</p>
+            <ol>
+              <li>Enter your current age and when you plan to start OAS.</li>
+              <li>Enter years lived in Canada after age 18.</li>
+              <li>Enter your estimated net income for the year.</li>
+              <li>Click <strong>Calculate OAS</strong> to see your benefit.</li>
+            </ol>
+          </div>
+
+          <form id="oas-form" novalidate>
+
+            <div class="form-group">
+              <label class="form-label" for="current-age">Current Age</label>
+              <div class="input-wrapper">
+                <input type="number" id="current-age" class="form-input"
+                  placeholder="64" min="18" max="75" step="1" value="64"
+                  aria-describedby="current-age-hint" />
+              </div>
+              <p class="field-help" id="current-age-hint">OAS can start as early as 65. You can defer up to age 70 for a higher monthly benefit.</p>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label" for="start-age">Age to Start OAS</label>
+              <div class="select-wrapper">
+                <select id="start-age" class="form-select" aria-describedby="start-age-hint">
+                  <option value="65" selected>65 — Standard (no bonus)</option>
+                  <option value="66">66 — Deferred (+7.2%)</option>
+                  <option value="67">67 — Deferred (+14.4%)</option>
+                  <option value="68">68 — Deferred (+21.6%)</option>
+                  <option value="69">69 — Deferred (+28.8%)</option>
+                  <option value="70">70 — Maximum (+36%)</option>
+                </select>
+              </div>
+              <p class="field-help" id="start-age-hint">Deferring OAS increases your benefit by 0.6% per month (7.2%/year), up to 36% more at age 70.</p>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label" for="years-in-canada">Years Lived in Canada (after age 18)</label>
+              <div class="input-wrapper">
+                <input type="number" id="years-in-canada" class="form-input"
+                  placeholder="40" min="10" max="50" step="1" value="40"
+                  aria-describedby="years-hint years-error" />
+              </div>
+              <p class="field-help" id="years-hint">40+ years = full OAS. Minimum 10 years for partial OAS. Each year = 2.5% of the full amount.</p>
+              <p id="years-error" class="form-error-msg" role="alert"></p>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label" for="net-income">Estimated Net Annual Income</label>
+              <div class="input-wrapper">
+                <span class="input-prefix" aria-hidden="true">$</span>
+                <input type="text" id="net-income" class="form-input has-prefix"
+                  placeholder="40,000" inputmode="numeric" autocomplete="off" value="40,000"
+                  aria-describedby="income-hint income-error" />
+              </div>
+              <p class="field-help" id="income-hint">Your net income from line 23600 of your tax return. OAS clawback applies above $90,997 in 2026.</p>
+              <p id="income-error" class="form-error-msg" role="alert"></p>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label" for="age-group">Age Group</label>
+              <div class="select-wrapper">
+                <select id="age-group" class="form-select" aria-describedby="age-group-hint">
+                  <option value="65_74" selected>Age 65–74</option>
+                  <option value="75_plus">Age 75+ (automatic 10% increase)</option>
+                </select>
+              </div>
+              <p class="field-help" id="age-group-hint">Canadians 75 and older automatically receive 10% more OAS since July 2022.</p>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label" for="marital-status">Marital Status</label>
+              <div class="select-wrapper">
+                <select id="marital-status" class="form-select">
+                  <option value="single" selected>Single / Widowed / Divorced</option>
+                  <option value="couple">Married / Common-Law</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label" for="other-income">Other Monthly Income <span class="form-hint">(for GIS)</span></label>
+              <div class="input-wrapper">
+                <span class="input-prefix" aria-hidden="true">$</span>
+                <input type="text" id="other-income" class="form-input has-prefix"
+                  placeholder="0" inputmode="numeric" autocomplete="off" value="0"
+                  aria-describedby="other-income-hint" />
+              </div>
+              <p class="field-help" id="other-income-hint">Monthly income other than OAS (CPP, pension, RRIF, etc.). Used to calculate GIS eligibility.</p>
+            </div>
+
+            <div class="btn-row">
+              <button type="submit" class="btn btn-primary btn-calculate" style="flex:1">
+                Calculate OAS
+              </button>
+              <button type="button" id="reset-btn" class="btn btn-secondary">Reset</button>
+            </div>
+
+          </form>
+        </section>
+
+        <!-- Results -->
+        <section class="calc-panel" aria-labelledby="results-heading" aria-live="polite">
+          <h2 id="results-heading" class="calc-panel-title">Your Results</h2>
+
+          <div id="results-placeholder" class="result-placeholder">
+            <div class="result-placeholder-icon" aria-hidden="true">
+              <svg width="56" height="56" viewBox="0 0 56 56" fill="none">
+                <circle cx="28" cy="28" r="20" stroke="#D1D5DB" stroke-width="2"/>
+                <path d="M20 28H28M28 28V20M28 28L34 34" stroke="#D1D5DB" stroke-width="2" stroke-linecap="round"/>
+              </svg>
+            </div>
+            <p>Enter your details and click <strong>Calculate OAS</strong> to see your estimated benefit.</p>
+          </div>
+
+          <div id="results-content" class="hidden">
+
+            <!-- Hero -->
+            <div class="result-hero">
+              <p class="result-hero-label">Monthly OAS Benefit</p>
+              <p class="result-hero-value" id="result-monthly-oas">—</p>
+              <p class="result-hero-sub" id="result-annual-sub">— per year</p>
+            </div>
+
+            <div class="result-summary" role="list">
+              <div class="result-row" role="listitem">
+                <span class="result-row-label">Base OAS (before adjustments)</span>
+                <span class="result-row-value" id="result-base-oas">—</span>
+              </div>
+              <div class="result-row" role="listitem">
+                <span class="result-row-label">OAS Eligibility</span>
+                <span class="result-row-value" id="result-eligibility">—</span>
+              </div>
+              <div class="result-row" role="listitem">
+                <span class="result-row-label">Deferral Bonus</span>
+                <span class="result-row-value" id="result-deferral">—</span>
+              </div>
+              <div class="result-row" role="listitem">
+                <span class="result-row-label">Clawback Amount</span>
+                <span class="result-row-value is-error" id="result-clawback">—</span>
+              </div>
+              <div class="result-row result-row--total" role="listitem">
+                <span class="result-row-label">Net Monthly OAS</span>
+                <span class="result-row-value is-success" id="result-net-oas">—</span>
+              </div>
+            </div>
+
+            <!-- GIS card -->
+            <div id="gis-card" style="margin-top:var(--space-5);padding:var(--space-5);background:var(--color-bg);border:1px solid var(--color-border);border-radius:var(--radius-md)">
+              <p style="font-family:var(--font-heading);font-size:var(--text-base);font-weight:700;margin-bottom:var(--space-4)">Guaranteed Income Supplement (GIS)</p>
+              <div class="result-summary" role="list">
+                <div class="result-row" role="listitem">
+                  <span class="result-row-label">GIS Eligibility</span>
+                  <span class="result-row-value" id="result-gis-eligible">—</span>
+                </div>
+                <div class="result-row" role="listitem">
+                  <span class="result-row-label">Estimated Monthly GIS</span>
+                  <span class="result-row-value is-success" id="result-gis-amount">—</span>
+                </div>
+                <div class="result-row result-row--total" role="listitem">
+                  <span class="result-row-label">Total Monthly (OAS + GIS)</span>
+                  <span class="result-row-value is-success" id="result-total-monthly">—</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Milestone cards -->
+            <div class="milestone-grid" style="margin-top:var(--space-5)">
+              <div class="milestone-card">
+                <p class="milestone-label">Annual OAS</p>
+                <p class="milestone-value" id="result-annual-oas">—</p>
+                <p class="milestone-sub">Net of clawback</p>
+              </div>
+              <div class="milestone-card">
+                <p class="milestone-label">Years Until OAS</p>
+                <p class="milestone-value" id="result-years-until">—</p>
+                <p class="milestone-sub">Based on current age</p>
+              </div>
+              <div class="milestone-card">
+                <p class="milestone-label">Clawback Threshold</p>
+                <p class="milestone-value">$90,997</p>
+                <p class="milestone-sub">2026 net income limit</p>
+              </div>
+              <div class="milestone-card">
+                <p class="milestone-label">Lifetime OAS</p>
+                <p class="milestone-value" id="result-lifetime">—</p>
+                <p class="milestone-sub">Estimated to age 85</p>
+              </div>
+            </div>
+
+            <!-- Deferral comparison -->
+            <div style="margin-top:var(--space-5);padding:var(--space-5);background:var(--color-bg);border:1px solid var(--color-border);border-radius:var(--radius-md)">
+              <p style="font-family:var(--font-heading);font-size:var(--text-base);font-weight:700;margin-bottom:var(--space-4)">OAS at Every Age</p>
+              <div id="deferral-comparison"></div>
+            </div>
+
+            <div style="margin-top:var(--space-4);padding:var(--space-3) var(--space-4);background:var(--color-bg);border:1px solid var(--color-border);border-radius:var(--radius-md);font-size:var(--text-sm);color:var(--color-text-muted);line-height:1.6">
+              ℹ️ OAS benefit amounts are indexed to inflation quarterly. These estimates use 2026 Q1 rates. Actual amounts may differ. Verify at <strong>My Service Canada Account</strong>.
+            </div>
+
+            <div id="nn-disclaimer" style="margin-top:var(--space-5)"></div>
+
+            <button type="button" id="copy-btn" class="copy-btn" style="margin-top:var(--space-4)">
+              📋 Copy Results to Clipboard
+            </button>
+
+          </div>
+        </section>
+      </div>
+
+      <!-- Educational content -->
+      <section style="margin-top:var(--space-16);padding-top:var(--space-10);border-top:1px solid var(--color-border)">
+        <h2 style="font-size:var(--text-2xl);font-weight:700;margin-bottom:var(--space-8)">Understanding OAS in Canada</h2>
+        <div style="display:grid;gap:var(--space-8)">
+
+          <div>
+            <h3 style="font-size:var(--text-xl);font-weight:600;margin-bottom:var(--space-3)">🇨🇦 What is Old Age Security?</h3>
+            <p style="color:var(--color-text-muted);line-height:1.8">Old Age Security is a monthly pension paid by the federal government to Canadians 65 and older. Unlike CPP, OAS is not based on employment history — it's based on how long you've lived in Canada after age 18. You need a minimum of 10 years in Canada to qualify for partial OAS, and 40 years for the full amount. OAS is taxable income and is indexed to inflation quarterly.</p>
+          </div>
+
+          <div>
+            <h3 style="font-size:var(--text-xl);font-weight:600;margin-bottom:var(--space-3)">📊 2026 OAS Key Numbers</h3>
+            <div style="overflow-x:auto">
+              <table style="width:100%;border-collapse:collapse;font-size:var(--text-sm)">
+                <tbody>
+                  <tr style="border-bottom:1px solid var(--color-border)"><td style="padding:var(--space-3);font-weight:600">Maximum monthly OAS (age 65–74)</td><td style="padding:var(--space-3);text-align:right">$727.67</td></tr>
+                  <tr style="border-bottom:1px solid var(--color-border);background:var(--color-bg)"><td style="padding:var(--space-3);font-weight:600">Maximum monthly OAS (age 75+)</td><td style="padding:var(--space-3);text-align:right">$800.44</td></tr>
+                  <tr style="border-bottom:1px solid var(--color-border)"><td style="padding:var(--space-3);font-weight:600">Clawback threshold (net income)</td><td style="padding:var(--space-3);text-align:right">$90,997</td></tr>
+                  <tr style="border-bottom:1px solid var(--color-border);background:var(--color-bg)"><td style="padding:var(--space-3);font-weight:600">Clawback rate</td><td style="padding:var(--space-3);text-align:right">15% of income above threshold</td></tr>
+                  <tr style="border-bottom:1px solid var(--color-border)"><td style="padding:var(--space-3);font-weight:600">Deferral bonus (per month after 65)</td><td style="padding:var(--space-3);text-align:right">+0.6% (max +36% at 70)</td></tr>
+                  <tr style="border-bottom:1px solid var(--color-border);background:var(--color-bg)"><td style="padding:var(--space-3);font-weight:600">Full eligibility</td><td style="padding:var(--space-3);text-align:right">40 years in Canada after 18</td></tr>
+                  <tr><td style="padding:var(--space-3);font-weight:600">Maximum GIS (single)</td><td style="padding:var(--space-3);text-align:right">$1,057.01/month</td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <div>
+            <h3 style="font-size:var(--text-xl);font-weight:600;margin-bottom:var(--space-3)">⏰ Should You Defer OAS?</h3>
+            <p style="color:var(--color-text-muted);line-height:1.8">Deferring OAS past 65 increases your monthly benefit by 0.6% per month — 7.2% per year — up to a maximum of 36% more at age 70. The break-even point for deferring from 65 to 70 is approximately age 82–83. If you have other income sources (CPP, pension, RRIF) and don't need OAS at 65, and if you're in good health, deferring to 70 typically results in significantly more lifetime income. However, if you have a lower income and may qualify for GIS, taking OAS at 65 is usually better since GIS is reduced dollar-for-dollar by OAS income.</p>
+          </div>
+
+          <div>
+            <h3 style="font-size:var(--text-xl);font-weight:600;margin-bottom:var(--space-3)">💸 OAS Clawback Explained</h3>
+            <p style="color:var(--color-text-muted);line-height:1.8">If your net income exceeds $90,997 in 2026, OAS is "clawed back" at a rate of 15 cents per dollar above the threshold. At approximately $147,418 of net income, OAS is completely eliminated. The clawback is calculated on your previous year's income and applied as a withholding tax through the year. Strategies to reduce clawback include income splitting with a spouse, RRSP/RRIF withdrawals, and timing of RRIF conversions.</p>
+          </div>
+
+          <div>
+            <h3 style="font-size:var(--text-xl);font-weight:600;margin-bottom:var(--space-3)">🔗 Related Calculators</h3>
+            <div id="nn-related"></div>
+          </div>
+
+        </div>
+
+        <div style="margin-top:var(--space-8);padding:var(--space-4) var(--space-5);background:var(--color-bg);border:1px solid var(--color-border);border-radius:var(--radius-md);font-size:var(--text-sm);color:var(--color-text-muted);line-height:1.7">
+          📋 OAS estimates use 2026 Q1 rates. Amounts are indexed to inflation quarterly and may change. GIS estimates are approximations. Always verify your entitlement through Service Canada. See our <a href="/disclaimer.html" style="color:var(--color-primary)">full disclaimer</a>.
+        </div>
+      </section>
+
+    </div>
+  </main>
+
+  <footer class="site-footer" id="nn-footer" role="contentinfo"></footer>
+
+  <script src="../script.js" defer></script>
+  <script src="../data/nn-constants.js" defer></script>
+  <script src="../data/nn-calculators.js" defer></script>
+  <script src="../shared/nn-utils.js" defer></script>
+  <script src="../shared/nn-seo.js" defer></script>
+  <script src="../shared/nn-analytics.js" defer></script>
+  <script src="../shared/nn-ads.js" defer></script>
+  <script src="../shared/nn-components.js" defer></script>
+  <script src="oas.js" defer></script>
+</body>
+</html>
