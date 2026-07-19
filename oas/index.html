@@ -65,10 +65,10 @@
               <label class="form-label" for="current-age">Current Age</label>
               <div class="input-wrapper">
                 <input type="number" id="current-age" class="form-input"
-                  placeholder="64" min="18" max="75" step="1" value="64"
+                  placeholder="64" min="18" max="90" step="1" value="64"
                   aria-describedby="current-age-hint" />
               </div>
-              <p class="field-help" id="current-age-hint">OAS can start as early as 65. You can defer up to age 70 for a higher monthly benefit.</p>
+              <p class="field-help" id="current-age-hint">OAS can start as early as 65. You can defer up to age 70 for a higher monthly benefit. Apply 6 months before you want payments to begin.</p>
             </div>
 
             <div class="form-group">
@@ -90,10 +90,10 @@
               <label class="form-label" for="years-in-canada">Years Lived in Canada (after age 18)</label>
               <div class="input-wrapper">
                 <input type="number" id="years-in-canada" class="form-input"
-                  placeholder="40" min="10" max="50" step="1" value="40"
+                  placeholder="40" min="10" max="40" step="1" value="40"
                   aria-describedby="years-hint years-error" />
               </div>
-              <p class="field-help" id="years-hint">40+ years = full OAS. Minimum 10 years for partial OAS. Each year = 2.5% of the full amount.</p>
+              <p class="field-help" id="years-hint">40 years = full OAS. Minimum 10 years for partial OAS (each year = 2.5%). Years beyond 40 do not increase your benefit.</p>
               <p id="years-error" class="form-error-msg" role="alert"></p>
             </div>
 
@@ -199,7 +199,8 @@
 
             <!-- GIS card -->
             <div id="gis-card" style="margin-top:var(--space-5);padding:var(--space-5);background:var(--color-bg);border:1px solid var(--color-border);border-radius:var(--radius-md)">
-              <p style="font-family:var(--font-heading);font-size:var(--text-base);font-weight:700;margin-bottom:var(--space-4)">Guaranteed Income Supplement (GIS)</p>
+              <p style="font-family:var(--font-heading);font-size:var(--text-base);font-weight:700;margin-bottom:var(--space-1)">Guaranteed Income Supplement (GIS)</p>
+              <p style="font-size:var(--text-xs);color:var(--color-success);margin-bottom:var(--space-3)">✅ GIS is non-taxable income</p>
               <div class="result-summary" role="list">
                 <div class="result-row" role="listitem">
                   <span class="result-row-label">GIS Eligibility</span>
@@ -294,7 +295,7 @@
 
           <div>
             <h3 style="font-size:var(--text-xl);font-weight:600;margin-bottom:var(--space-3)">💸 OAS Clawback Explained</h3>
-            <p style="color:var(--color-text-muted);line-height:1.8">If your net income exceeds $90,997 in 2026, OAS is "clawed back" at a rate of 15 cents per dollar above the threshold. At approximately $147,418 of net income, OAS is completely eliminated. The clawback is calculated on your previous year's income and applied as a withholding tax through the year. Strategies to reduce clawback include income splitting with a spouse, RRSP/RRIF withdrawals, and timing of RRIF conversions.</p>
+            <p style="color:var(--color-text-muted);line-height:1.8">If your net income exceeds $90,997 in 2026, OAS is "clawed back" at a rate of 15 cents per dollar above the threshold. At approximately $149,211 of net income, OAS is completely eliminated. The clawback is calculated on your previous year's income and applied as a withholding tax through the year. Strategies to reduce clawback include income splitting with a spouse, RRSP/RRIF withdrawals, and timing of RRIF conversions.</p>
           </div>
 
           <div>

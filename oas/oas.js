@@ -48,7 +48,7 @@ document.addEventListener('DOMContentLoaded', function () {
     NNSeo.injectSchema({ title:'OAS Calculator Canada 2026', slug:'oas', description:'Calculate your OAS benefit, GIS eligibility, clawback, and deferral bonus for 2026.' });
     NNSeo.injectFAQSchema([
       { question:'What is the maximum OAS in 2026?', answer:'The maximum monthly OAS for ages 65–74 is $727.67 in 2026. Canadians 75 and older receive $800.44/month — an automatic 10% increase introduced in 2022.' },
-      { question:'What is the OAS clawback threshold for 2026?', answer:'The OAS clawback begins at $90,997 of net income in 2026. For every dollar above this threshold, OAS is reduced by 15 cents. OAS is completely eliminated at approximately $147,418 of net income.' },
+      { question:'What is the OAS clawback threshold for 2026?', answer:'The OAS clawback begins at $90,997 of net income in 2026. For every dollar above this threshold, OAS is reduced by 15 cents. OAS is completely eliminated at approximately $149,211 of net income.' },
       { question:'Should I defer OAS to age 70?', answer:'Deferring OAS increases your benefit by 0.6% per month (7.2% per year), up to 36% more at age 70. The break-even versus taking at 65 is around age 82-83. If you have other income and are in good health, deferring usually results in more lifetime income.' },
       { question:'What is the Guaranteed Income Supplement?', answer:'The GIS is a non-taxable monthly benefit for low-income OAS recipients. In 2026, single seniors can receive up to $1,057.01/month. GIS reduces by $1 for every $2 of income other than OAS.' },
     ]);
