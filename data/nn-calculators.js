@@ -179,10 +179,10 @@ window.NNRegistry = {
       id: 'gst-hst', name: 'GST/HST Calculator', category: 'taxes',
       url: '/gst-hst/', icon: '🧾',
       description: 'Calculate GST, HST, or PST for any Canadian province. Add or remove tax from any amount.',
-      keywords: ['gst hst calculator canada','tax calculator canada','hst calculator ontario'],
-      status: 'planned', priority: 15,
-      showInFooter: false, showOnHomepage: false,
-      related: ['income-tax','budget']
+      keywords: ['gst hst calculator canada','tax calculator canada','hst calculator ontario','sales tax calculator canada'],
+      status: 'active', priority: 15,
+      showInFooter: true, footerSection: 'moreTools', showOnHomepage: true,
+      related: ['income-tax','budget','inflation','loan']
     }
   ],
 

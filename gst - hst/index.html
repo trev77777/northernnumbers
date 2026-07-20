@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="en-CA">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>GST/HST Calculator Canada 2026 — Northern Numbers</title>
+  <meta name="description" content="Free Canadian GST/HST calculator for 2026. Add or remove GST, HST, or PST for all 13 provinces and territories. Instant results for business and personal use." />
+  <meta name="keywords" content="gst hst calculator canada 2026, hst calculator ontario, gst calculator canada, pst calculator bc, sales tax calculator canada" />
+  <link rel="canonical" href="https://www.northernnumbers.ca/gst-hst/" />
+  <meta property="og:title" content="GST/HST Calculator Canada 2026 — Northern Numbers" />
+  <meta property="og:description" content="Add or remove GST, HST, or PST for all 13 Canadian provinces and territories instantly." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://www.northernnumbers.ca/gst-hst/" />
+  <meta property="og:locale" content="en_CA" />
+  <meta property="og:site_name" content="Northern Numbers" />
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="GST/HST Calculator Canada 2026 — Northern Numbers" />
+  <meta name="twitter:description" content="Add or remove GST/HST/PST for all Canadian provinces instantly." />
+  <meta name="robots" content="index, follow" />
+  <meta name="author" content="Northern Numbers" />
+  <link rel="icon" type="image/x-icon" href="../favicon.ico" />
+  <link rel="icon" type="image/svg+xml" href="../favicon.svg" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Poppins:wght@600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="../styles.css" />
+</head>
+<body>
+
+  <header class="site-header" id="nn-header" role="banner"></header>
+
+  <main id="main-content" class="calc-page">
+    <div class="container">
+
+      <nav class="calc-breadcrumb" aria-label="Breadcrumb">
+        <a href="/">Home</a>
+        <span class="calc-breadcrumb-sep" aria-hidden="true">›</span>
+        <a href="/finance/">Calculators</a>
+        <span class="calc-breadcrumb-sep" aria-hidden="true">›</span>
+        <span aria-current="page">GST/HST Calculator</span>
+      </nav>
+
+      <div class="calc-page-header">
+        <h1 class="calc-page-title">GST/HST Calculator Canada 2026</h1>
+        <p class="calc-page-desc">Add or remove GST, HST, or PST for any Canadian province or territory. Instant results for business invoicing, shopping, and expense tracking.</p>
+      </div>
+
+      <div class="calc-layout">
+
+        <!-- Inputs -->
+        <section class="calc-panel" aria-labelledby="inputs-heading">
+          <h2 id="inputs-heading" class="calc-panel-title">Your Details</h2>
+
+          <div class="quick-start" role="note">
+            <p class="quick-start-title">📋 How to use this calculator</p>
+            <ol>
+              <li>Enter your amount.</li>
+              <li>Select your province or territory.</li>
+              <li>Choose to <strong>add tax</strong> or <strong>remove tax</strong>.</li>
+              <li>Click <strong>Calculate Tax</strong> for an instant breakdown.</li>
+            </ol>
+          </div>
+
+          <!-- Presets -->
+          <div style="margin-bottom:var(--space-4)">
+            <p style="font-size:var(--text-sm);font-weight:600;color:var(--color-text-muted);margin-bottom:var(--space-2)">Quick presets:</p>
+            <div class="preset-group" role="group">
+              <button type="button" class="preset-btn" data-preset="invoice">🧾 Invoice $1,000</button>
+              <button type="button" class="preset-btn" data-preset="meal">🍽 Meal $50</button>
+              <button type="button" class="preset-btn" data-preset="car">🚗 Car $30,000</button>
+              <button type="button" class="preset-btn" data-preset="reno">🔨 Reno $10,000</button>
+            </div>
+          </div>
+
+          <form id="gst-form" novalidate>
+
+            <!-- Amount -->
+            <div class="form-group">
+              <label class="form-label" for="amount">Amount</label>
+              <div class="input-wrapper">
+                <span class="input-prefix" aria-hidden="true">$</span>
+                <input type="text" id="amount" class="form-input has-prefix"
+                  placeholder="100.00" inputmode="decimal" autocomplete="off" value="100.00"
+                  aria-describedby="amount-hint amount-error" />
+              </div>
+              <p class="field-help" id="amount-hint">Enter the dollar amount before or after tax.</p>
+              <p id="amount-error" class="form-error-msg" role="alert"></p>
+            </div>
+
+            <!-- Province -->
+            <div class="form-group">
+              <label class="form-label" for="province">Province / Territory</label>
+              <div class="select-wrapper">
+                <select id="province" class="form-select" aria-describedby="province-hint">
+                  <option value="ON" selected>Ontario — HST 13%</option>
+                  <option value="AB">Alberta — GST 5%</option>
+                  <option value="BC">British Columbia — GST+PST 12%</option>
+                  <option value="MB">Manitoba — GST+PST 12%</option>
+                  <option value="SK">Saskatchewan — GST+PST 11%</option>
+                  <option value="QC">Quebec — GST+QST 14.975%</option>
+                  <option value="NB">New Brunswick — HST 15%</option>
+                  <option value="NS">Nova Scotia — HST 15%</option>
+                  <option value="PE">Prince Edward Island — HST 15%</option>
+                  <option value="NL">Newfoundland & Labrador — HST 15%</option>
+                  <option value="NT">Northwest Territories — GST 5%</option>
+                  <option value="NU">Nunavut — GST 5%</option>
+                  <option value="YT">Yukon — GST 5%</option>
+                </select>
+              </div>
+              <p class="field-help" id="province-hint">Select where the purchase or service is made.</p>
+            </div>
+
+            <!-- Direction -->
+            <div class="form-group">
+              <label class="form-label" for="direction">Calculation Type</label>
+              <div class="select-wrapper">
+                <select id="direction" class="form-select">
+                  <option value="add" selected>Add tax (price before tax → total)</option>
+                  <option value="remove">Remove tax (total with tax → price before tax)</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="btn-row">
+              <button type="submit" class="btn btn-primary btn-calculate" id="calc-btn" style="flex:1">
+                Calculate Tax
+              </button>
+              <button type="button" id="reset-btn" class="btn btn-secondary">Reset</button>
+            </div>
+
+          </form>
+
+          <!-- Province tax rate reference -->
+          <div style="margin-top:var(--space-6);padding:var(--space-4) var(--space-5);background:#EFF6FF;border:1px solid #BFDBFE;border-radius:var(--radius-md);font-size:var(--text-sm);color:#1E40AF;line-height:1.6">
+            <strong style="display:block;margin-bottom:var(--space-1)">🇨🇦 2026 Tax Rates at a Glance</strong>
+            <strong>5%</strong> GST only — AB, NT, NU, YT &nbsp;·&nbsp;
+            <strong>11%</strong> GST+PST — SK &nbsp;·&nbsp;
+            <strong>12%</strong> GST+PST — BC, MB &nbsp;·&nbsp;
+            <strong>13%</strong> HST — ON &nbsp;·&nbsp;
+            <strong>14.975%</strong> GST+QST — QC &nbsp;·&nbsp;
+            <strong>15%</strong> HST — NB, NS, PE, NL
+          </div>
+        </section>
+
+        <!-- Results -->
+        <section class="calc-panel" aria-labelledby="results-heading" aria-live="polite">
+          <h2 id="results-heading" class="calc-panel-title">Your Results</h2>
+
+          <div id="results-placeholder" class="result-placeholder">
+            <div class="result-placeholder-icon" aria-hidden="true">
+              <svg width="56" height="56" viewBox="0 0 56 56" fill="none">
+                <rect x="12" y="8" width="32" height="40" rx="3" stroke="#D1D5DB" stroke-width="2"/>
+                <path d="M20 20H36M20 28H36M20 36H28" stroke="#D1D5DB" stroke-width="2" stroke-linecap="round"/>
+              </svg>
+            </div>
+            <p>Enter an amount and click <strong>Calculate Tax</strong> to see the breakdown.</p>
+          </div>
+
+          <div id="results-content" class="hidden">
+
+            <!-- Hero -->
+            <div class="result-hero">
+              <p class="result-hero-label" id="result-hero-label">Total with Tax</p>
+              <p class="result-hero-value" id="result-total">—</p>
+              <p class="result-hero-sub" id="result-hero-sub">—</p>
+            </div>
+
+            <div class="result-summary" role="list">
+              <div class="result-row" role="listitem">
+                <span class="result-row-label">Price Before Tax</span>
+                <span class="result-row-value" id="result-before-tax">—</span>
+              </div>
+              <div class="result-row" role="listitem">
+                <span class="result-row-label" id="result-fed-label">Federal Tax (GST/HST)</span>
+                <span class="result-row-value is-error" id="result-fed-tax">—</span>
+              </div>
+              <div class="result-row" id="prov-tax-row" role="listitem">
+                <span class="result-row-label" id="result-prov-label">Provincial Tax (PST/QST)</span>
+                <span class="result-row-value is-error" id="result-prov-tax">—</span>
+              </div>
+              <div class="result-row result-row--total" role="listitem">
+                <span class="result-row-label">Total Tax</span>
+                <span class="result-row-value is-error" id="result-total-tax">—</span>
+              </div>
+              <div class="result-row result-row--total" role="listitem">
+                <span class="result-row-label">Total with Tax</span>
+                <span class="result-row-value is-success" id="result-grand-total">—</span>
+              </div>
+            </div>
+
+            <!-- Milestone cards -->
+            <div class="milestone-grid" style="margin-top:var(--space-5)">
+              <div class="milestone-card">
+                <p class="milestone-label">Tax Rate</p>
+                <p class="milestone-value" id="result-rate">—</p>
+                <p class="milestone-sub" id="result-tax-type">—</p>
+              </div>
+              <div class="milestone-card">
+                <p class="milestone-label">Tax Amount</p>
+                <p class="milestone-value is-error" id="result-tax-amount">—</p>
+                <p class="milestone-sub">Total tax on this purchase</p>
+              </div>
+              <div class="milestone-card">
+                <p class="milestone-label">Federal Portion</p>
+                <p class="milestone-value" id="result-fed-pct">—</p>
+                <p class="milestone-sub">GST / HST federal component</p>
+              </div>
+              <div class="milestone-card">
+                <p class="milestone-label">Per $100 Tax</p>
+                <p class="milestone-value" id="result-per-100">—</p>
+                <p class="milestone-sub">Tax on every $100 spent</p>
+              </div>
+            </div>
+
+            <div id="nn-disclaimer" style="margin-top:var(--space-5)"></div>
+
+            <button type="button" id="copy-btn" class="copy-btn" style="margin-top:var(--space-4)">
+              📋 Copy Results to Clipboard
+            </button>
+
+          </div>
+        </section>
+      </div>
+
+      <!-- Educational content -->
+      <section style="margin-top:var(--space-16);padding-top:var(--space-10);border-top:1px solid var(--color-border)">
+        <h2 style="font-size:var(--text-2xl);font-weight:700;margin-bottom:var(--space-8)">Understanding GST, HST, and PST in Canada</h2>
+        <div style="display:grid;gap:var(--space-8)">
+
+          <div>
+            <h3 style="font-size:var(--text-xl);font-weight:600;margin-bottom:var(--space-3)">🇨🇦 How Canadian Sales Tax Works</h3>
+            <p style="color:var(--color-text-muted);line-height:1.8">Canada has a two-level sales tax system. The federal Goods and Services Tax (GST) is 5% and applies across all provinces and territories. Some provinces have merged their provincial sales tax with the GST into a single Harmonized Sales Tax (HST) — Ontario (13%), New Brunswick, Nova Scotia, Prince Edward Island, and Newfoundland and Labrador (all 15%). Other provinces charge GST plus a separate Provincial Sales Tax (PST) — British Columbia and Manitoba (12%), Saskatchewan (11%). Quebec uses a Goods and Services Tax plus a Quebec Sales Tax (QST) at 9.975%, totalling approximately 14.975%. Alberta, Yukon, Northwest Territories, and Nunavut have no provincial sales tax and charge only the 5% GST.</p>
+          </div>
+
+          <div>
+            <h3 style="font-size:var(--text-xl);font-weight:600;margin-bottom:var(--space-3)">📊 2026 Sales Tax Rates by Province</h3>
+            <div style="overflow-x:auto">
+              <table style="width:100%;border-collapse:collapse;font-size:var(--text-sm)">
+                <thead>
+                  <tr style="background:var(--color-bg);border-bottom:2px solid var(--color-border)">
+                    <th style="padding:var(--space-3);text-align:left;font-weight:600">Province/Territory</th>
+                    <th style="padding:var(--space-3);text-align:center;font-weight:600">GST</th>
+                    <th style="padding:var(--space-3);text-align:center;font-weight:600">PST/QST/HST</th>
+                    <th style="padding:var(--space-3);text-align:right;font-weight:600">Total</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr style="border-bottom:1px solid var(--color-border)"><td style="padding:var(--space-3)">Alberta</td><td style="padding:var(--space-3);text-align:center">5%</td><td style="padding:var(--space-3);text-align:center">—</td><td style="padding:var(--space-3);text-align:right;font-weight:600">5%</td></tr>
+                  <tr style="border-bottom:1px solid var(--color-border);background:var(--color-bg)"><td style="padding:var(--space-3)">British Columbia</td><td style="padding:var(--space-3);text-align:center">5%</td><td style="padding:var(--space-3);text-align:center">7% PST</td><td style="padding:var(--space-3);text-align:right;font-weight:600">12%</td></tr>
+                  <tr style="border-bottom:1px solid var(--color-border)"><td style="padding:var(--space-3)">Manitoba</td><td style="padding:var(--space-3);text-align:center">5%</td><td style="padding:var(--space-3);text-align:center">7% RST</td><td style="padding:var(--space-3);text-align:right;font-weight:600">12%</td></tr>
+                  <tr style="border-bottom:1px solid var(--color-border);background:var(--color-bg)"><td style="padding:var(--space-3)">Saskatchewan</td><td style="padding:var(--space-3);text-align:center">5%</td><td style="padding:var(--space-3);text-align:center">6% PST</td><td style="padding:var(--space-3);text-align:right;font-weight:600">11%</td></tr>
+                  <tr style="border-bottom:1px solid var(--color-border)"><td style="padding:var(--space-3)">Ontario</td><td style="padding:var(--space-3);text-align:center" colspan="2">13% HST (combined)</td><td style="padding:var(--space-3);text-align:right;font-weight:600">13%</td></tr>
+                  <tr style="border-bottom:1px solid var(--color-border);background:var(--color-bg)"><td style="padding:var(--space-3)">Quebec</td><td style="padding:var(--space-3);text-align:center">5%</td><td style="padding:var(--space-3);text-align:center">9.975% QST</td><td style="padding:var(--space-3);text-align:right;font-weight:600">14.975%</td></tr>
+                  <tr style="border-bottom:1px solid var(--color-border)"><td style="padding:var(--space-3)">New Brunswick</td><td style="padding:var(--space-3);text-align:center" colspan="2">15% HST (combined)</td><td style="padding:var(--space-3);text-align:right;font-weight:600">15%</td></tr>
+                  <tr style="border-bottom:1px solid var(--color-border);background:var(--color-bg)"><td style="padding:var(--space-3)">Nova Scotia</td><td style="padding:var(--space-3);text-align:center" colspan="2">15% HST (combined)</td><td style="padding:var(--space-3);text-align:right;font-weight:600">15%</td></tr>
+                  <tr style="border-bottom:1px solid var(--color-border)"><td style="padding:var(--space-3)">Prince Edward Island</td><td style="padding:var(--space-3);text-align:center" colspan="2">15% HST (combined)</td><td style="padding:var(--space-3);text-align:right;font-weight:600">15%</td></tr>
+                  <tr style="border-bottom:1px solid var(--color-border);background:var(--color-bg)"><td style="padding:var(--space-3)">Newfoundland & Labrador</td><td style="padding:var(--space-3);text-align:center" colspan="2">15% HST (combined)</td><td style="padding:var(--space-3);text-align:right;font-weight:600">15%</td></tr>
+                  <tr><td style="padding:var(--space-3)">AB, NT, NU, YT</td><td style="padding:var(--space-3);text-align:center">5%</td><td style="padding:var(--space-3);text-align:center">—</td><td style="padding:var(--space-3);text-align:right;font-weight:600">5%</td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <div>
+            <h3 style="font-size:var(--text-xl);font-weight:600;margin-bottom:var(--space-3)">🧮 The GST/HST Formula</h3>
+            <div style="padding:var(--space-4) var(--space-5);background:var(--color-bg);border:1px solid var(--color-border);border-radius:var(--radius-md);font-size:var(--text-sm)">
+              <p style="font-family:monospace;font-size:var(--text-base);font-weight:600;color:var(--color-primary);margin-bottom:var(--space-2)">Total = Price Before Tax × (1 + Tax Rate)</p>
+              <p style="font-family:monospace;font-size:var(--text-base);font-weight:600;color:var(--color-primary);margin-bottom:var(--space-2)">Price Before Tax = Total ÷ (1 + Tax Rate)</p>
+              <p style="color:var(--color-text-muted);line-height:1.7">Example (Ontario HST 13%): $100.00 × 1.13 = $113.00 total<br>
+              Reverse: $113.00 ÷ 1.13 = $100.00 before tax · Tax = $13.00</p>
+            </div>
+          </div>
+
+          <div>
+            <h3 style="font-size:var(--text-xl);font-weight:600;margin-bottom:var(--space-3)">💼 GST/HST for Small Businesses</h3>
+            <p style="color:var(--color-text-muted);line-height:1.8">If your business earns more than $30,000 in revenue over four consecutive calendar quarters, you must register for a GST/HST account with the CRA. Once registered, you collect GST/HST on taxable supplies and remit the net amount (tax collected minus input tax credits) to the CRA. Input Tax Credits (ITCs) allow you to recover GST/HST paid on business expenses — making GST effectively a tax on the end consumer, not on businesses in the supply chain. Small suppliers under $30,000 may voluntarily register to claim ITCs, which can be beneficial if you purchase significant taxable inputs. Filing can be monthly, quarterly, or annually depending on your revenue level and preference.</p>
+          </div>
+
+          <div>
+            <h3 style="font-size:var(--text-xl);font-weight:600;margin-bottom:var(--space-3)">❓ Frequently Asked Questions</h3>
+            <div style="display:flex;flex-direction:column;gap:var(--space-5)">
+              <div>
+                <p style="font-weight:600;margin-bottom:var(--space-1)">What items are exempt from GST/HST in Canada?</p>
+                <p style="color:var(--color-text-muted);font-size:var(--text-sm);line-height:1.7">Many essential goods and services are zero-rated (taxed at 0%) or exempt. Zero-rated items include most basic groceries, prescription drugs, medical devices, and exports. Exempt supplies include residential rent, most health and dental services, educational services, and most financial services. Zero-rated differs from exempt — zero-rated businesses can still claim ITCs on their inputs; exempt businesses cannot.</p>
+              </div>
+              <div>
+                <p style="font-weight:600;margin-bottom:var(--space-1)">Why does Quebec have a different sales tax?</p>
+                <p style="color:var(--color-text-muted);font-size:var(--text-sm);line-height:1.7">Quebec administers its own provincial tax system separately from the federal government. The Quebec Sales Tax (QST) rate is 9.975% and is administered by Revenu Québec rather than the CRA. Unlike provinces that harmonized with the federal GST, Quebec maintains its own registration, filing, and remittance system. Quebec businesses must register for both GST (with CRA) and QST (with Revenu Québec) separately.</p>
+              </div>
+              <div>
+                <p style="font-weight:600;margin-bottom:var(--space-1)">Do I charge HST on services provided remotely?</p>
+                <p style="color:var(--color-text-muted);font-size:var(--text-sm);line-height:1.7">Generally, the GST/HST rate that applies is based on where your customer is located (the "place of supply" rules), not where you are. If you're in Ontario providing services to a client in Alberta, you would charge 5% GST, not 13% HST. The place of supply rules are complex for digital services and professional services — consulting a tax professional is advisable for cross-provincial service businesses.</p>
+              </div>
+              <div>
+                <p style="font-weight:600;margin-bottom:var(--space-1)">Are there GST/HST rebates for new home purchases?</p>
+                <p style="color:var(--color-text-muted);font-size:var(--text-sm);line-height:1.7">Yes. The GST/HST New Housing Rebate allows buyers of new homes under $450,000 to recover a portion of the GST or HST paid. The federal rebate is 36% of the 5% GST (up to $6,300) for homes under $350,000, phasing out between $350,000 and $450,000. Most HST provinces also offer a provincial portion of the rebate. Builders often factor these rebates into the purchase price, but it's important to confirm how rebates are handled in your purchase agreement.</p>
+              </div>
+            </div>
+          </div>
+
+          <div>
+            <h3 style="font-size:var(--text-xl);font-weight:600;margin-bottom:var(--space-3)">🔗 Related Calculators</h3>
+            <div id="nn-related"></div>
+          </div>
+
+        </div>
+
+        <div style="margin-top:var(--space-8);padding:var(--space-4) var(--space-5);background:var(--color-bg);border:1px solid var(--color-border);border-radius:var(--radius-md);font-size:var(--text-sm);color:var(--color-text-muted);line-height:1.7">
+          📋 Tax rates are based on 2026 federal and provincial rates. Some goods and services may be exempt or zero-rated. This calculator is for general guidance only. See our <a href="/disclaimer.html" style="color:var(--color-primary)">full disclaimer</a>.
+        </div>
+      </section>
+
+    </div>
+  </main>
+
+  <footer class="site-footer" id="nn-footer" role="contentinfo"></footer>
+
+  <script src="../script.js" defer></script>
+  <script src="../data/nn-constants.js" defer></script>
+  <script src="../data/nn-calculators.js" defer></script>
+  <script src="../shared/nn-utils.js" defer></script>
+  <script src="../shared/nn-seo.js" defer></script>
+  <script src="../shared/nn-analytics.js" defer></script>
+  <script src="../shared/nn-ads.js" defer></script>
+  <script src="../shared/nn-components.js" defer></script>
+  <script src="gst-hst.js" defer></script>
+</body>
+</html>
