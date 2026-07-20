@@ -134,6 +134,18 @@ document.addEventListener('DOMContentLoaded', function () {
     document.getElementById('result-total-inflation').textContent= '+' + totalInflation.toFixed(1) + '%';
     document.getElementById('result-power-change').textContent  = (powerChange > 0 ? '+' : '') + powerChange.toFixed(1) + '% purchasing power';
 
+    // Purchasing Power Remaining
+    const powerRemaining = direction === 'future'
+      ? (amount / equivalent * 100)        // how much original value remains
+      : (equivalent / amount * 100);       // what % of today's value the past amount was
+    const remainingEl = document.getElementById('result-power-remaining');
+    if (remainingEl) {
+      remainingEl.textContent = powerRemaining.toFixed(1) + '% of original value';
+      remainingEl.style.color = powerRemaining >= 100
+        ? 'var(--color-success)'
+        : powerRemaining >= 70 ? '' : 'var(--color-danger)';
+    }
+
     // Milestone cards
     document.getElementById('result-lost').textContent        = NNUtils.formatCAD(Math.abs(valueLost));
     document.getElementById('result-real-return').textContent = rate.toFixed(1) + '%/year';

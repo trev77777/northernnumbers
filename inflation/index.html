@@ -182,6 +182,10 @@
                 <span class="result-row-label">Purchasing Power Change</span>
                 <span class="result-row-value is-error" id="result-power-change">—</span>
               </div>
+              <div class="result-row" role="listitem">
+                <span class="result-row-label">Purchasing Power Remaining</span>
+                <span class="result-row-value" id="result-power-remaining">—</span>
+              </div>
             </div>
 
             <!-- Milestone cards -->
@@ -253,6 +257,18 @@
           </div>
 
           <div>
+            <h3 style="font-size:var(--text-xl);font-weight:600;margin-bottom:var(--space-3)">🧮 The Inflation Formula</h3>
+            <div style="padding:var(--space-4) var(--space-5);background:var(--color-bg);border:1px solid var(--color-border);border-radius:var(--radius-md);margin-bottom:var(--space-3);font-size:var(--text-sm)">
+              <p style="font-family:monospace;font-size:var(--text-base);font-weight:600;color:var(--color-primary);margin-bottom:var(--space-2)">Future Value = Present Value × (1 + Inflation Rate)<sup>Years</sup></p>
+              <p style="color:var(--color-text-muted);line-height:1.7">Example: $10,000 today at 2% inflation for 10 years<br>
+              = $10,000 × (1 + 0.02)<sup>10</sup> = $10,000 × 1.2190 = <strong>$12,189.94</strong><br>
+              To calculate past purchasing power, divide instead of multiply:<br>
+              <span style="font-family:monospace">Past Value = Present Value ÷ (1 + Inflation Rate)<sup>Years</sup></span></p>
+              <p style="font-size:var(--text-xs);color:var(--color-text-muted);margin-top:var(--space-2)">Source: Statistics Canada CPI methodology. Historical data from Statistics Canada Table 18-10-0005-01.</p>
+            </div>
+          </div>
+
+          <div>
             <h3 style="font-size:var(--text-xl);font-weight:600;margin-bottom:var(--space-3)">📊 Canadian Inflation History</h3>
             <div style="overflow-x:auto">
               <table style="width:100%;border-collapse:collapse;font-size:var(--text-sm)">
@@ -264,9 +280,9 @@
                   </tr>
                 </thead>
                 <tbody>
-                  <tr style="border-bottom:1px solid var(--color-border)"><td style="padding:var(--space-3)">1995–2004</td><td style="padding:var(--space-3);text-align:right">1.9%</td><td style="padding:var(--space-3);text-align:right">Post-recession stability</td></tr>
-                  <tr style="border-bottom:1px solid var(--color-border);background:var(--color-bg)"><td style="padding:var(--space-3)">2005–2014</td><td style="padding:var(--space-3);text-align:right">2.0%</td><td style="padding:var(--space-3);text-align:right">Near BoC target</td></tr>
-                  <tr style="border-bottom:1px solid var(--color-border)"><td style="padding:var(--space-3)">2015–2019</td><td style="padding:var(--space-3);text-align:right">1.5%</td><td style="padding:var(--space-3);text-align:right">Low inflation era</td></tr>
+                  <tr style="border-bottom:1px solid var(--color-border)"><td style="padding:var(--space-3)">1995–2004</td><td style="padding:var(--space-3);text-align:right">~2.0%</td><td style="padding:var(--space-3);text-align:right">Post-recession stability</td></tr>
+                  <tr style="border-bottom:1px solid var(--color-border);background:var(--color-bg)"><td style="padding:var(--space-3)">2005–2014</td><td style="padding:var(--space-3);text-align:right">~1.8%</td><td style="padding:var(--space-3);text-align:right">Near BoC target</td></tr>
+                  <tr style="border-bottom:1px solid var(--color-border)"><td style="padding:var(--space-3)">2015–2019</td><td style="padding:var(--space-3);text-align:right">~1.7%</td><td style="padding:var(--space-3);text-align:right">Low inflation era</td></tr>
                   <tr style="border-bottom:1px solid var(--color-border);background:var(--color-bg)"><td style="padding:var(--space-3)">2020</td><td style="padding:var(--space-3);text-align:right">0.7%</td><td style="padding:var(--space-3);text-align:right">COVID-19 pandemic</td></tr>
                   <tr style="border-bottom:1px solid var(--color-border)"><td style="padding:var(--space-3)">2021</td><td style="padding:var(--space-3);text-align:right">3.4%</td><td style="padding:var(--space-3);text-align:right">Recovery & supply chains</td></tr>
                   <tr style="border-bottom:1px solid var(--color-border);background:var(--color-bg)"><td style="padding:var(--space-3)">2022</td><td style="padding:var(--space-3);text-align:right">6.8%</td><td style="padding:var(--space-3);text-align:right">40-year high</td></tr>
