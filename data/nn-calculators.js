@@ -96,7 +96,7 @@ window.NNRegistry = {
     /* ── PLANNED CALCULATORS ── (change status to 'active' when built) */
     {
       id: 'car-loan', name: 'Car Loan Calculator', category: 'loans',
-      url: '/car-loan/', icon: '🚗',
+      url: '/car-loan/', icon: '🚗', lastmod: '2026-07-14',
       description: 'Calculate monthly payments, total interest, and true cost of ownership for your next vehicle purchase in Canada.',
       keywords: ['car loan calculator canada','auto loan calculator canada','vehicle loan calculator'],
       status: 'active', priority: 6,
