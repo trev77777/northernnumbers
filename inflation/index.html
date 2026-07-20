@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html lang="en-CA">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Inflation Calculator Canada 2026 — Northern Numbers</title>
+  <meta name="description" content="Free Canadian inflation calculator. See how inflation erodes purchasing power over time, compare past and present values using Canadian CPI data, and plan for rising costs." />
+  <meta name="keywords" content="inflation calculator canada, cpi calculator canada, purchasing power calculator canada, cost of living calculator canada" />
+  <link rel="canonical" href="https://www.northernnumbers.ca/inflation/" />
+  <meta property="og:title" content="Inflation Calculator Canada 2026 — Northern Numbers" />
+  <meta property="og:description" content="See how inflation erodes purchasing power over time using Canadian CPI data." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://www.northernnumbers.ca/inflation/" />
+  <meta property="og:locale" content="en_CA" />
+  <meta property="og:site_name" content="Northern Numbers" />
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Inflation Calculator Canada 2026 — Northern Numbers" />
+  <meta name="twitter:description" content="See how inflation erodes purchasing power over time using Canadian CPI data." />
+  <meta name="robots" content="index, follow" />
+  <meta name="author" content="Northern Numbers" />
+  <link rel="icon" type="image/x-icon" href="../favicon.ico" />
+  <link rel="icon" type="image/svg+xml" href="../favicon.svg" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Poppins:wght@600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="../styles.css" />
+</head>
+<body>
+
+  <header class="site-header" id="nn-header" role="banner"></header>
+
+  <main id="main-content" class="calc-page">
+    <div class="container">
+
+      <nav class="calc-breadcrumb" aria-label="Breadcrumb">
+        <a href="/">Home</a>
+        <span class="calc-breadcrumb-sep" aria-hidden="true">›</span>
+        <a href="/finance/">Calculators</a>
+        <span class="calc-breadcrumb-sep" aria-hidden="true">›</span>
+        <span aria-current="page">Inflation Calculator</span>
+      </nav>
+
+      <div class="calc-page-header">
+        <h1 class="calc-page-title">Canadian Inflation Calculator 2026</h1>
+        <p class="calc-page-desc">See how inflation erodes purchasing power over time. Calculate what a dollar amount from the past is worth today, or project how far your money will go in the future.</p>
+      </div>
+
+      <div class="calc-layout">
+
+        <!-- LEFT: Inputs -->
+        <section class="calc-panel" aria-labelledby="inputs-heading">
+          <h2 id="inputs-heading" class="calc-panel-title">Your Inflation Details</h2>
+
+          <div class="quick-start" role="note">
+            <p class="quick-start-title">📋 How to use this calculator</p>
+            <ol>
+              <li>Enter a dollar amount.</li>
+              <li>Choose whether to calculate <strong>past → present</strong> or <strong>present → future</strong>.</li>
+              <li>Set the number of years and inflation rate.</li>
+              <li>Click <strong>Calculate</strong> to see your result.</li>
+            </ol>
+          </div>
+
+          <!-- Presets -->
+          <div style="margin-bottom:var(--space-4)">
+            <p style="font-size:var(--text-sm);font-weight:600;color:var(--color-text-muted);margin-bottom:var(--space-2)">Quick presets:</p>
+            <div class="preset-group" role="group">
+              <button type="button" class="preset-btn" data-preset="boc">🏦 BoC Target (2%)</button>
+              <button type="button" class="preset-btn" data-preset="recent">📈 Recent Avg (2.7%)</button>
+              <button type="button" class="preset-btn" data-preset="high">🔥 High (6.8%)</button>
+              <button type="button" class="preset-btn" data-preset="retirement">🏖 Retirement (25 yrs)</button>
+            </div>
+          </div>
+
+          <form id="inflation-form" novalidate>
+
+            <!-- Amount -->
+            <div class="form-group">
+              <label class="form-label" for="amount">Dollar Amount</label>
+              <div class="input-wrapper">
+                <span class="input-prefix" aria-hidden="true">$</span>
+                <input type="text" id="amount" class="form-input has-prefix"
+                  placeholder="10,000" inputmode="numeric" autocomplete="off" value="10,000"
+                  aria-describedby="amount-hint amount-error" />
+              </div>
+              <p class="field-help" id="amount-hint">The amount you want to compare across time.</p>
+              <p id="amount-error" class="form-error-msg" role="alert"></p>
+            </div>
+
+            <!-- Direction -->
+            <div class="form-group">
+              <label class="form-label" for="direction">Calculate Direction</label>
+              <div class="select-wrapper">
+                <select id="direction" class="form-select" aria-describedby="direction-hint">
+                  <option value="future" selected>Present → Future (what will it cost?)</option>
+                  <option value="past">Past → Present (what was it worth?)</option>
+                </select>
+              </div>
+              <p class="field-help" id="direction-hint">Choose whether you want to project forward or look backward.</p>
+            </div>
+
+            <!-- Years -->
+            <div class="form-group">
+              <label class="form-label" for="years">Number of Years</label>
+              <div class="input-wrapper">
+                <input type="number" id="years" class="form-input has-suffix"
+                  placeholder="10" min="1" max="50" step="1" value="10"
+                  aria-describedby="years-hint years-error" />
+                <span class="input-suffix" aria-hidden="true">years</span>
+              </div>
+              <input type="range" id="years-slider" class="range-slider"
+                min="1" max="50" step="1" value="10" aria-label="Years slider" />
+              <p class="field-help" id="years-hint">How many years forward or backward to calculate.</p>
+              <p id="years-error" class="form-error-msg" role="alert"></p>
+            </div>
+
+            <!-- Inflation Rate -->
+            <div class="form-group">
+              <label class="form-label" for="inflation-rate">Annual Inflation Rate</label>
+              <div class="input-wrapper">
+                <input type="number" id="inflation-rate" class="form-input has-suffix"
+                  placeholder="2.0" min="0.1" max="20" step="0.1" value="2.0"
+                  aria-describedby="rate-hint" />
+                <span class="input-suffix" aria-hidden="true">%</span>
+              </div>
+              <input type="range" id="rate-slider" class="range-slider"
+                min="0.1" max="10" step="0.1" value="2.0" aria-label="Inflation rate slider" />
+              <p class="field-help" id="rate-hint">Canada's long-term average is ~2.1%. The Bank of Canada targets 2%. Recent 10-year average: 2.7%.</p>
+            </div>
+
+            <div class="btn-row">
+              <button type="submit" class="btn btn-primary btn-calculate" id="calc-btn" style="flex:1">
+                Calculate
+              </button>
+              <button type="button" id="reset-btn" class="btn btn-secondary">Reset</button>
+            </div>
+
+          </form>
+        </section>
+
+        <!-- RIGHT: Results -->
+        <section class="calc-panel" aria-labelledby="results-heading" aria-live="polite">
+          <h2 id="results-heading" class="calc-panel-title">Your Results</h2>
+
+          <div id="results-placeholder" class="result-placeholder">
+            <div class="result-placeholder-icon" aria-hidden="true">
+              <svg width="56" height="56" viewBox="0 0 56 56" fill="none">
+                <circle cx="28" cy="28" r="20" stroke="#D1D5DB" stroke-width="2"/>
+                <path d="M28 18V28M28 28L34 22M28 28L22 22" stroke="#D1D5DB" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </div>
+            <p>Enter an amount and click <strong>Calculate</strong> to see purchasing power over time.</p>
+          </div>
+
+          <div id="results-content" class="hidden">
+
+            <!-- Hero -->
+            <div class="result-hero">
+              <p class="result-hero-label" id="result-hero-label">Equivalent Value</p>
+              <p class="result-hero-value" id="result-equivalent">—</p>
+              <p class="result-hero-sub" id="result-hero-sub">—</p>
+            </div>
+
+            <div class="result-summary" role="list">
+              <div class="result-row" role="listitem">
+                <span class="result-row-label">Starting Amount</span>
+                <span class="result-row-value" id="result-start">—</span>
+              </div>
+              <div class="result-row" role="listitem">
+                <span class="result-row-label">Years</span>
+                <span class="result-row-value" id="result-years-display">—</span>
+              </div>
+              <div class="result-row" role="listitem">
+                <span class="result-row-label">Annual Inflation Rate</span>
+                <span class="result-row-value" id="result-rate-display">—</span>
+              </div>
+              <div class="result-row" role="listitem">
+                <span class="result-row-label">Total Inflation</span>
+                <span class="result-row-value is-error" id="result-total-inflation">—</span>
+              </div>
+              <div class="result-row result-row--total" role="listitem">
+                <span class="result-row-label">Purchasing Power Change</span>
+                <span class="result-row-value is-error" id="result-power-change">—</span>
+              </div>
+            </div>
+
+            <!-- Milestone cards -->
+            <div class="milestone-grid" style="margin-top:var(--space-6)">
+              <div class="milestone-card">
+                <p class="milestone-label">Value Lost to Inflation</p>
+                <p class="milestone-value is-error" id="result-lost">—</p>
+                <p class="milestone-sub">In today's dollars</p>
+              </div>
+              <div class="milestone-card">
+                <p class="milestone-label">Real Return Needed</p>
+                <p class="milestone-value" id="result-real-return">—</p>
+                <p class="milestone-sub">To break even with inflation</p>
+              </div>
+              <div class="milestone-card">
+                <p class="milestone-label">Purchasing Power Halves</p>
+                <p class="milestone-value" id="result-half-life">—</p>
+                <p class="milestone-sub">Rule of 70 estimate</p>
+              </div>
+              <div class="milestone-card">
+                <p class="milestone-label">Annual Cost Increase</p>
+                <p class="milestone-value" id="result-annual-cost">—</p>
+                <p class="milestone-sub">On your starting amount</p>
+              </div>
+            </div>
+
+            <!-- Year-by-year table -->
+            <div style="margin-top:var(--space-6)">
+              <button type="button" class="advanced-toggle" id="table-toggle" aria-expanded="false" aria-controls="year-table">
+                <span>📅 Year-by-Year Breakdown</span>
+                <svg class="advanced-toggle-icon" width="18" height="18" viewBox="0 0 20 20" fill="none" aria-hidden="true">
+                  <path d="M5 7.5L10 12.5L15 7.5" stroke="#6B7280" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </button>
+              <div id="year-table" class="advanced-fields">
+                <div style="overflow-x:auto;margin-top:var(--space-3)">
+                  <table style="width:100%;border-collapse:collapse;font-size:var(--text-sm)" id="breakdown-table">
+                    <thead>
+                      <tr style="background:var(--color-bg);border-bottom:2px solid var(--color-border)">
+                        <th style="padding:var(--space-2) var(--space-3);text-align:left;font-weight:600">Year</th>
+                        <th style="padding:var(--space-2) var(--space-3);text-align:right;font-weight:600">Equivalent Value</th>
+                        <th style="padding:var(--space-2) var(--space-3);text-align:right;font-weight:600">Cumulative Change</th>
+                      </tr>
+                    </thead>
+                    <tbody id="breakdown-body"></tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+
+            <div id="nn-disclaimer" style="margin-top:var(--space-5)"></div>
+
+            <button type="button" id="copy-btn" class="copy-btn" style="margin-top:var(--space-4)">
+              📋 Copy Results to Clipboard
+            </button>
+
+          </div>
+        </section>
+      </div>
+
+      <!-- Educational content -->
+      <section style="margin-top:var(--space-16);padding-top:var(--space-10);border-top:1px solid var(--color-border)">
+        <h2 style="font-size:var(--text-2xl);font-weight:700;margin-bottom:var(--space-8)">Understanding Inflation in Canada</h2>
+        <div style="display:grid;gap:var(--space-8)">
+
+          <div>
+            <h3 style="font-size:var(--text-xl);font-weight:600;margin-bottom:var(--space-3)">🇨🇦 How Inflation Is Measured in Canada</h3>
+            <p style="color:var(--color-text-muted);line-height:1.8">Statistics Canada measures inflation through the Consumer Price Index (CPI), which tracks the price changes of a basket of goods and services that a typical Canadian household purchases. The basket includes food, shelter, transportation, clothing, health care, education, and recreation. When the CPI rises, it means the same basket costs more — your purchasing power has declined. The Bank of Canada targets a 2% annual inflation rate as the ideal balance between economic growth and price stability. Inflation above 2% erodes savings faster and makes long-term financial planning more difficult.</p>
+          </div>
+
+          <div>
+            <h3 style="font-size:var(--text-xl);font-weight:600;margin-bottom:var(--space-3)">📊 Canadian Inflation History</h3>
+            <div style="overflow-x:auto">
+              <table style="width:100%;border-collapse:collapse;font-size:var(--text-sm)">
+                <thead>
+                  <tr style="background:var(--color-bg);border-bottom:2px solid var(--color-border)">
+                    <th style="padding:var(--space-3);text-align:left;font-weight:600">Period</th>
+                    <th style="padding:var(--space-3);text-align:right;font-weight:600">Avg Annual CPI</th>
+                    <th style="padding:var(--space-3);text-align:right;font-weight:600">Notable Events</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr style="border-bottom:1px solid var(--color-border)"><td style="padding:var(--space-3)">1995–2004</td><td style="padding:var(--space-3);text-align:right">1.9%</td><td style="padding:var(--space-3);text-align:right">Post-recession stability</td></tr>
+                  <tr style="border-bottom:1px solid var(--color-border);background:var(--color-bg)"><td style="padding:var(--space-3)">2005–2014</td><td style="padding:var(--space-3);text-align:right">2.0%</td><td style="padding:var(--space-3);text-align:right">Near BoC target</td></tr>
+                  <tr style="border-bottom:1px solid var(--color-border)"><td style="padding:var(--space-3)">2015–2019</td><td style="padding:var(--space-3);text-align:right">1.5%</td><td style="padding:var(--space-3);text-align:right">Low inflation era</td></tr>
+                  <tr style="border-bottom:1px solid var(--color-border);background:var(--color-bg)"><td style="padding:var(--space-3)">2020</td><td style="padding:var(--space-3);text-align:right">0.7%</td><td style="padding:var(--space-3);text-align:right">COVID-19 pandemic</td></tr>
+                  <tr style="border-bottom:1px solid var(--color-border)"><td style="padding:var(--space-3)">2021</td><td style="padding:var(--space-3);text-align:right">3.4%</td><td style="padding:var(--space-3);text-align:right">Recovery & supply chains</td></tr>
+                  <tr style="border-bottom:1px solid var(--color-border);background:var(--color-bg)"><td style="padding:var(--space-3)">2022</td><td style="padding:var(--space-3);text-align:right">6.8%</td><td style="padding:var(--space-3);text-align:right">40-year high</td></tr>
+                  <tr style="border-bottom:1px solid var(--color-border)"><td style="padding:var(--space-3)">2023</td><td style="padding:var(--space-3);text-align:right">3.9%</td><td style="padding:var(--space-3);text-align:right">Rate hikes cooling inflation</td></tr>
+                  <tr style="border-bottom:1px solid var(--color-border);background:var(--color-bg)"><td style="padding:var(--space-3)">2024</td><td style="padding:var(--space-3);text-align:right">2.4%</td><td style="padding:var(--space-3);text-align:right">Returning to target</td></tr>
+                  <tr><td style="padding:var(--space-3)">2025</td><td style="padding:var(--space-3);text-align:right">2.3%</td><td style="padding:var(--space-3);text-align:right">Near BoC target</td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <div>
+            <h3 style="font-size:var(--text-xl);font-weight:600;margin-bottom:var(--space-3)">💡 How to Protect Your Money from Inflation</h3>
+            <p style="color:var(--color-text-muted);line-height:1.8">The most effective way to protect purchasing power is to invest in assets that grow faster than inflation. Historically, Canadian equity markets have returned 6–8% annually — well above the long-term inflation average of ~2%. A TFSA invested in a diversified index ETF like XEQT or VEQT provides tax-free growth that outpaces inflation over time. For fixed-income investors, Government of Canada Real Return Bonds (RRBs) are specifically designed to keep pace with CPI. Even a high-interest savings account returning 4–5% provides a real return of 2–3% after inflation in a typical year. Holding too much cash long-term is the most common way Canadians unknowingly lose purchasing power.</p>
+          </div>
+
+          <div>
+            <h3 style="font-size:var(--text-xl);font-weight:600;margin-bottom:var(--space-3)">🏠 Inflation and Real Estate in Canada</h3>
+            <p style="color:var(--color-text-muted);line-height:1.8">Real estate is often cited as an inflation hedge, but it's more complex in Canada. In high-demand cities like Toronto and Vancouver, home prices have grown far faster than CPI — making housing both unaffordable and an exceptional investment for early buyers. In slower markets, real estate may barely keep pace with inflation after maintenance costs, property taxes, and transaction fees are factored in. Rental costs tend to rise with inflation over time, making homeownership a hedge against rising rent costs. The FHSA, RRSP Home Buyers' Plan, and First Home Buyer's Tax Credit are Canadian programs specifically designed to help first-time buyers overcome the inflation-driven rise in home prices.</p>
+          </div>
+
+          <div>
+            <h3 style="font-size:var(--text-xl);font-weight:600;margin-bottom:var(--space-3)">❓ Frequently Asked Questions</h3>
+            <div style="display:flex;flex-direction:column;gap:var(--space-5)">
+              <div>
+                <p style="font-weight:600;margin-bottom:var(--space-1)">What is the current inflation rate in Canada?</p>
+                <p style="color:var(--color-text-muted);font-size:var(--text-sm);line-height:1.7">As of 2025, Canada's annual inflation rate is approximately 2.3%, close to the Bank of Canada's 2% target. After peaking at 6.8% in 2022, inflation has steadily declined due to interest rate increases. For the most current rate, check Statistics Canada's monthly CPI release.</p>
+              </div>
+              <div>
+                <p style="font-weight:600;margin-bottom:var(--space-1)">How does inflation affect my RRSP and TFSA?</p>
+                <p style="color:var(--color-text-muted);font-size:var(--text-sm);line-height:1.7">Inflation erodes the real value of any savings not earning a return above the inflation rate. $100,000 in a savings account earning 1% while inflation runs at 2% loses roughly $1,000 in real purchasing power per year. TFSA and RRSP investments in equities or balanced funds typically grow 5–8% annually, providing a real return of 3–6% after inflation — significantly growing your purchasing power over time.</p>
+              </div>
+              <div>
+                <p style="font-weight:600;margin-bottom:var(--space-1)">What is the Rule of 70?</p>
+                <p style="color:var(--color-text-muted);font-size:var(--text-sm);line-height:1.7">The Rule of 70 is a quick way to estimate how long it takes for purchasing power to halve at a given inflation rate: divide 70 by the annual inflation rate. At 2% inflation, purchasing power halves in approximately 35 years. At 6.8% (Canada's 2022 peak), it would halve in just over 10 years. This rule helps illustrate why even moderate inflation has a significant long-term impact.</p>
+              </div>
+              <div>
+                <p style="font-weight:600;margin-bottom:var(--space-1)">Are CPP and OAS adjusted for inflation?</p>
+                <p style="color:var(--color-text-muted);font-size:var(--text-sm);line-height:1.7">Yes. Both CPP and OAS are indexed to the Consumer Price Index and adjusted quarterly. This means your retirement income from these programs maintains its real purchasing power even during periods of high inflation — a significant advantage over fixed pensions or GICs that don't adjust for CPI.</p>
+              </div>
+            </div>
+          </div>
+
+          <div>
+            <h3 style="font-size:var(--text-xl);font-weight:600;margin-bottom:var(--space-3)">🔗 Related Calculators</h3>
+            <div id="nn-related"></div>
+          </div>
+
+        </div>
+
+        <div style="margin-top:var(--space-8);padding:var(--space-4) var(--space-5);background:var(--color-bg);border:1px solid var(--color-border);border-radius:var(--radius-md);font-size:var(--text-sm);color:var(--color-text-muted);line-height:1.7">
+          📋 This calculator uses compound inflation formula and user-provided rates. Historical CPI data sourced from Statistics Canada. Future projections are estimates only. See our <a href="/disclaimer.html" style="color:var(--color-primary)">full disclaimer</a>.
+        </div>
+      </section>
+
+    </div>
+  </main>
+
+  <footer class="site-footer" id="nn-footer" role="contentinfo"></footer>
+
+  <script src="../script.js" defer></script>
+  <script src="../data/nn-constants.js" defer></script>
+  <script src="../data/nn-calculators.js" defer></script>
+  <script src="../shared/nn-utils.js" defer></script>
+  <script src="../shared/nn-seo.js" defer></script>
+  <script src="../shared/nn-analytics.js" defer></script>
+  <script src="../shared/nn-ads.js" defer></script>
+  <script src="../shared/nn-components.js" defer></script>
+  <script src="inflation.js" defer></script>
+</body>
+</html>

@@ -96,7 +96,7 @@ window.NNRegistry = {
     /* ── PLANNED CALCULATORS ── (change status to 'active' when built) */
     {
       id: 'car-loan', name: 'Car Loan Calculator', category: 'loans',
-      url: '/car-loan/', icon: '🚗', lastmod: '2026-07-14',
+      url: '/car-loan/', icon: '🚗',
       description: 'Calculate monthly payments, total interest, and true cost of ownership for your next vehicle purchase in Canada.',
       keywords: ['car loan calculator canada','auto loan calculator canada','vehicle loan calculator'],
       status: 'active', priority: 6,
@@ -143,10 +143,10 @@ window.NNRegistry = {
       id: 'inflation', name: 'Inflation Calculator', category: 'personal',
       url: '/inflation/', icon: '📉',
       description: 'See how inflation erodes purchasing power over time using Canadian CPI data.',
-      keywords: ['inflation calculator canada','cpi calculator canada','purchasing power calculator'],
-      status: 'planned', priority: 11,
-      showInFooter: false, showOnHomepage: true,
-      related: ['compound-interest','retirement']
+      keywords: ['inflation calculator canada','cpi calculator canada','purchasing power calculator canada'],
+      status: 'active', priority: 11,
+      showInFooter: true, footerSection: 'moreTools', showOnHomepage: true,
+      related: ['compound-interest','rrsp','tfsa','cpp']
     },
     {
       id: 'cpp', name: 'CPP Calculator', category: 'retirement',
