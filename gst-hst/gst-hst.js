@@ -136,15 +136,25 @@ document.addEventListener('DOMContentLoaded', function () {
 
     // Summary rows
     document.getElementById('result-before-tax').textContent = NNUtils.formatCAD(beforeTax);
-    document.getElementById('result-fed-label').textContent  = `Federal Tax (${r.fedLabel})`;
-    document.getElementById('result-fed-tax').textContent    = NNUtils.formatCAD(fedTax);
 
     const provRow = document.getElementById('prov-tax-row');
+
     if (r.prov > 0) {
+      // Separate GST + PST/QST rows (BC, MB, SK, QC)
+      document.getElementById('result-fed-label').textContent  = `GST (${r.fed}%)`;
+      document.getElementById('result-fed-tax').textContent    = NNUtils.formatCAD(fedTax);
       provRow.style.display = '';
-      document.getElementById('result-prov-label').textContent = `Provincial Tax (${r.provLabel})`;
+      document.getElementById('result-prov-label').textContent = `${r.provLabel} (${r.prov}%)`;
       document.getElementById('result-prov-tax').textContent   = NNUtils.formatCAD(provTax);
+    } else if (r.type === 'HST') {
+      // Single combined HST row (ON, NB, NS, PE, NL)
+      document.getElementById('result-fed-label').textContent  = `HST (${r.total}%)`;
+      document.getElementById('result-fed-tax').textContent    = NNUtils.formatCAD(totalTax);
+      provRow.style.display = 'none';
     } else {
+      // GST only (AB, NT, NU, YT)
+      document.getElementById('result-fed-label').textContent  = `GST (${r.fed}%)`;
+      document.getElementById('result-fed-tax').textContent    = NNUtils.formatCAD(totalTax);
       provRow.style.display = 'none';
     }
 
