@@ -162,11 +162,30 @@ document.addEventListener('DOMContentLoaded', function () {
     document.getElementById('result-grand-total').textContent= NNUtils.formatCAD(grandTotal);
 
     // Milestone cards
-    document.getElementById('result-rate').textContent     = r.total + '%';
-    document.getElementById('result-tax-type').textContent = r.type;
+    document.getElementById('result-rate').textContent       = r.total + '%';
+    document.getElementById('result-tax-type').textContent   = r.type;
     document.getElementById('result-tax-amount').textContent = NNUtils.formatCAD(totalTax);
-    document.getElementById('result-fed-pct').textContent  = NNUtils.formatCAD(fedTax);
-    document.getElementById('result-per-100').textContent  = NNUtils.formatCAD(100 * totalRate);
+    document.getElementById('result-per-100').textContent    = NNUtils.formatCAD(100 * totalRate);
+
+    // Federal Portion card — context-aware
+    const fedCard      = document.getElementById('result-fed-pct');
+    const fedCardLabel = fedCard?.closest('.milestone-card')?.querySelector('.milestone-label');
+    const fedCardSub   = fedCard?.closest('.milestone-card')?.querySelector('.milestone-sub');
+    if (r.prov > 0) {
+      // BC, MB, SK, QC — GST + PST/QST already shown separately; hide this card
+      if (fedCard) fedCard.closest('.milestone-card').style.display = 'none';
+    } else if (r.type === 'HST') {
+      // HST provinces — show federal (5%) and provincial split
+      if (fedCard) fedCard.closest('.milestone-card').style.display = '';
+      const fedComponent  = beforeTax * 0.05;
+      const provComponent = totalTax - fedComponent;
+      if (fedCard)      fedCard.textContent      = NNUtils.formatCAD(fedComponent) + ' federal / ' + NNUtils.formatCAD(provComponent) + ' prov.';
+      if (fedCardLabel) fedCardLabel.textContent = 'HST Breakdown';
+      if (fedCardSub)   fedCardSub.textContent   = '5% federal + ' + (r.total - 5) + '% provincial';
+    } else {
+      // GST only — card is redundant, hide it
+      if (fedCard) fedCard.closest('.milestone-card').style.display = 'none';
+    }
 
     window._gstResults = { amount, province, direction, beforeTax, fedTax, provTax, totalTax, grandTotal, r };
 
