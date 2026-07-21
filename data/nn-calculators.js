@@ -185,6 +185,15 @@ window.NNRegistry = {
       related: ['income-tax','budget','inflation','loan']
     },
     {
+      id: 'net-worth', name: 'Net Worth Calculator', category: 'personal',
+      url: '/net-worth/', icon: '💎',
+      description: 'Calculate your total assets, liabilities, and net worth. Compare to Canadian benchmarks by age.',
+      keywords: ['net worth calculator canada','canadian net worth','average net worth canada by age'],
+      status: 'active', priority: 17,
+      showInFooter: true, footerSection: 'moreTools', showOnHomepage: true,
+      related: ['tfsa','rrsp','budget','mortgage']
+    },
+    {
       id: 'paycheck', name: 'Paycheck Calculator', category: 'taxes',
       url: '/paycheck/', icon: '💵',
       description: 'Calculate your exact take-home pay after federal tax, provincial tax, CPP, CPP2, and EI for all provinces.',

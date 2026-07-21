@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang="en-CA">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Net Worth Calculator Canada 2026 — Northern Numbers</title>
+  <meta name="description" content="Free Canadian net worth calculator. Calculate your total assets, liabilities, and net worth with TFSA, RRSP, FHSA, real estate, and debt. See how you compare to Canadian benchmarks by age." />
+  <meta name="keywords" content="net worth calculator canada, net worth calculator, canadian net worth, how to calculate net worth canada, average net worth canada by age" />
+  <link rel="canonical" href="https://www.northernnumbers.ca/net-worth/" />
+  <meta property="og:title" content="Net Worth Calculator Canada 2026 — Northern Numbers" />
+  <meta property="og:description" content="Calculate your total assets, liabilities, and net worth with Canadian-specific accounts like TFSA, RRSP, and FHSA." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://www.northernnumbers.ca/net-worth/" />
+  <meta property="og:locale" content="en_CA" />
+  <meta property="og:site_name" content="Northern Numbers" />
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Net Worth Calculator Canada 2026 — Northern Numbers" />
+  <meta name="twitter:description" content="Calculate your Canadian net worth including TFSA, RRSP, real estate, and all debts." />
+  <meta name="robots" content="index, follow" />
+  <meta name="author" content="Northern Numbers" />
+  <link rel="icon" type="image/png" sizes="32x32" href="../favicon-32x32.png" />
+  <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png" />
+  <link rel="icon" type="image/x-icon" href="../favicon.ico" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Poppins:wght@600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="../styles.css" />
+</head>
+<body>
+
+  <header class="site-header" id="nn-header" role="banner"></header>
+
+  <main id="main-content" class="calc-page">
+    <div class="container">
+
+      <nav class="calc-breadcrumb" aria-label="Breadcrumb">
+        <a href="/">Home</a>
+        <span class="calc-breadcrumb-sep" aria-hidden="true">›</span>
+        <a href="/finance/">Calculators</a>
+        <span class="calc-breadcrumb-sep" aria-hidden="true">›</span>
+        <span aria-current="page">Net Worth Calculator</span>
+      </nav>
+
+      <div class="calc-page-header">
+        <h1 class="calc-page-title">Canadian Net Worth Calculator 2026</h1>
+        <p class="calc-page-desc">Calculate your total assets, liabilities, and net worth. Includes Canadian-specific accounts like TFSA, RRSP, and FHSA. See how you compare to Canadian benchmarks by age.</p>
+      </div>
+
+      <div class="calc-layout">
+
+        <!-- Inputs -->
+        <section class="calc-panel" aria-labelledby="inputs-heading">
+          <h2 id="inputs-heading" class="calc-panel-title">Your Assets &amp; Liabilities</h2>
+
+          <div class="quick-start" role="note">
+            <p class="quick-start-title">📋 How to use this calculator</p>
+            <ol>
+              <li>Enter your <strong>assets</strong> — what you own.</li>
+              <li>Enter your <strong>liabilities</strong> — what you owe.</li>
+              <li>Enter your age to see how you compare to Canadian benchmarks.</li>
+              <li>Click <strong>Calculate Net Worth</strong> to see your result.</li>
+            </ol>
+          </div>
+
+          <form id="networth-form" novalidate>
+
+            <!-- ASSETS -->
+            <div class="budget-section">
+              <div class="budget-section-header">
+                <span class="budget-section-icon">💰</span>
+                <span class="budget-section-title">Liquid Assets</span>
+                <span class="budget-section-total" id="total-liquid">$0</span>
+              </div>
+              <div class="budget-row"><label class="budget-row-label" for="chequing">Chequing &amp; Savings</label><div class="budget-input-wrap"><span class="input-prefix" aria-hidden="true">$</span><input type="text" id="chequing" class="budget-input" placeholder="0" inputmode="numeric" value="5,000" data-section="liquid" /></div></div>
+              <div class="budget-row"><label class="budget-row-label" for="tfsa">TFSA</label><div class="budget-input-wrap"><span class="input-prefix" aria-hidden="true">$</span><input type="text" id="tfsa" class="budget-input" placeholder="0" inputmode="numeric" value="25,000" data-section="liquid" /></div></div>
+              <div class="budget-row"><label class="budget-row-label" for="emergency-fund">Emergency Fund</label><div class="budget-input-wrap"><span class="input-prefix" aria-hidden="true">$</span><input type="text" id="emergency-fund" class="budget-input" placeholder="0" inputmode="numeric" value="0" data-section="liquid" /></div></div>
+              <div class="budget-row"><label class="budget-row-label" for="cash">Cash &amp; GICs</label><div class="budget-input-wrap"><span class="input-prefix" aria-hidden="true">$</span><input type="text" id="cash" class="budget-input" placeholder="0" inputmode="numeric" value="0" data-section="liquid" /></div></div>
+            </div>
+
+            <div class="budget-section">
+              <div class="budget-section-header">
+                <span class="budget-section-icon">📈</span>
+                <span class="budget-section-title">Registered &amp; Investment Accounts</span>
+                <span class="budget-section-total" id="total-investments">$0</span>
+              </div>
+              <div class="budget-row"><label class="budget-row-label" for="rrsp">RRSP / LIRA</label><div class="budget-input-wrap"><span class="input-prefix" aria-hidden="true">$</span><input type="text" id="rrsp" class="budget-input" placeholder="0" inputmode="numeric" value="80,000" data-section="investments" /></div></div>
+              <div class="budget-row"><label class="budget-row-label" for="fhsa">FHSA</label><div class="budget-input-wrap"><span class="input-prefix" aria-hidden="true">$</span><input type="text" id="fhsa" class="budget-input" placeholder="0" inputmode="numeric" value="0" data-section="investments" /></div></div>
+              <div class="budget-row"><label class="budget-row-label" for="resp">RESP</label><div class="budget-input-wrap"><span class="input-prefix" aria-hidden="true">$</span><input type="text" id="resp" class="budget-input" placeholder="0" inputmode="numeric" value="0" data-section="investments" /></div></div>
+              <div class="budget-row"><label class="budget-row-label" for="non-registered">Non-Registered Investments</label><div class="budget-input-wrap"><span class="input-prefix" aria-hidden="true">$</span><input type="text" id="non-registered" class="budget-input" placeholder="0" inputmode="numeric" value="0" data-section="investments" /></div></div>
+              <div class="budget-row"><label class="budget-row-label" for="pension">Defined Benefit Pension (est.)</label><div class="budget-input-wrap"><span class="input-prefix" aria-hidden="true">$</span><input type="text" id="pension" class="budget-input" placeholder="0" inputmode="numeric" value="0" data-section="investments" /></div></div>
+              <div class="budget-row"><label class="budget-row-label" for="crypto">Crypto &amp; Alternative</label><div class="budget-input-wrap"><span class="input-prefix" aria-hidden="true">$</span><input type="text" id="crypto" class="budget-input" placeholder="0" inputmode="numeric" value="0" data-section="investments" /></div></div>
+            </div>
+
+            <div class="budget-section">
+              <div class="budget-section-header">
+                <span class="budget-section-icon">🏠</span>
+                <span class="budget-section-title">Real Estate</span>
+                <span class="budget-section-total" id="total-realestate">$0</span>
+              </div>
+              <div class="budget-row"><label class="budget-row-label" for="home-value">Primary Home (market value)</label><div class="budget-input-wrap"><span class="input-prefix" aria-hidden="true">$</span><input type="text" id="home-value" class="budget-input" placeholder="0" inputmode="numeric" value="650,000" data-section="realestate" /></div></div>
+              <div class="budget-row"><label class="budget-row-label" for="rental-property">Rental / Investment Property</label><div class="budget-input-wrap"><span class="input-prefix" aria-hidden="true">$</span><input type="text" id="rental-property" class="budget-input" placeholder="0" inputmode="numeric" value="0" data-section="realestate" /></div></div>
+              <div class="budget-row"><label class="budget-row-label" for="cottage">Cottage / Vacation Property</label><div class="budget-input-wrap"><span class="input-prefix" aria-hidden="true">$</span><input type="text" id="cottage" class="budget-input" placeholder="0" inputmode="numeric" value="0" data-section="realestate" /></div></div>
+            </div>
+
+            <div class="budget-section">
+              <div class="budget-section-header">
+                <span class="budget-section-icon">🚗</span>
+                <span class="budget-section-title">Other Assets</span>
+                <span class="budget-section-total" id="total-other-assets">$0</span>
+              </div>
+              <div class="budget-row"><label class="budget-row-label" for="vehicle">Vehicle(s)</label><div class="budget-input-wrap"><span class="input-prefix" aria-hidden="true">$</span><input type="text" id="vehicle" class="budget-input" placeholder="0" inputmode="numeric" value="20,000" data-section="other-assets" /></div></div>
+              <div class="budget-row"><label class="budget-row-label" for="business">Business Value</label><div class="budget-input-wrap"><span class="input-prefix" aria-hidden="true">$</span><input type="text" id="business" class="budget-input" placeholder="0" inputmode="numeric" value="0" data-section="other-assets" /></div></div>
+              <div class="budget-row"><label class="budget-row-label" for="other-assets-val">Other Assets</label><div class="budget-input-wrap"><span class="input-prefix" aria-hidden="true">$</span><input type="text" id="other-assets-val" class="budget-input" placeholder="0" inputmode="numeric" value="0" data-section="other-assets" /></div></div>
+            </div>
+
+            <!-- LIABILITIES -->
+            <div class="budget-section" style="border-top:2px solid var(--color-danger-light);margin-top:var(--space-4);padding-top:var(--space-2)">
+              <div class="budget-section-header">
+                <span class="budget-section-icon">🏦</span>
+                <span class="budget-section-title">Liabilities (What You Owe)</span>
+                <span class="budget-section-total" id="total-liabilities-display" style="color:var(--color-danger)">$0</span>
+              </div>
+              <div class="budget-row"><label class="budget-row-label" for="mortgage-balance">Mortgage Balance</label><div class="budget-input-wrap"><span class="input-prefix" aria-hidden="true">$</span><input type="text" id="mortgage-balance" class="budget-input" placeholder="0" inputmode="numeric" value="420,000" data-section="liabilities" /></div></div>
+              <div class="budget-row"><label class="budget-row-label" for="heloc">HELOC Balance</label><div class="budget-input-wrap"><span class="input-prefix" aria-hidden="true">$</span><input type="text" id="heloc" class="budget-input" placeholder="0" inputmode="numeric" value="0" data-section="liabilities" /></div></div>
+              <div class="budget-row"><label class="budget-row-label" for="car-loan">Car Loan</label><div class="budget-input-wrap"><span class="input-prefix" aria-hidden="true">$</span><input type="text" id="car-loan" class="budget-input" placeholder="0" inputmode="numeric" value="12,000" data-section="liabilities" /></div></div>
+              <div class="budget-row"><label class="budget-row-label" for="student-loan">Student Loan</label><div class="budget-input-wrap"><span class="input-prefix" aria-hidden="true">$</span><input type="text" id="student-loan" class="budget-input" placeholder="0" inputmode="numeric" value="0" data-section="liabilities" /></div></div>
+              <div class="budget-row"><label class="budget-row-label" for="credit-cards">Credit Card Balances</label><div class="budget-input-wrap"><span class="input-prefix" aria-hidden="true">$</span><input type="text" id="credit-cards" class="budget-input" placeholder="0" inputmode="numeric" value="2,000" data-section="liabilities" /></div></div>
+              <div class="budget-row"><label class="budget-row-label" for="personal-loan">Personal Loan</label><div class="budget-input-wrap"><span class="input-prefix" aria-hidden="true">$</span><input type="text" id="personal-loan" class="budget-input" placeholder="0" inputmode="numeric" value="0" data-section="liabilities" /></div></div>
+              <div class="budget-row"><label class="budget-row-label" for="other-debt">Other Debt</label><div class="budget-input-wrap"><span class="input-prefix" aria-hidden="true">$</span><input type="text" id="other-debt" class="budget-input" placeholder="0" inputmode="numeric" value="0" data-section="liabilities" /></div></div>
+            </div>
+
+            <!-- Age for benchmark -->
+            <div class="form-group" style="margin-top:var(--space-4)">
+              <label class="form-label" for="your-age">Your Age <span class="form-hint">(for benchmarks)</span></label>
+              <div class="input-wrapper">
+                <input type="number" id="your-age" class="form-input"
+                  placeholder="35" min="18" max="80" step="1" value="35"
+                  aria-describedby="age-hint" />
+              </div>
+              <p class="field-help" id="age-hint">Used to compare your net worth to Statistics Canada median benchmarks.</p>
+            </div>
+
+            <div class="btn-row">
+              <button type="submit" class="btn btn-primary btn-calculate" id="calc-btn" style="flex:1">
+                Calculate Net Worth
+              </button>
+              <button type="button" id="reset-btn" class="btn btn-secondary">Reset</button>
+            </div>
+
+          </form>
+        </section>
+
+        <!-- Results -->
+        <section class="calc-panel" aria-labelledby="results-heading" aria-live="polite">
+          <h2 id="results-heading" class="calc-panel-title">Your Results</h2>
+
+          <div id="results-placeholder" class="result-placeholder">
+            <div class="result-placeholder-icon" aria-hidden="true">
+              <svg width="56" height="56" viewBox="0 0 56 56" fill="none">
+                <circle cx="28" cy="28" r="20" stroke="#D1D5DB" stroke-width="2"/>
+                <path d="M28 18V28L34 34" stroke="#D1D5DB" stroke-width="2" stroke-linecap="round"/>
+              </svg>
+            </div>
+            <p>Enter your assets and liabilities, then click <strong>Calculate Net Worth</strong>.</p>
+          </div>
+
+          <div id="results-content" class="hidden">
+
+            <!-- Hero -->
+            <div class="result-hero" id="result-hero-box">
+              <p class="result-hero-label">Your Net Worth</p>
+              <p class="result-hero-value" id="result-net-worth">—</p>
+              <p class="result-hero-sub" id="result-hero-sub">—</p>
+            </div>
+
+            <div class="result-summary" role="list">
+              <div class="result-row" role="listitem">
+                <span class="result-row-label">Total Assets</span>
+                <span class="result-row-value is-success" id="result-total-assets">—</span>
+              </div>
+              <div class="result-row" role="listitem">
+                <span class="result-row-label">Total Liabilities</span>
+                <span class="result-row-value is-error" id="result-total-liabilities">—</span>
+              </div>
+              <div class="result-row result-row--total" role="listitem">
+                <span class="result-row-label">Net Worth</span>
+                <span class="result-row-value" id="result-nw-summary">—</span>
+              </div>
+              <div class="result-row" role="listitem">
+                <span class="result-row-label">Debt-to-Asset Ratio</span>
+                <span class="result-row-value" id="result-dta">—</span>
+              </div>
+              <div class="result-row" role="listitem">
+                <span class="result-row-label">Asset Coverage</span>
+                <span class="result-row-value" id="result-coverage">—</span>
+              </div>
+            </div>
+
+            <!-- Asset breakdown -->
+            <div style="margin-top:var(--space-5);padding:var(--space-5);background:var(--color-bg);border:1px solid var(--color-border);border-radius:var(--radius-md)">
+              <p style="font-family:var(--font-heading);font-size:var(--text-base);font-weight:700;margin-bottom:var(--space-4)">Asset Breakdown</p>
+              <div class="result-summary" role="list">
+                <div class="result-row" role="listitem"><span class="result-row-label">💰 Liquid Assets</span><span class="result-row-value" id="result-liquid">—</span></div>
+                <div class="result-row" role="listitem"><span class="result-row-label">📈 Registered &amp; Investments</span><span class="result-row-value" id="result-investments">—</span></div>
+                <div class="result-row" role="listitem"><span class="result-row-label">🏠 Real Estate</span><span class="result-row-value" id="result-realestate">—</span></div>
+                <div class="result-row" role="listitem"><span class="result-row-label">🚗 Other Assets</span><span class="result-row-value" id="result-other">—</span></div>
+              </div>
+            </div>
+
+            <!-- Milestone cards -->
+            <div class="milestone-grid" style="margin-top:var(--space-5)">
+              <div class="milestone-card">
+                <p class="milestone-label">Liquid Net Worth</p>
+                <p class="milestone-value" id="result-liquid-nw">—</p>
+                <p class="milestone-sub">Excl. real estate &amp; illiquid</p>
+              </div>
+              <div class="milestone-card">
+                <p class="milestone-label">Home Equity</p>
+                <p class="milestone-value" id="result-home-equity">—</p>
+                <p class="milestone-sub">Home value minus mortgage</p>
+              </div>
+              <div class="milestone-card">
+                <p class="milestone-label">Canadian Median (Age)</p>
+                <p class="milestone-value" id="result-benchmark">—</p>
+                <p class="milestone-sub" id="result-benchmark-sub">—</p>
+              </div>
+              <div class="milestone-card">
+                <p class="milestone-label">vs. Benchmark</p>
+                <p class="milestone-value" id="result-vs-benchmark">—</p>
+                <p class="milestone-sub" id="result-vs-sub">—</p>
+              </div>
+            </div>
+
+            <div id="nn-disclaimer" style="margin-top:var(--space-5)"></div>
+
+            <button type="button" id="copy-btn" class="copy-btn" style="margin-top:var(--space-4)">
+              📋 Copy Results to Clipboard
+            </button>
+
+          </div>
+        </section>
+      </div>
+
+      <!-- Educational -->
+      <section style="margin-top:var(--space-16);padding-top:var(--space-10);border-top:1px solid var(--color-border)">
+        <h2 style="font-size:var(--text-2xl);font-weight:700;margin-bottom:var(--space-8)">Understanding Net Worth in Canada</h2>
+        <div style="display:grid;gap:var(--space-8)">
+
+          <div>
+            <h3 style="font-size:var(--text-xl);font-weight:600;margin-bottom:var(--space-3)">🇨🇦 What Is Net Worth?</h3>
+            <p style="color:var(--color-text-muted);line-height:1.8">Net worth is the difference between everything you own (assets) and everything you owe (liabilities). It's the most comprehensive snapshot of your financial health — more meaningful than income alone, because it captures what you've actually built over time. A high income with no savings and large debts can produce a negative net worth, while a modest income with consistent saving and investing can produce strong net worth over decades. Most financial planners recommend tracking your net worth at least annually to measure real financial progress.</p>
+          </div>
+
+          <div>
+            <h3 style="font-size:var(--text-xl);font-weight:600;margin-bottom:var(--space-3)">📊 Canadian Net Worth Benchmarks by Age</h3>
+            <p style="color:var(--color-text-muted);line-height:1.8;margin-bottom:var(--space-4)">Based on Statistics Canada Survey of Financial Security data. These are median (middle) values — half of Canadians have more, half have less.</p>
+            <div style="overflow-x:auto">
+              <table style="width:100%;border-collapse:collapse;font-size:var(--text-sm)">
+                <thead>
+                  <tr style="background:var(--color-bg);border-bottom:2px solid var(--color-border)">
+                    <th style="padding:var(--space-3);text-align:left;font-weight:600">Age Group</th>
+                    <th style="padding:var(--space-3);text-align:right;font-weight:600">Median Net Worth</th>
+                    <th style="padding:var(--space-3);text-align:right;font-weight:600">Key Driver</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr style="border-bottom:1px solid var(--color-border)"><td style="padding:var(--space-3)">Under 35</td><td style="padding:var(--space-3);text-align:right">~$48,000</td><td style="padding:var(--space-3);text-align:right">TFSA, RRSP, student debt</td></tr>
+                  <tr style="border-bottom:1px solid var(--color-border);background:var(--color-bg)"><td style="padding:var(--space-3)">35–44</td><td style="padding:var(--space-3);text-align:right">~$234,000</td><td style="padding:var(--space-3);text-align:right">Home equity building</td></tr>
+                  <tr style="border-bottom:1px solid var(--color-border)"><td style="padding:var(--space-3)">45–54</td><td style="padding:var(--space-3);text-align:right">~$521,000</td><td style="padding:var(--space-3);text-align:right">Peak earning, mortgage paydown</td></tr>
+                  <tr style="border-bottom:1px solid var(--color-border);background:var(--color-bg)"><td style="padding:var(--space-3)">55–64</td><td style="padding:var(--space-3);text-align:right">~$890,000</td><td style="padding:var(--space-3);text-align:right">RRSP, paid-off home</td></tr>
+                  <tr><td style="padding:var(--space-3)">65+</td><td style="padding:var(--space-3);text-align:right">~$1,015,000</td><td style="padding:var(--space-3);text-align:right">Real estate, pension</td></tr>
+                </tbody>
+              </table>
+            </div>
+            <p style="font-size:var(--text-xs);color:var(--color-text-muted);margin-top:var(--space-2)">Source: Statistics Canada Survey of Financial Security. Values are approximate and inflation-adjusted for 2026.</p>
+          </div>
+
+          <div>
+            <h3 style="font-size:var(--text-xl);font-weight:600;margin-bottom:var(--space-3)">💡 How to Increase Your Net Worth</h3>
+            <p style="color:var(--color-text-muted);line-height:1.8">Net worth grows when assets increase faster than liabilities. The most reliable strategies in Canada: maximize your TFSA first (tax-free growth and withdrawals don't affect OAS clawback), contribute to RRSP for the tax refund and invest it, pay down high-interest debt aggressively, and build home equity through regular mortgage payments. Investing in a diversified index ETF inside your TFSA or RRSP — like XEQT or VEQT — is one of the simplest ways to grow assets over time with minimal fees. Canadians who consistently save 15–20% of their income and invest it in low-cost index funds typically reach retirement with a net worth well above the national median.</p>
+          </div>
+
+          <div>
+            <h3 style="font-size:var(--text-xl);font-weight:600;margin-bottom:var(--space-3)">❓ Frequently Asked Questions</h3>
+            <div style="display:flex;flex-direction:column;gap:var(--space-5)">
+              <div>
+                <p style="font-weight:600;margin-bottom:var(--space-1)">Should I include my car in net worth?</p>
+                <p style="color:var(--color-text-muted);font-size:var(--text-sm);line-height:1.7">Yes, at current market value — not what you paid. Use Canadian Black Book or similar to estimate your vehicle's current value. Include any outstanding car loan as a liability. Most financial planners include vehicles since they have real resale value, though they depreciate quickly and are considered a depreciating asset unlike a home or investment account.</p>
+              </div>
+              <div>
+                <p style="font-weight:600;margin-bottom:var(--space-1)">Should I include my pension in net worth?</p>
+                <p style="color:var(--color-text-muted);font-size:var(--text-sm);line-height:1.7">A Defined Contribution (DC) pension has a clear account balance and should be included. A Defined Benefit (DB) pension is harder to value — a rough estimate is to multiply your annual projected pension income by 20–25. For example, a DB pension paying $40,000/year is worth approximately $800,000–$1,000,000 in net worth terms. CPP and OAS are generally excluded from personal net worth calculations since they cannot be transferred or inherited.</p>
+              </div>
+              <div>
+                <p style="font-weight:600;margin-bottom:var(--space-1)">What is a good net worth at 35 in Canada?</p>
+                <p style="color:var(--color-text-muted);font-size:var(--text-sm);line-height:1.7">The median Canadian net worth for ages 35–44 is approximately $234,000, driven largely by home equity in those who own. A common rule of thumb is to have a net worth equal to your annual income by 30, double by 35, and four times by 40. But context matters — those who rented through their 20s and invested heavily may have high liquid net worth with no home equity, which is equally valid.</p>
+              </div>
+              <div>
+                <p style="font-weight:600;margin-bottom:var(--space-1)">Is TFSA withdrawal room part of net worth?</p>
+                <p style="color:var(--color-text-muted);font-size:var(--text-sm);line-height:1.7">No. Unused TFSA contribution room is not an asset — it's simply the capacity to shelter future savings from tax. Only the actual money inside your TFSA accounts counts toward your net worth. Similarly, RRSP deduction limit is not an asset.</p>
+              </div>
+            </div>
+          </div>
+
+          <div>
+            <h3 style="font-size:var(--text-xl);font-weight:600;margin-bottom:var(--space-3)">🔗 Related Calculators</h3>
+            <div id="nn-related"></div>
+          </div>
+
+        </div>
+
+        <div style="margin-top:var(--space-8);padding:var(--space-4) var(--space-5);background:var(--color-bg);border:1px solid var(--color-border);border-radius:var(--radius-md);font-size:var(--text-sm);color:var(--color-text-muted);line-height:1.7">
+          📋 Net worth benchmarks are based on Statistics Canada Survey of Financial Security data, adjusted for 2026. Personal net worth calculations depend on accurate self-reported values. This calculator is for informational purposes only. See our <a href="/disclaimer.html" style="color:var(--color-primary)">full disclaimer</a>.
+        </div>
+      </section>
+
+    </div>
+  </main>
+
+  <footer class="site-footer" id="nn-footer" role="contentinfo"></footer>
+
+  <script src="../script.js" defer></script>
+  <script src="../data/nn-constants.js" defer></script>
+  <script src="../data/nn-calculators.js" defer></script>
+  <script src="../shared/nn-utils.js" defer></script>
+  <script src="../shared/nn-seo.js" defer></script>
+  <script src="../shared/nn-analytics.js" defer></script>
+  <script src="../shared/nn-ads.js" defer></script>
+  <script src="../shared/nn-components.js" defer></script>
+  <script src="net-worth.js" defer></script>
+</body>
+</html>
