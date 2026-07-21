@@ -1,0 +1,402 @@
+<!DOCTYPE html>
+<html lang="en-CA">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Paycheck Calculator Canada 2026 — Northern Numbers</title>
+  <meta name="description" content="Free Canadian paycheck calculator for 2026. Calculate your exact take-home pay after federal tax, provincial tax, CPP, CPP2, and EI for all provinces. Weekly, biweekly, semi-monthly, and monthly." />
+  <meta name="keywords" content="paycheck calculator canada 2026, take home pay calculator canada, salary after tax canada, net pay calculator canada, canadian payroll calculator" />
+  <link rel="canonical" href="https://www.northernnumbers.ca/paycheck/" />
+  <meta property="og:title" content="Paycheck Calculator Canada 2026 — Northern Numbers" />
+  <meta property="og:description" content="Calculate your exact take-home pay after federal tax, provincial tax, CPP, CPP2, and EI for all provinces." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://www.northernnumbers.ca/paycheck/" />
+  <meta property="og:locale" content="en_CA" />
+  <meta property="og:site_name" content="Northern Numbers" />
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Paycheck Calculator Canada 2026 — Northern Numbers" />
+  <meta name="twitter:description" content="Calculate your exact take-home pay after tax, CPP, and EI for all Canadian provinces." />
+  <meta name="robots" content="index, follow" />
+  <meta name="author" content="Northern Numbers" />
+  <link rel="icon" type="image/png" sizes="32x32" href="../favicon-32x32.png" />
+  <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png" />
+  <link rel="icon" type="image/x-icon" href="../favicon.ico" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Poppins:wght@600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="../styles.css" />
+</head>
+<body>
+
+  <header class="site-header" id="nn-header" role="banner"></header>
+
+  <main id="main-content" class="calc-page">
+    <div class="container">
+
+      <nav class="calc-breadcrumb" aria-label="Breadcrumb">
+        <a href="/">Home</a>
+        <span class="calc-breadcrumb-sep" aria-hidden="true">›</span>
+        <a href="/finance/">Calculators</a>
+        <span class="calc-breadcrumb-sep" aria-hidden="true">›</span>
+        <span aria-current="page">Paycheck Calculator</span>
+      </nav>
+
+      <div class="calc-page-header">
+        <h1 class="calc-page-title">Canadian Paycheck Calculator 2026</h1>
+        <p class="calc-page-desc">Calculate your exact take-home pay after federal tax, provincial tax, CPP, CPP2, and EI. Supports weekly, biweekly, semi-monthly, and monthly pay periods for all provinces.</p>
+      </div>
+
+      <div class="calc-layout">
+
+        <!-- Inputs -->
+        <section class="calc-panel" aria-labelledby="inputs-heading">
+          <h2 id="inputs-heading" class="calc-panel-title">Your Pay Details</h2>
+
+          <div class="quick-start" role="note">
+            <p class="quick-start-title">📋 How to use this calculator</p>
+            <ol>
+              <li>Enter your gross annual salary or hourly wage.</li>
+              <li>Select your province and pay frequency.</li>
+              <li>Add any RRSP contributions to reduce your taxable income.</li>
+              <li>Click <strong>Calculate Paycheck</strong> to see your breakdown.</li>
+            </ol>
+          </div>
+
+          <!-- Presets -->
+          <div style="margin-bottom:var(--space-4)">
+            <p style="font-size:var(--text-sm);font-weight:600;color:var(--color-text-muted);margin-bottom:var(--space-2)">Quick presets:</p>
+            <div class="preset-group" role="group">
+              <button type="button" class="preset-btn" data-preset="min">🌱 Min Wage ON</button>
+              <button type="button" class="preset-btn" data-preset="avg">📊 Avg Canadian</button>
+              <button type="button" class="preset-btn" data-preset="tech">💻 Tech Worker</button>
+              <button type="button" class="preset-btn" data-preset="exec">🏆 Executive</button>
+            </div>
+          </div>
+
+          <form id="paycheck-form" novalidate>
+
+            <!-- Income type toggle -->
+            <div class="form-group">
+              <label class="form-label" for="income-type">Income Type</label>
+              <div class="select-wrapper">
+                <select id="income-type" class="form-select">
+                  <option value="annual" selected>Annual Salary</option>
+                  <option value="hourly">Hourly Wage</option>
+                </select>
+              </div>
+            </div>
+
+            <!-- Annual salary -->
+            <div class="form-group" id="annual-group">
+              <label class="form-label" for="gross-salary">Annual Gross Salary</label>
+              <div class="input-wrapper">
+                <span class="input-prefix" aria-hidden="true">$</span>
+                <input type="text" id="gross-salary" class="form-input has-prefix"
+                  placeholder="85,000" inputmode="numeric" autocomplete="off" value="85,000"
+                  aria-describedby="salary-hint salary-error" />
+              </div>
+              <p class="field-help" id="salary-hint">Your total gross salary before any deductions.</p>
+              <p id="salary-error" class="form-error-msg" role="alert"></p>
+            </div>
+
+            <!-- Hourly wage (hidden by default) -->
+            <div class="form-group" id="hourly-group" style="display:none">
+              <label class="form-label" for="hourly-rate">Hourly Rate</label>
+              <div class="input-wrapper">
+                <span class="input-prefix" aria-hidden="true">$</span>
+                <input type="text" id="hourly-rate" class="form-input has-prefix"
+                  placeholder="25.00" inputmode="decimal" autocomplete="off" value="25.00"
+                  aria-describedby="hourly-hint" />
+              </div>
+              <p class="field-help" id="hourly-hint">Your hourly rate before deductions.</p>
+            </div>
+
+            <!-- Hours per week (shown with hourly) -->
+            <div class="form-group" id="hours-group" style="display:none">
+              <label class="form-label" for="hours-per-week">Hours per Week</label>
+              <div class="input-wrapper">
+                <input type="number" id="hours-per-week" class="form-input has-suffix"
+                  placeholder="40" min="1" max="80" step="1" value="40" />
+                <span class="input-suffix" aria-hidden="true">hrs</span>
+              </div>
+            </div>
+
+            <!-- Province -->
+            <div class="form-group">
+              <label class="form-label" for="province">Province / Territory</label>
+              <div class="select-wrapper">
+                <select id="province" class="form-select">
+                  <option value="ON" selected>Ontario</option>
+                  <option value="AB">Alberta</option>
+                  <option value="BC">British Columbia</option>
+                  <option value="MB">Manitoba</option>
+                  <option value="SK">Saskatchewan</option>
+                  <option value="QC">Quebec</option>
+                  <option value="NB">New Brunswick</option>
+                  <option value="NS">Nova Scotia</option>
+                  <option value="PE">Prince Edward Island</option>
+                  <option value="NL">Newfoundland &amp; Labrador</option>
+                  <option value="YT">Yukon</option>
+                  <option value="NT">Northwest Territories</option>
+                  <option value="NU">Nunavut</option>
+                </select>
+              </div>
+            </div>
+
+            <!-- Pay frequency -->
+            <div class="form-group">
+              <label class="form-label" for="pay-frequency">Pay Frequency</label>
+              <div class="select-wrapper">
+                <select id="pay-frequency" class="form-select" aria-describedby="freq-hint">
+                  <option value="26" selected>Biweekly (every 2 weeks) — 26 pay periods</option>
+                  <option value="52">Weekly — 52 pay periods</option>
+                  <option value="24">Semi-monthly (twice a month) — 24 pay periods</option>
+                  <option value="12">Monthly — 12 pay periods</option>
+                </select>
+              </div>
+              <p class="field-help" id="freq-hint">Most Canadian employees are paid biweekly.</p>
+            </div>
+
+            <!-- Employment type -->
+            <div class="form-group">
+              <label class="form-label" for="employment-type">Employment Type</label>
+              <div class="select-wrapper">
+                <select id="employment-type" class="form-select">
+                  <option value="employed" selected>Employee (CPP + EI apply)</option>
+                  <option value="self-employed">Self-Employed (CPP × 2, no EI)</option>
+                </select>
+              </div>
+            </div>
+
+            <!-- RRSP -->
+            <div class="form-group">
+              <label class="form-label" for="rrsp-annual">Annual RRSP Contribution <span class="form-hint">(optional)</span></label>
+              <div class="input-wrapper">
+                <span class="input-prefix" aria-hidden="true">$</span>
+                <input type="text" id="rrsp-annual" class="form-input has-prefix"
+                  placeholder="0" inputmode="numeric" autocomplete="off" value="0"
+                  aria-describedby="rrsp-hint" />
+              </div>
+              <p class="field-help" id="rrsp-hint">RRSP contributions reduce your taxable income and your tax deductions each pay period.</p>
+            </div>
+
+            <div class="btn-row">
+              <button type="submit" class="btn btn-primary btn-calculate" id="calc-btn" style="flex:1">
+                Calculate Paycheck
+              </button>
+              <button type="button" id="reset-btn" class="btn btn-secondary">Reset</button>
+            </div>
+
+          </form>
+        </section>
+
+        <!-- Results -->
+        <section class="calc-panel" aria-labelledby="results-heading" aria-live="polite">
+          <h2 id="results-heading" class="calc-panel-title">Your Results</h2>
+
+          <div id="results-placeholder" class="result-placeholder">
+            <div class="result-placeholder-icon" aria-hidden="true">
+              <svg width="56" height="56" viewBox="0 0 56 56" fill="none">
+                <rect x="8" y="12" width="40" height="32" rx="3" stroke="#D1D5DB" stroke-width="2"/>
+                <path d="M16 22H40M16 30H32" stroke="#D1D5DB" stroke-width="2" stroke-linecap="round"/>
+              </svg>
+            </div>
+            <p>Enter your salary and click <strong>Calculate Paycheck</strong> to see your take-home pay.</p>
+          </div>
+
+          <div id="results-content" class="hidden">
+
+            <!-- Hero -->
+            <div class="result-hero">
+              <p class="result-hero-label" id="result-hero-label">Take-Home Per Paycheck</p>
+              <p class="result-hero-value" id="result-net-per-period">—</p>
+              <p class="result-hero-sub" id="result-hero-sub">—</p>
+            </div>
+
+            <div class="result-summary" role="list">
+              <div class="result-row" role="listitem">
+                <span class="result-row-label">Gross Per Paycheck</span>
+                <span class="result-row-value" id="result-gross-per-period">—</span>
+              </div>
+              <div class="result-row" role="listitem">
+                <span class="result-row-label">Federal Income Tax</span>
+                <span class="result-row-value is-error" id="result-fed-per-period">—</span>
+              </div>
+              <div class="result-row" role="listitem">
+                <span class="result-row-label">Provincial Income Tax</span>
+                <span class="result-row-value is-error" id="result-prov-per-period">—</span>
+              </div>
+              <div class="result-row" role="listitem">
+                <span class="result-row-label">CPP Contribution</span>
+                <span class="result-row-value is-error" id="result-cpp-per-period">—</span>
+              </div>
+              <div class="result-row" id="cpp2-row" role="listitem">
+                <span class="result-row-label">CPP2 Contribution</span>
+                <span class="result-row-value is-error" id="result-cpp2-per-period">—</span>
+              </div>
+              <div class="result-row" id="ei-row" role="listitem">
+                <span class="result-row-label">EI Premium</span>
+                <span class="result-row-value is-error" id="result-ei-per-period">—</span>
+              </div>
+              <div class="result-row result-row--total" role="listitem">
+                <span class="result-row-label">Total Deductions</span>
+                <span class="result-row-value is-error" id="result-total-deductions">—</span>
+              </div>
+              <div class="result-row result-row--total" role="listitem">
+                <span class="result-row-label" style="color:var(--color-success);font-weight:700">Net Take-Home Pay</span>
+                <span class="result-row-value is-success" id="result-net-total">—</span>
+              </div>
+            </div>
+
+            <!-- Milestone cards -->
+            <div class="milestone-grid" style="margin-top:var(--space-5)">
+              <div class="milestone-card">
+                <p class="milestone-label">Annual Net Income</p>
+                <p class="milestone-value" id="result-net-annual">—</p>
+                <p class="milestone-sub">After all deductions</p>
+              </div>
+              <div class="milestone-card">
+                <p class="milestone-label">Effective Tax Rate</p>
+                <p class="milestone-value" id="result-effective-rate">—</p>
+                <p class="milestone-sub">All deductions / gross</p>
+              </div>
+              <div class="milestone-card">
+                <p class="milestone-label">Marginal Tax Rate</p>
+                <p class="milestone-value" id="result-marginal-rate">—</p>
+                <p class="milestone-sub">Rate on next dollar</p>
+              </div>
+              <div class="milestone-card">
+                <p class="milestone-label">RRSP Tax Savings</p>
+                <p class="milestone-value is-success" id="result-rrsp-savings">—</p>
+                <p class="milestone-sub">Annual tax reduction</p>
+              </div>
+            </div>
+
+            <!-- Annual summary -->
+            <div style="margin-top:var(--space-5);padding:var(--space-5);background:var(--color-bg);border:1px solid var(--color-border);border-radius:var(--radius-md)">
+              <p style="font-family:var(--font-heading);font-size:var(--text-base);font-weight:700;margin-bottom:var(--space-4)">Annual Summary</p>
+              <div class="result-summary" role="list">
+                <div class="result-row" role="listitem">
+                  <span class="result-row-label">Gross Annual Salary</span>
+                  <span class="result-row-value" id="result-gross-annual">—</span>
+                </div>
+                <div class="result-row" role="listitem">
+                  <span class="result-row-label">Annual Federal Tax</span>
+                  <span class="result-row-value is-error" id="result-fed-annual">—</span>
+                </div>
+                <div class="result-row" role="listitem">
+                  <span class="result-row-label">Annual Provincial Tax</span>
+                  <span class="result-row-value is-error" id="result-prov-annual">—</span>
+                </div>
+                <div class="result-row" role="listitem">
+                  <span class="result-row-label">Annual CPP</span>
+                  <span class="result-row-value is-error" id="result-cpp-annual">—</span>
+                </div>
+                <div class="result-row" role="listitem">
+                  <span class="result-row-label">Annual EI</span>
+                  <span class="result-row-value is-error" id="result-ei-annual">—</span>
+                </div>
+                <div class="result-row result-row--total" role="listitem">
+                  <span class="result-row-label">Annual Net Take-Home</span>
+                  <span class="result-row-value is-success" id="result-net-annual-total">—</span>
+                </div>
+              </div>
+            </div>
+
+            <div id="nn-disclaimer" style="margin-top:var(--space-5)"></div>
+
+            <button type="button" id="copy-btn" class="copy-btn" style="margin-top:var(--space-4)">
+              📋 Copy Results to Clipboard
+            </button>
+
+          </div>
+        </section>
+      </div>
+
+      <!-- Educational -->
+      <section style="margin-top:var(--space-16);padding-top:var(--space-10);border-top:1px solid var(--color-border)">
+        <h2 style="font-size:var(--text-2xl);font-weight:700;margin-bottom:var(--space-8)">Understanding Your Canadian Paycheck</h2>
+        <div style="display:grid;gap:var(--space-8)">
+
+          <div>
+            <h3 style="font-size:var(--text-xl);font-weight:600;margin-bottom:var(--space-3)">🇨🇦 What Gets Deducted from Your Paycheck?</h3>
+            <p style="color:var(--color-text-muted);line-height:1.8">Every Canadian employee has four mandatory deductions taken from each paycheck: federal income tax, provincial income tax, Canada Pension Plan (CPP) contributions, and Employment Insurance (EI) premiums. Your employer also matches your CPP contribution and pays 1.4 times your EI premium — these employer contributions do not come off your paycheck but are a real cost to your employer. If you earn above $68,500, you also contribute to CPP2 at 4% on earnings between $68,500 and $73,200 (up to $188/year in 2026). Quebec residents pay into QPP and QPIP instead of CPP and EI — this calculator uses simplified federal equivalents for Quebec and the actual difference is minor for most employees.</p>
+          </div>
+
+          <div>
+            <h3 style="font-size:var(--text-xl);font-weight:600;margin-bottom:var(--space-3)">📊 2026 Payroll Deduction Rates</h3>
+            <div style="overflow-x:auto">
+              <table style="width:100%;border-collapse:collapse;font-size:var(--text-sm)">
+                <thead>
+                  <tr style="background:var(--color-bg);border-bottom:2px solid var(--color-border)">
+                    <th style="padding:var(--space-3);text-align:left;font-weight:600">Deduction</th>
+                    <th style="padding:var(--space-3);text-align:right;font-weight:600">Rate</th>
+                    <th style="padding:var(--space-3);text-align:right;font-weight:600">2026 Maximum</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr style="border-bottom:1px solid var(--color-border)"><td style="padding:var(--space-3)">CPP (employee)</td><td style="padding:var(--space-3);text-align:right">5.95% of pensionable earnings</td><td style="padding:var(--space-3);text-align:right">$3,867.50</td></tr>
+                  <tr style="border-bottom:1px solid var(--color-border);background:var(--color-bg)"><td style="padding:var(--space-3)">CPP2 (employee)</td><td style="padding:var(--space-3);text-align:right">4% on $68,500–$73,200</td><td style="padding:var(--space-3);text-align:right">$188.00</td></tr>
+                  <tr style="border-bottom:1px solid var(--color-border)"><td style="padding:var(--space-3)">EI (employee)</td><td style="padding:var(--space-3);text-align:right">1.666% of insurable earnings</td><td style="padding:var(--space-3);text-align:right">$1,049.12</td></tr>
+                  <tr style="border-bottom:1px solid var(--color-border);background:var(--color-bg)"><td style="padding:var(--space-3)">Federal income tax</td><td style="padding:var(--space-3);text-align:right">15% – 33% (progressive)</td><td style="padding:var(--space-3);text-align:right">No maximum</td></tr>
+                  <tr><td style="padding:var(--space-3)">Provincial income tax</td><td style="padding:var(--space-3);text-align:right">Varies by province</td><td style="padding:var(--space-3);text-align:right">No maximum</td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <div>
+            <h3 style="font-size:var(--text-xl);font-weight:600;margin-bottom:var(--space-3)">💰 How RRSP Contributions Reduce Your Paycheck Deductions</h3>
+            <p style="color:var(--color-text-muted);line-height:1.8">Contributing to an RRSP reduces your taxable income and lowers the tax withheld from each paycheck — but only if your employer knows about your contributions. You can file a T1213 form with the CRA to get a reduced withholding at source based on your planned RRSP contributions. Without this form, you pay full tax throughout the year and receive a refund when you file. The RRSP deduction does not reduce CPP or EI — those are calculated on gross employment income regardless of RRSP contributions.</p>
+          </div>
+
+          <div>
+            <h3 style="font-size:var(--text-xl);font-weight:600;margin-bottom:var(--space-3)">❓ Frequently Asked Questions</h3>
+            <div style="display:flex;flex-direction:column;gap:var(--space-5)">
+              <div>
+                <p style="font-weight:600;margin-bottom:var(--space-1)">Why does my actual paycheck differ from this calculator?</p>
+                <p style="color:var(--color-text-muted);font-size:var(--text-sm);line-height:1.7">This calculator uses annualized tax rates applied evenly to each pay period. Your actual deductions may differ if you have a TD1 form with additional credits claimed, benefit deductions (health, dental, group RRSP, parking), union dues, garnishments, or if you started mid-year and your employer annualizes differently. The results are a close estimate for most employees on standard T4 employment.</p>
+              </div>
+              <div>
+                <p style="font-weight:600;margin-bottom:var(--space-1)">What is CPP2 and do I have to pay it?</p>
+                <p style="color:var(--color-text-muted);font-size:var(--text-sm);line-height:1.7">CPP2 is the second additional Canada Pension Plan contribution introduced in 2024. If you earn between $68,500 and $73,200 in 2026, you contribute 4% on that band — a maximum of $188 per year. Like CPP1, your employer matches your CPP2 contribution. The benefit is a slightly higher CPP retirement pension in the future.</p>
+              </div>
+              <div>
+                <p style="font-weight:600;margin-bottom:var(--space-1)">Is it better to be paid weekly or biweekly?</p>
+                <p style="color:var(--color-text-muted);font-size:var(--text-sm);line-height:1.7">Your annual net income is identical regardless of pay frequency — only the timing changes. Biweekly pay means 26 paychecks per year, with two months having three paydays. Some people prefer the predictability of semi-monthly (exactly twice per month on fixed dates) for budgeting purposes. Weekly pay can feel like more money but the annual total is the same.</p>
+              </div>
+              <div>
+                <p style="font-weight:600;margin-bottom:var(--space-1)">What is the minimum wage in Canada in 2026?</p>
+                <p style="color:var(--color-text-muted);font-size:var(--text-sm);line-height:1.7">Minimum wage varies by province. In Ontario it is $17.60/hour as of October 2025. Alberta is $15.00/hour. British Columbia is $17.40/hour. Quebec is $16.10/hour. The federal minimum wage (for federally regulated industries) is $17.30/hour. Most provinces adjust minimum wage annually, typically in October.</p>
+              </div>
+            </div>
+          </div>
+
+          <div>
+            <h3 style="font-size:var(--text-xl);font-weight:600;margin-bottom:var(--space-3)">🔗 Related Calculators</h3>
+            <div id="nn-related"></div>
+          </div>
+
+        </div>
+
+        <div style="margin-top:var(--space-8);padding:var(--space-4) var(--space-5);background:var(--color-bg);border:1px solid var(--color-border);border-radius:var(--radius-md);font-size:var(--text-sm);color:var(--color-text-muted);line-height:1.7">
+          📋 Results are estimates based on 2026 federal and provincial rates. Actual deductions may vary based on TD1 credits, benefit deductions, and employer payroll practices. Quebec residents use QPP and QPIP — this calculator uses federal CPP/EI equivalents for Quebec. See our <a href="/disclaimer.html" style="color:var(--color-primary)">full disclaimer</a>.
+        </div>
+      </section>
+
+    </div>
+  </main>
+
+  <footer class="site-footer" id="nn-footer" role="contentinfo"></footer>
+
+  <script src="../script.js" defer></script>
+  <script src="../data/nn-constants.js" defer></script>
+  <script src="../data/nn-calculators.js" defer></script>
+  <script src="../shared/nn-utils.js" defer></script>
+  <script src="../shared/nn-seo.js" defer></script>
+  <script src="../shared/nn-analytics.js" defer></script>
+  <script src="../shared/nn-ads.js" defer></script>
+  <script src="../shared/nn-components.js" defer></script>
+  <script src="paycheck.js" defer></script>
+</body>
+</html>

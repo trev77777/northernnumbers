@@ -183,6 +183,15 @@ window.NNRegistry = {
       status: 'active', priority: 15,
       showInFooter: true, footerSection: 'moreTools', showOnHomepage: true,
       related: ['income-tax','budget','inflation','loan']
+    },
+    {
+      id: 'paycheck', name: 'Paycheck Calculator', category: 'taxes',
+      url: '/paycheck/', icon: '💵',
+      description: 'Calculate your exact take-home pay after federal tax, provincial tax, CPP, CPP2, and EI for all provinces.',
+      keywords: ['paycheck calculator canada 2026','take home pay calculator canada','salary after tax canada','net pay calculator canada'],
+      status: 'active', priority: 16,
+      showInFooter: true, footerSection: 'moreTools', showOnHomepage: true,
+      related: ['income-tax','budget','rrsp','cpp']
     }
   ],
 
