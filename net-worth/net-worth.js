@@ -39,7 +39,7 @@ document.addEventListener('DOMContentLoaded', function () {
     });
     NNSeo.injectSchema({ title:'Canadian Net Worth Calculator 2026', slug:'net-worth', description:'Calculate your net worth with Canadian accounts like TFSA, RRSP, and FHSA. Compare to Statistics Canada benchmarks.' });
     NNSeo.injectFAQSchema([
-      { question:'What is the average net worth in Canada?', answer:'According to Statistics Canada, the median net worth of Canadian families is approximately $329,900. It varies significantly by age: under 35 is about $48,000, ages 35-44 is $234,000, 45-54 is $521,000, 55-64 is $890,000, and 65+ is over $1,000,000.' },
+      { question:'What is the average net worth in Canada?', answer:'According to Statistics Canada\'s Survey of Financial Security 2023, the median net worth of Canadian families was $519,700. It varies significantly by age: under 35 is $159,100, ages 35–44 is $409,300, 45–54 is $675,800, 55–64 is $873,400, and 65+ is $738,900.' },
       { question:'How do you calculate net worth in Canada?', answer:'Net worth equals total assets minus total liabilities. Assets include cash, TFSA, RRSP, FHSA, investments, home value, and other property. Liabilities include mortgage balance, car loans, student loans, credit card balances, and any other debt.' },
       { question:'Should I include my TFSA in net worth?', answer:'Yes. Your TFSA balance is a real asset and should be included in your net worth. The account has actual market value and can be withdrawn at any time. Unused TFSA contribution room is not an asset — only the money actually inside the account counts.' },
       { question:'What is a good net worth at 40 in Canada?', answer:'The median Canadian net worth for ages 35-44 is approximately $234,000. A common rule of thumb is to have a net worth equal to twice your annual income by age 40. However, this varies widely depending on whether you own a home, your province, and your savings habits.' },
@@ -91,12 +91,15 @@ document.addEventListener('DOMContentLoaded', function () {
   updateAllTotals();
 
   /* ── Benchmarks (Statistics Canada, inflation-adj. 2026) ── */
+  // Statistics Canada Survey of Financial Security 2023
+  // Released October 29, 2024 | 2023 constant dollars
+  // Source: https://www150.statcan.gc.ca/n1/daily-quotidien/241029/dq241029a-eng.htm
   const BENCHMARKS = [
-    { maxAge: 34,  label: 'Under 35', value: 48000 },
-    { maxAge: 44,  label: '35–44',    value: 234000 },
-    { maxAge: 54,  label: '45–54',    value: 521000 },
-    { maxAge: 64,  label: '55–64',    value: 890000 },
-    { maxAge: 100, label: '65+',      value: 1015000 },
+    { maxAge: 34,  label: 'Under 35', value: 159100 },
+    { maxAge: 44,  label: '35–44',    value: 409300 },
+    { maxAge: 54,  label: '45–54',    value: 675800 },
+    { maxAge: 64,  label: '55–64',    value: 873400 },
+    { maxAge: 100, label: '65+',      value: 738900 },
   ];
 
   function getBenchmark(age) {
