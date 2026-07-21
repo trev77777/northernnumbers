@@ -197,6 +197,17 @@ document.addEventListener('DOMContentLoaded', function () {
     document.getElementById('result-hero-sub').textContent    = `${NNUtils.formatCAD(grossAnnual)} gross · ${province} · ${freqLabel}`;
 
     document.getElementById('result-gross-per-period').textContent = NNUtils.formatCAD(gross_pp);
+
+    // Hourly wage equivalent (based on 40 hrs/week, 52 weeks)
+    const hourlyEquivRow = document.getElementById('hourly-equiv-row');
+    const hourlyEquivEl  = document.getElementById('result-hourly-equiv');
+    if (incomeType === 'annual' && hourlyEquivEl) {
+      const hourlyEquiv = grossAnnual / 2080; // 40 hrs × 52 weeks
+      hourlyEquivEl.textContent = NNUtils.formatCAD(hourlyEquiv) + '/hr';
+      if (hourlyEquivRow) hourlyEquivRow.style.display = '';
+    } else {
+      if (hourlyEquivRow) hourlyEquivRow.style.display = 'none';
+    }
     document.getElementById('result-fed-per-period').textContent   = NNUtils.formatCAD(fed_pp);
     document.getElementById('result-prov-per-period').textContent  = NNUtils.formatCAD(prov_pp);
     document.getElementById('result-cpp-per-period').textContent   = NNUtils.formatCAD(cpp_pp);
@@ -223,6 +234,7 @@ document.addEventListener('DOMContentLoaded', function () {
     document.getElementById('result-net-total').textContent        = NNUtils.formatCAD(net_pp);
 
     // Milestone cards
+    document.getElementById('result-monthly-takehome').textContent = NNUtils.formatCAD(netAnnual / 12);
     document.getElementById('result-net-annual').textContent     = NNUtils.formatCAD(netAnnual);
     document.getElementById('result-effective-rate').textContent = effectiveRate.toFixed(1) + '%';
     document.getElementById('result-marginal-rate').textContent  = marginalRate.toFixed(1) + '%';
