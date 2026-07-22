@@ -134,8 +134,12 @@ document.addEventListener('DOMContentLoaded', function () {
     const minWd     = balance * factor;
     const totalWd   = minWd + extraWd;
     const balAfter  = Math.max(0, (balance - totalWd) * (1 + growth));
-    const OAS_THRESH = 90997;
-    const oasRisk   = minWd > OAS_THRESH ? '⚠️ Exceeds clawback threshold' : minWd > OAS_THRESH * 0.75 ? '⚡ Approaching threshold' : '✅ Below threshold';
+    const OAS_THRESH = 95323; // 2026 estimated income threshold
+    const oasRisk   = minWd > OAS_THRESH
+      ? '⚠️ This withdrawal alone exceeds $95,323 — actual OAS recovery tax depends on total net world income'
+      : minWd > OAS_THRESH * 0.75
+      ? '⚡ This withdrawal alone is approaching $95,323 — monitor total net income'
+      : '✅ This withdrawal alone is below the $95,323 threshold';
 
     /* Render */
     placeholder.classList.add('hidden');

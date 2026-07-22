@@ -83,7 +83,7 @@
                   placeholder="500,000" inputmode="numeric" autocomplete="off" value="500,000"
                   aria-describedby="balance-hint balance-error" />
               </div>
-              <p class="field-help" id="balance-hint">The market value of your RRIF on January 1 of the current year. This is what your minimum withdrawal is calculated on.</p>
+              <p class="field-help" id="balance-hint">The market value of your RRIF on January 1 of the current year. This is what your minimum withdrawal is calculated on. No minimum withdrawal is required in the year a RRIF is first established.</p>
               <p id="balance-error" class="form-error-msg" role="alert"></p>
             </div>
 
@@ -103,7 +103,7 @@
               <div class="select-wrapper">
                 <select id="use-spouse-age" class="form-select">
                   <option value="own" selected>My own age</option>
-                  <option value="spouse">Spouse's age (if younger — reduces minimums)</option>
+                  <option value="spouse">Spouse's or common-law partner's age (only if you elected this when the RRIF was established)</option>
                 </select>
               </div>
             </div>
@@ -115,7 +115,7 @@
                   placeholder="68" min="55" max="95" step="1" value="68"
                   aria-describedby="spouse-hint" />
               </div>
-              <p class="field-help" id="spouse-hint">Must be younger than your age to reduce minimum withdrawals.</p>
+              <p class="field-help" id="spouse-hint">Use only if you irrevocably elected to use their age when the RRIF was established. Must be younger than your age to reduce minimum withdrawals.</p>
             </div>
 
             <div class="form-group">
@@ -216,9 +216,9 @@
             <!-- Milestone cards -->
             <div class="milestone-grid" style="margin-top:var(--space-5)">
               <div class="milestone-card">
-                <p class="milestone-label">Monthly Income</p>
+                <p class="milestone-label">Minimum Monthly Equivalent</p>
                 <p class="milestone-value" id="result-monthly">—</p>
-                <p class="milestone-sub">Minimum ÷ 12</p>
+                <p class="milestone-sub">Annual minimum ÷ 12</p>
               </div>
               <div class="milestone-card">
                 <p class="milestone-label">Withdrawal Rate</p>
@@ -228,12 +228,12 @@
               <div class="milestone-card">
                 <p class="milestone-label">OAS Clawback Risk</p>
                 <p class="milestone-value" id="result-oas-risk">—</p>
-                <p class="milestone-sub">Threshold: $90,997 (2026)</p>
+                <p class="milestone-sub">2026 income threshold — estimated</p>
               </div>
               <div class="milestone-card">
-                <p class="milestone-label">Balance After Withdrawal</p>
+                <p class="milestone-label">Projected Year-End Balance</p>
                 <p class="milestone-value" id="result-balance-after">—</p>
-                <p class="milestone-sub">After this year's min. withdrawal</p>
+                <p class="milestone-sub">After this year's withdrawal and assumed growth</p>
               </div>
             </div>
 
@@ -246,7 +246,8 @@
                 </svg>
               </button>
               <div id="projection-table" class="advanced-fields">
-                <div style="overflow-x:auto;margin-top:var(--space-3)">
+                <p style="font-size:var(--text-xs);color:var(--color-text-muted);margin-top:var(--space-3);margin-bottom:var(--space-2)">Annual withdrawals are assumed to occur at the beginning of each year. Balances reflect end-of-year values after withdrawal and growth.</p>
+              <div style="overflow-x:auto;margin-top:var(--space-3)">
                   <table style="width:100%;border-collapse:collapse;font-size:var(--text-sm)">
                     <thead>
                       <tr style="background:var(--color-bg);border-bottom:2px solid var(--color-border)">
@@ -319,12 +320,12 @@
 
           <div>
             <h3 style="font-size:var(--text-xl);font-weight:600;margin-bottom:var(--space-3)">💡 Strategies to Reduce RRIF Tax Impact</h3>
-            <p style="color:var(--color-text-muted);line-height:1.8">The most powerful strategy is early RRSP drawdown — making voluntary RRSP withdrawals in low-income years between 65 and 71, before mandatory RRIF withdrawals begin. This fills low tax brackets (20–25%) instead of forcing larger withdrawals later at 35–45%. Using your spouse's younger age for the RRIF calculation reduces the mandatory minimum each year, keeping more money growing tax-deferred. Pension income splitting allows you to allocate up to 50% of eligible RRIF income to a spouse, potentially halving your effective tax rate. Finally, withdrawing just enough above the minimum each year to fill a lower bracket — without triggering OAS clawback above $90,997 — can significantly reduce lifetime tax.</p>
+            <p style="color:var(--color-text-muted);line-height:1.8">The most powerful strategy is early RRSP drawdown — making voluntary RRSP withdrawals in low-income years between 65 and 71, before mandatory RRIF withdrawals begin. This fills low tax brackets (20–25%) instead of forcing larger withdrawals later at 35–45%. Using your spouse's younger age for the RRIF calculation reduces the mandatory minimum each year, keeping more money growing tax-deferred. Pension income splitting allows you to allocate up to 50% of eligible RRIF income to a spouse, potentially halving your effective tax rate. Finally, withdrawing just enough above the minimum each year to fill a lower bracket — without triggering OAS recovery tax above approximately $95,323 (2026 estimated threshold) — can significantly reduce lifetime tax.</p>
           </div>
 
           <div>
             <h3 style="font-size:var(--text-xl);font-weight:600;margin-bottom:var(--space-3)">⚠️ RRIF Withdrawals and OAS Clawback</h3>
-            <p style="color:var(--color-text-muted);line-height:1.8">RRIF withdrawals are fully taxable income and count toward your net income for OAS clawback purposes. In 2026, OAS begins to be clawed back at $90,997 of net income — 15 cents for every dollar above this threshold. For a retiree with a large RRIF, mandatory withdrawals alone can exceed the threshold by their late 70s or 80s. Combined with CPP and OAS itself, this makes RRIF planning an important part of retirement income strategy. One option is converting to an annuity for a portion of the RRIF to create predictable income without the growing mandatory withdrawal problem.</p>
+            <p style="color:var(--color-text-muted);line-height:1.8">RRIF withdrawals are fully taxable income and count toward your net income for OAS clawback purposes. In 2026, OAS recovery tax begins at approximately $95,323 of net income in 2026 (estimated) — 15 cents for every dollar above this threshold. For a retiree with a large RRIF, mandatory withdrawals alone can exceed the threshold by their late 70s or 80s. Combined with CPP and OAS itself, this makes RRIF planning an important part of retirement income strategy. One option is converting to an annuity for a portion of the RRIF to create predictable income without the growing mandatory withdrawal problem.</p>
           </div>
 
           <div>
@@ -357,7 +358,7 @@
         </div>
 
         <div style="margin-top:var(--space-8);padding:var(--space-4) var(--space-5);background:var(--color-bg);border:1px solid var(--color-border);border-radius:var(--radius-md);font-size:var(--text-sm);color:var(--color-text-muted);line-height:1.7">
-          📋 RRIF minimum withdrawal factors are based on the CRA Income Tax Act, Schedule I (post-2015 federal budget schedule). For ages under 71, the formula 1/(90−age) applies. OAS clawback threshold is $90,997 for 2026. Projections are estimates and do not account for taxes, inflation, or variable growth. See our <a href="/disclaimer.html" style="color:var(--color-primary)">full disclaimer</a>.
+          📋 RRIF minimum withdrawal factors are based on the CRA Income Tax Act, Schedule I (post-2015 federal budget schedule). For ages under 71, the formula 1/(90−age) applies. OAS recovery tax threshold is approximately $95,323 for 2026 (estimated). Projections are estimates and do not account for taxes, inflation, or variable growth. See our <a href="/disclaimer.html" style="color:var(--color-primary)">full disclaimer</a>.
         </div>
       </section>
 
