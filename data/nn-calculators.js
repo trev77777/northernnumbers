@@ -185,6 +185,15 @@ window.NNRegistry = {
       related: ['income-tax','budget','inflation','loan']
     },
     {
+      id: 'rrif', name: 'RRIF Calculator', category: 'retirement',
+      url: '/rrif/', icon: '📊',
+      description: 'Calculate mandatory RRIF minimum withdrawals using official CRA prescribed factors. Project your balance and income to age 90+.',
+      keywords: ['rrif calculator canada 2026','rrif minimum withdrawal calculator','rrif withdrawal table 2026'],
+      status: 'active', priority: 18,
+      showInFooter: true, footerSection: 'moreTools', showOnHomepage: true,
+      related: ['rrsp','cpp','oas','income-tax']
+    },
+    {
       id: 'net-worth', name: 'Net Worth Calculator', category: 'personal',
       url: '/net-worth/', icon: '💎',
       description: 'Calculate your total assets, liabilities, and net worth. Compare to Canadian benchmarks by age.',
