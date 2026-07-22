@@ -126,12 +126,12 @@ document.addEventListener('DOMContentLoaded', function () {
     // Hero
     const heroLabel = direction === 'future'
       ? `What $${NNUtils.formatInputNumber(amount)} costs in ${years} year${years>1?'s':''}`
-      : `What $${NNUtils.formatInputNumber(amount)} was worth ${years} year${years>1?'s':''} ago`;
+      : `Equivalent value ${years} year${years>1?'s':''} ago`;
     document.getElementById('result-hero-label').textContent = heroLabel;
     document.getElementById('result-equivalent').textContent = NNUtils.formatCAD(equivalent);
     document.getElementById('result-hero-sub').textContent   = direction === 'future'
       ? `At ${rate}% inflation over ${years} years`
-      : `In today's dollars at ${rate}% inflation`;
+      : `That amount had the same purchasing power as ${NNUtils.formatCAD(amount)} today`;
 
     // Summary rows
     document.getElementById('result-start').textContent         = NNUtils.formatCAD(amount);
