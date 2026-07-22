@@ -18,15 +18,12 @@
   <meta name="twitter:description" content="See how inflation erodes purchasing power over time using Canadian CPI data." />
   <meta name="robots" content="index, follow" />
   <meta name="author" content="Northern Numbers" />
-  
-  
+  <link rel="icon" type="image/x-icon" href="../favicon.ico" />
+  <link rel="icon" type="image/svg+xml" href="../favicon.svg" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Poppins:wght@600;700;800&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="../styles.css" />
-  <link rel="icon" type="image/png" sizes="32x32" href="../favicon-32x32.png" />
-  <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png" />
-  <link rel="icon" type="image/x-icon" href="../favicon.ico" />
 </head>
 <body>
 
@@ -194,14 +191,14 @@
             <!-- Milestone cards -->
             <div class="milestone-grid" style="margin-top:var(--space-6)">
               <div class="milestone-card">
-                <p class="milestone-label">Value Lost to Inflation</p>
+                <p class="milestone-label">Purchasing Power Lost</p>
                 <p class="milestone-value is-error" id="result-lost">—</p>
-                <p class="milestone-sub">In today's dollars</p>
+                <p class="milestone-sub">In today's dollars (real loss)</p>
               </div>
               <div class="milestone-card">
-                <p class="milestone-label">Real Return Needed</p>
+                <p class="milestone-label">Nominal Return Needed</p>
                 <p class="milestone-value" id="result-real-return">—</p>
-                <p class="milestone-sub">To break even with inflation</p>
+                <p class="milestone-sub">To keep pace with inflation (real return = 0%)</p>
               </div>
               <div class="milestone-card">
                 <p class="milestone-label">Purchasing Power Halves</p>
@@ -209,9 +206,9 @@
                 <p class="milestone-sub">Rule of 70 estimate</p>
               </div>
               <div class="milestone-card">
-                <p class="milestone-label">Annual Cost Increase</p>
+                <p class="milestone-label">Year 1 Cost Increase</p>
                 <p class="milestone-value" id="result-annual-cost">—</p>
-                <p class="milestone-sub">On your starting amount</p>
+                <p class="milestone-sub">First year only — compounds after</p>
               </div>
             </div>
 

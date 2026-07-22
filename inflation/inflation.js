@@ -107,10 +107,16 @@ document.addEventListener('DOMContentLoaded', function () {
       powerChange    = ((equivalent / amount) - 1) * 100;
     }
 
-    const valueLost   = direction === 'future' ? equivalent - amount : amount - equivalent;
     const rule70      = rate > 0 ? Math.round(70 / rate) : 0;
     const annualCost  = amount * r;
-    const realReturn  = rate; // need to earn at least this to break even
+    // Purchasing power loss in today's dollars:
+    // What $X today is worth in real terms after inflation
+    const purchPowerToday = direction === 'future'
+      ? amount / Math.pow(1 + r, years)        // today's equivalent of your money's future buying power
+      : equivalent;                             // past → present: equivalent already in today's dollars
+    const valueLost = direction === 'future'
+      ? amount - purchPowerToday                // real loss: how much purchasing power eroded in today's $
+      : amount - equivalent;                    // past → present: nominal difference
 
     // Render
     const wasHidden = resultsContent.classList.contains('hidden');
@@ -148,7 +154,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
     // Milestone cards
     document.getElementById('result-lost').textContent        = NNUtils.formatCAD(Math.abs(valueLost));
-    document.getElementById('result-real-return').textContent = rate.toFixed(1) + '%/year';
+    document.getElementById('result-real-return').textContent = rate.toFixed(1) + '%/year (nominal)';
     document.getElementById('result-half-life').textContent   = rule70 + ' years';
     document.getElementById('result-annual-cost').textContent = NNUtils.formatCAD(annualCost) + '/year';
 
