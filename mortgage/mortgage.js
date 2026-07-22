@@ -476,7 +476,7 @@ function calculate() {
       <div style="display:flex;flex-wrap:wrap;gap:var(--space-3);">
         <span class="summary-tag">🏠 ${formatCAD(price)}</span>
         <span class="summary-tag">💰 ${dpDisplay}</span>
-        <span class="summary-tag">📈 ${rate * 100}% rate</span>
+        <span class="summary-tag">📈 ${rate}% rate</span>
         <span class="summary-tag">📅 ${amortYears} yr amort</span>
       </div>`;
     summaryBox.classList.remove('hidden');
