@@ -1,0 +1,383 @@
+<!DOCTYPE html>
+<html lang="en-CA">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Land Transfer Tax Calculator Canada 2026 — Northern Numbers</title>
+  <meta name="description" content="Free Canadian land transfer tax calculator for 2026. Calculate LTT for every province including Ontario, BC, Quebec (welcome tax), Manitoba, and Toronto municipal tax. Includes first-time buyer rebates." />
+  <meta name="keywords" content="land transfer tax calculator canada, ontario land transfer tax calculator, bc property transfer tax calculator, toronto land transfer tax, welcome tax calculator quebec, land transfer tax 2026" />
+  <link rel="canonical" href="https://www.northernnumbers.ca/land-transfer-tax/" />
+  <meta property="og:title" content="Land Transfer Tax Calculator Canada 2026 — Northern Numbers" />
+  <meta property="og:description" content="Calculate land transfer tax for every Canadian province. Includes first-time buyer rebates and Toronto municipal tax." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://www.northernnumbers.ca/land-transfer-tax/" />
+  <meta property="og:locale" content="en_CA" />
+  <meta property="og:site_name" content="Northern Numbers" />
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Land Transfer Tax Calculator Canada 2026 — Northern Numbers" />
+  <meta name="twitter:description" content="Calculate LTT for every Canadian province. Includes first-time buyer rebates and Toronto municipal tax." />
+  <meta name="robots" content="index, follow" />
+  <meta name="author" content="Northern Numbers" />
+  <link rel="icon" type="image/png" sizes="32x32" href="../favicon-32x32.png" />
+  <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png" />
+  <link rel="icon" type="image/x-icon" href="../favicon.ico" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Poppins:wght@600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="../styles.css" />
+</head>
+<body>
+
+  <header class="site-header" id="nn-header" role="banner"></header>
+
+  <main id="main-content" class="calc-page">
+    <div class="container">
+
+      <nav class="calc-breadcrumb" aria-label="Breadcrumb">
+        <a href="/">Home</a>
+        <span class="calc-breadcrumb-sep" aria-hidden="true">›</span>
+        <a href="/finance/">Calculators</a>
+        <span class="calc-breadcrumb-sep" aria-hidden="true">›</span>
+        <span aria-current="page">Land Transfer Tax Calculator</span>
+      </nav>
+
+      <div class="calc-page-header">
+        <h1 class="calc-page-title">Land Transfer Tax Calculator Canada 2026</h1>
+        <p class="calc-page-desc">Calculate your exact land transfer tax for every Canadian province and territory. Includes first-time buyer rebates, Toronto municipal tax, Quebec welcome tax, and the Alberta/Saskatchewan title fee estimates.</p>
+      </div>
+
+      <div class="calc-layout">
+
+        <!-- Inputs -->
+        <section class="calc-panel" aria-labelledby="inputs-heading">
+          <h2 id="inputs-heading" class="calc-panel-title">Your Purchase Details</h2>
+
+          <div class="quick-start" role="note">
+            <p class="quick-start-title">📋 How to use this calculator</p>
+            <ol>
+              <li>Enter your purchase price.</li>
+              <li>Select your province or territory.</li>
+              <li>Indicate if you are a first-time home buyer.</li>
+              <li>Toronto buyers — check the municipal tax option.</li>
+              <li>Click <strong>Calculate Tax</strong> for your instant breakdown.</li>
+            </ol>
+          </div>
+
+          <!-- Presets -->
+          <div style="margin-bottom:var(--space-4)">
+            <p style="font-size:var(--text-sm);font-weight:600;color:var(--color-text-muted);margin-bottom:var(--space-2)">Quick presets:</p>
+            <div class="preset-group" role="group">
+              <button type="button" class="preset-btn" data-preset="starter">🏠 Starter ($500K)</button>
+              <button type="button" class="preset-btn" data-preset="avg">📊 Average ($750K)</button>
+              <button type="button" class="preset-btn" data-preset="toronto">🏙 Toronto ($900K)</button>
+              <button type="button" class="preset-btn" data-preset="luxury">💎 Luxury ($2M)</button>
+            </div>
+          </div>
+
+          <form id="ltt-form" novalidate>
+
+            <div class="form-group">
+              <label class="form-label" for="purchase-price">Purchase Price</label>
+              <div class="input-wrapper">
+                <span class="input-prefix" aria-hidden="true">$</span>
+                <input type="text" id="purchase-price" class="form-input has-prefix"
+                  placeholder="750,000" inputmode="numeric" autocomplete="off" value="750,000"
+                  aria-describedby="price-hint price-error" />
+              </div>
+              <p class="field-help" id="price-hint">The agreed purchase price of the property.</p>
+              <p id="price-error" class="form-error-msg" role="alert"></p>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label" for="province">Province / Territory</label>
+              <div class="select-wrapper">
+                <select id="province" class="form-select" aria-describedby="province-hint">
+                  <option value="ON" selected>Ontario</option>
+                  <option value="BC">British Columbia</option>
+                  <option value="QC">Quebec</option>
+                  <option value="MB">Manitoba</option>
+                  <option value="NB">New Brunswick</option>
+                  <option value="NS">Nova Scotia</option>
+                  <option value="PE">Prince Edward Island</option>
+                  <option value="NL">Newfoundland &amp; Labrador</option>
+                  <option value="AB">Alberta (no LTT — fees only)</option>
+                  <option value="SK">Saskatchewan (no LTT — fees only)</option>
+                  <option value="YT">Yukon (no LTT)</option>
+                  <option value="NT">Northwest Territories (no LTT)</option>
+                  <option value="NU">Nunavut (no LTT)</option>
+                </select>
+              </div>
+              <p class="field-help" id="province-hint">Select where the property is located.</p>
+            </div>
+
+            <!-- First-time buyer -->
+            <div class="form-group">
+              <label class="form-label">Buyer Status</label>
+              <div style="display:flex;flex-direction:column;gap:var(--space-2)">
+                <label style="display:flex;align-items:center;gap:var(--space-2);cursor:pointer;font-size:var(--text-sm)">
+                  <input type="radio" name="buyer-status" value="first-time" id="buyer-first" style="accent-color:var(--color-primary)" />
+                  First-time home buyer (never owned a home anywhere)
+                </label>
+                <label style="display:flex;align-items:center;gap:var(--space-2);cursor:pointer;font-size:var(--text-sm)">
+                  <input type="radio" name="buyer-status" value="returning" id="buyer-returning" checked style="accent-color:var(--color-primary)" />
+                  Returning buyer / not a first-time buyer
+                </label>
+              </div>
+            </div>
+
+            <!-- Toronto municipal -->
+            <div class="form-group" id="toronto-group" style="display:none">
+              <label class="form-label">Toronto Municipal Tax</label>
+              <div style="display:flex;flex-direction:column;gap:var(--space-2)">
+                <label style="display:flex;align-items:center;gap:var(--space-2);cursor:pointer;font-size:var(--text-sm)">
+                  <input type="checkbox" id="toronto-mltt" style="accent-color:var(--color-primary)" />
+                  Property is within Toronto city limits (adds Toronto MLTT on top of Ontario LTT)
+                </label>
+              </div>
+            </div>
+
+            <!-- Quebec Montreal -->
+            <div class="form-group" id="montreal-group" style="display:none">
+              <label class="form-label">Quebec Municipality</label>
+              <div class="select-wrapper">
+                <select id="qc-city" class="form-select">
+                  <option value="standard" selected>Outside Montreal (standard rates)</option>
+                  <option value="montreal">City of Montreal (higher brackets)</option>
+                </select>
+              </div>
+            </div>
+
+            <!-- Nova Scotia rate -->
+            <div class="form-group" id="ns-group" style="display:none">
+              <label class="form-label" for="ns-rate">Municipal DTT Rate</label>
+              <div class="input-wrapper">
+                <input type="number" id="ns-rate" class="form-input has-suffix"
+                  placeholder="1.5" min="0.5" max="1.5" step="0.1" value="1.5" />
+                <span class="input-suffix" aria-hidden="true">%</span>
+              </div>
+              <p class="field-help">Halifax uses 1.5% (maximum). Other NS municipalities vary from 0.5% to 1.5%. Verify with your municipality.</p>
+            </div>
+
+            <!-- Alberta mortgage (for fee estimate) -->
+            <div class="form-group" id="ab-group" style="display:none">
+              <label class="form-label" for="ab-mortgage">Mortgage Amount <span class="form-hint">(for fee estimate)</span></label>
+              <div class="input-wrapper">
+                <span class="input-prefix" aria-hidden="true">$</span>
+                <input type="text" id="ab-mortgage" class="form-input has-prefix"
+                  placeholder="600,000" inputmode="numeric" autocomplete="off" value="600,000" />
+              </div>
+            </div>
+
+            <div class="btn-row">
+              <button type="submit" class="btn btn-primary btn-calculate" id="calc-btn" style="flex:1">
+                Calculate Tax
+              </button>
+              <button type="button" id="reset-btn" class="btn btn-secondary">Reset</button>
+            </div>
+
+          </form>
+        </section>
+
+        <!-- Results -->
+        <section class="calc-panel" aria-labelledby="results-heading" aria-live="polite">
+          <h2 id="results-heading" class="calc-panel-title">Your Results</h2>
+
+          <div id="results-placeholder" class="result-placeholder">
+            <div class="result-placeholder-icon" aria-hidden="true">
+              <svg width="56" height="56" viewBox="0 0 56 56" fill="none">
+                <rect x="10" y="10" width="36" height="36" rx="4" stroke="#D1D5DB" stroke-width="2"/>
+                <path d="M20 28H36M20 22H30M20 34H26" stroke="#D1D5DB" stroke-width="2" stroke-linecap="round"/>
+              </svg>
+            </div>
+            <p>Enter your purchase price and province, then click <strong>Calculate Tax</strong>.</p>
+          </div>
+
+          <div id="results-content" class="hidden">
+
+            <!-- Hero -->
+            <div class="result-hero">
+              <p class="result-hero-label" id="result-hero-label">Total Land Transfer Tax</p>
+              <p class="result-hero-value" id="result-total-ltt">—</p>
+              <p class="result-hero-sub" id="result-hero-sub">—</p>
+            </div>
+
+            <div class="result-summary" role="list">
+              <div class="result-row" role="listitem">
+                <span class="result-row-label">Purchase Price</span>
+                <span class="result-row-value" id="result-price">—</span>
+              </div>
+              <div class="result-row" role="listitem" id="prov-ltt-row">
+                <span class="result-row-label" id="prov-ltt-label">Provincial LTT</span>
+                <span class="result-row-value is-error" id="result-prov-ltt">—</span>
+              </div>
+              <div class="result-row" role="listitem" id="rebate-row" style="display:none">
+                <span class="result-row-label" id="rebate-label">First-Time Buyer Rebate</span>
+                <span class="result-row-value is-success" id="result-rebate">—</span>
+              </div>
+              <div class="result-row" role="listitem" id="mun-ltt-row" style="display:none">
+                <span class="result-row-label" id="mun-ltt-label">Toronto Municipal LTT</span>
+                <span class="result-row-value is-error" id="result-mun-ltt">—</span>
+              </div>
+              <div class="result-row" role="listitem" id="mun-rebate-row" style="display:none">
+                <span class="result-row-label">Toronto FTHB Rebate</span>
+                <span class="result-row-value is-success" id="result-mun-rebate">—</span>
+              </div>
+              <div class="result-row result-row--total" role="listitem">
+                <span class="result-row-label">Total Tax / Fees</span>
+                <span class="result-row-value is-error" id="result-net-total">—</span>
+              </div>
+            </div>
+
+            <!-- Milestone cards -->
+            <div class="milestone-grid" style="margin-top:var(--space-5)">
+              <div class="milestone-card">
+                <p class="milestone-label">Tax as % of Price</p>
+                <p class="milestone-value" id="result-pct">—</p>
+                <p class="milestone-sub">LTT ÷ purchase price</p>
+              </div>
+              <div class="milestone-card">
+                <p class="milestone-label">Per $100K of Price</p>
+                <p class="milestone-value" id="result-per-100k">—</p>
+                <p class="milestone-sub">Effective rate per $100K</p>
+              </div>
+              <div class="milestone-card">
+                <p class="milestone-label">Rebate Saved</p>
+                <p class="milestone-value is-success" id="result-rebate-saved">—</p>
+                <p class="milestone-sub">First-time buyer savings</p>
+              </div>
+              <div class="milestone-card">
+                <p class="milestone-label">Total Closing Estimate</p>
+                <p class="milestone-value" id="result-closing">—</p>
+                <p class="milestone-sub">LTT + est. legal/title fees</p>
+              </div>
+            </div>
+
+            <!-- Bracket breakdown -->
+            <div style="margin-top:var(--space-6)">
+              <button type="button" class="advanced-toggle" id="bracket-toggle" aria-expanded="false" aria-controls="bracket-table">
+                <span>📊 Tax Bracket Breakdown</span>
+                <svg class="advanced-toggle-icon" width="18" height="18" viewBox="0 0 20 20" fill="none" aria-hidden="true">
+                  <path d="M5 7.5L10 12.5L15 7.5" stroke="#6B7280" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </button>
+              <div id="bracket-table" class="advanced-fields">
+                <div style="overflow-x:auto;margin-top:var(--space-3)">
+                  <table style="width:100%;border-collapse:collapse;font-size:var(--text-sm)">
+                    <thead>
+                      <tr style="background:var(--color-bg);border-bottom:2px solid var(--color-border)">
+                        <th style="padding:var(--space-2) var(--space-3);text-align:left;font-weight:600">Bracket</th>
+                        <th style="padding:var(--space-2) var(--space-3);text-align:right;font-weight:600">Rate</th>
+                        <th style="padding:var(--space-2) var(--space-3);text-align:right;font-weight:600">Taxable Amount</th>
+                        <th style="padding:var(--space-2) var(--space-3);text-align:right;font-weight:600">Tax</th>
+                      </tr>
+                    </thead>
+                    <tbody id="bracket-body"></tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+
+            <div id="nn-disclaimer" style="margin-top:var(--space-5)"></div>
+
+            <button type="button" id="copy-btn" class="copy-btn" style="margin-top:var(--space-4)">
+              📋 Copy Results to Clipboard
+            </button>
+
+          </div>
+        </section>
+      </div>
+
+      <!-- Educational -->
+      <section style="margin-top:var(--space-16);padding-top:var(--space-10);border-top:1px solid var(--color-border)">
+        <h2 style="font-size:var(--text-2xl);font-weight:700;margin-bottom:var(--space-8)">Land Transfer Tax in Canada: Province by Province</h2>
+        <div style="display:grid;gap:var(--space-8)">
+
+          <div>
+            <h3 style="font-size:var(--text-xl);font-weight:600;margin-bottom:var(--space-3)">🇨🇦 What Is Land Transfer Tax?</h3>
+            <p style="color:var(--color-text-muted);line-height:1.8">Land transfer tax (LTT) is a one-time provincial tax paid by the buyer when a property changes ownership. It is one of the largest closing costs when buying a home in Canada — on a $750,000 purchase in Ontario, you pay $11,475. In Toronto, that doubles to $22,950. Alberta and Saskatchewan are the only major provinces with no percentage-based LTT; they charge small flat title registration fees instead. The tax is calculated using tiered brackets applied to the purchase price — similar to income tax. LTT is paid at closing and is handled by your lawyer or notary.</p>
+          </div>
+
+          <div>
+            <h3 style="font-size:var(--text-xl);font-weight:600;margin-bottom:var(--space-3)">📊 2026 LTT Comparison — $750,000 Purchase</h3>
+            <div style="overflow-x:auto">
+              <table style="width:100%;border-collapse:collapse;font-size:var(--text-sm)">
+                <thead>
+                  <tr style="background:var(--color-bg);border-bottom:2px solid var(--color-border)">
+                    <th style="padding:var(--space-3);text-align:left;font-weight:600">Province</th>
+                    <th style="padding:var(--space-3);text-align:right;font-weight:600">LTT (Regular)</th>
+                    <th style="padding:var(--space-3);text-align:right;font-weight:600">LTT (First-Time Buyer)</th>
+                    <th style="padding:var(--space-3);text-align:right;font-weight:600">FTHB Rebate</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr style="border-bottom:1px solid var(--color-border)"><td style="padding:var(--space-3)">🏙 Toronto (ON + MLTT)</td><td style="padding:var(--space-3);text-align:right">$22,950</td><td style="padding:var(--space-3);text-align:right">$14,475</td><td style="padding:var(--space-3);text-align:right">$8,475</td></tr>
+                  <tr style="border-bottom:1px solid var(--color-border);background:var(--color-bg)"><td style="padding:var(--space-3)">🍁 Ontario</td><td style="padding:var(--space-3);text-align:right">$11,475</td><td style="padding:var(--space-3);text-align:right">$7,475</td><td style="padding:var(--space-3);text-align:right">$4,000</td></tr>
+                  <tr style="border-bottom:1px solid var(--color-border)"><td style="padding:var(--space-3)">🌊 British Columbia</td><td style="padding:var(--space-3);text-align:right">$13,000</td><td style="padding:var(--space-3);text-align:right">$5,000</td><td style="padding:var(--space-3);text-align:right">$8,000</td></tr>
+                  <tr style="border-bottom:1px solid var(--color-border);background:var(--color-bg)"><td style="padding:var(--space-3)">⚜️ Quebec (Montreal)</td><td style="padding:var(--space-3);text-align:right">$10,349</td><td style="padding:var(--space-3);text-align:right">$10,349*</td><td style="padding:var(--space-3);text-align:right">Tax credit</td></tr>
+                  <tr style="border-bottom:1px solid var(--color-border)"><td style="padding:var(--space-3)">🌾 Manitoba</td><td style="padding:var(--space-3);text-align:right">$16,400</td><td style="padding:var(--space-3);text-align:right">$11,900</td><td style="padding:var(--space-3);text-align:right">$4,500</td></tr>
+                  <tr style="border-bottom:1px solid var(--color-border);background:var(--color-bg)"><td style="padding:var(--space-3)">🦞 New Brunswick</td><td style="padding:var(--space-3);text-align:right">$7,500</td><td style="padding:var(--space-3);text-align:right">$7,500</td><td style="padding:var(--space-3);text-align:right">None</td></tr>
+                  <tr style="border-bottom:1px solid var(--color-border)"><td style="padding:var(--space-3)">🎵 Nova Scotia (Halifax)</td><td style="padding:var(--space-3);text-align:right">$11,250</td><td style="padding:var(--space-3);text-align:right">$11,250</td><td style="padding:var(--space-3);text-align:right">None</td></tr>
+                  <tr style="border-bottom:1px solid var(--color-border);background:var(--color-bg)"><td style="padding:var(--space-3)">🥔 Prince Edward Island</td><td style="padding:var(--space-3);text-align:right">$7,500</td><td style="padding:var(--space-3);text-align:right">$0</td><td style="padding:var(--space-3);text-align:right">Full exemption</td></tr>
+                  <tr style="border-bottom:1px solid var(--color-border)"><td style="padding:var(--space-3)">🌊 Newfoundland &amp; Labrador</td><td style="padding:var(--space-3);text-align:right">~$100</td><td style="padding:var(--space-3);text-align:right">~$100</td><td style="padding:var(--space-3);text-align:right">None</td></tr>
+                  <tr><td style="padding:var(--space-3)">🏔 Alberta / Saskatchewan</td><td style="padding:var(--space-3);text-align:right">~$400–$600</td><td style="padding:var(--space-3);text-align:right">~$400–$600</td><td style="padding:var(--space-3);text-align:right">N/A</td></tr>
+                </tbody>
+              </table>
+            </div>
+            <p style="font-size:var(--text-xs);color:var(--color-text-muted);margin-top:var(--space-2)">*Quebec FTHB: tax credit of up to $5,875 claimed on income tax return (retroactive to January 1, 2026). Not deducted at closing.</p>
+          </div>
+
+          <div>
+            <h3 style="font-size:var(--text-xl);font-weight:600;margin-bottom:var(--space-3)">🏠 First-Time Home Buyer Rebates</h3>
+            <p style="color:var(--color-text-muted);line-height:1.8">Ontario offers a land transfer tax rebate of up to $4,000 for first-time buyers — effectively covering the full tax on the first $368,333 of purchase price. Toronto adds a municipal rebate of up to $4,475. British Columbia offers a full exemption for properties up to $835,000 (saving up to $13,000 in PTT), with a partial sliding exemption up to $860,000. Prince Edward Island offers a full exemption with no dollar cap for qualifying first-time buyers. Manitoba offers a rebate of up to $4,500. Quebec first-time buyers can claim a provincial tax credit of up to $5,875 on their income tax return (retroactive to January 1, 2026), but this is not deducted at closing. New Brunswick, Nova Scotia, and Newfoundland offer no specific first-time buyer programs for land transfer tax.</p>
+          </div>
+
+          <div>
+            <h3 style="font-size:var(--text-xl);font-weight:600;margin-bottom:var(--space-3)">❓ Frequently Asked Questions</h3>
+            <div style="display:flex;flex-direction:column;gap:var(--space-5)">
+              <div>
+                <p style="font-weight:600;margin-bottom:var(--space-1)">When is land transfer tax paid?</p>
+                <p style="color:var(--color-text-muted);font-size:var(--text-sm);line-height:1.7">Land transfer tax is paid on closing day — the day your lawyer or notary registers the transfer of title. Your lawyer calculates the amount, collects it from you, and remits it to the province. Quebec is an exception: the welcome tax is billed separately by the municipality, typically 3–6 months after closing. You cannot add LTT to your mortgage.</p>
+              </div>
+              <div>
+                <p style="font-weight:600;margin-bottom:var(--space-1)">Do I pay land transfer tax in Alberta?</p>
+                <p style="color:var(--color-text-muted);font-size:var(--text-sm);line-height:1.7">No. Alberta has no land transfer tax. You pay a small title transfer registration fee ($50 base + $2 per $5,000 of property value) and a mortgage registration fee if applicable. On a $750,000 purchase with a $600,000 mortgage, the combined fees are approximately $580 — compared to $11,475 in Ontario. This is one of the major financial advantages of buying in Alberta.</p>
+              </div>
+              <div>
+                <p style="font-weight:600;margin-bottom:var(--space-1)">What is Toronto's municipal land transfer tax?</p>
+                <p style="color:var(--color-text-muted);font-size:var(--text-sm);line-height:1.7">Toronto is the only city in Canada with its own municipal land transfer tax, charged on top of Ontario's provincial tax. The Toronto MLTT uses the same bracket structure as Ontario and effectively doubles the LTT burden for buyers within city limits. On a $750,000 home, you pay $11,475 in provincial LTT plus another $11,475 in Toronto MLTT — a combined $22,950 versus $11,475 in Mississauga or Markham just across the city boundary.</p>
+              </div>
+              <div>
+                <p style="font-weight:600;margin-bottom:var(--space-1)">Is land transfer tax tax-deductible?</p>
+                <p style="color:var(--color-text-muted);font-size:var(--text-sm);line-height:1.7">Not for personal residential purchases. LTT is added to the adjusted cost base (ACB) of investment properties, which reduces your capital gain when you eventually sell — providing an indirect tax benefit for real estate investors. For your principal residence, LTT is simply a one-time closing cost with no direct tax deduction.</p>
+              </div>
+            </div>
+          </div>
+
+          <div>
+            <h3 style="font-size:var(--text-xl);font-weight:600;margin-bottom:var(--space-3)">🔗 Related Calculators</h3>
+            <div id="nn-related"></div>
+          </div>
+
+        </div>
+
+        <div style="margin-top:var(--space-8);padding:var(--space-4) var(--space-5);background:var(--color-bg);border:1px solid var(--color-border);border-radius:var(--radius-md);font-size:var(--text-sm);color:var(--color-text-muted);line-height:1.7">
+          📋 Land transfer tax rates are based on verified 2026 provincial schedules. Quebec welcome tax thresholds are indexed annually. Nova Scotia municipal rates vary by municipality — Halifax rate (1.5%) is used as default. Manitoba first-time buyer rebate confirmed at $4,500. BC first-time buyer exemption threshold is $835,000 (April 2024 update). Alberta and Saskatchewan registration fee estimates assume 20% down payment. Actual amounts may differ — verify with your lawyer or notary. See our <a href="/disclaimer.html" style="color:var(--color-primary)">full disclaimer</a>.
+        </div>
+      </section>
+
+    </div>
+  </main>
+
+  <footer class="site-footer" id="nn-footer" role="contentinfo"></footer>
+
+  <script src="../script.js" defer></script>
+  <script src="../data/nn-constants.js" defer></script>
+  <script src="../data/nn-calculators.js" defer></script>
+  <script src="../shared/nn-utils.js" defer></script>
+  <script src="../shared/nn-seo.js" defer></script>
+  <script src="../shared/nn-analytics.js" defer></script>
+  <script src="../shared/nn-ads.js" defer></script>
+  <script src="../shared/nn-components.js" defer></script>
+  <script src="land-transfer-tax.js" defer></script>
+</body>
+</html>

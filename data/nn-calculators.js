@@ -185,6 +185,15 @@ window.NNRegistry = {
       related: ['income-tax','budget','inflation','loan']
     },
     {
+      id: 'land-transfer-tax', name: 'Land Transfer Tax Calculator', category: 'taxes',
+      url: '/land-transfer-tax/', icon: '🏠',
+      description: 'Calculate land transfer tax for every Canadian province. Includes first-time buyer rebates, Toronto municipal tax, and Quebec welcome tax.',
+      keywords: ['land transfer tax calculator canada','ontario land transfer tax','bc property transfer tax','toronto land transfer tax','welcome tax calculator quebec'],
+      status: 'active', priority: 19,
+      showInFooter: true, footerSection: 'moreTools', showOnHomepage: true,
+      related: ['mortgage','gst-hst','budget','inflation']
+    },
+    {
       id: 'rrif', name: 'RRIF Calculator', category: 'retirement',
       url: '/rrif/', icon: '📊',
       description: 'Calculate mandatory RRIF minimum withdrawals using official CRA prescribed factors. Project your balance and income to age 90+.',
