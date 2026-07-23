@@ -185,6 +185,15 @@ window.NNRegistry = {
       related: ['income-tax','budget','inflation','loan']
     },
     {
+      id: 'mortgage-affordability', name: 'Mortgage Affordability Calculator', category: 'real-estate',
+      url: '/mortgage-affordability/', icon: '🏡',
+      description: 'Find out how much house you can afford in Canada using OSFI stress test, GDS/TDS ratios, and 2026 CMHC rules.',
+      keywords: ['mortgage affordability calculator canada 2026','how much house can i afford canada','mortgage stress test calculator','cmhc calculator canada'],
+      status: 'active', priority: 20,
+      showInFooter: true, footerSection: 'moreTools', showOnHomepage: true,
+      related: ['mortgage','land-transfer-tax','budget','gst-hst']
+    },
+    {
       id: 'land-transfer-tax', name: 'Land Transfer Tax Calculator', category: 'taxes',
       url: '/land-transfer-tax/', icon: '🏠',
       description: 'Calculate land transfer tax for every Canadian province. Includes first-time buyer rebates, Toronto municipal tax, and Quebec welcome tax.',

@@ -1,0 +1,426 @@
+<!DOCTYPE html>
+<html lang="en-CA">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Mortgage Affordability Calculator Canada 2026 — Northern Numbers</title>
+  <meta name="description" content="Free Canadian mortgage affordability calculator for 2026. Find out how much house you can afford based on income, down payment, debts, and the OSFI stress test. Uses official GDS/TDS ratios and 2026 CMHC rules." />
+  <meta name="keywords" content="mortgage affordability calculator canada 2026, how much house can i afford canada, mortgage stress test calculator, cmhc calculator canada, gds tds ratio calculator" />
+  <link rel="canonical" href="https://www.northernnumbers.ca/mortgage-affordability/" />
+  <meta property="og:title" content="Mortgage Affordability Calculator Canada 2026 — Northern Numbers" />
+  <meta property="og:description" content="Find out how much house you can afford based on income, down payment, debts, and the OSFI stress test." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://www.northernnumbers.ca/mortgage-affordability/" />
+  <meta property="og:locale" content="en_CA" />
+  <meta property="og:site_name" content="Northern Numbers" />
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Mortgage Affordability Calculator Canada 2026 — Northern Numbers" />
+  <meta name="twitter:description" content="Find out how much house you can afford in Canada using GDS/TDS ratios and the OSFI stress test." />
+  <meta name="robots" content="index, follow" />
+  <meta name="author" content="Northern Numbers" />
+  <link rel="icon" type="image/png" sizes="32x32" href="../favicon-32x32.png" />
+  <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png" />
+  <link rel="icon" type="image/x-icon" href="../favicon.ico" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Poppins:wght@600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="../styles.css" />
+</head>
+<body>
+
+  <header class="site-header" id="nn-header" role="banner"></header>
+
+  <main id="main-content" class="calc-page">
+    <div class="container">
+
+      <nav class="calc-breadcrumb" aria-label="Breadcrumb">
+        <a href="/">Home</a>
+        <span class="calc-breadcrumb-sep" aria-hidden="true">›</span>
+        <a href="/finance/">Calculators</a>
+        <span class="calc-breadcrumb-sep" aria-hidden="true">›</span>
+        <span aria-current="page">Mortgage Affordability Calculator</span>
+      </nav>
+
+      <div class="calc-page-header">
+        <h1 class="calc-page-title">Mortgage Affordability Calculator Canada 2026</h1>
+        <p class="calc-page-desc">Find out how much house you can afford in Canada. Uses the OSFI stress test, GDS/TDS ratios, and 2026 CMHC rules to calculate your maximum purchase price and monthly payment.</p>
+      </div>
+
+      <div class="calc-layout">
+
+        <!-- Inputs -->
+        <section class="calc-panel" aria-labelledby="inputs-heading">
+          <h2 id="inputs-heading" class="calc-panel-title">Your Financial Details</h2>
+
+          <div class="quick-start" role="note">
+            <p class="quick-start-title">📋 How to use this calculator</p>
+            <ol>
+              <li>Enter your gross annual household income.</li>
+              <li>Enter your down payment amount.</li>
+              <li>Set your expected mortgage rate and amortization.</li>
+              <li>Add any existing monthly debt payments (car loan, student loan, etc.).</li>
+              <li>Click <strong>Calculate Affordability</strong> to see your maximum home price.</li>
+            </ol>
+          </div>
+
+          <!-- Presets -->
+          <div style="margin-bottom:var(--space-4)">
+            <p style="font-size:var(--text-sm);font-weight:600;color:var(--color-text-muted);margin-bottom:var(--space-2)">Quick presets:</p>
+            <div class="preset-group" role="group">
+              <button type="button" class="preset-btn" data-preset="firsttime">🏠 First-Time Buyer</button>
+              <button type="button" class="preset-btn" data-preset="typical">📊 Typical Family</button>
+              <button type="button" class="preset-btn" data-preset="upsizing">📈 Upsizing</button>
+              <button type="button" class="preset-btn" data-preset="highearner">💰 High Earner</button>
+            </div>
+          </div>
+
+          <form id="afford-form" novalidate>
+
+            <!-- Income -->
+            <div class="form-group">
+              <label class="form-label" for="gross-income">Gross Annual Household Income</label>
+              <div class="input-wrapper">
+                <span class="input-prefix" aria-hidden="true">$</span>
+                <input type="text" id="gross-income" class="form-input has-prefix"
+                  placeholder="120,000" inputmode="numeric" autocomplete="off" value="120,000"
+                  aria-describedby="income-hint income-error" />
+              </div>
+              <p class="field-help" id="income-hint">Combined gross income before tax. Include co-applicant income if applicable.</p>
+              <p id="income-error" class="form-error-msg" role="alert"></p>
+            </div>
+
+            <!-- Down payment -->
+            <div class="form-group">
+              <label class="form-label" for="down-payment">Down Payment</label>
+              <div class="input-wrapper">
+                <span class="input-prefix" aria-hidden="true">$</span>
+                <input type="text" id="down-payment" class="form-input has-prefix"
+                  placeholder="60,000" inputmode="numeric" autocomplete="off" value="60,000"
+                  aria-describedby="dp-hint dp-error" />
+              </div>
+              <p class="field-help" id="dp-hint">Minimum 5% for homes under $500K. 5% on first $500K + 10% on remainder for $500K–$999,999. Minimum 20% for $1M+.</p>
+              <p id="dp-error" class="form-error-msg" role="alert"></p>
+            </div>
+
+            <!-- Rate -->
+            <div class="form-group">
+              <label class="form-label" for="mortgage-rate">Mortgage Interest Rate</label>
+              <div class="input-wrapper">
+                <input type="number" id="mortgage-rate" class="form-input has-suffix"
+                  placeholder="4.5" min="1" max="15" step="0.05" value="4.5"
+                  aria-describedby="rate-hint" />
+                <span class="input-suffix" aria-hidden="true">%</span>
+              </div>
+              <input type="range" id="rate-slider" class="range-slider"
+                min="1" max="10" step="0.05" value="4.5" aria-label="Interest rate slider" />
+              <p class="field-help" id="rate-hint">Your expected 5-year fixed or variable rate. The stress test will qualify you at your rate + 2% (or 5.25%, whichever is higher).</p>
+            </div>
+
+            <!-- Amortization -->
+            <div class="form-group">
+              <label class="form-label" for="amort-years">Amortization Period</label>
+              <div class="select-wrapper">
+                <select id="amort-years" class="form-select" aria-describedby="amort-hint">
+                  <option value="25" selected>25 years (insured max)</option>
+                  <option value="30">30 years (uninsured / FTHB new build)</option>
+                </select>
+              </div>
+              <p class="field-help" id="amort-hint">Max 25 years for insured mortgages (under 20% down). Max 30 years for uninsured or first-time buyers of new builds.</p>
+            </div>
+
+            <!-- Monthly debts -->
+            <div class="form-group">
+              <label class="form-label" for="monthly-debts">Monthly Debt Payments <span class="form-hint">(optional)</span></label>
+              <div class="input-wrapper">
+                <span class="input-prefix" aria-hidden="true">$</span>
+                <input type="text" id="monthly-debts" class="form-input has-prefix"
+                  placeholder="0" inputmode="numeric" autocomplete="off" value="0"
+                  aria-describedby="debts-hint" />
+              </div>
+              <p class="field-help" id="debts-hint">Total of all monthly debt payments: car loan, student loan, personal loan, minimum credit card payments. Not including the future mortgage.</p>
+            </div>
+
+            <!-- Property tax -->
+            <div class="form-group">
+              <label class="form-label" for="property-tax">Annual Property Tax <span class="form-hint">(optional)</span></label>
+              <div class="input-wrapper">
+                <span class="input-prefix" aria-hidden="true">$</span>
+                <input type="text" id="property-tax" class="form-input has-prefix"
+                  placeholder="4,000" inputmode="numeric" autocomplete="off" value="4,000"
+                  aria-describedby="tax-hint" />
+              </div>
+              <p class="field-help" id="tax-hint">Estimated annual property tax. Lenders typically use $100–$250/month as a default. Varies widely by municipality.</p>
+            </div>
+
+            <!-- Heating -->
+            <div class="form-group">
+              <label class="form-label" for="heating">Monthly Heating Cost <span class="form-hint">(optional)</span></label>
+              <div class="input-wrapper">
+                <span class="input-prefix" aria-hidden="true">$</span>
+                <input type="text" id="heating" class="form-input has-prefix"
+                  placeholder="150" inputmode="numeric" autocomplete="off" value="150"
+                  aria-describedby="heat-hint" />
+              </div>
+              <p class="field-help" id="heat-hint">Lenders use $100–$175/month as a standard heating cost estimate. Included in GDS ratio calculation.</p>
+            </div>
+
+            <!-- Condo fee -->
+            <div class="form-group">
+              <label class="form-label" for="condo-fee">Monthly Condo / Strata Fee <span class="form-hint">(if applicable)</span></label>
+              <div class="input-wrapper">
+                <span class="input-prefix" aria-hidden="true">$</span>
+                <input type="text" id="condo-fee" class="form-input has-prefix"
+                  placeholder="0" inputmode="numeric" autocomplete="off" value="0"
+                  aria-describedby="condo-hint" />
+              </div>
+              <p class="field-help" id="condo-hint">50% of condo/strata fees are included in the GDS ratio per CMHC guidelines.</p>
+            </div>
+
+            <div class="btn-row">
+              <button type="submit" class="btn btn-primary btn-calculate" style="flex:1">
+                Calculate Affordability
+              </button>
+              <button type="button" id="reset-btn" class="btn btn-secondary">Reset</button>
+            </div>
+
+          </form>
+        </section>
+
+        <!-- Results -->
+        <section class="calc-panel" aria-labelledby="results-heading" aria-live="polite">
+          <h2 id="results-heading" class="calc-panel-title">Your Results</h2>
+
+          <div id="results-placeholder" class="result-placeholder">
+            <div class="result-placeholder-icon" aria-hidden="true">
+              <svg width="56" height="56" viewBox="0 0 56 56" fill="none">
+                <path d="M10 28L28 10L46 28V46H34V36H22V46H10V28Z" stroke="#D1D5DB" stroke-width="2" stroke-linejoin="round"/>
+              </svg>
+            </div>
+            <p>Enter your income and down payment, then click <strong>Calculate Affordability</strong>.</p>
+          </div>
+
+          <div id="results-content" class="hidden">
+
+            <!-- Hero -->
+            <div class="result-hero">
+              <p class="result-hero-label">Maximum Home Price</p>
+              <p class="result-hero-value" id="result-max-price">—</p>
+              <p class="result-hero-sub" id="result-hero-sub">—</p>
+            </div>
+
+            <div class="result-summary" role="list">
+              <div class="result-row" role="listitem">
+                <span class="result-row-label">Maximum Home Price</span>
+                <span class="result-row-value" id="result-price-row">—</span>
+              </div>
+              <div class="result-row" role="listitem">
+                <span class="result-row-label">Maximum Mortgage</span>
+                <span class="result-row-value" id="result-mortgage">—</span>
+              </div>
+              <div class="result-row" role="listitem" id="cmhc-row">
+                <span class="result-row-label">CMHC Insurance Premium</span>
+                <span class="result-row-value is-error" id="result-cmhc">—</span>
+              </div>
+              <div class="result-row" role="listitem">
+                <span class="result-row-label">Monthly Payment (contract rate)</span>
+                <span class="result-row-value" id="result-monthly-contract">—</span>
+              </div>
+              <div class="result-row" role="listitem">
+                <span class="result-row-label">Monthly Payment (stress test rate)</span>
+                <span class="result-row-value" id="result-monthly-stress">—</span>
+              </div>
+              <div class="result-row result-row--total" role="listitem">
+                <span class="result-row-label">Stress Test Rate Used</span>
+                <span class="result-row-value" id="result-stress-rate">—</span>
+              </div>
+            </div>
+
+            <!-- GDS / TDS panel -->
+            <div style="margin-top:var(--space-5);padding:var(--space-5);background:var(--color-bg);border:1px solid var(--color-border);border-radius:var(--radius-md)">
+              <p style="font-family:var(--font-heading);font-size:var(--text-base);font-weight:700;margin-bottom:var(--space-4)">Debt Ratio Analysis</p>
+              <div class="result-summary" role="list">
+                <div class="result-row" role="listitem">
+                  <span class="result-row-label">Gross Debt Service (GDS)</span>
+                  <span class="result-row-value" id="result-gds">—</span>
+                </div>
+                <div class="result-row" role="listitem">
+                  <span class="result-row-label">GDS Limit</span>
+                  <span class="result-row-value">39%</span>
+                </div>
+                <div class="result-row" role="listitem">
+                  <span class="result-row-label">Total Debt Service (TDS)</span>
+                  <span class="result-row-value" id="result-tds">—</span>
+                </div>
+                <div class="result-row" role="listitem">
+                  <span class="result-row-label">TDS Limit</span>
+                  <span class="result-row-value">44%</span>
+                </div>
+                <div class="result-row" role="listitem">
+                  <span class="result-row-label">Binding Constraint</span>
+                  <span class="result-row-value" id="result-constraint">—</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Milestone cards -->
+            <div class="milestone-grid" style="margin-top:var(--space-5)">
+              <div class="milestone-card">
+                <p class="milestone-label">Monthly PITH</p>
+                <p class="milestone-value" id="result-pith">—</p>
+                <p class="milestone-sub">P+I + Tax + Heat</p>
+              </div>
+              <div class="milestone-card">
+                <p class="milestone-label">Down Payment %</p>
+                <p class="milestone-value" id="result-dp-pct">—</p>
+                <p class="milestone-sub">Of maximum price</p>
+              </div>
+              <div class="milestone-card">
+                <p class="milestone-label">CMHC Required</p>
+                <p class="milestone-value" id="result-cmhc-required">—</p>
+                <p class="milestone-sub">Mortgage insurance</p>
+              </div>
+              <div class="milestone-card">
+                <p class="milestone-label">Annual Income Needed</p>
+                <p class="milestone-value" id="result-income-needed">—</p>
+                <p class="milestone-sub">At this purchase price</p>
+              </div>
+            </div>
+
+            <!-- Down payment breakdown -->
+            <div style="margin-top:var(--space-5)">
+              <button type="button" class="advanced-toggle" id="dp-toggle" aria-expanded="false" aria-controls="dp-breakdown">
+                <span>📊 What You Need to Close</span>
+                <svg class="advanced-toggle-icon" width="18" height="18" viewBox="0 0 20 20" fill="none" aria-hidden="true">
+                  <path d="M5 7.5L10 12.5L15 7.5" stroke="#6B7280" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </button>
+              <div id="dp-breakdown" class="advanced-fields">
+                <div class="result-summary" style="margin-top:var(--space-3)" role="list">
+                  <div class="result-row" role="listitem">
+                    <span class="result-row-label">Down Payment</span>
+                    <span class="result-row-value" id="close-dp">—</span>
+                  </div>
+                  <div class="result-row" role="listitem">
+                    <span class="result-row-label">Land Transfer Tax (ON est.)</span>
+                    <span class="result-row-value" id="close-ltt">—</span>
+                  </div>
+                  <div class="result-row" role="listitem">
+                    <span class="result-row-label">Legal / Title / Inspection</span>
+                    <span class="result-row-value">~$3,500</span>
+                  </div>
+                  <div class="result-row result-row--total" role="listitem">
+                    <span class="result-row-label">Estimated Total Cash Needed</span>
+                    <span class="result-row-value" id="close-total">—</span>
+                  </div>
+                </div>
+                <p style="font-size:var(--text-xs);color:var(--color-text-muted);margin-top:var(--space-2)">LTT estimate uses Ontario rates. Use the <a href="/land-transfer-tax/" style="color:var(--color-primary)">Land Transfer Tax Calculator</a> for your province.</p>
+              </div>
+            </div>
+
+            <div id="nn-disclaimer" style="margin-top:var(--space-5)"></div>
+
+            <button type="button" id="copy-btn" class="copy-btn" style="margin-top:var(--space-4)">
+              📋 Copy Results to Clipboard
+            </button>
+
+          </div>
+        </section>
+      </div>
+
+      <!-- Educational -->
+      <section style="margin-top:var(--space-16);padding-top:var(--space-10);border-top:1px solid var(--color-border)">
+        <h2 style="font-size:var(--text-2xl);font-weight:700;margin-bottom:var(--space-8)">How Canadian Mortgage Affordability Works</h2>
+        <div style="display:grid;gap:var(--space-8)">
+
+          <div>
+            <h3 style="font-size:var(--text-xl);font-weight:600;margin-bottom:var(--space-3)">🧮 The Stress Test</h3>
+            <p style="color:var(--color-text-muted);line-height:1.8">Canada's OSFI mortgage stress test requires you to qualify at the higher of your contract rate plus 2%, or 5.25% — whichever is greater. If your bank offers you a 5-year fixed rate of 4.5%, you must prove you could afford payments at 6.5%. This test applies to all federally regulated lenders (major banks, federal credit unions) and has applied since 2018 for insured mortgages and 2021 for uninsured. The stress test significantly reduces maximum purchase prices — a household qualifying for a $600,000 home at 4.5% would only qualify for roughly $480,000–$500,000 at the 6.5% qualifying rate.</p>
+          </div>
+
+          <div>
+            <h3 style="font-size:var(--text-xl);font-weight:600;margin-bottom:var(--space-3)">📊 GDS and TDS Ratios Explained</h3>
+            <p style="color:var(--color-text-muted);line-height:1.8;margin-bottom:var(--space-3)">Lenders use two debt ratios to determine how much you can borrow:</p>
+            <div style="padding:var(--space-4) var(--space-5);background:var(--color-bg);border:1px solid var(--color-border);border-radius:var(--radius-md);font-size:var(--text-sm);margin-bottom:var(--space-3)">
+              <p style="font-weight:700;margin-bottom:var(--space-1)">GDS — Gross Debt Service Ratio ≤ 39%</p>
+              <p style="font-family:monospace;color:var(--color-primary)">(Principal + Interest + Property Tax + Heating + 50% Condo Fee) ÷ Gross Monthly Income</p>
+            </div>
+            <div style="padding:var(--space-4) var(--space-5);background:var(--color-bg);border:1px solid var(--color-border);border-radius:var(--radius-md);font-size:var(--text-sm)">
+              <p style="font-weight:700;margin-bottom:var(--space-1)">TDS — Total Debt Service Ratio ≤ 44%</p>
+              <p style="font-family:monospace;color:var(--color-primary)">(GDS components + All Other Debt Payments) ÷ Gross Monthly Income</p>
+            </div>
+            <p style="color:var(--color-text-muted);line-height:1.8;margin-top:var(--space-3)">Both ratios are calculated using the stress test rate, not your contract rate. The binding constraint is whichever ratio hits its limit first — for most borrowers with no other debts, GDS is the binding constraint at 39%.</p>
+          </div>
+
+          <div>
+            <h3 style="font-size:var(--text-xl);font-weight:600;margin-bottom:var(--space-3)">🏦 2026 CMHC Mortgage Insurance Rules</h3>
+            <div style="overflow-x:auto">
+              <table style="width:100%;border-collapse:collapse;font-size:var(--text-sm)">
+                <thead>
+                  <tr style="background:var(--color-bg);border-bottom:2px solid var(--color-border)">
+                    <th style="padding:var(--space-3);text-align:left;font-weight:600">Down Payment</th>
+                    <th style="padding:var(--space-3);text-align:right;font-weight:600">CMHC Premium</th>
+                    <th style="padding:var(--space-3);text-align:right;font-weight:600">On $500,000</th>
+                    <th style="padding:var(--space-3);text-align:right;font-weight:600">Max Amortization</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr style="border-bottom:1px solid var(--color-border)"><td style="padding:var(--space-3)">5% – 9.99%</td><td style="padding:var(--space-3);text-align:right">4.00%</td><td style="padding:var(--space-3);text-align:right">$19,000</td><td style="padding:var(--space-3);text-align:right">25 yrs</td></tr>
+                  <tr style="border-bottom:1px solid var(--color-border);background:var(--color-bg)"><td style="padding:var(--space-3)">10% – 14.99%</td><td style="padding:var(--space-3);text-align:right">3.10%</td><td style="padding:var(--space-3);text-align:right">$13,950</td><td style="padding:var(--space-3);text-align:right">25 yrs</td></tr>
+                  <tr style="border-bottom:1px solid var(--color-border)"><td style="padding:var(--space-3)">15% – 19.99%</td><td style="padding:var(--space-3);text-align:right">2.80%</td><td style="padding:var(--space-3);text-align:right">$11,900</td><td style="padding:var(--space-3);text-align:right">25 yrs</td></tr>
+                  <tr><td style="padding:var(--space-3)">20%+</td><td style="padding:var(--space-3);text-align:right">None</td><td style="padding:var(--space-3);text-align:right">$0</td><td style="padding:var(--space-3);text-align:right">30 yrs</td></tr>
+                </tbody>
+              </table>
+            </div>
+            <p style="font-size:var(--text-xs);color:var(--color-text-muted);margin-top:var(--space-2)">CMHC insurance is required for all mortgages with less than 20% down. Max insured purchase price is $999,999. Homes $1M+ require minimum 20% down. Premium is added to your mortgage balance.</p>
+          </div>
+
+          <div>
+            <h3 style="font-size:var(--text-xl);font-weight:600;margin-bottom:var(--space-3)">❓ Frequently Asked Questions</h3>
+            <div style="display:flex;flex-direction:column;gap:var(--space-5)">
+              <div>
+                <p style="font-weight:600;margin-bottom:var(--space-1)">What income do I need to afford a $700,000 home?</p>
+                <p style="color:var(--color-text-muted);font-size:var(--text-sm);line-height:1.7">With a 10% down payment ($70,000) at a 4.5% rate, you need approximately $130,000–$140,000 in gross annual household income to qualify for a $700,000 home under the 39% GDS ratio at the 6.5% stress test rate. Reducing other debts or increasing your down payment lowers the income requirement significantly.</p>
+              </div>
+              <div>
+                <p style="font-weight:600;margin-bottom:var(--space-1)">Does the stress test apply to mortgage renewals?</p>
+                <p style="color:var(--color-text-muted);font-size:var(--text-sm);line-height:1.7">If you renew with your existing lender, the stress test generally does not apply. If you switch lenders at renewal, the stress test does apply. This means some Canadians who pass the stress test at purchase may not qualify to switch lenders at renewal if rates or incomes have changed — effectively locking them in with their current lender.</p>
+              </div>
+              <div>
+                <p style="font-weight:600;margin-bottom:var(--space-1)">Can I get a 30-year amortization with less than 20% down?</p>
+                <p style="color:var(--color-text-muted);font-size:var(--text-sm);line-height:1.7">As of August 2024, first-time buyers purchasing a newly built home can access a 30-year insured amortization. This reduces monthly payments by approximately 10–12% compared to a 25-year amortization but significantly increases total interest paid over the life of the mortgage.</p>
+              </div>
+              <div>
+                <p style="font-weight:600;margin-bottom:var(--space-1)">Does this calculator account for the First Home Buyer's Incentive?</p>
+                <p style="color:var(--color-text-muted);font-size:var(--text-sm);line-height:1.7">The First Home Buyer's Incentive (FHBI) was cancelled by the federal government in March 2024. This calculator does not include it. The FHSA (First Home Savings Account) is not a direct subsidy and functions as a tax-deductible savings account — its contribution is reflected in your down payment amount.</p>
+              </div>
+            </div>
+          </div>
+
+          <div>
+            <h3 style="font-size:var(--text-xl);font-weight:600;margin-bottom:var(--space-3)">🔗 Related Calculators</h3>
+            <div id="nn-related"></div>
+          </div>
+
+        </div>
+
+        <div style="margin-top:var(--space-8);padding:var(--space-4) var(--space-5);background:var(--color-bg);border:1px solid var(--color-border);border-radius:var(--radius-md);font-size:var(--text-sm);color:var(--color-text-muted);line-height:1.7">
+          📋 This calculator uses a binary search to find the maximum home price where both GDS ≤ 39% and TDS ≤ 44% at the OSFI stress test rate. Results are estimates only. Actual mortgage approval depends on your credit score, employment history, property type, and lender-specific policies. CMHC rules sourced from cmhc-schl.gc.ca. Stress test rules sourced from osfi-bsif.gc.ca. See our <a href="/disclaimer.html" style="color:var(--color-primary)">full disclaimer</a>.
+        </div>
+      </section>
+
+    </div>
+  </main>
+
+  <footer class="site-footer" id="nn-footer" role="contentinfo"></footer>
+
+  <script src="../script.js" defer></script>
+  <script src="../data/nn-constants.js" defer></script>
+  <script src="../data/nn-calculators.js" defer></script>
+  <script src="../shared/nn-utils.js" defer></script>
+  <script src="../shared/nn-seo.js" defer></script>
+  <script src="../shared/nn-analytics.js" defer></script>
+  <script src="../shared/nn-ads.js" defer></script>
+  <script src="../shared/nn-components.js" defer></script>
+  <script src="mortgage-affordability.js" defer></script>
+</body>
+</html>
