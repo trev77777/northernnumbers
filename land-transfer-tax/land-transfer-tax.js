@@ -155,9 +155,11 @@ document.addEventListener('DOMContentLoaded', function () {
       provLabel = 'PEI Land Transfer Tax';
       brackets  = [[Infinity, 0.01]];
     } else if (prov === 'NL') {
-      provTax   = 100; // nominal registration fee
-      provLabel = 'NL Registration Fee';
-      brackets  = [];
+      // NL Land Registration Fee: $100 base + $0.40 per additional $100 (or part thereof) above $500
+      const nlUnits = Math.ceil(Math.max(0, price - 500) / 100);
+      provTax   = price <= 500 ? 100 : 100 + nlUnits * 0.40;
+      provLabel = 'NL Land Registration Fee';
+      brackets  = [['NL_FORMULA', provTax]];
     } else if (prov === 'AB') {
       const mtg   = NNUtils.parseInputNumber(abMortgage?.value || '0') || price * 0.80;
       provTax     = 50 + Math.ceil(price / 5000) * 2 + 50 + Math.ceil(mtg / 5000) * 1.50;
@@ -263,26 +265,45 @@ document.addEventListener('DOMContentLoaded', function () {
     // Bracket breakdown
     const tbody = document.getElementById('bracket-body');
     if (tbody && r.brackets.length > 0) {
-      let rows = ''; let prev = 0;
-      r.brackets.forEach(([limit, rate], i) => {
-        if (price <= prev) return;
-        const taxable = Math.min(price, limit) - prev;
-        const tax     = taxable * rate;
-        const label   = limit === Infinity
-          ? `Above ${NNUtils.formatCAD(prev)}`
-          : `${NNUtils.formatCAD(prev)} – ${NNUtils.formatCAD(limit)}`;
-        rows += `<tr style="${i%2===0?'background:var(--color-bg);':''}border-bottom:1px solid var(--color-border)">
-          <td style="padding:var(--space-2) var(--space-3)">${label}</td>
-          <td style="padding:var(--space-2) var(--space-3);text-align:right">${(rate*100).toFixed(1)}%</td>
-          <td style="padding:var(--space-2) var(--space-3);text-align:right">${NNUtils.formatCAD(taxable)}</td>
-          <td style="padding:var(--space-2) var(--space-3);text-align:right;font-weight:500">${NNUtils.formatCAD(tax)}</td>
-        </tr>`;
-        prev = limit;
-      });
-      tbody.innerHTML = rows;
+      // Special case: NL formula display
+      if (r.brackets[0][0] === 'NL_FORMULA') {
+        const nlUnits = Math.ceil(Math.max(0, price - 500) / 100);
+        const rows = `
+          <tr style="border-bottom:1px solid var(--color-border)">
+            <td style="padding:var(--space-2) var(--space-3)">Base fee</td>
+            <td style="padding:var(--space-2) var(--space-3);text-align:right">Flat</td>
+            <td style="padding:var(--space-2) var(--space-3);text-align:right">First $500</td>
+            <td style="padding:var(--space-2) var(--space-3);text-align:right;font-weight:500">$100.00</td>
+          </tr>
+          <tr style="background:var(--color-bg)">
+            <td style="padding:var(--space-2) var(--space-3)">Additional units (${nlUnits} × $0.40)</td>
+            <td style="padding:var(--space-2) var(--space-3);text-align:right">$0.40/$100</td>
+            <td style="padding:var(--space-2) var(--space-3);text-align:right">${NNUtils.formatCAD(Math.max(0, price - 500))}</td>
+            <td style="padding:var(--space-2) var(--space-3);text-align:right;font-weight:500">${NNUtils.formatCAD(nlUnits * 0.40)}</td>
+          </tr>`;
+        tbody.innerHTML = rows;
+      } else {
+        let rows = ''; let prev = 0;
+        r.brackets.forEach(([limit, rate], i) => {
+          if (price <= prev) return;
+          const taxable = Math.min(price, limit) - prev;
+          const tax     = taxable * rate;
+          const label   = limit === Infinity
+            ? `Above ${NNUtils.formatCAD(prev)}`
+            : `${NNUtils.formatCAD(prev)} – ${NNUtils.formatCAD(limit)}`;
+          rows += `<tr style="${i%2===0?'background:var(--color-bg);':''}border-bottom:1px solid var(--color-border)">
+            <td style="padding:var(--space-2) var(--space-3)">${label}</td>
+            <td style="padding:var(--space-2) var(--space-3);text-align:right">${(rate*100).toFixed(1)}%</td>
+            <td style="padding:var(--space-2) var(--space-3);text-align:right">${NNUtils.formatCAD(taxable)}</td>
+            <td style="padding:var(--space-2) var(--space-3);text-align:right;font-weight:500">${NNUtils.formatCAD(tax)}</td>
+          </tr>`;
+          prev = limit;
+        });
+        tbody.innerHTML = rows;
+      }
       document.getElementById('bracket-table').style.display = '';
     } else {
-      if (tbody) tbody.innerHTML = '<tr><td colspan="4" style="padding:var(--space-3);color:var(--color-text-muted)">Flat rate — no bracket breakdown available.</td></tr>';
+      if (tbody) tbody.innerHTML = '<tr><td colspan="4" style="padding:var(--space-3);color:var(--color-text-muted)">No bracket breakdown available.</td></tr>';
     }
 
     window._lttResults = { price, prov, fthb, r };
