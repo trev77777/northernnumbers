@@ -121,11 +121,26 @@
               <label class="form-label" for="amort-years">Amortization Period</label>
               <div class="select-wrapper">
                 <select id="amort-years" class="form-select" aria-describedby="amort-hint">
-                  <option value="25" selected>25 years (insured max)</option>
-                  <option value="30">30 years (uninsured / FTHB new build)</option>
+                  <option value="25" selected>25 years (standard insured)</option>
+                  <option value="30">30 years (uninsured or FTHB / new build)</option>
                 </select>
               </div>
-              <p class="field-help" id="amort-hint">Max 25 years for insured mortgages (under 20% down). Max 30 years for uninsured or first-time buyers of new builds.</p>
+              <p class="field-help" id="amort-hint">Maximum 25 years for most insured mortgages. A 30-year insured amortization may be available if at least one borrower is a first-time homebuyer OR the property is a newly built home. Uninsured mortgages may also allow 30 years.</p>
+            </div>
+
+            <div class="form-group" id="amort-30-options" style="display:none">
+              <label class="form-label">30-Year Eligibility</label>
+              <div style="display:flex;flex-direction:column;gap:var(--space-2)">
+                <label style="display:flex;align-items:center;gap:var(--space-2);cursor:pointer;font-size:var(--text-sm)">
+                  <input type="checkbox" id="buyer-fthb" style="accent-color:var(--color-primary)" />
+                  First-time homebuyer (qualifies for CMHC Home Start rates)
+                </label>
+                <label style="display:flex;align-items:center;gap:var(--space-2);cursor:pointer;font-size:var(--text-sm)">
+                  <input type="checkbox" id="buyer-newbuild" style="accent-color:var(--color-primary)" />
+                  Newly built home (qualifies for CMHC Home Start rates)
+                </label>
+              </div>
+              <p class="field-help" style="margin-top:var(--space-2)">If neither applies, a 30-year amortization requires at least 20% down (no CMHC insurance).</p>
             </div>
 
             <!-- Monthly debts -->
@@ -303,6 +318,10 @@
                   <div class="result-row" role="listitem">
                     <span class="result-row-label">Land Transfer Tax (ON est.)</span>
                     <span class="result-row-value" id="close-ltt">—</span>
+                  </div>
+                  <div class="result-row" role="listitem" id="close-cmhc-tax-row" style="display:none">
+                    <span class="result-row-label">Ontario tax on mortgage insurance (8%)</span>
+                    <span class="result-row-value is-error" id="close-cmhc-tax">—</span>
                   </div>
                   <div class="result-row" role="listitem">
                     <span class="result-row-label">Legal / Title / Inspection</span>

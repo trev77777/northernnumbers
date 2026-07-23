@@ -68,7 +68,17 @@ document.addEventListener('DOMContentLoaded', function () {
 
   /* ── Auto-recalc on amort change ── */
   amortEl?.addEventListener('change', () => {
+    const show30 = amortEl.value === '30';
+    const opts30 = document.getElementById('amort-30-options');
+    if (opts30) opts30.style.display = show30 ? '' : 'none';
     if (!resultsContent.classList.contains('hidden')) calculate();
+  });
+
+  // Wire FTHB/new build checkboxes to recalc
+  ['buyer-fthb','buyer-newbuild'].forEach(id => {
+    document.getElementById(id)?.addEventListener('change', () => {
+      if (!resultsContent.classList.contains('hidden')) calculate();
+    });
   });
 
   /* ── Presets ── */
@@ -102,10 +112,19 @@ document.addEventListener('DOMContentLoaded', function () {
   }
 
   function cmhcRate(dpPct) {
+    // Standard rates — 25-year amortization
     if (dpPct >= 0.20) return 0;
     if (dpPct >= 0.15) return 0.028;
     if (dpPct >= 0.10) return 0.031;
     return 0.040;
+  }
+
+  function cmhcHomeStartRate(ltv) {
+    // CMHC Home Start rates — 30-year insured (FTHB or new build)
+    if (ltv <= 0.80)   return 0;
+    if (ltv <= 0.8500) return 0.030;
+    if (ltv <= 0.9000) return 0.033;
+    return 0.042; // 90.01%–95% LTV
   }
 
   function stressRate(contractRate) {
@@ -131,7 +150,7 @@ document.addEventListener('DOMContentLoaded', function () {
   }
 
   /* ── BINARY SEARCH ── */
-  function findMaxPrice(income, dp, contractRate, amortYears, monthlyDebts, propTaxAnnual, heatingMo, condoMo, gdsLimit, tdsLimit) {
+  function findMaxPrice(income, dp, contractRate, amortYears, monthlyDebts, propTaxAnnual, heatingMo, condoMo, gdsLimit, tdsLimit, is30yrInsured) {
     const grossMo     = income / 12;
     const stress      = stressRate(contractRate);
     const mr          = monthlyRate(stress);
@@ -145,7 +164,8 @@ document.addEventListener('DOMContentLoaded', function () {
       const mortgage = mid - dp;
       if (mortgage <= 0) { hi = mid; continue; }
       const dpPct    = dp / mid;
-      const premium  = cmhcRate(dpPct);
+      const ltv      = mid > 0 ? (mid - dp) / mid : 0;
+      const premium  = is30yrInsured ? cmhcHomeStartRate(ltv) : cmhcRate(dpPct);
       const insured  = mortgage * (1 + premium);
       const pi       = monthlyPayment(insured, mr, amortMo);
       const pith     = pi + propTaxMo + heatingMo + condoHalf;
@@ -163,6 +183,8 @@ document.addEventListener('DOMContentLoaded', function () {
     const rate       = parseFloat(rateEl.value) || 4.5;
     const amort      = parseInt(amortEl.value) || 25;
     const debts      = NNUtils.parseInputNumber(debtsEl.value) || 0;
+    const fthb       = document.getElementById('buyer-fthb')?.checked || false;
+    const newBuild   = document.getElementById('buyer-newbuild')?.checked || false;
     const propTax    = NNUtils.parseInputNumber(propTaxEl.value) || 4000;
     const heating    = NNUtils.parseInputNumber(heatingEl.value) || 150;
     const condo      = NNUtils.parseInputNumber(condoEl.value) || 0;
@@ -176,11 +198,13 @@ document.addEventListener('DOMContentLoaded', function () {
     const GDS_LIMIT = 0.39;
     const TDS_LIMIT = 0.44;
 
-    const maxPrice    = Math.floor(findMaxPrice(income, dp, rate, amort, debts, propTax, heating, condo, GDS_LIMIT, TDS_LIMIT));
+    const is30yrInsured = amort === 30 && (fthb || newBuild) && dp / (income * 4) < 0.20; // rough LTV check
+    const maxPrice    = Math.floor(findMaxPrice(income, dp, rate, amort, debts, propTax, heating, condo, GDS_LIMIT, TDS_LIMIT, is30yrInsured));
     const mortgage    = maxPrice - dp;
     const dpPct       = dp / maxPrice;
+    const ltv         = mortgage / maxPrice;
     const minDp       = minDownPayment(maxPrice);
-    const premium     = cmhcRate(dpPct);
+    const premium     = is30yrInsured ? cmhcHomeStartRate(ltv) : cmhcRate(dpPct);
     const insured     = mortgage * (1 + premium);
     const stressR     = stressRate(rate);
     const mrStress    = monthlyRate(stressR);
@@ -195,12 +219,16 @@ document.addEventListener('DOMContentLoaded', function () {
     const tds         = (pith + debts) / (income / 12);
     const binding     = gds >= tds - 0.01 ? 'GDS (housing costs)' : 'TDS (including debts)';
 
-    // Income needed cross-check
-    const incomeNeeded = pith / GDS_LIMIT * 12;
+    // Income needed — binding constraint (GDS or TDS whichever requires more income)
+    const reqGDSIncome  = (pith * 12) / GDS_LIMIT;
+    const reqTDSIncome  = ((pith + debts) * 12) / TDS_LIMIT;
+    const incomeNeeded  = Math.max(reqGDSIncome, reqTDSIncome);
 
     // Closing costs
-    const ltt       = onLTT(maxPrice);
-    const closingTotal = dp + ltt + 3500;
+    const ltt            = onLTT(maxPrice);
+    const cmhcPremiumAmt = mortgage * premium;
+    const cmhcTax        = premium > 0 ? cmhcPremiumAmt * 0.08 : 0; // Ontario 8% PST on CMHC premium
+    const closingTotal   = dp + ltt + 3500 + cmhcTax;
 
     /* Render */
     placeholder.classList.add('hidden');
@@ -214,7 +242,7 @@ document.addEventListener('DOMContentLoaded', function () {
     const cmhcRow = document.getElementById('cmhc-row');
     if (premium > 0) {
       cmhcRow.style.display = '';
-      document.getElementById('result-cmhc').textContent = NNUtils.formatCAD(mortgage * premium) + ` (${(premium*100).toFixed(1)}%)`;
+      document.getElementById('result-cmhc').textContent = NNUtils.formatCAD(cmhcPremiumAmt) + ` (${(premium*100).toFixed(1)}%)`;
     } else {
       cmhcRow.style.display = 'none';
     }
@@ -232,6 +260,12 @@ document.addEventListener('DOMContentLoaded', function () {
 
     document.getElementById('close-dp').textContent    = NNUtils.formatCAD(dp);
     document.getElementById('close-ltt').textContent   = NNUtils.formatCAD(ltt);
+    const cmhcTaxRow = document.getElementById('close-cmhc-tax-row');
+    const cmhcTaxEl  = document.getElementById('close-cmhc-tax');
+    if (cmhcTaxRow && cmhcTaxEl) {
+      if (cmhcTax > 0) { cmhcTaxRow.style.display = ''; cmhcTaxEl.textContent = NNUtils.formatCAD(cmhcTax); }
+      else              { cmhcTaxRow.style.display = 'none'; }
+    }
     document.getElementById('close-total').textContent = NNUtils.formatCAD(closingTotal);
 
     // Warn if down payment below minimum
