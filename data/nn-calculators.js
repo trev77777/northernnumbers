@@ -185,6 +185,15 @@ window.NNRegistry = {
       related: ['income-tax','budget','inflation','loan']
     },
     {
+      id: 'rent-vs-buy', name: 'Rent vs Buy Calculator', category: 'real-estate',
+      url: '/rent-vs-buy/', icon: '⚖️',
+      description: 'Compare the true financial outcome of renting versus buying a home in Canada over 5, 10, or 25 years.',
+      keywords: ['rent vs buy calculator canada','should i rent or buy canada','renting vs buying canada 2026'],
+      status: 'active', priority: 21,
+      showInFooter: true, footerSection: 'moreTools', showOnHomepage: true,
+      related: ['mortgage','mortgage-affordability','land-transfer-tax','budget']
+    },
+    {
       id: 'mortgage-affordability', name: 'Mortgage Affordability Calculator', category: 'real-estate',
       url: '/mortgage-affordability/', icon: '🏡',
       description: 'Find out how much house you can afford in Canada using OSFI stress test, GDS/TDS ratios, and 2026 CMHC rules.',

@@ -1,0 +1,418 @@
+<!DOCTYPE html>
+<html lang="en-CA">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Rent vs Buy Calculator Canada 2026 — Northern Numbers</title>
+  <meta name="description" content="Free Canadian rent vs buy calculator for 2026. Compare the true financial cost of renting versus buying a home over 5, 10, or 25 years. Includes home appreciation, investment returns, CMHC, and all closing costs." />
+  <meta name="keywords" content="rent vs buy calculator canada, should i rent or buy canada, rent vs buy calculator 2026, renting vs buying canada, is it better to rent or buy canada" />
+  <link rel="canonical" href="https://www.northernnumbers.ca/rent-vs-buy/" />
+  <meta property="og:title" content="Rent vs Buy Calculator Canada 2026 — Northern Numbers" />
+  <meta property="og:description" content="Compare the true financial cost of renting versus buying a home in Canada over 5, 10, or 25 years." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://www.northernnumbers.ca/rent-vs-buy/" />
+  <meta property="og:locale" content="en_CA" />
+  <meta property="og:site_name" content="Northern Numbers" />
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Rent vs Buy Calculator Canada 2026 — Northern Numbers" />
+  <meta name="twitter:description" content="Compare the true cost of renting vs buying a home in Canada." />
+  <meta name="robots" content="index, follow" />
+  <meta name="author" content="Northern Numbers" />
+  <link rel="icon" type="image/png" sizes="32x32" href="../favicon-32x32.png" />
+  <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png" />
+  <link rel="icon" type="image/x-icon" href="../favicon.ico" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Poppins:wght@600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="../styles.css" />
+</head>
+<body>
+
+  <header class="site-header" id="nn-header" role="banner"></header>
+
+  <main id="main-content" class="calc-page">
+    <div class="container">
+
+      <nav class="calc-breadcrumb" aria-label="Breadcrumb">
+        <a href="/">Home</a>
+        <span class="calc-breadcrumb-sep" aria-hidden="true">›</span>
+        <a href="/finance/">Calculators</a>
+        <span class="calc-breadcrumb-sep" aria-hidden="true">›</span>
+        <span aria-current="page">Rent vs Buy Calculator</span>
+      </nav>
+
+      <div class="calc-page-header">
+        <h1 class="calc-page-title">Rent vs Buy Calculator Canada 2026</h1>
+        <p class="calc-page-desc">Compare the true financial outcome of renting versus buying a home in Canada. Accounts for home appreciation, investment returns on your down payment, CMHC insurance, all closing costs, and property expenses.</p>
+      </div>
+
+      <div class="calc-layout">
+
+        <!-- Inputs -->
+        <section class="calc-panel" aria-labelledby="inputs-heading">
+          <h2 id="inputs-heading" class="calc-panel-title">Your Details</h2>
+
+          <div class="quick-start" role="note">
+            <p class="quick-start-title">📋 How to use this calculator</p>
+            <ol>
+              <li>Enter the home price you're considering buying.</li>
+              <li>Enter your current monthly rent.</li>
+              <li>Set your down payment, mortgage rate, and time horizon.</li>
+              <li>Adjust the growth rate assumptions to match your market.</li>
+              <li>Click <strong>Compare</strong> to see which comes out ahead.</li>
+            </ol>
+          </div>
+
+          <!-- Presets -->
+          <div style="margin-bottom:var(--space-4)">
+            <p style="font-size:var(--text-sm);font-weight:600;color:var(--color-text-muted);margin-bottom:var(--space-2)">Quick presets:</p>
+            <div class="preset-group" role="group">
+              <button type="button" class="preset-btn" data-preset="toronto">🏙 Toronto</button>
+              <button type="button" class="preset-btn" data-preset="calgary">🌄 Calgary</button>
+              <button type="button" class="preset-btn" data-preset="vancouver">🌊 Vancouver</button>
+              <button type="button" class="preset-btn" data-preset="national">🍁 National Avg</button>
+            </div>
+          </div>
+
+          <form id="rvb-form" novalidate>
+
+            <!-- Home price -->
+            <div class="form-group">
+              <label class="form-label" for="home-price">Home Purchase Price</label>
+              <div class="input-wrapper">
+                <span class="input-prefix" aria-hidden="true">$</span>
+                <input type="text" id="home-price" class="form-input has-prefix"
+                  placeholder="700,000" inputmode="numeric" autocomplete="off" value="700,000"
+                  aria-describedby="price-hint price-error" />
+              </div>
+              <p class="field-help" id="price-hint">The price of the home you'd consider buying.</p>
+              <p id="price-error" class="form-error-msg" role="alert"></p>
+            </div>
+
+            <!-- Down payment -->
+            <div class="form-group">
+              <label class="form-label" for="down-pct">Down Payment</label>
+              <div class="input-wrapper">
+                <input type="number" id="down-pct" class="form-input has-suffix"
+                  placeholder="10" min="5" max="100" step="1" value="10"
+                  aria-describedby="dp-hint" />
+                <span class="input-suffix" aria-hidden="true">%</span>
+              </div>
+              <input type="range" id="down-slider" class="range-slider"
+                min="5" max="50" step="1" value="10" aria-label="Down payment slider" />
+              <p class="field-help" id="dp-hint">Down payment as a percentage of purchase price. Under 20% requires CMHC insurance.</p>
+            </div>
+
+            <!-- Mortgage rate -->
+            <div class="form-group">
+              <label class="form-label" for="mortgage-rate">Mortgage Rate</label>
+              <div class="input-wrapper">
+                <input type="number" id="mortgage-rate" class="form-input has-suffix"
+                  placeholder="4.5" min="1" max="12" step="0.05" value="4.5"
+                  aria-describedby="rate-hint" />
+                <span class="input-suffix" aria-hidden="true">%</span>
+              </div>
+              <input type="range" id="rate-slider" class="range-slider"
+                min="1" max="10" step="0.05" value="4.5" aria-label="Mortgage rate slider" />
+              <p class="field-help" id="rate-hint">Expected average mortgage rate over the comparison period.</p>
+            </div>
+
+            <!-- Amortization -->
+            <div class="form-group">
+              <label class="form-label" for="amort-years">Amortization Period</label>
+              <div class="select-wrapper">
+                <select id="amort-years" class="form-select">
+                  <option value="25" selected>25 years</option>
+                  <option value="30">30 years</option>
+                </select>
+              </div>
+            </div>
+
+            <!-- Monthly rent -->
+            <div class="form-group">
+              <label class="form-label" for="monthly-rent">Current Monthly Rent</label>
+              <div class="input-wrapper">
+                <span class="input-prefix" aria-hidden="true">$</span>
+                <input type="text" id="monthly-rent" class="form-input has-prefix"
+                  placeholder="2,400" inputmode="numeric" autocomplete="off" value="2,400"
+                  aria-describedby="rent-hint rent-error" />
+              </div>
+              <p class="field-help" id="rent-hint">What you currently pay in rent, or would pay for a comparable rental.</p>
+              <p id="rent-error" class="form-error-msg" role="alert"></p>
+            </div>
+
+            <!-- Time horizon -->
+            <div class="form-group">
+              <label class="form-label" for="horizon">Time Horizon</label>
+              <div class="select-wrapper">
+                <select id="horizon" class="form-select" aria-describedby="horizon-hint">
+                  <option value="5">5 years</option>
+                  <option value="10" selected>10 years</option>
+                  <option value="15">15 years</option>
+                  <option value="25">25 years</option>
+                </select>
+              </div>
+              <p class="field-help" id="horizon-hint">How long you plan to stay. Buying generally wins over longer horizons due to equity building.</p>
+            </div>
+
+            <!-- Advanced assumptions -->
+            <button type="button" class="advanced-toggle" id="assumptions-toggle" aria-expanded="false" aria-controls="assumptions-fields">
+              <span>⚙️ Advanced Assumptions</span>
+              <svg class="advanced-toggle-icon" width="18" height="18" viewBox="0 0 20 20" fill="none" aria-hidden="true">
+                <path d="M5 7.5L10 12.5L15 7.5" stroke="#6B7280" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </button>
+
+            <div id="assumptions-fields" class="advanced-fields">
+
+              <div class="form-group">
+                <label class="form-label" for="home-appreciation">Home Appreciation Rate</label>
+                <div class="input-wrapper">
+                  <input type="number" id="home-appreciation" class="form-input has-suffix"
+                    placeholder="3.0" min="0" max="15" step="0.1" value="3.0" />
+                  <span class="input-suffix" aria-hidden="true">%/yr</span>
+                </div>
+                <p class="field-help">Canadian historical average: ~3–4%/yr. Toronto/Vancouver: 4–6%. Prairies: 1–3%.</p>
+              </div>
+
+              <div class="form-group">
+                <label class="form-label" for="rent-inflation">Annual Rent Increase</label>
+                <div class="input-wrapper">
+                  <input type="number" id="rent-inflation" class="form-input has-suffix"
+                    placeholder="3.0" min="0" max="10" step="0.1" value="3.0" />
+                  <span class="input-suffix" aria-hidden="true">%/yr</span>
+                </div>
+                <p class="field-help">Typical rent inflation in Canada: 2–4%/yr. Many provinces have rent control limits.</p>
+              </div>
+
+              <div class="form-group">
+                <label class="form-label" for="investment-return">Investment Return (if renting)</label>
+                <div class="input-wrapper">
+                  <input type="number" id="investment-return" class="form-input has-suffix"
+                    placeholder="7.0" min="0" max="15" step="0.1" value="7.0" />
+                  <span class="input-suffix" aria-hidden="true">%/yr</span>
+                </div>
+                <p class="field-help">Expected annual return if you invest the down payment instead. TSX historical avg: ~7%. Balanced portfolio: ~6%.</p>
+              </div>
+
+              <div class="form-group">
+                <label class="form-label" for="property-tax-rate">Annual Property Tax Rate</label>
+                <div class="input-wrapper">
+                  <input type="number" id="property-tax-rate" class="form-input has-suffix"
+                    placeholder="1.0" min="0.3" max="3" step="0.05" value="1.0" />
+                  <span class="input-suffix" aria-hidden="true">% of value</span>
+                </div>
+                <p class="field-help">As % of home value. Toronto: ~0.66%. Vancouver: ~0.28%. Ontario outside Toronto: ~1.0–1.5%.</p>
+              </div>
+
+              <div class="form-group">
+                <label class="form-label" for="maintenance-rate">Annual Maintenance Cost</label>
+                <div class="input-wrapper">
+                  <input type="number" id="maintenance-rate" class="form-input has-suffix"
+                    placeholder="1.0" min="0.5" max="3" step="0.1" value="1.0" />
+                  <span class="input-suffix" aria-hidden="true">% of value</span>
+                </div>
+                <p class="field-help">Industry standard: 1% of home value per year. Older homes or condos may be higher.</p>
+              </div>
+
+              <div class="form-group">
+                <label class="form-label" for="realtor-fee">Realtor / Closing Fees on Sale</label>
+                <div class="input-wrapper">
+                  <input type="number" id="realtor-fee" class="form-input has-suffix"
+                    placeholder="4.0" min="1" max="8" step="0.5" value="4.0" />
+                  <span class="input-suffix" aria-hidden="true">% of sale price</span>
+                </div>
+                <p class="field-help">Realtor commissions in Canada are typically 3–5%. Includes land transfer tax on sale.</p>
+              </div>
+
+            </div>
+
+            <div class="btn-row">
+              <button type="submit" class="btn btn-primary btn-calculate" style="flex:1">
+                Compare Rent vs Buy
+              </button>
+              <button type="button" id="reset-btn" class="btn btn-secondary">Reset</button>
+            </div>
+
+          </form>
+        </section>
+
+        <!-- Results -->
+        <section class="calc-panel" aria-labelledby="results-heading" aria-live="polite">
+          <h2 id="results-heading" class="calc-panel-title">Your Results</h2>
+
+          <div id="results-placeholder" class="result-placeholder">
+            <div class="result-placeholder-icon" aria-hidden="true">
+              <svg width="56" height="56" viewBox="0 0 56 56" fill="none">
+                <path d="M10 30L20 20L28 28L38 18L46 26" stroke="#D1D5DB" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                <rect x="10" y="36" width="36" height="2" rx="1" fill="#D1D5DB"/>
+              </svg>
+            </div>
+            <p>Enter your details and click <strong>Compare Rent vs Buy</strong> to see results.</p>
+          </div>
+
+          <div id="results-content" class="hidden">
+
+            <!-- Verdict hero -->
+            <div class="result-hero" id="verdict-hero">
+              <p class="result-hero-label" id="verdict-label">Financial Advantage</p>
+              <p class="result-hero-value" id="verdict-amount">—</p>
+              <p class="result-hero-sub" id="verdict-sub">—</p>
+            </div>
+
+            <!-- Side-by-side summary -->
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:var(--space-3);margin-top:var(--space-5)">
+              <div style="padding:var(--space-4);background:var(--color-bg);border:2px solid var(--color-border);border-radius:var(--radius-md)">
+                <p style="font-family:var(--font-heading);font-weight:700;font-size:var(--text-base);margin-bottom:var(--space-3)">🏠 Buy</p>
+                <div style="display:flex;flex-direction:column;gap:var(--space-2);font-size:var(--text-sm)">
+                  <div style="display:flex;justify-content:space-between"><span style="color:var(--color-text-muted)">Home value</span><span id="b-home-value" style="font-weight:600">—</span></div>
+                  <div style="display:flex;justify-content:space-between"><span style="color:var(--color-text-muted)">Mortgage left</span><span id="b-mortgage-end" style="font-weight:600">—</span></div>
+                  <div style="display:flex;justify-content:space-between"><span style="color:var(--color-text-muted)">Sale proceeds</span><span id="b-sale-proceeds" style="font-weight:600">—</span></div>
+                  <div style="display:flex;justify-content:space-between;border-top:1px solid var(--color-border);padding-top:var(--space-2)"><span style="font-weight:700">Net Wealth</span><span id="b-net-wealth" style="font-weight:700;color:var(--color-primary)">—</span></div>
+                </div>
+              </div>
+              <div style="padding:var(--space-4);background:var(--color-bg);border:2px solid var(--color-border);border-radius:var(--radius-md)">
+                <p style="font-family:var(--font-heading);font-weight:700;font-size:var(--text-base);margin-bottom:var(--space-3)">🏢 Rent</p>
+                <div style="display:flex;flex-direction:column;gap:var(--space-2);font-size:var(--text-sm)">
+                  <div style="display:flex;justify-content:space-between"><span style="color:var(--color-text-muted)">Portfolio value</span><span id="r-portfolio" style="font-weight:600">—</span></div>
+                  <div style="display:flex;justify-content:space-between"><span style="color:var(--color-text-muted)">Total rent paid</span><span id="r-total-rent" style="font-weight:600">—</span></div>
+                  <div style="display:flex;justify-content:space-between"><span style="color:var(--color-text-muted)">Final rent/mo</span><span id="r-final-rent" style="font-weight:600">—</span></div>
+                  <div style="display:flex;justify-content:space-between;border-top:1px solid var(--color-border);padding-top:var(--space-2)"><span style="font-weight:700">Net Wealth</span><span id="r-net-wealth" style="font-weight:700;color:var(--color-primary)">—</span></div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Key metrics -->
+            <div class="milestone-grid" style="margin-top:var(--space-5)">
+              <div class="milestone-card">
+                <p class="milestone-label">Break-Even Point</p>
+                <p class="milestone-value" id="result-breakeven">—</p>
+                <p class="milestone-sub">When buying overtakes renting</p>
+              </div>
+              <div class="milestone-card">
+                <p class="milestone-label">Monthly Buy Cost</p>
+                <p class="milestone-value" id="result-monthly-buy">—</p>
+                <p class="milestone-sub">Mortgage + tax + maintenance</p>
+              </div>
+              <div class="milestone-card">
+                <p class="milestone-label">CMHC Insurance</p>
+                <p class="milestone-value" id="result-cmhc">—</p>
+                <p class="milestone-sub">Added to mortgage balance</p>
+              </div>
+              <div class="milestone-card">
+                <p class="milestone-label">Initial Cash Needed</p>
+                <p class="milestone-value" id="result-initial-cash">—</p>
+                <p class="milestone-sub">Down payment + closing costs</p>
+              </div>
+            </div>
+
+            <!-- Year-by-year toggle -->
+            <div style="margin-top:var(--space-6)">
+              <button type="button" class="advanced-toggle" id="table-toggle" aria-expanded="false" aria-controls="year-table">
+                <span>📅 Year-by-Year Comparison</span>
+                <svg class="advanced-toggle-icon" width="18" height="18" viewBox="0 0 20 20" fill="none" aria-hidden="true">
+                  <path d="M5 7.5L10 12.5L15 7.5" stroke="#6B7280" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </button>
+              <div id="year-table" class="advanced-fields">
+                <div style="overflow-x:auto;margin-top:var(--space-3)">
+                  <table style="width:100%;border-collapse:collapse;font-size:var(--text-sm)">
+                    <thead>
+                      <tr style="background:var(--color-bg);border-bottom:2px solid var(--color-border)">
+                        <th style="padding:var(--space-2) var(--space-3);text-align:left;font-weight:600">Year</th>
+                        <th style="padding:var(--space-2) var(--space-3);text-align:right;font-weight:600">Home Value</th>
+                        <th style="padding:var(--space-2) var(--space-3);text-align:right;font-weight:600">Buy Equity</th>
+                        <th style="padding:var(--space-2) var(--space-3);text-align:right;font-weight:600">Rent Portfolio</th>
+                        <th style="padding:var(--space-2) var(--space-3);text-align:right;font-weight:600">Advantage</th>
+                      </tr>
+                    </thead>
+                    <tbody id="year-body"></tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+
+            <div style="margin-top:var(--space-4);padding:var(--space-3) var(--space-4);background:var(--color-bg);border:1px solid var(--color-border);border-radius:var(--radius-md);font-size:var(--text-xs);color:var(--color-text-muted);line-height:1.7">
+              ℹ️ Buy wealth = home sale proceeds minus remaining mortgage. Rent wealth = invested portfolio (down payment + invested monthly savings). No capital gains tax applies on principal residence sale. Results are projections — actual outcomes depend on market conditions. All assumptions adjustable above.
+            </div>
+
+            <div id="nn-disclaimer" style="margin-top:var(--space-4)"></div>
+
+            <button type="button" id="copy-btn" class="copy-btn" style="margin-top:var(--space-4)">
+              📋 Copy Results to Clipboard
+            </button>
+
+          </div>
+        </section>
+      </div>
+
+      <!-- Educational -->
+      <section style="margin-top:var(--space-16);padding-top:var(--space-10);border-top:1px solid var(--color-border)">
+        <h2 style="font-size:var(--text-2xl);font-weight:700;margin-bottom:var(--space-8)">Renting vs Buying in Canada</h2>
+        <div style="display:grid;gap:var(--space-8)">
+
+          <div>
+            <h3 style="font-size:var(--text-xl);font-weight:600;margin-bottom:var(--space-3)">🇨🇦 The Canadian Context</h3>
+            <p style="color:var(--color-text-muted);line-height:1.8">The rent vs buy decision in Canada is more complex than in most countries due to unique factors: exceptionally high home prices in major cities, mortgage rules that require stress testing at rates 2% above contract, CMHC insurance costs for buyers with less than 20% down, and a cultural expectation that homeownership builds wealth. Over the long run, Canadian home prices have appreciated significantly — national average home prices rose approximately 4% annually from 1990 to 2024. However, this masks enormous regional variation. Buying has been transformative in Toronto and Vancouver; far less so in smaller cities where prices were already affordable and appreciation modest.</p>
+          </div>
+
+          <div>
+            <h3 style="font-size:var(--text-xl);font-weight:600;margin-bottom:var(--space-3)">💡 When Buying Usually Wins</h3>
+            <p style="color:var(--color-text-muted);line-height:1.8">Buying tends to outperform renting when: you stay for 7+ years (time to recoup closing costs and build equity), home appreciation exceeds your mortgage rate, rent increases significantly over time, and you would not reliably invest the down payment if renting. Forced savings through mortgage payments is a real psychological advantage — many renters who claim they'd invest the difference don't actually do it consistently. Equity in a home is also protected from capital gains tax on your principal residence, an enormous tax advantage not available on investment portfolios.</p>
+          </div>
+
+          <div>
+            <h3 style="font-size:var(--text-xl);font-weight:600;margin-bottom:var(--space-3)">📊 When Renting Usually Wins</h3>
+            <p style="color:var(--color-text-muted);line-height:1.8">Renting tends to outperform buying when: you stay fewer than 5 years (closing costs alone can exceed 3–5% of purchase price), home appreciation is slow, you have high-interest debt that should be paid first, your city has a high price-to-rent ratio (monthly rent is far below mortgage payments for equivalent homes), or you invest the down payment and monthly savings consistently in a diversified portfolio. High-priced markets like Toronto and Vancouver often have price-to-rent ratios where renting and investing is financially superior over a 10-year horizon — even if it feels wrong emotionally.</p>
+          </div>
+
+          <div>
+            <h3 style="font-size:var(--text-xl);font-weight:600;margin-bottom:var(--space-3)">❓ Frequently Asked Questions</h3>
+            <div style="display:flex;flex-direction:column;gap:var(--space-5)">
+              <div>
+                <p style="font-weight:600;margin-bottom:var(--space-1)">Is it better to rent or buy in Canada in 2026?</p>
+                <p style="color:var(--color-text-muted);font-size:var(--text-sm);line-height:1.7">It depends heavily on your city, time horizon, and what you'd do with the down payment if you rented. In high-appreciation markets like Toronto and Vancouver, buying has historically built significant wealth over 15+ years. In lower-appreciation markets, renting and investing the difference often performs similarly or better. Use this calculator with your specific numbers — the answer varies enormously by situation.</p>
+              </div>
+              <div>
+                <p style="font-weight:600;margin-bottom:var(--space-1)">How long do I need to stay to make buying worthwhile?</p>
+                <p style="color:var(--color-text-muted);font-size:var(--text-sm);line-height:1.7">The break-even point in Canada is typically 5–7 years, accounting for closing costs (land transfer tax, legal fees, realtor commissions on sale). In very high-appreciation markets it can be as low as 3–4 years. In slow markets with high ownership costs, it can be 8–10 years. This calculator shows your specific break-even year in the year-by-year table.</p>
+              </div>
+              <div>
+                <p style="font-weight:600;margin-bottom:var(--space-1)">Does this calculator account for the principal residence exemption?</p>
+                <p style="color:var(--color-text-muted);font-size:var(--text-sm);line-height:1.7">Yes. The model assumes no capital gains tax on the home sale, which is correct for your primary residence in Canada under the principal residence exemption. This is a major tax advantage for homeowners — an equivalent gain in a non-registered investment portfolio would be taxed at 50% inclusion rate (capital gains inclusion rate as of 2024).</p>
+              </div>
+              <div>
+                <p style="font-weight:600;margin-bottom:var(--space-1)">What investment return should I use for the rent path?</p>
+                <p style="color:var(--color-text-muted);font-size:var(--text-sm);line-height:1.7">The TSX Composite has returned approximately 7–8% annually over the long term. A diversified global portfolio (e.g. XEQT or VEQT) has historically returned 7–9%. A balanced 60/40 portfolio averages roughly 5–6%. For a conservative estimate, use 5–6%. For a growth-oriented investor, 7–8% is reasonable. Lower returns make buying look better; higher returns make renting look better.</p>
+              </div>
+            </div>
+          </div>
+
+          <div>
+            <h3 style="font-size:var(--text-xl);font-weight:600;margin-bottom:var(--space-3)">🔗 Related Calculators</h3>
+            <div id="nn-related"></div>
+          </div>
+
+        </div>
+
+        <div style="margin-top:var(--space-8);padding:var(--space-4) var(--space-5);background:var(--color-bg);border:1px solid var(--color-border);border-radius:var(--radius-md);font-size:var(--text-sm);color:var(--color-text-muted);line-height:1.7">
+          📋 This calculator models net wealth at the end of the time horizon, not total costs paid. Buy wealth assumes home sale at the end of the period minus remaining mortgage and realtor fees. Rent wealth assumes the down payment and any monthly cost differences are invested at the assumed return rate. Principal residence capital gains exemption applied to home sale. All projections are estimates — actual returns vary. See our <a href="/disclaimer.html" style="color:var(--color-primary)">full disclaimer</a>.
+        </div>
+      </section>
+
+    </div>
+  </main>
+
+  <footer class="site-footer" id="nn-footer" role="contentinfo"></footer>
+
+  <script src="../script.js" defer></script>
+  <script src="../data/nn-constants.js" defer></script>
+  <script src="../data/nn-calculators.js" defer></script>
+  <script src="../shared/nn-utils.js" defer></script>
+  <script src="../shared/nn-seo.js" defer></script>
+  <script src="../shared/nn-analytics.js" defer></script>
+  <script src="../shared/nn-ads.js" defer></script>
+  <script src="../shared/nn-components.js" defer></script>
+  <script src="rent-vs-buy.js" defer></script>
+</body>
+</html>
