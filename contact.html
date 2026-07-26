@@ -3,30 +3,24 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-
-  <title>Contact — Northern Numbers</title>
-  <meta name="description" content="Get in touch with Northern Numbers — suggest a calculator, report an issue, or ask a question." />
+  <title>Contact Northern Numbers — Questions, Corrections & Calculator Suggestions</title>
+  <meta name="description" content="Contact Northern Numbers to suggest a new Canadian financial calculator, report an inaccurate rate or formula, or ask a general question. We read every message." />
   <meta name="robots" content="index, follow" />
   <link rel="canonical" href="https://www.northernnumbers.ca/contact.html" />
-
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Poppins:wght@600;700;800&display=swap" rel="stylesheet" />
-
   <link rel="stylesheet" href="styles.css" />
   <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
   <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
   <link rel="icon" type="image/x-icon" href="/favicon.ico" />
 </head>
-
 <body>
 
-  <!-- HEADER -->
   <header class="site-header" id="nn-header" role="banner"></header>
 
-  <!-- MAIN -->
   <main id="main-content" class="calc-page">
-    <div class="container" style="max-width: 600px;">
+    <div class="container" style="max-width:760px">
 
       <nav class="calc-breadcrumb" aria-label="Breadcrumb">
         <a href="/">Home</a>
@@ -35,70 +29,80 @@
       </nav>
 
       <div class="calc-page-header">
-        <h1 class="calc-page-title">Contact Us</h1>
-        <p class="calc-page-desc">Suggest a calculator, report an issue, or ask a question.</p>
-        <p style="font-size:var(--text-sm);color:var(--color-text-muted);margin-top:var(--space-2)">We typically respond within 24–48 hours.</p>
+        <h1 class="calc-page-title">Contact Northern Numbers</h1>
+        <p class="calc-page-desc">We read every message. Whether you've spotted an error, want to suggest a calculator, or have a question about how something works — reach out.</p>
       </div>
 
-      <div class="calc-panel">
-        <p style="margin-bottom: var(--space-6); color: var(--color-text-muted); line-height: 1.7;">
-          We read every message. For calculator requests, let us know which Canadian financial
-          calculation you're looking for and we'll add it to the roadmap.
-        </p>
+      <div style="display:grid;gap:var(--space-8);margin-top:var(--space-8)">
 
-        <form id="contact-form" aria-label="Contact form">
-          <div class="form-group">
-            <label class="form-label" for="contact-name">Name</label>
-            <input type="text" id="contact-name" class="form-input" placeholder="Your name" required />
+        <!-- Primary contact -->
+        <section style="padding:var(--space-6);background:var(--color-bg);border:2px solid var(--color-primary);border-radius:var(--radius-md)">
+          <h2 style="font-size:var(--text-xl);font-weight:700;margin-bottom:var(--space-3)">📧 Email Us</h2>
+          <p style="color:var(--color-text-muted);line-height:1.8;margin-bottom:var(--space-4)">The best way to reach us is by email. We typically respond within 1–3 business days.</p>
+          <a href="mailto:hello@northernnumbers.ca" style="display:inline-flex;align-items:center;gap:var(--space-2);font-family:var(--font-heading);font-size:var(--text-lg);font-weight:700;color:var(--color-primary);text-decoration:none">
+            hello@northernnumbers.ca
+          </a>
+        </section>
+
+        <!-- Reasons to contact -->
+        <section>
+          <h2 style="font-size:var(--text-xl);font-weight:700;margin-bottom:var(--space-5)">What We Can Help With</h2>
+          <div style="display:grid;gap:var(--space-5)">
+
+            <div style="display:flex;gap:var(--space-4)">
+              <div style="font-size:1.5rem;flex-shrink:0">🔢</div>
+              <div>
+                <p style="font-weight:600;margin-bottom:var(--space-1)">Reporting a Calculation Error</p>
+                <p style="color:var(--color-text-muted);font-size:var(--text-sm);line-height:1.7">If you believe a rate, formula, or result is incorrect, please email us with the calculator name, the inputs you used, the result you got, and what you expected to see. We take accuracy seriously and investigate every report. If you can link to the official CRA or government source showing the correct figure, that helps a lot.</p>
+              </div>
+            </div>
+
+            <div style="display:flex;gap:var(--space-4)">
+              <div style="font-size:1.5rem;flex-shrink:0">💡</div>
+              <div>
+                <p style="font-weight:600;margin-bottom:var(--space-1)">Suggesting a New Calculator</p>
+                <p style="color:var(--color-text-muted);font-size:var(--text-sm);line-height:1.7">We're always adding new calculators. If there's a Canadian financial calculation you need that we don't have yet — a specific tax credit, a provincial benefit, a pension estimate, or anything else — let us know. We prioritize requests that are genuinely Canada-specific and hard to find elsewhere.</p>
+              </div>
+            </div>
+
+            <div style="display:flex;gap:var(--space-4)">
+              <div style="font-size:1.5rem;flex-shrink:0">❓</div>
+              <div>
+                <p style="font-weight:600;margin-bottom:var(--space-1)">General Questions</p>
+                <p style="color:var(--color-text-muted);font-size:var(--text-sm);line-height:1.7">If you have a question about how a calculator works, what a specific input means, or how a Canadian financial rule applies to your situation, feel free to ask. We can explain the methodology behind our calculators. Please note that we are not licensed financial advisors and cannot provide personalized financial advice.</p>
+              </div>
+            </div>
+
+            <div style="display:flex;gap:var(--space-4)">
+              <div style="font-size:1.5rem;flex-shrink:0">🤝</div>
+              <div>
+                <p style="font-weight:600;margin-bottom:var(--space-1)">Business and Partnership Inquiries</p>
+                <p style="color:var(--color-text-muted);font-size:var(--text-sm);line-height:1.7">For media mentions, partnerships, or other business inquiries, email us at hello@northernnumbers.ca with a brief description of what you have in mind.</p>
+              </div>
+            </div>
+
           </div>
+        </section>
 
-          <div class="form-group">
-            <label class="form-label" for="contact-email">Email</label>
-            <input type="email" id="contact-email" class="form-input" placeholder="you@example.com" required />
-          </div>
+        <!-- What we can't help with -->
+        <section style="padding:var(--space-5);background:var(--color-bg);border:1px solid var(--color-border);border-radius:var(--radius-md)">
+          <h2 style="font-size:var(--text-base);font-weight:700;margin-bottom:var(--space-3)">What We Can't Help With</h2>
+          <p style="color:var(--color-text-muted);font-size:var(--text-sm);line-height:1.8">Northern Numbers is a calculator tool, not a financial advisory service. We cannot provide personalized tax advice, investment recommendations, legal opinions, or help interpreting your specific CRA notices. For those needs, please consult a licensed tax professional, financial advisor, or the CRA directly at 1-800-959-8281.</p>
+        </section>
 
-          <div class="form-group">
-            <label class="form-label" for="contact-subject">What's this about?</label>
-            <select id="contact-subject" class="form-select">
-              <option value="suggestion">Calculator suggestion</option>
-              <option value="bug">Report a bug</option>
-              <option value="question">General question</option>
-              <option value="other">Other</option>
-            </select>
-          </div>
+        <!-- Response time -->
+        <section>
+          <h2 style="font-size:var(--text-xl);font-weight:700;margin-bottom:var(--space-3)">Response Times</h2>
+          <p style="color:var(--color-text-muted);line-height:1.8">We aim to respond to all emails within 1–3 business days. During periods of high volume (particularly around tax season, January TFSA room updates, and federal budget announcements), response times may be slightly longer. Calculation error reports are always prioritized.</p>
+        </section>
 
-          <div class="form-group">
-            <label class="form-label" for="contact-message">Message</label>
-            <textarea id="contact-message" class="form-input" rows="5" placeholder="Tell us what's on your mind..." required style="resize: vertical;"></textarea>
-          </div>
-
-          <button type="submit" class="btn btn-primary btn-calculate">Send Message</button>
-        </form>
-
-        <div id="contact-success" class="hidden" style="margin-top: var(--space-5); padding: var(--space-5); background: #F0FDF4; border: 1px solid #86EFAC; border-radius: var(--radius-md); text-align: center;">
-          <p style="font-size: 1.5rem; margin-bottom: var(--space-2)">✅</p>
-          <p style="font-weight: 700; color: #166534; margin-bottom: var(--space-1)">Message sent successfully!</p>
-          <p style="font-size: var(--text-sm); color: #166534;">Thank you for reaching out. We typically respond within 24–48 hours.</p>
-        </div>
       </div>
-
     </div>
   </main>
 
-  <!-- FOOTER -->
   <footer class="site-footer" id="nn-footer" role="contentinfo"></footer>
 
   <script src="script.js" defer></script>
-  <script>
-    // Simple client-side form handler (no backend yet — just shows success message)
-    document.getElementById('contact-form').addEventListener('submit', function (e) {
-      e.preventDefault();
-      document.getElementById('contact-success').classList.remove('hidden');
-      this.reset();
-    });
-  </script>
-
-  <!-- Northern Numbers shared modules — DO NOT REMOVE OR REORDER -->
   <script src="data/nn-constants.js" defer></script>
   <script src="data/nn-calculators.js" defer></script>
   <script src="shared/nn-utils.js" defer></script>
