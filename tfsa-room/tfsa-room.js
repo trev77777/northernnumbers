@@ -116,7 +116,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
     const { total: lifetimeRoom, rows, firstEligible } = calcLifetimeRoom(birthYear, residentSince);
     const availableRoom = Math.max(0, lifetimeRoom - contributions + withdrawals);
-    const canAddNow     = Math.max(0, availableRoom - balance);
+    const canAddNow     = availableRoom + 7000; // projected room Jan 1, 2027
     const roomUsedPct   = lifetimeRoom > 0 ? (contributions / lifetimeRoom * 100).toFixed(1) : '0';
 
     /* Render */
