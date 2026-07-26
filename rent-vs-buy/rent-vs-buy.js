@@ -153,7 +153,7 @@ document.addEventListener('DOMContentLoaded', function () {
                     propTaxRate, maintenanceRate, realtorFee) {
 
     const dp           = homePrice * downPct / 100;
-    const closing      = dp * 0.015 + 3000; // ~simplified LTT + legal
+    const closing      = homePrice * 0.015 + 3000; // ~simplified LTT + legal (based on purchase price)
     const mortgage     = homePrice - dp;
     const cmhc         = cmhcRate(downPct / 100);
     const cmhcAmt      = mortgage * cmhc;
