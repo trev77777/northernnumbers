@@ -185,6 +185,15 @@ window.NNRegistry = {
       related: ['income-tax','budget','inflation','loan']
     },
     {
+      id: 'tfsa-room', name: 'TFSA Contribution Room Calculator', category: 'savings',
+      url: '/tfsa-room/', icon: '🏦',
+      description: 'Calculate your exact TFSA contribution room for 2026 based on birth year, residency history, contributions, and withdrawals.',
+      keywords: ['tfsa contribution room calculator 2026','how much tfsa room do i have','tfsa room calculator canada','tfsa lifetime limit 2026'],
+      status: 'active', priority: 22,
+      showInFooter: true, footerSection: 'moreTools', showOnHomepage: true,
+      related: ['tfsa','rrsp','budget','income-tax']
+    },
+    {
       id: 'rent-vs-buy', name: 'Rent vs Buy Calculator', category: 'real-estate',
       url: '/rent-vs-buy/', icon: '⚖️',
       description: 'Compare the true financial outcome of renting versus buying a home in Canada over 5, 10, or 25 years.',
