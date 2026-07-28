@@ -185,6 +185,15 @@ window.NNRegistry = {
       related: ['income-tax','budget','inflation','loan']
     },
     {
+      id: 'debt-payoff', name: 'Debt Payoff Calculator', category: 'debt',
+      url: '/debt-payoff/', icon: '💳',
+      description: 'Compare the avalanche and snowball debt payoff strategies. See exactly when each debt is paid off and how much interest you save.',
+      keywords: ['debt payoff calculator canada','avalanche vs snowball calculator','debt elimination calculator canada','how to pay off debt canada'],
+      status: 'active', priority: 23,
+      showInFooter: true, footerSection: 'moreTools', showOnHomepage: true,
+      related: ['budget','loan','mortgage','income-tax']
+    },
+    {
       id: 'tfsa-room', name: 'TFSA Contribution Room Calculator', category: 'savings',
       url: '/tfsa-room/', icon: '🏦',
       description: 'Calculate your exact TFSA contribution room for 2026 based on birth year, residency history, contributions, and withdrawals.',
