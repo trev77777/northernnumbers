@@ -185,6 +185,24 @@ window.NNRegistry = {
       related: ['income-tax','budget','inflation','loan']
     },
     {
+      id: 'salary-vs-hourly', name: 'Salary vs Hourly Calculator', category: 'income',
+      url: '/salary-vs-hourly/', icon: '💰',
+      description: 'Convert between annual salary and hourly wage with full Canadian pay period breakdown and vacation adjustments.',
+      keywords: ['salary to hourly calculator canada','hourly to salary calculator canada','pay period calculator canada 2026'],
+      status: 'active', priority: 24,
+      showInFooter: true, footerSection: 'moreTools', showOnHomepage: true,
+      related: ['paycheck','income-tax','budget','loan']
+    },
+    {
+      id: 'salary-to-hourly', name: 'Salary to Hourly Calculator', category: 'income',
+      url: '/salary-to-hourly/', icon: '💼',
+      description: 'Convert any annual salary to hourly wage or hourly rate to annual salary. Includes all pay period breakdowns.',
+      keywords: ['salary to hourly calculator canada','hourly to salary calculator canada','annual salary to hourly wage canada','salary calculator canada 2026'],
+      status: 'active', priority: 24,
+      showInFooter: true, footerSection: 'moreTools', showOnHomepage: true,
+      related: ['paycheck','income-tax','budget','cpp']
+    },
+    {
       id: 'debt-payoff', name: 'Debt Payoff Calculator', category: 'debt',
       url: '/debt-payoff/', icon: '💳',
       description: 'Compare the avalanche and snowball debt payoff strategies. See exactly when each debt is paid off and how much interest you save.',
