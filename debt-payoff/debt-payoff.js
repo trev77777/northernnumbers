@@ -72,7 +72,7 @@ document.addEventListener('DOMContentLoaded', function () {
         <label style="font-weight:600;font-size:var(--text-sm)">Debt ${id}</label>
         <button type="button" class="remove-debt" data-id="${id}" style="background:none;border:none;color:var(--color-text-muted);cursor:pointer;font-size:var(--text-sm);padding:var(--space-1)" aria-label="Remove debt ${id}">✕ Remove</button>
       </div>
-      <div style="display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:var(--space-2)">
+      <div style="display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:var(--space-2);min-width:0" class="debt-input-grid">
         <div>
           <label style="font-size:var(--text-xs);font-weight:600;color:var(--color-text-muted);display:block;margin-bottom:4px">DEBT NAME</label>
           <input type="text" class="form-input debt-name" placeholder="e.g. Credit Card" value="${p.name}" style="font-size:var(--text-sm)" />
