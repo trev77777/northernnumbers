@@ -1345,6 +1345,17 @@ input[type=number] { -moz-appearance: textfield; }
   color: var(--color-success);
 }
 
+/* Mobile: fix result-row--total full-bleed overflow on small screens */
+@media (max-width: 599px) {
+  .result-row--total {
+    margin-inline: calc(-1 * var(--space-5));
+    padding-inline: var(--space-5);
+  }
+  .result-row--total .result-row-value {
+    font-size: var(--text-base);
+  }
+}
+
 
 /* =============================================
    14. UTILITIES
