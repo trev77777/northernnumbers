@@ -275,10 +275,10 @@ document.addEventListener('DOMContentLoaded', function () {
     // Payoff order
     const orderEl = document.getElementById('payoff-order');
     orderEl.innerHTML = primary.payoffOrder.map((item, i) => `
-      <div style="display:flex;align-items:center;gap:var(--space-3);padding:var(--space-3);background:var(--color-bg);border:1px solid var(--color-border);border-radius:var(--radius-md);font-size:var(--text-sm)">
+      <div style="display:flex;align-items:center;flex-wrap:wrap;gap:var(--space-2);padding:var(--space-3);background:var(--color-bg);border:1px solid var(--color-border);border-radius:var(--radius-md);font-size:var(--text-sm)">
         <span style="width:24px;height:24px;border-radius:50%;background:var(--color-primary);color:white;display:flex;align-items:center;justify-content:center;font-weight:700;flex-shrink:0;font-size:var(--text-xs)">${i+1}</span>
-        <span style="font-weight:600;flex:1">${item.name}</span>
-        <span style="color:var(--color-text-muted)">Paid off ${debtFreeDate(item.month)}</span>
+        <span style="font-weight:600;flex:1;min-width:80px">${item.name}</span>
+        <span style="color:var(--color-text-muted);flex-shrink:0">Paid off ${debtFreeDate(item.month)}</span>
       </div>`).join('');
 
     // Schedule table (max 60 rows to keep it manageable)
