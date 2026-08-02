@@ -74,6 +74,23 @@
       #results-content * { max-width:100%; box-sizing:border-box; }
       #results-content table { max-width:100%; }
       #results-content .result-hero { max-width:100%; }
+
+      /* Keep the month-by-month table within the viewport on small screens */
+      #payoff-table { width:100%; overflow:hidden; }
+      #payoff-table > div { width:100%; overflow-x:auto; -webkit-overflow-scrolling:touch; }
+      #payoff-table table {
+        width:100%;
+        max-width:100%;
+        table-layout:fixed;
+        border-collapse:collapse;
+      }
+      #payoff-table th,
+      #payoff-table td {
+        max-width:100%;
+        white-space:normal;
+        overflow-wrap:anywhere;
+        word-break:break-word;
+      }
     }
   </style>
 </head>
@@ -280,8 +297,8 @@
                 </svg>
               </button>
               <div id="payoff-table" class="advanced-fields">
-                <div style="overflow-x:auto;margin-top:var(--space-3)">
-                  <table style="width:100%;border-collapse:collapse;font-size:var(--text-sm)">
+                <div style="overflow-x:auto;margin-top:var(--space-3);-webkit-overflow-scrolling:touch">
+                  <table style="width:100%;min-width:0;border-collapse:collapse;font-size:var(--text-sm)">
                     <thead>
                       <tr style="background:var(--color-bg);border-bottom:2px solid var(--color-border)">
                         <th style="padding:var(--space-2) var(--space-3);text-align:left;font-weight:600">Month</th>
