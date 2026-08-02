@@ -34,30 +34,46 @@
 
     /* Mobile layout fixes — match styles.css breakpoint of 767px */
     @media(max-width:767px){
+      /* Constrain the whole page shell to the viewport */
+      html, body, main, .container, .calc-page, .calc-layout, .calc-panel, .calc-page-header, .calc-breadcrumb,
+      #results-content, #results-placeholder, #debt-list, .debt-entry, .debt-input-grid, .debt-row, .strategy-card,
+      .result-summary, .result-row, .milestone-grid, .milestone-card, #both-comparison, #payoff-order,
+      #payoff-table, .advanced-fields, .quick-start {
+        max-width:100%;
+        min-width:0;
+        box-sizing:border-box;
+      }
+
       /* Debt input row: 2 columns, name full width */
-      .debt-row { grid-template-columns:1fr 1fr; }
+      .debt-row { grid-template-columns:minmax(0,1fr) minmax(0,1fr); }
       .debt-row .debt-label { grid-column:1/-1; font-weight:600; margin-bottom:var(--space-1); }
-      .debt-input-grid { grid-template-columns:1fr 1fr !important; }
+      .debt-input-grid { grid-template-columns:minmax(0,1fr) minmax(0,1fr) !important; }
       .debt-input-grid > div:first-child { grid-column:1/-1; }
 
       /* Strategy comparison: stack cards vertically */
       #both-comparison > div[style] { display:flex !important; flex-direction:column !important; }
+      #both-comparison .strategy-card { min-width:0; }
 
       /* Result rows: stack label over value */
       .result-row { flex-direction:column; align-items:flex-start; gap:2px; }
-      .result-row-value { font-size:var(--text-sm); word-break:break-word; }
+      .result-row-value { font-size:var(--text-sm); word-break:break-word; overflow-wrap:anywhere; }
       .result-row-label { font-size:var(--text-xs); }
 
       /* Payoff order items: wrap date below name */
-      #payoff-order > div { flex-wrap:wrap; }
+      #payoff-order > div { flex-wrap:wrap; min-width:0; }
+      #payoff-order > div > span:last-child { min-width:0; }
 
-      /* Verdict text: wrap */
-      #strategy-verdict { word-break:break-word; }
+      /* Verdict and long values: wrap safely */
+      #strategy-verdict, .quick-start, .milestone-card, .result-hero-value, .result-hero-sub, .copy-btn {
+        word-break:break-word;
+        overflow-wrap:anywhere;
+      }
 
       /* Results content: no overflow */
       #results-content { max-width:100%; overflow:hidden; }
       #results-content * { max-width:100%; box-sizing:border-box; }
       #results-content table { max-width:100%; }
+      #results-content .result-hero { max-width:100%; }
     }
   </style>
 </head>
