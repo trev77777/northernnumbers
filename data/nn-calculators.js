@@ -78,7 +78,7 @@ window.NNRegistry = {
       description: 'Plan your first home purchase with couple mode, down payment tracker, HBP combination, and home buying timeline.',
       keywords: ['fhsa calculator','first home savings account calculator','fhsa 2026','fhsa canada calculator'],
       status: 'active', priority: 4,
-      showInFooter: true, footerSection: 'calculators', showOnHomepage: true,
+      showInFooter: false, footerSection: 'calculators', showOnHomepage: true,
       related: ['mortgage','tfsa','rrsp']
     },
 
@@ -89,7 +89,7 @@ window.NNRegistry = {
       description: 'See how compound interest grows your investments over time. Includes Rule of 72, milestone tracker, two-scenario comparison, and monthly income projection.',
       keywords: ['compound interest calculator canada','investment growth calculator','compound interest calculator','future value calculator canada'],
       status: 'active', priority: 5,
-      showInFooter: true, footerSection: 'calculators', showOnHomepage: true,
+      showInFooter: false, footerSection: 'calculators', showOnHomepage: true,
       related: ['tfsa','rrsp','retirement']
     },
 
@@ -100,7 +100,7 @@ window.NNRegistry = {
       description: 'Calculate monthly payments, total interest, and true cost of ownership for your next vehicle purchase in Canada.',
       keywords: ['car loan calculator canada','auto loan calculator canada','vehicle loan calculator'],
       status: 'active', priority: 6,
-      showInFooter: true, footerSection: 'moreTools', showOnHomepage: true,
+      showInFooter: false, footerSection: 'moreTools', showOnHomepage: true,
       related: ['loan','mortgage','budget','compound-interest']
     },
     {
@@ -109,7 +109,7 @@ window.NNRegistry = {
       description: 'Calculate payments and total interest for any personal loan, student loan, or line of credit in Canada.',
       keywords: ['loan calculator canada','personal loan calculator','line of credit calculator canada'],
       status: 'active', priority: 7,
-      showInFooter: true, footerSection: 'moreTools', showOnHomepage: true,
+      showInFooter: false, footerSection: 'moreTools', showOnHomepage: true,
       related: ['car-loan','mortgage','budget','compound-interest']
     },
     {
@@ -127,7 +127,7 @@ window.NNRegistry = {
       description: 'Calculate RESP growth with the 20% Canada Education Savings Grant (CESG) and project education savings for your child.',
       keywords: ['resp calculator canada','cesg calculator','education savings calculator canada'],
       status: 'active', priority: 9,
-      showInFooter: true, footerSection: 'calculators', showOnHomepage: true,
+      showInFooter: false, footerSection: 'calculators', showOnHomepage: true,
       related: ['tfsa','compound-interest','rrsp','fhsa']
     },
     {
@@ -145,7 +145,7 @@ window.NNRegistry = {
       description: 'See how inflation erodes purchasing power over time using Canadian CPI data.',
       keywords: ['inflation calculator canada','cpi calculator canada','purchasing power calculator canada'],
       status: 'active', priority: 11,
-      showInFooter: true, footerSection: 'moreTools', showOnHomepage: true,
+      showInFooter: false, footerSection: 'moreTools', showOnHomepage: true,
       related: ['compound-interest','rrsp','tfsa','cpp']
     },
     {
@@ -172,7 +172,7 @@ window.NNRegistry = {
       description: 'Calculate your federal and provincial income tax, marginal rate, effective rate, and after-tax income for all 13 provinces.',
       keywords: ['income tax calculator canada','tax calculator canada 2026','provincial tax calculator'],
       status: 'active', priority: 14,
-      showInFooter: true, footerSection: 'moreTools', showOnHomepage: true,
+      showInFooter: true, footerSection: 'calculators', showOnHomepage: true,
       related: ['rrsp','tfsa','budget','cpp']
     },
     {
@@ -181,7 +181,7 @@ window.NNRegistry = {
       description: 'Calculate GST, HST, or PST for any Canadian province. Add or remove tax from any amount.',
       keywords: ['gst hst calculator canada','tax calculator canada','hst calculator ontario','sales tax calculator canada'],
       status: 'active', priority: 15,
-      showInFooter: true, footerSection: 'moreTools', showOnHomepage: true,
+      showInFooter: false, footerSection: 'moreTools', showOnHomepage: true,
       related: ['income-tax','budget','inflation','loan']
     },
     {
@@ -190,7 +190,7 @@ window.NNRegistry = {
       description: 'Convert between annual salary and hourly wage with full Canadian pay period breakdown and vacation adjustments.',
       keywords: ['salary to hourly calculator canada','hourly to salary calculator canada','pay period calculator canada 2026'],
       status: 'active', priority: 24,
-      showInFooter: true, footerSection: 'moreTools', showOnHomepage: true,
+      showInFooter: false, footerSection: 'moreTools', showOnHomepage: true,
       related: ['paycheck','income-tax','budget','loan']
     },
     {
@@ -200,7 +200,7 @@ window.NNRegistry = {
       description: 'Calculate Canadian capital gains tax for 2026. Includes 50% inclusion rate, all provinces, principal residence exemption, LCGE, and capital loss offsets.',
       keywords: ['capital gains tax calculator canada 2026','capital gains calculator canada','canadian capital gains tax','capital gains inclusion rate 2026'],
       status: 'active', priority: 25,
-      showInFooter: true, footerSection: 'moreTools', showOnHomepage: true,
+      showInFooter: false, footerSection: 'moreTools', showOnHomepage: true,
       related: ['income-tax','tfsa','rrsp','net-worth']
     },
     {
@@ -209,7 +209,7 @@ window.NNRegistry = {
       description: 'Compare the avalanche and snowball debt payoff strategies. See exactly when each debt is paid off and how much interest you save.',
       keywords: ['debt payoff calculator canada','avalanche vs snowball calculator','debt elimination calculator canada','how to pay off debt canada'],
       status: 'active', priority: 23,
-      showInFooter: true, footerSection: 'moreTools', showOnHomepage: true,
+      showInFooter: false, footerSection: 'moreTools', showOnHomepage: true,
       related: ['budget','loan','mortgage','income-tax']
     },
     {
@@ -218,7 +218,7 @@ window.NNRegistry = {
       description: 'Calculate your exact TFSA contribution room for 2026 based on birth year, residency history, contributions, and withdrawals.',
       keywords: ['tfsa contribution room calculator 2026','how much tfsa room do i have','tfsa room calculator canada','tfsa lifetime limit 2026'],
       status: 'active', priority: 22,
-      showInFooter: true, footerSection: 'moreTools', showOnHomepage: true,
+      showInFooter: false, footerSection: 'moreTools', showOnHomepage: true,
       related: ['tfsa','rrsp','budget','income-tax']
     },
     {
@@ -227,7 +227,7 @@ window.NNRegistry = {
       description: 'Compare the true financial outcome of renting versus buying a home in Canada over 5, 10, or 25 years.',
       keywords: ['rent vs buy calculator canada','should i rent or buy canada','renting vs buying canada 2026'],
       status: 'active', priority: 21,
-      showInFooter: true, footerSection: 'moreTools', showOnHomepage: true,
+      showInFooter: false, footerSection: 'moreTools', showOnHomepage: true,
       related: ['mortgage','mortgage-affordability','land-transfer-tax','budget']
     },
     {
@@ -236,7 +236,7 @@ window.NNRegistry = {
       description: 'Find out how much house you can afford in Canada using OSFI stress test, GDS/TDS ratios, and 2026 CMHC rules.',
       keywords: ['mortgage affordability calculator canada 2026','how much house can i afford canada','mortgage stress test calculator','cmhc calculator canada'],
       status: 'active', priority: 20,
-      showInFooter: true, footerSection: 'moreTools', showOnHomepage: true,
+      showInFooter: false, footerSection: 'moreTools', showOnHomepage: true,
       related: ['mortgage','land-transfer-tax','budget','gst-hst']
     },
     {
@@ -254,7 +254,7 @@ window.NNRegistry = {
       description: 'Calculate mandatory RRIF minimum withdrawals using official CRA prescribed factors. Project your balance and income to age 90+.',
       keywords: ['rrif calculator canada 2026','rrif minimum withdrawal calculator','rrif withdrawal table 2026'],
       status: 'active', priority: 18,
-      showInFooter: true, footerSection: 'moreTools', showOnHomepage: true,
+      showInFooter: false, footerSection: 'moreTools', showOnHomepage: true,
       related: ['rrsp','cpp','oas','income-tax']
     },
     {
@@ -272,7 +272,7 @@ window.NNRegistry = {
       description: 'Calculate your exact take-home pay after federal tax, provincial tax, CPP, CPP2, and EI for all provinces.',
       keywords: ['paycheck calculator canada 2026','take home pay calculator canada','salary after tax canada','net pay calculator canada'],
       status: 'active', priority: 16,
-      showInFooter: true, footerSection: 'moreTools', showOnHomepage: true,
+      showInFooter: true, footerSection: 'calculators', showOnHomepage: true,
       related: ['income-tax','budget','rrsp','cpp']
     }
   ],
