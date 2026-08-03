@@ -108,8 +108,12 @@ document.addEventListener('DOMContentLoaded', function () {
     const carryforward = NNUtils.parseInputNumber(carryEl.value) || 0;
     const contributed  = NNUtils.parseInputNumber(contribEl.value) || 0;
 
-    if (!earnedIncome || earnedIncome < 0) {
-      NNUtils.setError(incomeEl, 'income-error', 'Please enter your 2025 earned income (can be 0 for no earned income).');
+    if (incomeEl.value.trim() === '') {
+      NNUtils.setError(incomeEl, 'income-error', 'Please enter your 2025 earned income. Enter 0 if you had no earned income this year.');
+      return;
+    }
+    if (earnedIncome < 0) {
+      NNUtils.setError(incomeEl, 'income-error', 'Earned income cannot be negative.');
       return;
     }
     NNUtils.clearError(incomeEl, 'income-error');
@@ -208,18 +212,19 @@ document.addEventListener('DOMContentLoaded', function () {
   document.getElementById('copy-btn')?.addEventListener('click', function() {
     const r = window._rrspResults;
     if (!r) return;
-    NNUtils.copyResults(this, [
+    const lines = [
       `📊 RRSP Contribution Room 2026 — Northern Numbers`,
       `─────────────────────────────`,
       `2025 Earned Income:    ${NNUtils.formatCAD(r.earnedIncome)}`,
       `New Room (18%):        ${NNUtils.formatCAD(r.newRoom)}`,
-      `Pension Adjustment:    −${NNUtils.formatCAD(r.pa)}`,
-      `Carry-Forward:         +${NNUtils.formatCAD(r.carryforward)}`,
-      `2026 Deduction Limit:  ${NNUtils.formatCAD(r.deductionLimit)}`,
-      `Contributions Made:    −${NNUtils.formatCAD(r.contributed)}`,
-      `─────────────────────────────`,
-      `Available Room:        ${r.isOver ? '−' + NNUtils.formatCAD(r.overAmt) + ' (OVER)' : NNUtils.formatCAD(r.availableRoom)}`,
-    ], 'RRSP Room Calculator');
+    ];
+    if (r.pa > 0)          lines.push(`Pension Adjustment:    −${NNUtils.formatCAD(r.pa)}`);
+    if (r.carryforward > 0) lines.push(`Carry-Forward:         +${NNUtils.formatCAD(r.carryforward)}`);
+    lines.push(`2026 Deduction Limit:  ${NNUtils.formatCAD(r.deductionLimit)}`);
+    if (r.contributed > 0) lines.push(`Contributions Made:    −${NNUtils.formatCAD(r.contributed)}`);
+    lines.push(`─────────────────────────────`);
+    lines.push(`Available Room:        ${r.isOver ? '−' + NNUtils.formatCAD(r.overAmt) + ' (OVER)' : NNUtils.formatCAD(r.availableRoom)}`);
+    NNUtils.copyResults(this, lines, 'RRSP Room Calculator');
   });
 
   /* ── Reset ── */
