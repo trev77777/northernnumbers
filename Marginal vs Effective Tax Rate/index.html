@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="en-CA">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Marginal vs Effective Tax Rate Calculator Canada 2026 — Northern Numbers</title>
+  <meta name="description" content="Free Canadian marginal vs effective tax rate calculator for 2026. See your marginal tax rate (tax on your next dollar) and effective tax rate (average tax on all income) for all 13 provinces. Confirmed 2026 brackets." />
+  <meta name="keywords" content="marginal tax rate calculator canada 2026, effective tax rate canada, marginal vs effective tax rate canada, what is my marginal tax rate canada, canadian tax rate calculator 2026" />
+  <link rel="canonical" href="https://www.northernnumbers.ca/marginal-tax-rate/" />
+  <meta property="og:title" content="Marginal vs Effective Tax Rate Calculator Canada 2026" />
+  <meta property="og:description" content="Find your marginal and effective tax rate for 2026. All 13 provinces, confirmed 2026 brackets." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://www.northernnumbers.ca/marginal-tax-rate/" />
+  <meta property="og:locale" content="en_CA" />
+  <meta property="og:site_name" content="Northern Numbers" />
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Marginal vs Effective Tax Rate Calculator Canada 2026" />
+  <meta name="twitter:description" content="Find your marginal and effective tax rate for all provinces. 2026 brackets confirmed." />
+  <meta name="robots" content="index, follow" />
+  <meta name="author" content="Northern Numbers" />
+  <link rel="icon" type="image/png" sizes="32x32" href="../favicon-32x32.png" />
+  <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png" />
+  <link rel="icon" type="image/x-icon" href="../favicon.ico" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Poppins:wght@600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="../styles.css" />
+</head>
+<body>
+
+  <header class="site-header" id="nn-header" role="banner"></header>
+
+  <main id="main-content" class="calc-page">
+    <div class="container">
+
+      <nav class="calc-breadcrumb" aria-label="Breadcrumb">
+        <a href="/">Home</a>
+        <span class="calc-breadcrumb-sep" aria-hidden="true">›</span>
+        <a href="/finance/">Calculators</a>
+        <span class="calc-breadcrumb-sep" aria-hidden="true">›</span>
+        <span aria-current="page">Marginal vs Effective Tax Rate</span>
+      </nav>
+
+      <div class="calc-page-header">
+        <h1 class="calc-page-title">Marginal vs Effective Tax Rate Calculator Canada 2026</h1>
+        <p class="calc-page-desc">Enter your taxable income and province to instantly see your marginal tax rate (the rate on your next dollar of income) and your effective tax rate (the average rate across all your income). Uses confirmed 2026 federal and provincial brackets for all 13 provinces.</p>
+      </div>
+
+      <div class="calc-layout">
+
+        <!-- Inputs -->
+        <section class="calc-panel" aria-labelledby="inputs-heading">
+          <h2 id="inputs-heading" class="calc-panel-title">Your Income</h2>
+
+          <!-- Presets -->
+          <div style="margin-bottom:var(--space-4)">
+            <p style="font-size:var(--text-sm);font-weight:600;color:var(--color-text-muted);margin-bottom:var(--space-2)">Quick examples:</p>
+            <div class="preset-group" role="group">
+              <button type="button" class="preset-btn" data-preset="40k">$40K</button>
+              <button type="button" class="preset-btn" data-preset="80k">$80K</button>
+              <button type="button" class="preset-btn" data-preset="120k">$120K</button>
+              <button type="button" class="preset-btn" data-preset="200k">$200K</button>
+            </div>
+          </div>
+
+          <form id="tax-form" novalidate>
+
+            <div class="form-group">
+              <label class="form-label" for="income">Taxable Income</label>
+              <div class="input-wrapper">
+                <span class="input-prefix" aria-hidden="true">$</span>
+                <input type="text" id="income" class="form-input has-prefix"
+                  placeholder="80,000" inputmode="numeric" autocomplete="off"
+                  aria-describedby="income-hint income-error" />
+              </div>
+              <p class="field-help" id="income-hint">Your taxable income after RRSP deductions, employment expenses, and other deductions — line 26000 on your T1 return. For a rough estimate, use your gross employment income.</p>
+              <p id="income-error" class="form-error-msg" role="alert"></p>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label" for="province">Province / Territory</label>
+              <div class="select-wrapper">
+                <select id="province" class="form-select">
+                  <option value="ON" selected>Ontario</option>
+                  <option value="BC">British Columbia</option>
+                  <option value="AB">Alberta</option>
+                  <option value="QC">Quebec</option>
+                  <option value="MB">Manitoba</option>
+                  <option value="SK">Saskatchewan</option>
+                  <option value="NS">Nova Scotia</option>
+                  <option value="NB">New Brunswick</option>
+                  <option value="PE">Prince Edward Island</option>
+                  <option value="NL">Newfoundland &amp; Labrador</option>
+                  <option value="YT">Yukon</option>
+                  <option value="NT">Northwest Territories</option>
+                  <option value="NU">Nunavut</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="btn-row">
+              <button type="submit" class="btn btn-primary btn-calculate" style="flex:1">
+                Calculate Rates
+              </button>
+              <button type="button" id="reset-btn" class="btn btn-secondary">Reset</button>
+            </div>
+
+          </form>
+        </section>
+
+        <!-- Results -->
+        <section class="calc-panel" aria-labelledby="results-heading" aria-live="polite">
+          <h2 id="results-heading" class="calc-panel-title">Your Tax Rates</h2>
+
+          <div id="results-placeholder" class="result-placeholder">
+            <div class="result-placeholder-icon" aria-hidden="true">
+              <svg width="56" height="56" viewBox="0 0 56 56" fill="none">
+                <path d="M10 46L22 22L34 32L46 10" stroke="#D1D5DB" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </div>
+            <p>Enter your taxable income to see your marginal and effective tax rates.</p>
+          </div>
+
+          <div id="results-content" class="hidden">
+
+            <!-- Two-rate hero -->
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:var(--space-4);margin-bottom:var(--space-5)">
+              <div class="result-hero" style="text-align:center;padding:var(--space-5)">
+                <p class="result-hero-label">Marginal Rate</p>
+                <p class="result-hero-value" id="result-marginal" style="font-size:2.5rem">—</p>
+                <p class="result-hero-sub">Rate on your next dollar</p>
+              </div>
+              <div class="result-hero" style="text-align:center;padding:var(--space-5);background:#F0FDF4;border-color:#86EFAC">
+                <p class="result-hero-label" style="color:#166534">Effective Rate</p>
+                <p class="result-hero-value" id="result-effective" style="font-size:2.5rem;color:#166534">—</p>
+                <p class="result-hero-sub">Average rate on all income</p>
+              </div>
+            </div>
+
+            <div class="result-summary" role="list">
+              <div class="result-row" role="listitem">
+                <span class="result-row-label">Taxable Income</span>
+                <span class="result-row-value" id="result-income">—</span>
+              </div>
+              <div class="result-row" role="listitem">
+                <span class="result-row-label">Province</span>
+                <span class="result-row-value" id="result-province">—</span>
+              </div>
+              <div class="result-row" role="listitem">
+                <span class="result-row-label">Estimated Total Tax</span>
+                <span class="result-row-value is-error" id="result-total-tax">—</span>
+              </div>
+              <div class="result-row result-row--total" role="listitem">
+                <span class="result-row-label">Estimated After-Tax Income</span>
+                <span class="result-row-value" id="result-after-tax">—</span>
+              </div>
+            </div>
+
+            <!-- Rate difference callout -->
+            <div id="rate-callout" style="margin-top:var(--space-5);padding:var(--space-4) var(--space-5);background:#EFF6FF;border:1px solid #BFDBFE;border-radius:var(--radius-md);font-size:var(--text-sm);color:#1E40AF;line-height:1.6">
+            </div>
+
+            <!-- Bracket breakdown -->
+            <div style="margin-top:var(--space-5)">
+              <p style="font-family:var(--font-heading);font-weight:700;font-size:var(--text-base);margin-bottom:var(--space-3)">Your Tax Bracket Breakdown</p>
+              <div id="bracket-breakdown" style="display:flex;flex-direction:column;gap:var(--space-2)"></div>
+            </div>
+
+            <!-- All-province comparison -->
+            <div style="margin-top:var(--space-6)">
+              <p style="font-family:var(--font-heading);font-weight:700;font-size:var(--text-base);margin-bottom:var(--space-3)">All-Province Comparison at <span id="compare-income-label">—</span></p>
+              <div style="overflow-x:auto">
+                <table style="width:100%;border-collapse:collapse;font-size:var(--text-sm)">
+                  <thead>
+                    <tr style="background:var(--color-bg);border-bottom:2px solid var(--color-border)">
+                      <th style="padding:var(--space-2) var(--space-3);text-align:left;font-weight:600">Province</th>
+                      <th style="padding:var(--space-2) var(--space-3);text-align:right;font-weight:600">Marginal</th>
+                      <th style="padding:var(--space-2) var(--space-3);text-align:right;font-weight:600">Effective</th>
+                      <th style="padding:var(--space-2) var(--space-3);text-align:right;font-weight:600">Tax Owing</th>
+                    </tr>
+                  </thead>
+                  <tbody id="province-comparison-body"></tbody>
+                </table>
+              </div>
+            </div>
+
+            <div id="nn-disclaimer" style="margin-top:var(--space-5)"></div>
+            <button type="button" id="copy-btn" class="copy-btn" style="margin-top:var(--space-4)">
+              📋 Copy Results to Clipboard
+            </button>
+
+          </div>
+        </section>
+      </div>
+
+      <!-- Educational -->
+      <section style="margin-top:var(--space-16);padding-top:var(--space-10);border-top:1px solid var(--color-border)">
+        <h2 style="font-size:var(--text-2xl);font-weight:700;margin-bottom:var(--space-8)">Marginal vs Effective Tax Rate in Canada: 2026 Guide</h2>
+        <div style="display:grid;gap:var(--space-8)">
+
+          <div>
+            <h3 style="font-size:var(--text-xl);font-weight:600;margin-bottom:var(--space-3)">📊 The Key Difference</h3>
+            <p style="color:var(--color-text-muted);line-height:1.8">Your <strong>marginal tax rate</strong> is the rate that applies to your last (and next) dollar of income. If you're in Ontario earning $80,000, your marginal rate is 29.65% — meaning if you earn one more dollar, you'd pay about $0.30 in combined federal and provincial tax on that dollar. Your <strong>effective tax rate</strong> is different: it's your total tax divided by your total income — the true average rate you pay across all your earnings. At $80,000 in Ontario, your effective rate is around 18–19%. Most Canadians pay significantly less in tax than their marginal rate suggests, because only income above each threshold is taxed at the higher rate.</p>
+          </div>
+
+          <div>
+            <h3 style="font-size:var(--text-xl);font-weight:600;margin-bottom:var(--space-3)">📋 2026 Federal Tax Brackets</h3>
+            <div style="overflow-x:auto">
+              <table style="width:100%;border-collapse:collapse;font-size:var(--text-sm)">
+                <thead>
+                  <tr style="background:var(--color-bg);border-bottom:2px solid var(--color-border)">
+                    <th style="padding:var(--space-3);text-align:left;font-weight:600">Taxable Income</th>
+                    <th style="padding:var(--space-3);text-align:right;font-weight:600">Federal Rate</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr style="border-bottom:1px solid var(--color-border)"><td style="padding:var(--space-2) var(--space-3)">First $58,523</td><td style="padding:var(--space-2) var(--space-3);text-align:right">14%</td></tr>
+                  <tr style="border-bottom:1px solid var(--color-border);background:var(--color-bg)"><td style="padding:var(--space-2) var(--space-3)">$58,524 – $117,045</td><td style="padding:var(--space-2) var(--space-3);text-align:right">20.5%</td></tr>
+                  <tr style="border-bottom:1px solid var(--color-border)"><td style="padding:var(--space-2) var(--space-3)">$117,046 – $181,440</td><td style="padding:var(--space-2) var(--space-3);text-align:right">26%</td></tr>
+                  <tr style="border-bottom:1px solid var(--color-border);background:var(--color-bg)"><td style="padding:var(--space-2) var(--space-3)">$181,441 – $258,482</td><td style="padding:var(--space-2) var(--space-3);text-align:right">29% + 0.29% BPA phase-out</td></tr>
+                  <tr><td style="padding:var(--space-2) var(--space-3)">Over $258,482</td><td style="padding:var(--space-2) var(--space-3);text-align:right">33%</td></tr>
+                </tbody>
+              </table>
+            </div>
+            <p style="font-size:var(--text-xs);color:var(--color-text-muted);margin-top:var(--space-2)">Confirmed: CRA T4127, TaxTips.ca. The 14% bottom rate was reduced from 15% effective January 1, 2026 (Bill C-4). Federal Basic Personal Amount: $16,452 (tapered to $14,829 above $181,440). Brackets indexed 2% for 2026.</p>
+          </div>
+
+          <div>
+            <h3 style="font-size:var(--text-xl);font-weight:600;margin-bottom:var(--space-3)">❓ Frequently Asked Questions</h3>
+            <div style="display:flex;flex-direction:column;gap:var(--space-5)">
+              <div>
+                <p style="font-weight:600;margin-bottom:var(--space-1)">Why does my employer deduct more tax than my effective rate suggests?</p>
+                <p style="color:var(--color-text-muted);font-size:var(--text-sm);line-height:1.7">Payroll withholding is calculated based on your marginal rate applied to each pay cheque, annualized. If you have only one job and no other income, you'll get a refund when you file — the CRA will correct for any excess withholding. You can also reduce withholding by submitting a TD1 form to your employer claiming eligible deductions like RRSP contributions or childcare expenses.</p>
+              </div>
+              <div>
+                <p style="font-weight:600;margin-bottom:var(--space-1)">Does moving to Alberta actually save me taxes?</p>
+                <p style="color:var(--color-text-muted);font-size:var(--text-sm);line-height:1.7">Yes — Alberta has the lowest combined top marginal rate among the larger provinces at 48.00%, compared to 53.53% in Ontario, 53.50% in BC, and 53.31% in Quebec. However, this doesn't account for higher property taxes, lack of a provincial sales tax (PST), and other cost-of-living differences. The tax difference is most significant for high earners above $100,000.</p>
+              </div>
+              <div>
+                <p style="font-weight:600;margin-bottom:var(--space-1)">What changed in 2026 vs 2025 federal tax rates?</p>
+                <p style="color:var(--color-text-muted);font-size:var(--text-sm);line-height:1.7">The federal bottom rate dropped from 14.5% (the 2025 effective rate) to 14% for 2026, following the rate reduction enacted through Bill C-4. All five federal bracket thresholds increased 2% for inflation: the first bracket now covers income up to $58,523 (up from $57,375), and the top bracket begins at $258,482 (up from $253,414). The federal Basic Personal Amount increased to $16,452 (up from $16,129 in 2025).</p>
+              </div>
+              <div>
+                <p style="font-weight:600;margin-bottom:var(--space-1)">Should I use my marginal rate or effective rate for financial decisions?</p>
+                <p style="color:var(--color-text-muted);font-size:var(--text-sm);line-height:1.7">Use your marginal rate when evaluating decisions at the margin — whether to contribute an additional dollar to your RRSP, take on freelance work, or realize a capital gain. The marginal rate tells you how much more tax you'll pay on additional income. Use your effective rate for understanding your overall tax burden, comparing year-to-year, or discussing your total tax situation. Most tax planning decisions use the marginal rate.</p>
+              </div>
+            </div>
+          </div>
+
+          <div>
+            <h3 style="font-size:var(--text-xl);font-weight:600;margin-bottom:var(--space-3)">🔗 Related Calculators</h3>
+            <div id="nn-related"></div>
+          </div>
+
+        </div>
+        <div style="margin-top:var(--space-8);padding:var(--space-4) var(--space-5);background:var(--color-bg);border:1px solid var(--color-border);border-radius:var(--radius-md);font-size:var(--text-sm);color:var(--color-text-muted);line-height:1.7">
+          📋 2026 combined marginal rates sourced from TaxTips.ca (confirmed against CRA T4127), Trans Canada Wealth Management, and PwC Canada Tax Summaries 2026. Federal brackets confirmed: $58,523 / $117,045 / $181,440 / $258,482 thresholds, 14% bottom rate (Bill C-4, effective January 1, 2026). Results are estimates for employment/other income — different rates apply to capital gains, eligible dividends, and non-eligible dividends. See our <a href="/disclaimer.html" style="color:var(--color-primary)">full disclaimer</a>.
+        </div>
+      </section>
+
+    </div>
+  </main>
+
+  <footer class="site-footer" id="nn-footer" role="contentinfo"></footer>
+
+  <script src="../script.js" defer></script>
+  <script src="../data/nn-constants.js" defer></script>
+  <script src="../data/nn-calculators.js" defer></script>
+  <script src="../shared/nn-utils.js" defer></script>
+  <script src="../shared/nn-seo.js" defer></script>
+  <script src="../shared/nn-analytics.js" defer></script>
+  <script src="../shared/nn-ads.js" defer></script>
+  <script src="../shared/nn-components.js" defer></script>
+  <script src="marginal-tax-rate.js" defer></script>
+</body>
+</html>

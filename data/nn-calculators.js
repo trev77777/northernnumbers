@@ -195,6 +195,15 @@ window.NNRegistry = {
     },
     {
     {
+      id: 'marginal-tax-rate', name: 'Marginal vs Effective Tax Rate Calculator', category: 'taxes',
+      url: '/marginal-tax-rate/', icon: '📊',
+      description: 'Find your marginal and effective tax rate for 2026. All 13 provinces, confirmed 2026 brackets.',
+      keywords: ['marginal tax rate calculator canada 2026','effective tax rate canada','marginal vs effective tax rate canada','what is my marginal tax rate canada'],
+      status: 'active', priority: 30,
+      showInFooter: false, showOnHomepage: true,
+      related: ['income-tax','capital-gains','dividend-tax','paycheck']
+    },
+    {
       id: 'emergency-fund', name: 'Emergency Fund Calculator', category: 'budgeting',
       url: '/emergency-fund/', icon: '🛡️',
       description: 'Find out how much emergency fund you need in Canada. Personalized target based on expenses, employment type, and family situation.',
