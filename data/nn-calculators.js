@@ -195,6 +195,15 @@ window.NNRegistry = {
     },
     {
     {
+      id: 'emergency-fund', name: 'Emergency Fund Calculator', category: 'budgeting',
+      url: '/emergency-fund/', icon: '🛡️',
+      description: 'Find out how much emergency fund you need in Canada. Personalized target based on expenses, employment type, and family situation.',
+      keywords: ['emergency fund calculator canada','how much emergency fund canada','emergency savings canada 2026','TFSA emergency fund canada'],
+      status: 'active', priority: 29,
+      showInFooter: false, showOnHomepage: true,
+      related: ['budget','tfsa','debt-payoff','net-worth']
+    },
+    {
       id: 'home-equity', name: 'Home Equity Calculator', category: 'mortgage',
       url: '/home-equity/', icon: '🏠',
       description: 'Find your home equity, LTV ratio, and maximum HELOC borrowing limit under OSFI B-20 rules.',

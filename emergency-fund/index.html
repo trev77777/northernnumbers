@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html lang="en-CA">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Emergency Fund Calculator Canada 2026 — Northern Numbers</title>
+  <meta name="description" content="Free Canadian emergency fund calculator. Find out exactly how much you need based on your expenses, employment type, and family situation. See your savings timeline and where to keep it in Canada." />
+  <meta name="keywords" content="emergency fund calculator canada, how much emergency fund canada, emergency savings canada 2026, emergency fund target canada, TFSA emergency fund canada" />
+  <link rel="canonical" href="https://www.northernnumbers.ca/emergency-fund/" />
+  <meta property="og:title" content="Emergency Fund Calculator Canada 2026 — Northern Numbers" />
+  <meta property="og:description" content="Find out exactly how much emergency fund you need based on your Canadian situation. Includes savings timeline and TFSA guidance." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://www.northernnumbers.ca/emergency-fund/" />
+  <meta property="og:locale" content="en_CA" />
+  <meta property="og:site_name" content="Northern Numbers" />
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Emergency Fund Calculator Canada 2026" />
+  <meta name="twitter:description" content="How much emergency fund do you need in Canada? Get a personalized target and savings timeline." />
+  <meta name="robots" content="index, follow" />
+  <meta name="author" content="Northern Numbers" />
+  <link rel="icon" type="image/png" sizes="32x32" href="../favicon-32x32.png" />
+  <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png" />
+  <link rel="icon" type="image/x-icon" href="../favicon.ico" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Poppins:wght@600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="../styles.css" />
+</head>
+<body>
+
+  <header class="site-header" id="nn-header" role="banner"></header>
+
+  <main id="main-content" class="calc-page">
+    <div class="container">
+
+      <nav class="calc-breadcrumb" aria-label="Breadcrumb">
+        <a href="/">Home</a>
+        <span class="calc-breadcrumb-sep" aria-hidden="true">›</span>
+        <a href="/finance/">Calculators</a>
+        <span class="calc-breadcrumb-sep" aria-hidden="true">›</span>
+        <span aria-current="page">Emergency Fund Calculator</span>
+      </nav>
+
+      <div class="calc-page-header">
+        <h1 class="calc-page-title">Emergency Fund Calculator Canada 2026</h1>
+        <p class="calc-page-desc">Find out exactly how much emergency fund you need based on your essential monthly expenses, employment situation, and family setup. See your savings target, how long it will take to get there, and where to keep it in Canada.</p>
+      </div>
+
+      <div class="calc-layout">
+
+        <!-- Inputs -->
+        <section class="calc-panel" aria-labelledby="inputs-heading">
+          <h2 id="inputs-heading" class="calc-panel-title">Your Situation</h2>
+
+          <div class="quick-start" role="note">
+            <p class="quick-start-title">📋 What counts as essential expenses?</p>
+            <p style="font-size:var(--text-sm);color:var(--color-text-muted);line-height:1.7">Only include what you <strong>must</strong> pay even with no income: rent or mortgage, utilities, groceries, basic transportation, insurance, phone, internet, and minimum debt payments. Leave out dining out, subscriptions, entertainment, and other discretionary spending.</p>
+          </div>
+
+          <form id="ef-form" novalidate>
+
+            <div class="form-group">
+              <label class="form-label" for="monthly-expenses">Monthly Essential Expenses</label>
+              <div class="input-wrapper">
+                <span class="input-prefix" aria-hidden="true">$</span>
+                <input type="text" id="monthly-expenses" class="form-input has-prefix"
+                  placeholder="3,500" inputmode="numeric" autocomplete="off"
+                  aria-describedby="exp-hint exp-error" />
+              </div>
+              <p class="field-help" id="exp-hint">Rent/mortgage + utilities + groceries + transportation + insurance + phone/internet + minimum debt payments.</p>
+              <p id="exp-error" class="form-error-msg" role="alert"></p>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label" for="employment-type">Employment Type</label>
+              <div class="select-wrapper">
+                <select id="employment-type" class="form-select" aria-describedby="emp-hint">
+                  <option value="stable-dual">Stable employment — dual income household</option>
+                  <option value="stable-single" selected>Stable employment — single income household</option>
+                  <option value="variable">Variable, contract, or seasonal work</option>
+                  <option value="self-employed">Self-employed or commission-based</option>
+                </select>
+              </div>
+              <p class="field-help" id="emp-hint">Your income stability directly affects how many months of expenses you should have saved. Self-employed and variable-income Canadians need more buffer.</p>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label">Dependants</label>
+              <div style="display:flex;flex-direction:column;gap:var(--space-2)">
+                <label style="display:flex;align-items:center;gap:var(--space-3);cursor:pointer;font-size:var(--text-sm)">
+                  <input type="checkbox" id="has-dependants" style="accent-color:var(--color-primary);flex-shrink:0" />
+                  I have children or other dependants relying on my income
+                </label>
+              </div>
+              <p class="field-help" style="margin-top:var(--space-2)">Dependants add one additional month to your recommended target.</p>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label" for="current-savings">Current Emergency Savings <span class="form-hint">(optional)</span></label>
+              <div class="input-wrapper">
+                <span class="input-prefix" aria-hidden="true">$</span>
+                <input type="text" id="current-savings" class="form-input has-prefix"
+                  placeholder="0" inputmode="numeric" autocomplete="off" value="0"
+                  aria-describedby="savings-hint" />
+              </div>
+              <p class="field-help" id="savings-hint">Money already set aside in a savings account or TFSA specifically for emergencies. Enter 0 if you're starting from scratch.</p>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label" for="monthly-contribution">Monthly Savings Contribution <span class="form-hint">(optional)</span></label>
+              <div class="input-wrapper">
+                <span class="input-prefix" aria-hidden="true">$</span>
+                <input type="text" id="monthly-contribution" class="form-input has-prefix"
+                  placeholder="500" inputmode="numeric" autocomplete="off" value="0"
+                  aria-describedby="contrib-hint" />
+              </div>
+              <p class="field-help" id="contrib-hint">How much you can set aside each month toward your emergency fund. Used to calculate your timeline to goal.</p>
+            </div>
+
+            <div class="btn-row">
+              <button type="submit" class="btn btn-primary btn-calculate" style="flex:1">
+                Calculate My Target
+              </button>
+              <button type="button" id="reset-btn" class="btn btn-secondary">Reset</button>
+            </div>
+
+          </form>
+        </section>
+
+        <!-- Results -->
+        <section class="calc-panel" aria-labelledby="results-heading" aria-live="polite">
+          <h2 id="results-heading" class="calc-panel-title">Your Emergency Fund Target</h2>
+
+          <div id="results-placeholder" class="result-placeholder">
+            <div class="result-placeholder-icon" aria-hidden="true">
+              <svg width="56" height="56" viewBox="0 0 56 56" fill="none">
+                <circle cx="28" cy="28" r="18" stroke="#D1D5DB" stroke-width="2"/>
+                <path d="M28 20v8l5 5" stroke="#D1D5DB" stroke-width="2" stroke-linecap="round"/>
+              </svg>
+            </div>
+            <p>Enter your monthly expenses and situation to get your personalized emergency fund target.</p>
+          </div>
+
+          <div id="results-content" class="hidden">
+
+            <!-- Already funded notice -->
+            <div id="funded-notice" style="display:none;margin-bottom:var(--space-4);padding:var(--space-4) var(--space-5);background:#F0FDF4;border:1px solid #86EFAC;border-radius:var(--radius-md);font-size:var(--text-sm);color:#166534;line-height:1.6">
+              ✅ <strong>Well done!</strong> Your current savings already meet or exceed your recommended emergency fund target. Consider keeping any surplus in a TFSA HISA earning 4–5% — it remains accessible while earning tax-free interest.
+            </div>
+
+            <!-- Hero -->
+            <div class="result-hero">
+              <p class="result-hero-label">Recommended Emergency Fund</p>
+              <p class="result-hero-value" id="result-target">—</p>
+              <p class="result-hero-sub" id="result-hero-sub">—</p>
+            </div>
+
+            <!-- Progress bar -->
+            <div style="margin-top:var(--space-5)">
+              <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:var(--space-2)">
+                <span style="font-size:var(--text-sm);font-weight:600">Current Progress</span>
+                <span id="result-pct" style="font-size:var(--text-sm);font-weight:600;color:var(--color-primary)">0%</span>
+              </div>
+              <div style="height:12px;background:var(--color-bg);border-radius:999px;overflow:hidden;border:1px solid var(--color-border)">
+                <div id="progress-bar" style="height:100%;background:var(--color-primary);border-radius:999px;width:0%;transition:width 0.5s ease"></div>
+              </div>
+              <div style="display:flex;justify-content:space-between;margin-top:var(--space-1);font-size:var(--text-xs);color:var(--color-text-muted)">
+                <span id="result-saved-label">$0 saved</span>
+                <span id="result-target-label">$0 target</span>
+              </div>
+            </div>
+
+            <div class="result-summary" role="list" style="margin-top:var(--space-5)">
+              <div class="result-row" role="listitem">
+                <span class="result-row-label">Monthly Essential Expenses</span>
+                <span class="result-row-value" id="result-expenses">—</span>
+              </div>
+              <div class="result-row" role="listitem">
+                <span class="result-row-label">Recommended Months of Coverage</span>
+                <span class="result-row-value" id="result-months">—</span>
+              </div>
+              <div class="result-row" role="listitem">
+                <span class="result-row-label">Emergency Fund Target</span>
+                <span class="result-row-value" id="result-target-row">—</span>
+              </div>
+              <div class="result-row" role="listitem" id="savings-row" style="display:none">
+                <span class="result-row-label">Current Emergency Savings</span>
+                <span class="result-row-value is-success" id="result-current">—</span>
+              </div>
+              <div class="result-row result-row--total" role="listitem">
+                <span class="result-row-label">Still Needed</span>
+                <span class="result-row-value" id="result-gap">—</span>
+              </div>
+            </div>
+
+            <!-- Milestone cards -->
+            <div class="milestone-grid" style="margin-top:var(--space-5)">
+              <div class="milestone-card">
+                <p class="milestone-label">Months Covered Now</p>
+                <p class="milestone-value" id="result-covered">—</p>
+                <p class="milestone-sub">With current savings</p>
+              </div>
+              <div class="milestone-card">
+                <p class="milestone-label">Time to Goal</p>
+                <p class="milestone-value" id="result-timeline">—</p>
+                <p class="milestone-sub">At your monthly contribution</p>
+              </div>
+              <div class="milestone-card">
+                <p class="milestone-label">3-Month Milestone</p>
+                <p class="milestone-value" id="result-3mo">—</p>
+                <p class="milestone-sub">Minimum safety net</p>
+              </div>
+              <div class="milestone-card">
+                <p class="milestone-label">6-Month Milestone</p>
+                <p class="milestone-value" id="result-6mo">—</p>
+                <p class="milestone-sub">Solid buffer</p>
+              </div>
+            </div>
+
+            <!-- Where to keep it -->
+            <div style="margin-top:var(--space-5);padding:var(--space-5);background:var(--color-bg);border:1px solid var(--color-border);border-radius:var(--radius-md)">
+              <p style="font-family:var(--font-heading);font-weight:700;font-size:var(--text-base);margin-bottom:var(--space-3)">🍁 Where to Keep Your Emergency Fund in Canada</p>
+              <div style="display:flex;flex-direction:column;gap:var(--space-3);font-size:var(--text-sm)">
+                <div style="display:flex;gap:var(--space-3);align-items:flex-start">
+                  <span style="color:var(--color-success);font-weight:700;flex-shrink:0">✅ Best</span>
+                  <div><strong>TFSA High-Interest Savings Account (HISA)</strong> — Rates of 4–5% at EQ Bank, Oaken Financial, Simplii, and Tangerine in 2026. Interest is completely tax-free. Instantly accessible. Best option for most Canadians who have TFSA room.</div>
+                </div>
+                <div style="display:flex;gap:var(--space-3);align-items:flex-start">
+                  <span style="color:#F59E0B;font-weight:700;flex-shrink:0">✓ Good</span>
+                  <div><strong>Non-registered HISA</strong> — Same rates, but interest is taxable. Still excellent for accessibility and safety. Use this if you've used up your TFSA room.</div>
+                </div>
+                <div style="display:flex;gap:var(--space-3);align-items:flex-start">
+                  <span style="color:var(--color-danger);font-weight:700;flex-shrink:0">❌ Avoid</span>
+                  <div><strong>Stocks, ETFs, or locked-in GICs</strong> — Markets can drop 30–40% right when you need the money most. Locked GICs may not be accessible in time. Your emergency fund must be liquid.</div>
+                </div>
+              </div>
+            </div>
+
+            <div id="nn-disclaimer" style="margin-top:var(--space-4)"></div>
+            <button type="button" id="copy-btn" class="copy-btn" style="margin-top:var(--space-4)">
+              📋 Copy Results to Clipboard
+            </button>
+
+          </div>
+        </section>
+      </div>
+
+      <!-- Educational -->
+      <section style="margin-top:var(--space-16);padding-top:var(--space-10);border-top:1px solid var(--color-border)">
+        <h2 style="font-size:var(--text-2xl);font-weight:700;margin-bottom:var(--space-8)">Emergency Funds in Canada: 2026 Guide</h2>
+        <div style="display:grid;gap:var(--space-8)">
+
+          <div>
+            <h3 style="font-size:var(--text-xl);font-weight:600;margin-bottom:var(--space-3)">💡 How Many Months Do You Need?</h3>
+            <div style="overflow-x:auto">
+              <table style="width:100%;border-collapse:collapse;font-size:var(--text-sm)">
+                <thead>
+                  <tr style="background:var(--color-bg);border-bottom:2px solid var(--color-border)">
+                    <th style="padding:var(--space-3);text-align:left;font-weight:600">Situation</th>
+                    <th style="padding:var(--space-3);text-align:center;font-weight:600">Recommended Months</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr style="border-bottom:1px solid var(--color-border)"><td style="padding:var(--space-2) var(--space-3)">Stable employment, dual income, no dependants</td><td style="padding:var(--space-2) var(--space-3);text-align:center">3 months</td></tr>
+                  <tr style="border-bottom:1px solid var(--color-border);background:var(--color-bg)"><td style="padding:var(--space-2) var(--space-3)">Stable employment, single income or dependants</td><td style="padding:var(--space-2) var(--space-3);text-align:center">4–5 months</td></tr>
+                  <tr style="border-bottom:1px solid var(--color-border)"><td style="padding:var(--space-2) var(--space-3)">Variable, contract, or seasonal work</td><td style="padding:var(--space-2) var(--space-3);text-align:center">6–7 months</td></tr>
+                  <tr><td style="padding:var(--space-2) var(--space-3)">Self-employed or commission-based</td><td style="padding:var(--space-2) var(--space-3);text-align:center">9–12 months</td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <div>
+            <h3 style="font-size:var(--text-xl);font-weight:600;margin-bottom:var(--space-3)">🇨🇦 The EI Factor</h3>
+            <p style="color:var(--color-text-muted);line-height:1.8">Canadians who lose their job through no fault of their own may be eligible for Employment Insurance (EI). In 2026, EI pays 55% of insurable earnings up to a maximum of $668 per week. If you qualify, EI payments typically begin 4–6 weeks after your job ends. This meaningfully reduces the savings gap during a job loss — but EI doesn't cover every emergency, doesn't apply to self-employed Canadians (unless they've opted in), and may not be enough to cover your essential expenses on its own. A solid emergency fund remains essential even with EI eligibility.</p>
+          </div>
+
+          <div>
+            <h3 style="font-size:var(--text-xl);font-weight:600;margin-bottom:var(--space-3)">❓ Frequently Asked Questions</h3>
+            <div style="display:flex;flex-direction:column;gap:var(--space-5)">
+              <div>
+                <p style="font-weight:600;margin-bottom:var(--space-1)">Should I build an emergency fund before paying off debt?</p>
+                <p style="color:var(--color-text-muted);font-size:var(--text-sm);line-height:1.7">Build a starter emergency fund of $1,000–$2,000 first, even while carrying high-interest debt. Without any cushion, a small unexpected expense — a car repair, a dental bill — forces you back into debt. Once you have that starter fund, attack high-interest debt aggressively. After the debt is paid off, build the full 3–6 month emergency fund. This sequence prevents you from running in circles between saving and debt repayment.</p>
+              </div>
+              <div>
+                <p style="font-weight:600;margin-bottom:var(--space-1)">Can I use my TFSA as an emergency fund in Canada?</p>
+                <p style="color:var(--color-text-muted);font-size:var(--text-sm);line-height:1.7">Yes — and it's often the best approach. A TFSA HISA gives you tax-free interest (currently 4–5% at online banks), full flexibility to withdraw at any time without tax consequences, and your contribution room is restored the following January 1 after a withdrawal. Keep the money in a simple savings account within the TFSA, not in stocks or ETFs, to ensure it's accessible and not subject to market drops when you need it most.</p>
+              </div>
+              <div>
+                <p style="font-weight:600;margin-bottom:var(--space-1)">What qualifies as a true emergency?</p>
+                <p style="color:var(--color-text-muted);font-size:var(--text-sm);line-height:1.7">True emergencies are unexpected, necessary, and urgent: job loss, major medical expenses not covered by provincial health care, essential car repairs (if you need the car for work), urgent home repairs (a broken furnace in January), or a family emergency requiring travel. Vacations, new phones, holiday gifts, and planned purchases are not emergencies — those belong in a separate savings goal. Keeping your emergency fund mentally separate helps prevent spending it on non-emergencies.</p>
+              </div>
+            </div>
+          </div>
+
+          <div>
+            <h3 style="font-size:var(--text-xl);font-weight:600;margin-bottom:var(--space-3)">🔗 Related Calculators</h3>
+            <div id="nn-related"></div>
+          </div>
+
+        </div>
+        <div style="margin-top:var(--space-8);padding:var(--space-4) var(--space-5);background:var(--color-bg);border:1px solid var(--color-border);border-radius:var(--radius-md);font-size:var(--text-sm);color:var(--color-text-muted);line-height:1.7">
+          📋 Recommended months based on widely accepted personal finance guidance (3–9 months of essential expenses). EI maximum weekly benefit $668 (2026, Service Canada). HISA rates 4–5% at major Canadian online banks as of mid-2026. Results are general guidance — your situation may require more or less. See our <a href="/disclaimer.html" style="color:var(--color-primary)">full disclaimer</a>.
+        </div>
+      </section>
+
+    </div>
+  </main>
+
+  <footer class="site-footer" id="nn-footer" role="contentinfo"></footer>
+
+  <script src="../script.js" defer></script>
+  <script src="../data/nn-constants.js" defer></script>
+  <script src="../data/nn-calculators.js" defer></script>
+  <script src="../shared/nn-utils.js" defer></script>
+  <script src="../shared/nn-seo.js" defer></script>
+  <script src="../shared/nn-analytics.js" defer></script>
+  <script src="../shared/nn-ads.js" defer></script>
+  <script src="../shared/nn-components.js" defer></script>
+  <script src="emergency-fund.js" defer></script>
+</body>
+</html>
