@@ -194,7 +194,6 @@ window.NNRegistry = {
       related: ['paycheck','income-tax','budget','loan']
     },
     {
-    {
       id: 'marginal-tax-rate', name: 'Marginal vs Effective Tax Rate Calculator', category: 'taxes',
       url: '/marginal-tax-rate/', icon: '📊',
       description: 'Find your marginal and effective tax rate for 2026. All 13 provinces, confirmed 2026 brackets.',
