@@ -1,0 +1,432 @@
+<!DOCTYPE html>
+<html lang="en-CA">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Capital Gains Tax Calculator Canada 2026 — Northern Numbers</title>
+  <meta name="description" content="Free Canadian capital gains tax calculator for 2026. Calculate tax on investment sales, real estate, and business shares. Includes principal residence exemption, LCGE, capital loss offsets, and all provinces." />
+  <meta name="keywords" content="capital gains tax calculator canada 2026, capital gains calculator canada, canadian capital gains tax, capital gains inclusion rate 2026, capital gains tax by province canada" />
+  <link rel="canonical" href="https://www.northernnumbers.ca/capital-gains/" />
+  <meta property="og:title" content="Capital Gains Tax Calculator Canada 2026 — Northern Numbers" />
+  <meta property="og:description" content="Calculate Canadian capital gains tax for 2026. Includes principal residence exemption, LCGE, capital loss offsets, and all provinces." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://www.northernnumbers.ca/capital-gains/" />
+  <meta property="og:locale" content="en_CA" />
+  <meta property="og:site_name" content="Northern Numbers" />
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Capital Gains Tax Calculator Canada 2026 — Northern Numbers" />
+  <meta name="twitter:description" content="Calculate Canadian capital gains tax for 2026. Includes all provinces and key exemptions." />
+  <meta name="robots" content="index, follow" />
+  <meta name="author" content="Northern Numbers" />
+  <link rel="icon" type="image/png" sizes="32x32" href="../favicon-32x32.png" />
+  <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png" />
+  <link rel="icon" type="image/x-icon" href="../favicon.ico" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Poppins:wght@600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="../styles.css" />
+</head>
+<body>
+
+  <header class="site-header" id="nn-header" role="banner"></header>
+
+  <main id="main-content" class="calc-page">
+    <div class="container">
+
+      <nav class="calc-breadcrumb" aria-label="Breadcrumb">
+        <a href="/">Home</a>
+        <span class="calc-breadcrumb-sep" aria-hidden="true">›</span>
+        <a href="/finance/">Calculators</a>
+        <span class="calc-breadcrumb-sep" aria-hidden="true">›</span>
+        <span aria-current="page">Capital Gains Tax Calculator</span>
+      </nav>
+
+      <div class="calc-page-header">
+        <h1 class="calc-page-title">Capital Gains Tax Calculator Canada 2026</h1>
+        <p class="calc-page-desc">Calculate how much tax you owe on investment sales, real estate, and business shares. Uses the 2026 50% inclusion rate, provincial marginal rates, principal residence exemption, LCGE, and capital loss offsets.</p>
+      </div>
+
+      <!-- 2026 rate notice -->
+      <div style="margin-bottom:var(--space-6);padding:var(--space-4) var(--space-5);background:#EFF6FF;border:1px solid #BFDBFE;border-radius:var(--radius-md);font-size:var(--text-sm);color:#1E40AF;line-height:1.6">
+        📌 <strong>2026 Rate Confirmed:</strong> The capital gains inclusion rate is <strong>50%</strong> for all Canadians. The proposed increase to 66.67% was cancelled by the federal government on March 21, 2025 and never became law. The LCGE is <strong>$1,275,000</strong> for 2026 (indexed). Source: <a href="https://www.canada.ca/en/revenue-agency/news/newsroom/tax-tips/tax-tips-2025/update-cra-administration-proposed-capital-gains-taxation-changes.html" target="_blank" rel="noopener" style="color:#1D4ED8">CRA</a>.
+      </div>
+
+      <div class="calc-layout">
+
+        <!-- Inputs -->
+        <section class="calc-panel" aria-labelledby="inputs-heading">
+          <h2 id="inputs-heading" class="calc-panel-title">Your Capital Gain</h2>
+
+          <div class="quick-start" role="note">
+            <p class="quick-start-title">📋 How to use this calculator</p>
+            <ol>
+              <li>Enter the proceeds of disposition (what you sold it for).</li>
+              <li>Enter the adjusted cost base (what you paid, including eligible costs).</li>
+              <li>Enter your other annual income so we can determine your marginal bracket.</li>
+              <li>Select your province and any applicable exemptions.</li>
+              <li>Click <strong>Calculate Tax</strong>.</li>
+            </ol>
+          </div>
+
+          <!-- Presets -->
+          <div style="margin-bottom:var(--space-4)">
+            <p style="font-size:var(--text-sm);font-weight:600;color:var(--color-text-muted);margin-bottom:var(--space-2)">Quick presets:</p>
+            <div class="preset-group" role="group">
+              <button type="button" class="preset-btn" data-preset="stocks">📈 Stocks ($50K gain)</button>
+              <button type="button" class="preset-btn" data-preset="rental">🏠 Rental Property</button>
+              <button type="button" class="preset-btn" data-preset="cottage">🌲 Cottage</button>
+              <button type="button" class="preset-btn" data-preset="business">💼 Business Shares</button>
+            </div>
+          </div>
+
+          <form id="cg-form" novalidate>
+
+            <!-- Asset type -->
+            <div class="form-group">
+              <label class="form-label" for="asset-type">Asset Type</label>
+              <div class="select-wrapper">
+                <select id="asset-type" class="form-select">
+                  <option value="investments">Investments (stocks, ETFs, crypto, bonds)</option>
+                  <option value="real-estate">Real Estate (rental, investment property)</option>
+                  <option value="cottage">Recreational Property (cottage, cabin)</option>
+                  <option value="business">Small Business Shares / Farm Property (LCGE may apply)</option>
+                  <option value="other">Other Capital Property</option>
+                </select>
+              </div>
+            </div>
+
+            <!-- Proceeds -->
+            <div class="form-group">
+              <label class="form-label" for="proceeds">Proceeds of Disposition</label>
+              <div class="input-wrapper">
+                <span class="input-prefix" aria-hidden="true">$</span>
+                <input type="text" id="proceeds" class="form-input has-prefix"
+                  placeholder="200,000" inputmode="numeric" autocomplete="off" value="200,000"
+                  aria-describedby="proceeds-hint proceeds-error" />
+              </div>
+              <p class="field-help" id="proceeds-hint">The sale price of the asset. For stocks, this is the total amount received. For real estate, this is the sale price minus selling costs (realtor fees, legal fees).</p>
+              <p id="proceeds-error" class="form-error-msg" role="alert"></p>
+            </div>
+
+            <!-- ACB -->
+            <div class="form-group">
+              <label class="form-label" for="acb">Adjusted Cost Base (ACB)</label>
+              <div class="input-wrapper">
+                <span class="input-prefix" aria-hidden="true">$</span>
+                <input type="text" id="acb" class="form-input has-prefix"
+                  placeholder="100,000" inputmode="numeric" autocomplete="off" value="100,000"
+                  aria-describedby="acb-hint acb-error" />
+              </div>
+              <p class="field-help" id="acb-hint">What you originally paid, plus eligible costs (commissions, legal fees, capital improvements). For stocks, this is your total cost per share × number of shares sold.</p>
+              <p id="acb-error" class="form-error-msg" role="alert"></p>
+            </div>
+
+            <!-- Capital losses -->
+            <div class="form-group">
+              <label class="form-label" for="capital-losses">Capital Losses to Apply <span class="form-hint">(optional)</span></label>
+              <div class="input-wrapper">
+                <span class="input-prefix" aria-hidden="true">$</span>
+                <input type="text" id="capital-losses" class="form-input has-prefix"
+                  placeholder="0" inputmode="numeric" autocomplete="off" value="0"
+                  aria-describedby="losses-hint" />
+              </div>
+              <p class="field-help" id="losses-hint">Current-year capital losses or prior-year unused capital losses you are applying against this gain. Reduces the net taxable gain dollar-for-dollar.</p>
+            </div>
+
+            <!-- Province -->
+            <div class="form-group">
+              <label class="form-label" for="province">Province / Territory</label>
+              <div class="select-wrapper">
+                <select id="province" class="form-select">
+                  <option value="ON" selected>Ontario</option>
+                  <option value="BC">British Columbia</option>
+                  <option value="AB">Alberta</option>
+                  <option value="QC">Quebec</option>
+                  <option value="MB">Manitoba</option>
+                  <option value="SK">Saskatchewan</option>
+                  <option value="NS">Nova Scotia</option>
+                  <option value="NB">New Brunswick</option>
+                  <option value="PE">Prince Edward Island</option>
+                  <option value="NL">Newfoundland & Labrador</option>
+                  <option value="YT">Yukon</option>
+                  <option value="NT">Northwest Territories</option>
+                  <option value="NU">Nunavut</option>
+                </select>
+              </div>
+            </div>
+
+            <!-- Other annual income -->
+            <div class="form-group">
+              <label class="form-label" for="other-income">Other Annual Income</label>
+              <div class="input-wrapper">
+                <span class="input-prefix" aria-hidden="true">$</span>
+                <input type="text" id="other-income" class="form-input has-prefix"
+                  placeholder="80,000" inputmode="numeric" autocomplete="off" value="80,000"
+                  aria-describedby="income-hint" />
+              </div>
+              <p class="field-help" id="income-hint">Your gross income from employment, pension, RRIF withdrawals, etc. — before this capital gain. Used to determine which tax bracket the taxable gain falls into.</p>
+            </div>
+
+            <!-- LCGE -->
+            <div class="form-group" id="lcge-group" style="display:none">
+              <label class="form-label" for="lcge">Lifetime Capital Gains Exemption (LCGE) to Apply <span class="form-hint">(optional)</span></label>
+              <div class="input-wrapper">
+                <span class="input-prefix" aria-hidden="true">$</span>
+                <input type="text" id="lcge" class="form-input has-prefix"
+                  placeholder="0" inputmode="numeric" autocomplete="off" value="0"
+                  aria-describedby="lcge-hint" />
+              </div>
+              <p class="field-help" id="lcge-hint">The 2026 LCGE limit is $1,275,000 for qualifying small business corporation (QSBC) shares and qualifying farm/fishing property. Enter how much of your LCGE you are applying. Reduces the net gain before calculating the taxable portion.</p>
+            </div>
+
+            <!-- Principal residence -->
+            <div class="form-group" id="pr-group" style="display:none">
+              <label class="form-label">Principal Residence Exemption</label>
+              <div style="display:flex;flex-direction:column;gap:var(--space-2)">
+                <label style="display:flex;align-items:flex-start;gap:var(--space-2);cursor:pointer;font-size:var(--text-sm)">
+                  <input type="checkbox" id="is-principal-residence" style="accent-color:var(--color-primary);margin-top:2px;flex-shrink:0" />
+                  This was my principal residence for all years of ownership (full exemption — no tax)
+                </label>
+              </div>
+              <p class="field-help" style="margin-top:var(--space-2)">Only one property may be designated as your principal residence per family unit per year. The sale must still be reported on Schedule 3 even if fully exempt.</p>
+            </div>
+
+            <div class="btn-row">
+              <button type="submit" class="btn btn-primary btn-calculate" style="flex:1">
+                Calculate Tax
+              </button>
+              <button type="button" id="reset-btn" class="btn btn-secondary">Reset</button>
+            </div>
+
+          </form>
+        </section>
+
+        <!-- Results -->
+        <section class="calc-panel" aria-labelledby="results-heading" aria-live="polite">
+          <h2 id="results-heading" class="calc-panel-title">Your Results</h2>
+
+          <div id="results-placeholder" class="result-placeholder">
+            <div class="result-placeholder-icon" aria-hidden="true">
+              <svg width="56" height="56" viewBox="0 0 56 56" fill="none">
+                <path d="M14 42L28 14L42 42" stroke="#D1D5DB" stroke-width="2" stroke-linejoin="round"/>
+                <path d="M20 32H36" stroke="#D1D5DB" stroke-width="2" stroke-linecap="round"/>
+              </svg>
+            </div>
+            <p>Enter your sale details and click <strong>Calculate Tax</strong> to see your estimated capital gains tax.</p>
+          </div>
+
+          <div id="results-content" class="hidden">
+
+            <!-- Principal residence exempt -->
+            <div id="pr-exempt-notice" style="display:none">
+              <div class="result-hero">
+                <p class="result-hero-label">Capital Gains Tax Owing</p>
+                <p class="result-hero-value">$0.00</p>
+                <p class="result-hero-sub">Principal residence exemption — fully exempt</p>
+              </div>
+              <div style="margin-top:var(--space-4);padding:var(--space-4) var(--space-5);background:#F0FDF4;border:1px solid #86EFAC;border-radius:var(--radius-md);font-size:var(--text-sm);color:#166534">
+                ✅ Your capital gain of <span id="pr-gain-amount">—</span> is fully exempt under the principal residence exemption. You must still report the sale on <strong>Schedule 3</strong> of your T1 return and claim the exemption on <strong>Schedule 3</strong>.
+              </div>
+            </div>
+
+            <!-- Normal results -->
+            <div id="normal-results">
+              <!-- Hero -->
+              <div class="result-hero">
+                <p class="result-hero-label">Estimated Capital Gains Tax</p>
+                <p class="result-hero-value" id="result-cg-tax">—</p>
+                <p class="result-hero-sub" id="result-hero-sub">—</p>
+              </div>
+
+              <div class="result-summary" role="list" style="margin-top:var(--space-5)">
+                <div class="result-row" role="listitem">
+                  <span class="result-row-label">Proceeds of Disposition</span>
+                  <span class="result-row-value" id="result-proceeds">—</span>
+                </div>
+                <div class="result-row" role="listitem">
+                  <span class="result-row-label">Adjusted Cost Base</span>
+                  <span class="result-row-value" id="result-acb">—</span>
+                </div>
+                <div class="result-row" role="listitem">
+                  <span class="result-row-label">Capital Gain (Gross)</span>
+                  <span class="result-row-value" id="result-gross-gain">—</span>
+                </div>
+                <div class="result-row" role="listitem" id="losses-row" style="display:none">
+                  <span class="result-row-label">Capital Losses Applied</span>
+                  <span class="result-row-value is-success" id="result-losses">—</span>
+                </div>
+                <div class="result-row" role="listitem" id="lcge-row" style="display:none">
+                  <span class="result-row-label">LCGE Applied</span>
+                  <span class="result-row-value is-success" id="result-lcge">—</span>
+                </div>
+                <div class="result-row" role="listitem">
+                  <span class="result-row-label">Net Capital Gain</span>
+                  <span class="result-row-value" id="result-net-gain">—</span>
+                </div>
+                <div class="result-row" role="listitem">
+                  <span class="result-row-label">Inclusion Rate</span>
+                  <span class="result-row-value">50%</span>
+                </div>
+                <div class="result-row" role="listitem">
+                  <span class="result-row-label">Taxable Capital Gain</span>
+                  <span class="result-row-value" id="result-taxable-cg">—</span>
+                </div>
+                <div class="result-row" role="listitem">
+                  <span class="result-row-label">Marginal Rate on Gain</span>
+                  <span class="result-row-value" id="result-marginal-rate">—</span>
+                </div>
+                <div class="result-row result-row--total" role="listitem">
+                  <span class="result-row-label">Estimated Tax Owing</span>
+                  <span class="result-row-value" id="result-tax-total">—</span>
+                </div>
+              </div>
+
+              <!-- Milestone cards -->
+              <div class="milestone-grid" style="margin-top:var(--space-5)">
+                <div class="milestone-card">
+                  <p class="milestone-label">Effective CG Rate</p>
+                  <p class="milestone-value" id="result-effective-rate">—</p>
+                  <p class="milestone-sub">Tax ÷ gross gain</p>
+                </div>
+                <div class="milestone-card">
+                  <p class="milestone-label">After-Tax Proceeds</p>
+                  <p class="milestone-value" id="result-after-tax">—</p>
+                  <p class="milestone-sub">Gain minus estimated tax</p>
+                </div>
+                <div class="milestone-card">
+                  <p class="milestone-label">Tax-Free Amount</p>
+                  <p class="milestone-value" id="result-tax-free">—</p>
+                  <p class="milestone-sub">50% of net gain (not taxed)</p>
+                </div>
+                <div class="milestone-card">
+                  <p class="milestone-label">Top CG Rate in Province</p>
+                  <p class="milestone-value" id="result-top-rate">—</p>
+                  <p class="milestone-sub">At highest income bracket</p>
+                </div>
+              </div>
+            </div>
+
+            <div style="margin-top:var(--space-4);padding:var(--space-3) var(--space-4);background:#FEF9C3;border:1px solid #FDE047;border-radius:var(--radius-md);font-size:var(--text-sm);color:#713F12;line-height:1.6">
+              ⚠️ <strong>Estimate only.</strong> Actual tax depends on your full T1 return, other income sources, deductions, credits, and province-specific rules. Consult a tax professional or use certified tax software before filing.
+            </div>
+
+            <div id="nn-disclaimer" style="margin-top:var(--space-4)"></div>
+
+            <button type="button" id="copy-btn" class="copy-btn" style="margin-top:var(--space-4)">
+              📋 Copy Results to Clipboard
+            </button>
+
+          </div>
+        </section>
+      </div>
+
+      <!-- Educational -->
+      <section style="margin-top:var(--space-16);padding-top:var(--space-10);border-top:1px solid var(--color-border)">
+        <h2 style="font-size:var(--text-2xl);font-weight:700;margin-bottom:var(--space-8)">Capital Gains Tax in Canada: 2026 Guide</h2>
+        <div style="display:grid;gap:var(--space-8)">
+
+          <div>
+            <h3 style="font-size:var(--text-xl);font-weight:600;margin-bottom:var(--space-3)">📊 How Capital Gains Tax Works in Canada</h3>
+            <p style="color:var(--color-text-muted);line-height:1.8">Canada does not have a separate capital gains tax. Instead, a portion of your capital gain — called the taxable capital gain — is added to your regular income for the year and taxed at your marginal rate. In 2026, the inclusion rate is 50%, meaning only half of your capital gain is taxable. If you sell shares for a $100,000 gain, $50,000 is added to your income. At a combined Ontario marginal rate of 43.41% (for income around $100,000), you would owe approximately $21,705 in tax on that gain. The other $50,000 is entirely tax-free — one of the most significant advantages of capital gains versus ordinary income.</p>
+          </div>
+
+          <div>
+            <h3 style="font-size:var(--text-xl);font-weight:600;margin-bottom:var(--space-3)">📈 2026 Effective Capital Gains Tax Rates by Province</h3>
+            <div style="overflow-x:auto">
+              <table style="width:100%;border-collapse:collapse;font-size:var(--text-sm)">
+                <thead>
+                  <tr style="background:var(--color-bg);border-bottom:2px solid var(--color-border)">
+                    <th style="padding:var(--space-3);text-align:left;font-weight:600">Province</th>
+                    <th style="padding:var(--space-3);text-align:right;font-weight:600">Top Combined Rate</th>
+                    <th style="padding:var(--space-3);text-align:right;font-weight:600">Effective CG Rate</th>
+                    <th style="padding:var(--space-3);text-align:right;font-weight:600">Tax on $100K Gain</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr style="border-bottom:1px solid var(--color-border)"><td style="padding:var(--space-2) var(--space-3)">Newfoundland &amp; Labrador</td><td style="padding:var(--space-2) var(--space-3);text-align:right">54.80%</td><td style="padding:var(--space-2) var(--space-3);text-align:right">27.40%</td><td style="padding:var(--space-2) var(--space-3);text-align:right">$27,400</td></tr>
+                  <tr style="border-bottom:1px solid var(--color-border);background:var(--color-bg)"><td style="padding:var(--space-2) var(--space-3)">Nova Scotia</td><td style="padding:var(--space-2) var(--space-3);text-align:right">54.00%</td><td style="padding:var(--space-2) var(--space-3);text-align:right">27.00%</td><td style="padding:var(--space-2) var(--space-3);text-align:right">$27,000</td></tr>
+                  <tr style="border-bottom:1px solid var(--color-border)"><td style="padding:var(--space-2) var(--space-3)">British Columbia</td><td style="padding:var(--space-2) var(--space-3);text-align:right">53.92%</td><td style="padding:var(--space-2) var(--space-3);text-align:right">26.96%</td><td style="padding:var(--space-2) var(--space-3);text-align:right">$26,960</td></tr>
+                  <tr style="border-bottom:1px solid var(--color-border);background:var(--color-bg)"><td style="padding:var(--space-2) var(--space-3)">Quebec</td><td style="padding:var(--space-2) var(--space-3);text-align:right">53.75%</td><td style="padding:var(--space-2) var(--space-3);text-align:right">26.88%</td><td style="padding:var(--space-2) var(--space-3);text-align:right">$26,880</td></tr>
+                  <tr style="border-bottom:1px solid var(--color-border)"><td style="padding:var(--space-2) var(--space-3)">Ontario</td><td style="padding:var(--space-2) var(--space-3);text-align:right">53.53%</td><td style="padding:var(--space-2) var(--space-3);text-align:right">26.77%</td><td style="padding:var(--space-2) var(--space-3);text-align:right">$26,765</td></tr>
+                  <tr style="border-bottom:1px solid var(--color-border);background:var(--color-bg)"><td style="padding:var(--space-2) var(--space-3)">New Brunswick</td><td style="padding:var(--space-2) var(--space-3);text-align:right">52.80%</td><td style="padding:var(--space-2) var(--space-3);text-align:right">26.40%</td><td style="padding:var(--space-2) var(--space-3);text-align:right">$26,400</td></tr>
+                  <tr style="border-bottom:1px solid var(--color-border)"><td style="padding:var(--space-2) var(--space-3)">Manitoba</td><td style="padding:var(--space-2) var(--space-3);text-align:right">50.40%</td><td style="padding:var(--space-2) var(--space-3);text-align:right">25.20%</td><td style="padding:var(--space-2) var(--space-3);text-align:right">$25,200</td></tr>
+                  <tr style="border-bottom:1px solid var(--color-border);background:var(--color-bg)"><td style="padding:var(--space-2) var(--space-3)">Prince Edward Island</td><td style="padding:var(--space-2) var(--space-3);text-align:right">48.75%</td><td style="padding:var(--space-2) var(--space-3);text-align:right">24.38%</td><td style="padding:var(--space-2) var(--space-3);text-align:right">$24,375</td></tr>
+                  <tr style="border-bottom:1px solid var(--color-border)"><td style="padding:var(--space-2) var(--space-3)">Yukon</td><td style="padding:var(--space-2) var(--space-3);text-align:right">48.00%</td><td style="padding:var(--space-2) var(--space-3);text-align:right">24.00%</td><td style="padding:var(--space-2) var(--space-3);text-align:right">$24,000</td></tr>
+                  <tr style="border-bottom:1px solid var(--color-border);background:var(--color-bg)"><td style="padding:var(--space-2) var(--space-3)">Saskatchewan</td><td style="padding:var(--space-2) var(--space-3);text-align:right">47.50%</td><td style="padding:var(--space-2) var(--space-3);text-align:right">23.75%</td><td style="padding:var(--space-2) var(--space-3);text-align:right">$23,750</td></tr>
+                  <tr style="border-bottom:1px solid var(--color-border)"><td style="padding:var(--space-2) var(--space-3)">Northwest Territories</td><td style="padding:var(--space-2) var(--space-3);text-align:right">47.40%</td><td style="padding:var(--space-2) var(--space-3);text-align:right">23.70%</td><td style="padding:var(--space-2) var(--space-3);text-align:right">$23,700</td></tr>
+                  <tr><td style="padding:var(--space-2) var(--space-3)">Alberta</td><td style="padding:var(--space-2) var(--space-3);text-align:right">46.00%</td><td style="padding:var(--space-2) var(--space-3);text-align:right">23.00%</td><td style="padding:var(--space-2) var(--space-3);text-align:right">$23,000</td></tr>
+                  <tr style="background:var(--color-bg)"><td style="padding:var(--space-2) var(--space-3)">Nunavut</td><td style="padding:var(--space-2) var(--space-3);text-align:right">44.50%</td><td style="padding:var(--space-2) var(--space-3);text-align:right">22.25%</td><td style="padding:var(--space-2) var(--space-3);text-align:right">$22,250</td></tr>
+                </tbody>
+              </table>
+            </div>
+            <p style="font-size:var(--text-xs);color:var(--color-text-muted);margin-top:var(--space-2)">Top bracket rates. Actual tax depends on your income level and applicable brackets. Sources: PwC Tax Summaries, TaxTips.ca (2026).</p>
+          </div>
+
+          <div>
+            <h3 style="font-size:var(--text-xl);font-weight:600;margin-bottom:var(--space-3)">🏠 Principal Residence Exemption</h3>
+            <p style="color:var(--color-text-muted);line-height:1.8">The principal residence exemption is one of the most valuable tax benefits available to Canadian homeowners. When you sell a home that qualifies as your principal residence for every year you owned it, the entire capital gain is tax-free — regardless of how large the gain is. For a home bought for $400,000 and sold for $1,200,000, the $800,000 gain is completely exempt. Only one property can be designated as a principal residence per family unit (you, your spouse, and unmarried children under 18) per year. You must still report the sale on Schedule 3 of your T1 return and claim the exemption — failing to report the sale can result in penalties.</p>
+          </div>
+
+          <div>
+            <h3 style="font-size:var(--text-xl);font-weight:600;margin-bottom:var(--space-3)">💼 Lifetime Capital Gains Exemption (LCGE) — $1,275,000 in 2026</h3>
+            <p style="color:var(--color-text-muted);line-height:1.8">The LCGE allows Canadian residents to shelter a significant portion of capital gains from qualifying assets entirely from tax. For 2026, the LCGE is $1,275,000 (indexed from the $1,250,000 limit established June 25, 2024 — this increase was kept when the inclusion rate hike was cancelled). The LCGE applies to qualifying small business corporation (QSBC) shares and qualifying farm or fishing property. To use the LCGE, the business must meet specific tests at the time of sale. The LCGE is a lifetime cumulative limit — any amount used on previous dispositions reduces what remains available.</p>
+          </div>
+
+          <div>
+            <h3 style="font-size:var(--text-xl);font-weight:600;margin-bottom:var(--space-3)">💡 Strategies to Reduce Capital Gains Tax in Canada</h3>
+            <p style="color:var(--color-text-muted);line-height:1.8;margin-bottom:var(--space-3)">Several legal strategies can reduce or defer capital gains tax in Canada:</p>
+            <p style="color:var(--color-text-muted);line-height:1.8"><strong>Tax-loss harvesting:</strong> Sell investments with unrealized losses to offset capital gains in the same year. Capital losses can be applied to gains in the current year, carried back three years, or carried forward indefinitely.</p>
+            <p style="color:var(--color-text-muted);line-height:1.8;margin-top:var(--space-3)"><strong>Spreading gains across years:</strong> If you can control when you sell, spreading large gains over multiple tax years can keep you in lower marginal brackets each year.</p>
+            <p style="color:var(--color-text-muted);line-height:1.8;margin-top:var(--space-3)"><strong>Holding in a TFSA:</strong> Capital gains inside a TFSA are completely tax-free. Holding growth investments in a TFSA rather than a non-registered account eliminates capital gains tax on those assets entirely.</p>
+            <p style="color:var(--color-text-muted);line-height:1.8;margin-top:var(--space-3)"><strong>Donating securities:</strong> Donating publicly traded securities (stocks, ETFs, mutual funds) directly to a registered charity eliminates the capital gain entirely — you pay no tax on the gain and receive a charitable donation receipt for the full fair market value.</p>
+          </div>
+
+          <div>
+            <h3 style="font-size:var(--text-xl);font-weight:600;margin-bottom:var(--space-3)">❓ Frequently Asked Questions</h3>
+            <div style="display:flex;flex-direction:column;gap:var(--space-5)">
+              <div>
+                <p style="font-weight:600;margin-bottom:var(--space-1)">What is the capital gains inclusion rate in Canada for 2026?</p>
+                <p style="color:var(--color-text-muted);font-size:var(--text-sm);line-height:1.7">The capital gains inclusion rate is 50% for 2026 — for all Canadians, all asset types, and all gain sizes. The proposed increase to 66.67% on gains above $250,000 was cancelled by the federal government on March 21, 2025 and never became law. Only half of any capital gain is added to your taxable income.</p>
+              </div>
+              <div>
+                <p style="font-weight:600;margin-bottom:var(--space-1)">Do I have to pay capital gains tax on my home sale?</p>
+                <p style="color:var(--color-text-muted);font-size:var(--text-sm);line-height:1.7">Not if it was your principal residence for all years you owned it. The principal residence exemption fully eliminates capital gains tax on a qualifying home sale — regardless of how large the gain is. However, you must still report the sale on Schedule 3 of your T1 tax return and claim the exemption. Vacation properties and rental properties generally do not qualify for the exemption.</p>
+              </div>
+              <div>
+                <p style="font-weight:600;margin-bottom:var(--space-1)">What is the superficial loss rule in Canada?</p>
+                <p style="color:var(--color-text-muted);font-size:var(--text-sm);line-height:1.7">The superficial loss rule denies a capital loss if you — or an affiliated person (your spouse, a corporation you control, etc.) — buys the same or identical securities within 30 days before or after the sale and still holds them 30 days after the sale. The denied loss is added to the adjusted cost base of the reacquired securities, deferring rather than permanently losing the tax benefit.</p>
+              </div>
+              <div>
+                <p style="font-weight:600;margin-bottom:var(--space-1)">How long can I carry forward capital losses in Canada?</p>
+                <p style="color:var(--color-text-muted);font-size:var(--text-sm);line-height:1.7">Capital losses can be carried forward indefinitely in Canada and applied against future capital gains. They can also be carried back up to three previous tax years to offset gains you already paid tax on — and receive a refund. Net capital losses can only be applied against capital gains, not against other types of income.</p>
+              </div>
+            </div>
+          </div>
+
+          <div>
+            <h3 style="font-size:var(--text-xl);font-weight:600;margin-bottom:var(--space-3)">🔗 Related Calculators</h3>
+            <div id="nn-related"></div>
+          </div>
+
+        </div>
+        <div style="margin-top:var(--space-8);padding:var(--space-4) var(--space-5);background:var(--color-bg);border:1px solid var(--color-border);border-radius:var(--radius-md);font-size:var(--text-sm);color:var(--color-text-muted);line-height:1.7">
+          📋 Capital gains inclusion rate 50% confirmed for 2026 — the proposed 66.67% rate was cancelled March 21, 2025 (Source: Department of Finance Canada). LCGE $1,275,000 for 2026 (indexed). Federal bottom rate 14% for 2026 (Bill C-4). Provincial top marginal rates sourced from PwC Tax Summaries and TaxTips.ca. This calculator provides estimates only — actual tax depends on your complete T1 return. See our <a href="/disclaimer.html" style="color:var(--color-primary)">full disclaimer</a>.
+        </div>
+      </section>
+
+    </div>
+  </main>
+
+  <footer class="site-footer" id="nn-footer" role="contentinfo"></footer>
+
+  <script src="../script.js" defer></script>
+  <script src="../data/nn-constants.js" defer></script>
+  <script src="../data/nn-calculators.js" defer></script>
+  <script src="../shared/nn-utils.js" defer></script>
+  <script src="../shared/nn-seo.js" defer></script>
+  <script src="../shared/nn-analytics.js" defer></script>
+  <script src="../shared/nn-ads.js" defer></script>
+  <script src="../shared/nn-components.js" defer></script>
+  <script src="capital-gains.js" defer></script>
+</body>
+</html>

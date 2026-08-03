@@ -185,13 +185,23 @@ window.NNRegistry = {
       related: ['income-tax','budget','inflation','loan']
     },
     {
-      id: 'salary-to-hourly', name: 'Salary to Hourly Calculator', category: 'income',
-      url: '/salary-to-hourly/', icon: '💼',
-      description: 'Convert any annual salary to hourly wage or hourly rate to annual salary. Includes all pay period breakdowns.',
-      keywords: ['salary to hourly calculator canada','hourly to salary calculator canada','annual salary to hourly wage canada','salary calculator canada 2026'],
+      id: 'salary-vs-hourly', name: 'Salary vs Hourly Calculator', category: 'income',
+      url: '/salary-vs-hourly/', icon: '💰',
+      description: 'Convert between annual salary and hourly wage with full Canadian pay period breakdown and vacation adjustments.',
+      keywords: ['salary to hourly calculator canada','hourly to salary calculator canada','pay period calculator canada 2026'],
       status: 'active', priority: 24,
       showInFooter: true, footerSection: 'moreTools', showOnHomepage: true,
-      related: ['paycheck','income-tax','budget','cpp']
+      related: ['paycheck','income-tax','budget','loan']
+    },
+    {
+    {
+      id: 'capital-gains', name: 'Capital Gains Tax Calculator', category: 'taxes',
+      url: '/capital-gains/', icon: '📈',
+      description: 'Calculate Canadian capital gains tax for 2026. Includes 50% inclusion rate, all provinces, principal residence exemption, LCGE, and capital loss offsets.',
+      keywords: ['capital gains tax calculator canada 2026','capital gains calculator canada','canadian capital gains tax','capital gains inclusion rate 2026'],
+      status: 'active', priority: 25,
+      showInFooter: true, footerSection: 'moreTools', showOnHomepage: true,
+      related: ['income-tax','tfsa','rrsp','net-worth']
     },
     {
       id: 'debt-payoff', name: 'Debt Payoff Calculator', category: 'debt',
