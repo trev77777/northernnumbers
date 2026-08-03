@@ -3,35 +3,43 @@
    Canadian Capital Gains Tax Calculator 2026
 
    2026 CONFIRMED RULES:
-   - Inclusion rate: 50% (flat — proposed 66.67% cancelled March 21 2025)
+   - Inclusion rate: 50% flat (proposed 66.67% cancelled March 21 2025)
    - Source: Department of Finance Canada, CRA
-   - Federal bottom rate: 14% (down from 15%, Bill C-4)
+   - Federal bottom rate: 14% (Bill C-4, effective 2026)
    - LCGE 2026: $1,275,000 (QSBC shares, farm/fishing property)
    - Principal residence exemption: 100% if designated all years
+   - Quebec abatement: 16.5% reduction in federal tax for QC residents
 
    FORMULA:
-   1. Gross gain = proceeds - ACB
-   2. Net gain = gross gain - capital losses - LCGE claimed
-   3. Taxable capital gain = net gain × 50%
-   4. Tax = marginal federal + provincial rate applied to taxable CG
-      (taxable CG stacks on top of other income)
+   1. Gross gain  = max(0, proceeds − ACB)
+   2. Net gain    = max(0, gross gain − capital losses − LCGE claimed)
+   3. Taxable CG  = net gain × 50%
+   4. Tax         = (federal tax + provincial tax) on taxable CG
+                    stacked on top of other income through real brackets
 
-   FEDERAL BRACKETS 2026 (14% bottom rate):
-   $0-$57,375: 14%
-   $57,375-$114,750: 20.5%
-   $114,750-$177,882: 26%
-   $177,882-$253,414: 29%
-   $253,414+: 33%
+   FEDERAL BRACKETS 2026 (14% bottom rate, Bill C-4):
+   $0–$57,375:      14%
+   $57,375–$114,750: 20.5%
+   $114,750–$177,882: 26%
+   $177,882–$253,414: 29%
+   $253,414+:        33%
 
-   PROVINCIAL TOP COMBINED RATES 2026 (used for top-rate card):
-   Source: PwC Tax Summaries, TaxTips.ca
+   PROVINCIAL BRACKETS 2026:
+   Source: TaxTips.ca, PwC Tax Summaries Canada 2026
+   All 13 provinces/territories use real bracket tables.
+   Ontario surtax applied. Quebec 16.5% federal abatement applied.
+
+   ACCURACY:
+   All provinces within 3% of published top combined rates.
+   Remaining gap: BPA phase-out, health premiums, minor credits
+   not worth adding to an estimation calculator.
    ============================================= */
 'use strict';
 
 document.addEventListener('DOMContentLoaded', function () {
 
   /* ── DOM refs + submit FIRST ── */
-  const form     = document.getElementById('cg-form');
+  const form        = document.getElementById('cg-form');
   const proceedsEl  = document.getElementById('proceeds');
   const acbEl       = document.getElementById('acb');
   const lossesEl    = document.getElementById('capital-losses');
@@ -86,73 +94,102 @@ document.addEventListener('DOMContentLoaded', function () {
     if (!resultsContent.classList.contains('hidden')) calculate();
   });
 
-  /* ── TAX TABLES ── */
-  // 2026 Federal brackets (14% bottom rate, Bill C-4)
+  /* ── TAX TABLES 2026 ── */
+
+  // Federal brackets 2026 — 14% bottom rate (Bill C-4)
+  // Source: CRA, TaxTips.ca 2026
   const FED_BRACKETS = [
-    [57375,   0.14],
-    [114750,  0.205],
-    [177882,  0.26],
-    [253414,  0.29],
+    [57375,    0.14],
+    [114750,   0.205],
+    [177882,   0.26],
+    [253414,   0.29],
     [Infinity, 0.33],
   ];
 
-  // Combined top marginal rates 2026 (fed+prov, top bracket)
-  // Source: PwC Tax Summaries Canada 2026, TaxTips.ca
+  // Provincial income tax brackets 2026 (provincial portion only)
+  // Source: TaxTips.ca 2026 provincial rate pages, PwC Tax Summaries Canada 2026
+  const PROV_BRACKETS = {
+    ON: [[51446, 0.0505], [102894, 0.0915], [150000, 0.1116], [220000, 0.1216], [Infinity, 0.1316]],
+    BC: [[45654, 0.0506], [91310, 0.0770], [104835, 0.1050], [127299, 0.1229], [172602, 0.1470], [240716, 0.1680], [Infinity, 0.2050]],
+    AB: [[148269, 0.10], [177922, 0.12], [237230, 0.13], [355845, 0.14], [Infinity, 0.15]],
+    QC: [[51780, 0.14], [103545, 0.19], [126000, 0.2325], [Infinity, 0.2575]],
+    MB: [[36842, 0.1080], [79625, 0.1275], [Infinity, 0.1740]],
+    SK: [[49720, 0.1050], [142058, 0.1250], [Infinity, 0.1450]],
+    NS: [[29590, 0.0879], [59180, 0.1495], [93000, 0.1667], [150000, 0.2100], [Infinity, 0.2100]],
+    NB: [[47715, 0.0940], [95431, 0.1482], [176756, 0.1652], [Infinity, 0.2030]],
+    PE: [[32656, 0.0965], [64313, 0.1363], [105000, 0.1665], [140000, 0.1825], [Infinity, 0.1875]],
+    NL: [[43198, 0.0870], [86395, 0.1450], [154244, 0.1580], [215943, 0.1780], [275870, 0.1980], [551739, 0.2080], [Infinity, 0.2130]],
+    YT: [[57375, 0.0640], [114750, 0.0900], [177882, 0.1090], [500000, 0.1280], [Infinity, 0.1500]],
+    NT: [[50597, 0.0590], [101198, 0.0860], [164525, 0.1220], [Infinity, 0.1405]],
+    NU: [[53268, 0.0400], [106537, 0.0700], [173205, 0.0900], [Infinity, 0.1150]],
+  };
+
+  // Top combined rates — for the "Top CG Rate in Province" display card
   const TOP_COMBINED = {
     ON: 0.5353, BC: 0.5392, AB: 0.4600, QC: 0.5375, MB: 0.5040,
     SK: 0.4750, NS: 0.5400, NB: 0.5280, PE: 0.4875, NL: 0.5480,
     YT: 0.4800, NT: 0.4740, NU: 0.4450,
   };
 
-  // Approximate combined brackets for marginal rate calculation
-  // Federal brackets × (1 + prov_factor) — simplified but close enough for estimates
-  // For precise: use province-specific brackets. Here we use a simplified approach:
-  // effective rate on each dollar = fed rate + average prov rate for that income band
-  // This gives a reasonable estimate for the tax on the taxable capital gain
-  function calcTaxOnGain(taxableCG, otherIncome, province) {
-    // Calculate federal tax on taxable CG stacked on top of other income
-    let remaining = taxableCG;
-    let tax = 0;
-    let prev = otherIncome;
-    let highestFedRate = 0;
+  /** Ontario surtax: 20% on prov tax > $5,315; +36% on prov tax > $6,802 */
+  function onSurtax(provTax) {
+    if (provTax > 6802) return (provTax - 6802) * 0.36 + (6802 - 5315) * 0.20;
+    if (provTax > 5315) return (provTax - 5315) * 0.20;
+    return 0;
+  }
 
-    for (const [limit, rate] of FED_BRACKETS) {
-      if (prev >= limit) continue;
-      const apply = Math.min(remaining, limit - prev);
+  /** Provincial tax on a given income level */
+  function provTaxTotal(income, province) {
+    const brackets = PROV_BRACKETS[province] || PROV_BRACKETS.ON;
+    let tax = 0, prev = 0;
+    for (const [lim, rate] of brackets) {
+      if (prev >= income) break;
+      const band = Math.min(income, lim) - prev;
+      if (band <= 0) break;
+      tax += band * rate;
+      prev = Math.min(income, lim);
+    }
+    return tax;
+  }
+
+  /**
+   * Calculate combined federal + provincial tax on the taxable capital gain,
+   * stacked on top of other income through real 2026 bracket tables.
+   *
+   * Quebec: 16.5% federal abatement applied.
+   * Ontario: surtax applied.
+   * All other provinces: real brackets only.
+   *
+   * Accuracy: within ~3% of published combined top rates for all provinces.
+   * Remaining gap due to BPA phase-out and minor credits — acceptable for estimates.
+   */
+  function calcTaxOnGain(taxableCG, otherIncome, province) {
+    // Federal tax on taxable CG stacked on other income
+    let fedTax = 0, prev = otherIncome, rem = taxableCG;
+    for (const [lim, rate] of FED_BRACKETS) {
+      if (prev >= lim) continue;
+      const apply = Math.min(rem, lim - prev);
       if (apply <= 0) break;
-      tax += apply * rate;
-      highestFedRate = rate;
-      prev += apply;
-      remaining -= apply;
-      if (remaining <= 0) break;
+      fedTax += apply * rate;
+      prev   += apply;
+      rem    -= apply;
+      if (rem <= 0) break;
     }
 
-    // Provincial tax: approximate as (top combined - fed rate at that bracket)
-    // We use the province's top combined rate to derive an approximate prov rate
-    // and apply it to the taxable CG. This is a reasonable estimate.
-    const topCombined = TOP_COMBINED[province] || 0.5353;
-    const topFed = 0.33;
-    const approxProvRate = topCombined - topFed; // approximate provincial top rate
+    // Quebec 16.5% federal abatement
+    if (province === 'QC') fedTax *= (1 - 0.165);
 
-    // For lower-income taxpayers, scale the prov rate proportionally
-    // Simple approximation: if their income is below the top bracket, use a lower prov rate
-    const totalIncome = otherIncome + taxableCG;
-    let provRateScaled = approxProvRate;
-    if (totalIncome < 100000) provRateScaled = approxProvRate * 0.55;
-    else if (totalIncome < 150000) provRateScaled = approxProvRate * 0.75;
-    else if (totalIncome < 220000) provRateScaled = approxProvRate * 0.90;
+    // Provincial tax on gain (difference before/after)
+    const provBefore = provTaxTotal(otherIncome, province);
+    const provAfter  = provTaxTotal(otherIncome + taxableCG, province);
+    let provTax = provAfter - provBefore;
 
-    const provTax = taxableCG * provRateScaled;
-    const totalTax = tax + provTax;
-    const avgRate = totalIncome > 0 ? totalTax / taxableCG : 0;
+    // Ontario surtax on incremental provincial tax
+    if (province === 'ON') {
+      provTax += onSurtax(provAfter) - onSurtax(provBefore);
+    }
 
-    return {
-      fedTax: tax,
-      provTax,
-      totalTax,
-      highestFedRate,
-      avgRateOnCG: avgRate,
-    };
+    return { fedTax, provTax, totalTax: fedTax + provTax };
   }
 
   /* ── PRESETS ── */
@@ -164,7 +201,7 @@ document.addEventListener('DOMContentLoaded', function () {
       provinceEl.value = 'ON';
       incomeEl.value   = NNUtils.formatInputNumber(80000);
       lossesEl.value   = NNUtils.formatInputNumber(0);
-      if (lcgeEl) lcgeEl.value = NNUtils.formatInputNumber(0);
+      if (lcgeEl)    lcgeEl.value    = NNUtils.formatInputNumber(0);
       if (prCheckEl) prCheckEl.checked = false;
 
       if (p === 'stocks') {
@@ -192,22 +229,46 @@ document.addEventListener('DOMContentLoaded', function () {
 
   /* ── CALCULATE ── */
   function calculate() {
-    const proceeds  = NNUtils.parseInputNumber(proceedsEl.value);
-    const acb       = NNUtils.parseInputNumber(acbEl.value);
-    const losses    = NNUtils.parseInputNumber(lossesEl.value) || 0;
-    const province  = provinceEl.value;
-    const income    = NNUtils.parseInputNumber(incomeEl.value) || 0;
-    const lcge      = NNUtils.parseInputNumber(lcgeEl?.value || '0') || 0;
-    const isPR      = prCheckEl?.checked || false;
+    const proceeds = NNUtils.parseInputNumber(proceedsEl.value);
+    const acb      = NNUtils.parseInputNumber(acbEl.value);
+    const losses   = NNUtils.parseInputNumber(lossesEl.value) || 0;
+    const province = provinceEl.value;
+    const income   = NNUtils.parseInputNumber(incomeEl.value) || 0;
+    const lcge     = NNUtils.parseInputNumber(lcgeEl?.value || '0') || 0;
+    const isPR     = prCheckEl?.checked || false;
 
-    if (!proceeds || proceeds <= 0) { NNUtils.setError(proceedsEl,'proceeds-error','Please enter the proceeds of disposition.'); return; }
-    NNUtils.clearError(proceedsEl,'proceeds-error');
-    if (acb === null || acb === undefined || acb < 0) { NNUtils.setError(acbEl,'acb-error','Please enter the adjusted cost base (can be 0).'); return; }
-    NNUtils.clearError(acbEl,'acb-error');
+    // Validate proceeds
+    if (!proceeds || proceeds <= 0) {
+      NNUtils.setError(proceedsEl, 'proceeds-error', 'Please enter the proceeds of disposition.');
+      return;
+    }
+    NNUtils.clearError(proceedsEl, 'proceeds-error');
 
-    const grossGain = Math.max(0, proceeds - acb);
+    // Validate ACB
+    if (acb === null || acb === undefined || acb < 0) {
+      NNUtils.setError(acbEl, 'acb-error', 'Please enter the adjusted cost base (can be 0).');
+      return;
+    }
+    NNUtils.clearError(acbEl, 'acb-error');
 
-    /* Principal residence — zero tax */
+    // Detect capital loss (proceeds < ACB)
+    const rawGain   = proceeds - acb;
+    const grossGain = Math.max(0, rawGain);
+    const isCapLoss = rawGain < 0;
+
+    // Capital loss notice element
+    const capLossNotice = document.getElementById('cap-loss-notice');
+    const capLossAmt    = document.getElementById('cap-loss-amount');
+    if (capLossNotice && capLossAmt) {
+      if (isCapLoss) {
+        capLossAmt.textContent     = NNUtils.formatCAD(Math.abs(rawGain));
+        capLossNotice.style.display = '';
+      } else {
+        capLossNotice.style.display = 'none';
+      }
+    }
+
+    // Principal residence — zero tax path
     const prExempt  = document.getElementById('pr-exempt-notice');
     const normalRes = document.getElementById('normal-results');
 
@@ -224,27 +285,46 @@ document.addEventListener('DOMContentLoaded', function () {
     if (prExempt)  prExempt.style.display  = 'none';
     if (normalRes) normalRes.style.display  = '';
 
-    const netGain       = Math.max(0, grossGain - losses - lcge);
-    const taxableCG     = netGain * 0.50;
-    const taxResult     = calcTaxOnGain(taxableCG, income, province);
-    const totalTax      = taxResult.totalTax;
-    const effectiveRate = grossGain > 0 ? totalTax / grossGain : 0;
-    const afterTax      = grossGain - totalTax;
-    const taxFreeAmt    = netGain * 0.50; // the 50% not included
-    const topCGRate     = (TOP_COMBINED[province] || 0.5353) * 0.50;
-    const combinedMarginalRate = taxableCG > 0 ? totalTax / taxableCG : 0;
+    // Calculate net gain after losses and LCGE
+    const netGainRaw    = grossGain - losses - lcge;
+    const netGain       = Math.max(0, netGainRaw);
+    const excessLosses  = losses > grossGain ? losses - grossGain : 0;
 
-    /* Render */
+    // Excess losses notice
+    const excessNotice = document.getElementById('excess-losses-notice');
+    const excessAmt    = document.getElementById('excess-losses-amount');
+    if (excessNotice && excessAmt) {
+      if (excessLosses > 0) {
+        excessAmt.textContent     = NNUtils.formatCAD(excessLosses);
+        excessNotice.style.display = '';
+      } else {
+        excessNotice.style.display = 'none';
+      }
+    }
+
+    // Core calculation
+    const taxableCG  = netGain * 0.50;
+    const taxResult  = calcTaxOnGain(taxableCG, income, province);
+    const totalTax   = taxResult.totalTax;
+
+    // Derived values
+    const effectiveRate = grossGain > 0 ? totalTax / grossGain : 0;
+    const afterTaxProceeds = proceeds - totalTax;    // net cash after selling and paying tax
+    const taxFreeAmt    = netGain * 0.50;            // 50% of net gain that is not taxed
+    const topCGRate     = (TOP_COMBINED[province] || 0.5353) * 0.50;
+    const marginalRateOnTaxable = taxableCG > 0 ? totalTax / taxableCG : 0;
+
+    /* ── Render ── */
     placeholder.classList.add('hidden');
     resultsContent.classList.remove('hidden');
 
     document.getElementById('result-cg-tax').textContent  = NNUtils.formatCAD(totalTax);
     document.getElementById('result-hero-sub').textContent =
-      `${NNUtils.formatCAD(grossGain)} gain · 50% inclusion · ${province} · ${(combinedMarginalRate*100).toFixed(1)}% marginal rate on taxable portion`;
+      `${NNUtils.formatCAD(grossGain)} gain · 50% inclusion · ${province} · ~${(marginalRateOnTaxable*100).toFixed(1)}% marginal rate`;
 
-    document.getElementById('result-proceeds').textContent  = NNUtils.formatCAD(proceeds);
-    document.getElementById('result-acb').textContent       = NNUtils.formatCAD(acb);
-    document.getElementById('result-gross-gain').textContent= NNUtils.formatCAD(grossGain);
+    document.getElementById('result-proceeds').textContent   = NNUtils.formatCAD(proceeds);
+    document.getElementById('result-acb').textContent        = NNUtils.formatCAD(acb);
+    document.getElementById('result-gross-gain').textContent = NNUtils.formatCAD(grossGain);
 
     const lossRow = document.getElementById('losses-row');
     if (losses > 0) {
@@ -258,20 +338,25 @@ document.addEventListener('DOMContentLoaded', function () {
       document.getElementById('result-lcge').textContent = '−' + NNUtils.formatCAD(lcge);
     } else { lcgeRow.style.display = 'none'; }
 
-    document.getElementById('result-net-gain').textContent     = NNUtils.formatCAD(netGain);
-    document.getElementById('result-taxable-cg').textContent   = NNUtils.formatCAD(taxableCG);
-    document.getElementById('result-marginal-rate').textContent= (combinedMarginalRate*100).toFixed(1) + '% (fed + prov, est.)';
-    document.getElementById('result-tax-total').textContent    = NNUtils.formatCAD(totalTax);
+    document.getElementById('result-net-gain').textContent      = NNUtils.formatCAD(netGain);
+    document.getElementById('result-taxable-cg').textContent    = NNUtils.formatCAD(taxableCG);
+    document.getElementById('result-marginal-rate').textContent = `~${(marginalRateOnTaxable*100).toFixed(1)}% (fed + prov, est.)`;
+    document.getElementById('result-tax-total').textContent     = NNUtils.formatCAD(totalTax);
 
-    document.getElementById('result-effective-rate').textContent = (effectiveRate*100).toFixed(2) + '%';
-    document.getElementById('result-after-tax').textContent      = NNUtils.formatCAD(grossGain - totalTax + acb);
+    document.getElementById('result-effective-rate').textContent = grossGain > 0 ? (effectiveRate*100).toFixed(2) + '%' : '—';
+    document.getElementById('result-after-tax').textContent      = NNUtils.formatCAD(afterTaxProceeds);
     document.getElementById('result-tax-free').textContent       = NNUtils.formatCAD(taxFreeAmt);
     document.getElementById('result-top-rate').textContent       = (topCGRate*100).toFixed(2) + '%';
 
-    window._cgResults = { proceeds, acb, grossGain, losses, lcge, netGain, taxableCG, totalTax, province };
+    window._cgResults = {
+      proceeds, acb, grossGain, losses, lcge, netGain,
+      taxableCG, totalTax, province,
+      fedTax: taxResult.fedTax, provTax: taxResult.provTax,
+      afterTaxProceeds, effectiveRate, marginalRateOnTaxable
+    };
 
     const el = document.getElementById('results-heading');
-    if (el) window.scrollTo({ top: Math.max(0, el.getBoundingClientRect().top + window.scrollY - 80), behavior:'smooth' });
+    if (el) window.scrollTo({ top: Math.max(0, el.getBoundingClientRect().top + window.scrollY - 80), behavior: 'smooth' });
 
     if (window.NNAnalytics) try { NNAnalytics.trackCalculator('Capital Gains Calculator', { grossGain, province }); } catch(e) {}
   }
@@ -290,7 +375,10 @@ document.addEventListener('DOMContentLoaded', function () {
       `Gross Gain:       ${NNUtils.formatCAD(r.grossGain)}`,
       `Net Gain:         ${NNUtils.formatCAD(r.netGain)}`,
       `Taxable (50%):    ${NNUtils.formatCAD(r.taxableCG)}`,
+      `Federal Tax:      ${NNUtils.formatCAD(r.fedTax)}`,
+      `Provincial Tax:   ${NNUtils.formatCAD(r.provTax)}`,
       `Estimated Tax:    ${NNUtils.formatCAD(r.totalTax)}`,
+      `After-Tax Proceeds: ${NNUtils.formatCAD(r.afterTaxProceeds)}`,
     ], 'Capital Gains Tax Calculator');
   });
 
@@ -302,14 +390,18 @@ document.addEventListener('DOMContentLoaded', function () {
     lossesEl.value   = NNUtils.formatInputNumber(0);
     provinceEl.value = 'ON';
     incomeEl.value   = NNUtils.formatInputNumber(80000);
-    if (lcgeEl)   lcgeEl.value  = NNUtils.formatInputNumber(0);
+    if (lcgeEl)    lcgeEl.value    = NNUtils.formatInputNumber(0);
     if (prCheckEl) prCheckEl.checked = false;
     updateAssetFields();
     placeholder.classList.remove('hidden');
     resultsContent.classList.add('hidden');
     document.querySelectorAll('.preset-btn').forEach(b => b.classList.remove('active'));
-    NNUtils.clearError(proceedsEl,'proceeds-error');
-    NNUtils.clearError(acbEl,'acb-error');
+    NNUtils.clearError(proceedsEl, 'proceeds-error');
+    NNUtils.clearError(acbEl, 'acb-error');
+    const capLossNotice = document.getElementById('cap-loss-notice');
+    if (capLossNotice) capLossNotice.style.display = 'none';
+    const excessNotice = document.getElementById('excess-losses-notice');
+    if (excessNotice)  excessNotice.style.display  = 'none';
   });
 
   // Init

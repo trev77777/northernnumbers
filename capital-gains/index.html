@@ -217,6 +217,16 @@
 
           <div id="results-content" class="hidden">
 
+            <!-- Capital loss notice (proceeds < ACB) -->
+            <div id="cap-loss-notice" style="display:none;margin-bottom:var(--space-4);padding:var(--space-4) var(--space-5);background:#FEF9C3;border:1px solid #FDE047;border-radius:var(--radius-md);font-size:var(--text-sm);color:#713F12;line-height:1.6">
+              📉 <strong>Capital Loss Realized:</strong> Your proceeds are less than your ACB. You have realized a capital loss of <strong id="cap-loss-amount">—</strong>. This loss can offset capital gains in the current year, be carried back up to 3 years, or carried forward indefinitely. Capital losses cannot be applied against other income (employment, interest, etc.).
+            </div>
+
+            <!-- Excess losses notice -->
+            <div id="excess-losses-notice" style="display:none;margin-bottom:var(--space-4);padding:var(--space-4) var(--space-5);background:#EFF6FF;border:1px solid #BFDBFE;border-radius:var(--radius-md);font-size:var(--text-sm);color:#1E40AF;line-height:1.6">
+              ℹ️ <strong>Excess Capital Losses:</strong> Your capital losses exceed this gain. <strong id="excess-losses-amount">—</strong> in excess losses remains available to carry forward against future capital gains or carry back up to 3 prior years.
+            </div>
+
             <!-- Principal residence exempt -->
             <div id="pr-exempt-notice" style="display:none">
               <div class="result-hero">
@@ -272,7 +282,7 @@
                   <span class="result-row-value" id="result-taxable-cg">—</span>
                 </div>
                 <div class="result-row" role="listitem">
-                  <span class="result-row-label">Marginal Rate on Gain</span>
+                  <span class="result-row-label">Marginal Rate on Taxable Portion</span>
                   <span class="result-row-value" id="result-marginal-rate">—</span>
                 </div>
                 <div class="result-row result-row--total" role="listitem">
@@ -291,7 +301,7 @@
                 <div class="milestone-card">
                   <p class="milestone-label">After-Tax Proceeds</p>
                   <p class="milestone-value" id="result-after-tax">—</p>
-                  <p class="milestone-sub">Gain minus estimated tax</p>
+                  <p class="milestone-sub">Sale proceeds minus estimated tax</p>
                 </div>
                 <div class="milestone-card">
                   <p class="milestone-label">Tax-Free Amount</p>
@@ -410,7 +420,7 @@
 
         </div>
         <div style="margin-top:var(--space-8);padding:var(--space-4) var(--space-5);background:var(--color-bg);border:1px solid var(--color-border);border-radius:var(--radius-md);font-size:var(--text-sm);color:var(--color-text-muted);line-height:1.7">
-          📋 Capital gains inclusion rate 50% confirmed for 2026 — the proposed 66.67% rate was cancelled March 21, 2025 (Source: Department of Finance Canada). LCGE $1,275,000 for 2026 (indexed). Federal bottom rate 14% for 2026 (Bill C-4). Provincial top marginal rates sourced from PwC Tax Summaries and TaxTips.ca. This calculator provides estimates only — actual tax depends on your complete T1 return. See our <a href="/disclaimer.html" style="color:var(--color-primary)">full disclaimer</a>.
+          📋 Capital gains inclusion rate 50% confirmed for 2026 — the proposed 66.67% rate was cancelled March 21, 2025 (Source: Department of Finance Canada). LCGE $1,275,000 for 2026 (indexed). Federal bottom rate 14% for 2026 (Bill C-4). Provincial tax calculated using real 2026 bracket tables for all 13 provinces. Ontario surtax and Quebec federal abatement (16.5%) applied. Results are estimates — actual tax depends on your complete T1 return including all credits and deductions. See our <a href="/disclaimer.html" style="color:var(--color-primary)">full disclaimer</a>.
         </div>
       </section>
 
