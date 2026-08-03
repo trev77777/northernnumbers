@@ -195,6 +195,15 @@ window.NNRegistry = {
     },
     {
     {
+      id: 'home-equity', name: 'Home Equity Calculator', category: 'mortgage',
+      url: '/home-equity/', icon: '🏠',
+      description: 'Find your home equity, LTV ratio, and maximum HELOC borrowing limit under OSFI B-20 rules.',
+      keywords: ['home equity calculator canada','HELOC calculator canada 2026','how much can I borrow HELOC canada','LTV calculator canada'],
+      status: 'active', priority: 28,
+      showInFooter: false, showOnHomepage: true,
+      related: ['mortgage','mortgage-affordability','rent-vs-buy','land-transfer-tax']
+    },
+    {
       id: 'dividend-tax', name: 'Dividend Tax Credit Calculator', category: 'taxes',
       url: '/dividend-tax/', icon: '💰',
       description: 'Calculate tax on eligible and non-eligible Canadian dividends. All provinces, 2026 rates. See gross-up, DTC, and effective rate.',

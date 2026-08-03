@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html lang="en-CA">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Home Equity Calculator Canada 2026 — HELOC Limit & LTV — Northern Numbers</title>
+  <meta name="description" content="Free Canadian home equity calculator. Find your home equity, loan-to-value ratio, and maximum HELOC borrowing limit under OSFI's 65% and 80% LTV rules. Updated for 2026." />
+  <meta name="keywords" content="home equity calculator canada, HELOC calculator canada 2026, how much can I borrow HELOC canada, home equity line of credit limit, LTV calculator canada" />
+  <link rel="canonical" href="https://www.northernnumbers.ca/home-equity/" />
+  <meta property="og:title" content="Home Equity Calculator Canada 2026 — HELOC Limit & LTV" />
+  <meta property="og:description" content="Find your home equity and maximum HELOC borrowing limit under OSFI's 65% and 80% LTV rules." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://www.northernnumbers.ca/home-equity/" />
+  <meta property="og:locale" content="en_CA" />
+  <meta property="og:site_name" content="Northern Numbers" />
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Home Equity Calculator Canada 2026" />
+  <meta name="twitter:description" content="Find your home equity and HELOC borrowing limit under OSFI rules." />
+  <meta name="robots" content="index, follow" />
+  <meta name="author" content="Northern Numbers" />
+  <link rel="icon" type="image/png" sizes="32x32" href="../favicon-32x32.png" />
+  <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png" />
+  <link rel="icon" type="image/x-icon" href="../favicon.ico" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Poppins:wght@600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="../styles.css" />
+</head>
+<body>
+
+  <header class="site-header" id="nn-header" role="banner"></header>
+
+  <main id="main-content" class="calc-page">
+    <div class="container">
+
+      <nav class="calc-breadcrumb" aria-label="Breadcrumb">
+        <a href="/">Home</a>
+        <span class="calc-breadcrumb-sep" aria-hidden="true">›</span>
+        <a href="/finance/">Calculators</a>
+        <span class="calc-breadcrumb-sep" aria-hidden="true">›</span>
+        <span aria-current="page">Home Equity Calculator</span>
+      </nav>
+
+      <div class="calc-page-header">
+        <h1 class="calc-page-title">Home Equity Calculator Canada 2026</h1>
+        <p class="calc-page-desc">Find out how much equity you have in your home, your current loan-to-value ratio, and the maximum you can borrow through a HELOC under OSFI's 65% and 80% LTV rules.</p>
+      </div>
+
+      <div class="calc-layout">
+
+        <!-- Inputs -->
+        <section class="calc-panel" aria-labelledby="inputs-heading">
+          <h2 id="inputs-heading" class="calc-panel-title">Your Home Details</h2>
+
+          <!-- Presets -->
+          <div style="margin-bottom:var(--space-4)">
+            <p style="font-size:var(--text-sm);font-weight:600;color:var(--color-text-muted);margin-bottom:var(--space-2)">Quick examples:</p>
+            <div class="preset-group" role="group">
+              <button type="button" class="preset-btn" data-preset="starter">🏠 Starter ($650K)</button>
+              <button type="button" class="preset-btn" data-preset="average">🏡 Average ($900K)</button>
+              <button type="button" class="preset-btn" data-preset="paid">✅ Nearly Paid Off</button>
+              <button type="button" class="preset-btn" data-preset="free">🏆 Mortgage-Free</button>
+            </div>
+          </div>
+
+          <form id="equity-form" novalidate>
+
+            <div class="form-group">
+              <label class="form-label" for="home-value">Estimated Home Value</label>
+              <div class="input-wrapper">
+                <span class="input-prefix" aria-hidden="true">$</span>
+                <input type="text" id="home-value" class="form-input has-prefix"
+                  placeholder="800,000" inputmode="numeric" autocomplete="off"
+                  aria-describedby="value-hint value-error" />
+              </div>
+              <p class="field-help" id="value-hint">Use a recent appraisal, a real estate agent's estimate, or comparable sales in your area. Lenders will use an independent appraisal before approving a HELOC.</p>
+              <p id="value-error" class="form-error-msg" role="alert"></p>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label" for="mortgage-balance">Outstanding Mortgage Balance</label>
+              <div class="input-wrapper">
+                <span class="input-prefix" aria-hidden="true">$</span>
+                <input type="text" id="mortgage-balance" class="form-input has-prefix"
+                  placeholder="400,000" inputmode="numeric" autocomplete="off" value="0"
+                  aria-describedby="mortgage-hint mortgage-error" />
+              </div>
+              <p class="field-help" id="mortgage-hint">The remaining principal on your mortgage. Find this on your latest mortgage statement. Enter 0 if you own your home outright.</p>
+              <p id="mortgage-error" class="form-error-msg" role="alert"></p>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label" for="existing-heloc">Existing HELOC Balance <span class="form-hint">(optional)</span></label>
+              <div class="input-wrapper">
+                <span class="input-prefix" aria-hidden="true">$</span>
+                <input type="text" id="existing-heloc" class="form-input has-prefix"
+                  placeholder="0" inputmode="numeric" autocomplete="off" value="0"
+                  aria-describedby="heloc-hint" />
+              </div>
+              <p class="field-help" id="heloc-hint">Any amount already drawn on an existing HELOC. Reduces your available borrowing room. Enter 0 if you have no HELOC or haven't drawn from it.</p>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label" for="heloc-rate">HELOC Interest Rate</label>
+              <div class="input-wrapper">
+                <input type="number" id="heloc-rate" class="form-input has-suffix"
+                  placeholder="5.45" min="0" max="30" step="0.01" value="5.45"
+                  aria-describedby="rate-hint" />
+                <span class="input-suffix" aria-hidden="true">%</span>
+              </div>
+              <p class="field-help" id="rate-hint">Current Canadian HELOC rates are typically prime + 0.5% to prime + 1.0%. With prime at 4.95% in 2026, that's roughly 5.45%–5.95%. Adjust to your lender's quoted rate.</p>
+            </div>
+
+            <div class="btn-row">
+              <button type="submit" class="btn btn-primary btn-calculate" style="flex:1">
+                Calculate Equity
+              </button>
+              <button type="button" id="reset-btn" class="btn btn-secondary">Reset</button>
+            </div>
+
+          </form>
+        </section>
+
+        <!-- Results -->
+        <section class="calc-panel" aria-labelledby="results-heading" aria-live="polite">
+          <h2 id="results-heading" class="calc-panel-title">Your Results</h2>
+
+          <div id="results-placeholder" class="result-placeholder">
+            <div class="result-placeholder-icon" aria-hidden="true">
+              <svg width="56" height="56" viewBox="0 0 56 56" fill="none">
+                <rect x="8" y="30" width="40" height="18" rx="2" stroke="#D1D5DB" stroke-width="2"/>
+                <path d="M14 30V20L28 10L42 20V30" stroke="#D1D5DB" stroke-width="2" stroke-linejoin="round"/>
+              </svg>
+            </div>
+            <p>Enter your home value and mortgage balance to see your equity and HELOC limit.</p>
+          </div>
+
+          <div id="results-content" class="hidden">
+
+            <!-- No HELOC available notice -->
+            <div id="no-heloc-notice" style="display:none;margin-bottom:var(--space-4);padding:var(--space-4) var(--space-5);background:#FEF2F2;border:1px solid #FECACA;border-radius:var(--radius-md);font-size:var(--text-sm);color:#991B1B;line-height:1.6">
+              ⚠️ <strong>No HELOC Available:</strong> Your outstanding mortgage balance exceeds 80% of your home value. Under OSFI rules, you cannot access a HELOC until you pay down your mortgage below the 80% threshold. You need approximately <strong id="paydown-needed">—</strong> in additional principal payments to qualify.
+            </div>
+
+            <!-- Hero -->
+            <div class="result-hero">
+              <p class="result-hero-label">Home Equity</p>
+              <p class="result-hero-value" id="result-equity">—</p>
+              <p class="result-hero-sub" id="result-hero-sub">—</p>
+            </div>
+
+            <div class="result-summary" role="list" style="margin-top:var(--space-5)">
+              <div class="result-row" role="listitem">
+                <span class="result-row-label">Estimated Home Value</span>
+                <span class="result-row-value" id="result-home-value">—</span>
+              </div>
+              <div class="result-row" role="listitem">
+                <span class="result-row-label">Outstanding Mortgage</span>
+                <span class="result-row-value is-error" id="result-mortgage">—</span>
+              </div>
+              <div class="result-row" role="listitem" id="heloc-row" style="display:none">
+                <span class="result-row-label">Existing HELOC Drawn</span>
+                <span class="result-row-value is-error" id="result-heloc-drawn">—</span>
+              </div>
+              <div class="result-row result-row--total" role="listitem">
+                <span class="result-row-label">Net Home Equity</span>
+                <span class="result-row-value" id="result-net-equity">—</span>
+              </div>
+            </div>
+
+            <!-- HELOC section -->
+            <div style="margin-top:var(--space-5);padding:var(--space-5);background:var(--color-bg);border:1px solid var(--color-border);border-radius:var(--radius-md)">
+              <p style="font-family:var(--font-heading);font-weight:700;font-size:var(--text-base);margin-bottom:var(--space-4)">HELOC Borrowing Capacity (OSFI B-20)</p>
+              <div class="result-summary" role="list">
+                <div class="result-row" role="listitem">
+                  <span class="result-row-label">Rule A: 65% of home value</span>
+                  <span class="result-row-value" id="result-rule-a">—</span>
+                </div>
+                <div class="result-row" role="listitem">
+                  <span class="result-row-label">Rule B: 80% of value minus mortgage</span>
+                  <span class="result-row-value" id="result-rule-b">—</span>
+                </div>
+                <div class="result-row result-row--total" role="listitem">
+                  <span class="result-row-label">Maximum HELOC Limit</span>
+                  <span class="result-row-value" id="result-heloc-max">—</span>
+                </div>
+              </div>
+              <div style="margin-top:var(--space-4);padding:var(--space-3) var(--space-4);background:rgba(213,43,30,0.05);border:1px solid rgba(213,43,30,0.2);border-radius:var(--radius-md);font-size:var(--text-sm);line-height:1.6">
+                <span style="font-weight:600">Available to borrow now:</span> <span id="result-available" style="font-size:var(--text-lg);font-weight:700;color:var(--color-primary)">—</span>
+                <span id="result-existing-note" style="color:var(--color-text-muted)"></span>
+              </div>
+            </div>
+
+            <!-- Milestone cards -->
+            <div class="milestone-grid" style="margin-top:var(--space-5)">
+              <div class="milestone-card">
+                <p class="milestone-label">Current LTV</p>
+                <p class="milestone-value" id="result-ltv">—</p>
+                <p class="milestone-sub">Loan-to-value ratio</p>
+              </div>
+              <div class="milestone-card">
+                <p class="milestone-label">LTV After Full Draw</p>
+                <p class="milestone-value" id="result-ltv-after">—</p>
+                <p class="milestone-sub">If HELOC fully used</p>
+              </div>
+              <div class="milestone-card">
+                <p class="milestone-label">Monthly Interest</p>
+                <p class="milestone-value" id="result-monthly-interest">—</p>
+                <p class="milestone-sub">On current HELOC balance</p>
+              </div>
+              <div class="milestone-card">
+                <p class="milestone-label">Equity as % of Value</p>
+                <p class="milestone-value" id="result-equity-pct">—</p>
+                <p class="milestone-sub">Ownership stake in home</p>
+              </div>
+            </div>
+
+            <div style="margin-top:var(--space-4);padding:var(--space-3) var(--space-4);background:#FEF9C3;border:1px solid #FDE047;border-radius:var(--radius-md);font-size:var(--text-sm);color:#713F12;line-height:1.6">
+              ⚠️ This calculator applies OSFI's 65%/80% LTV limits. Actual HELOC approval depends on your lender's appraisal, credit score, income verification, and debt service ratios. The stress test applies — you must qualify at your HELOC rate plus 2% or 5.25%, whichever is higher.
+            </div>
+
+            <div id="nn-disclaimer" style="margin-top:var(--space-4)"></div>
+            <button type="button" id="copy-btn" class="copy-btn" style="margin-top:var(--space-4)">
+              📋 Copy Results to Clipboard
+            </button>
+
+          </div>
+        </section>
+      </div>
+
+      <!-- Educational -->
+      <section style="margin-top:var(--space-16);padding-top:var(--space-10);border-top:1px solid var(--color-border)">
+        <h2 style="font-size:var(--text-2xl);font-weight:700;margin-bottom:var(--space-8)">Home Equity and HELOCs in Canada: 2026 Guide</h2>
+        <div style="display:grid;gap:var(--space-8)">
+
+          <div>
+            <h3 style="font-size:var(--text-xl);font-weight:600;margin-bottom:var(--space-3)">🏠 What Is Home Equity?</h3>
+            <p style="color:var(--color-text-muted);line-height:1.8">Home equity is the portion of your home's value that you own outright — the difference between what your home is worth and what you still owe on your mortgage. If your home is worth $800,000 and you have $350,000 remaining on your mortgage, you have $450,000 in equity. Equity grows in two ways: as you pay down your mortgage principal, and as your home's market value increases over time. You can access this equity without selling by using a home equity line of credit (HELOC) or by refinancing your mortgage.</p>
+          </div>
+
+          <div>
+            <h3 style="font-size:var(--text-xl);font-weight:600;margin-bottom:var(--space-3)">📏 The Two OSFI LTV Rules</h3>
+            <p style="color:var(--color-text-muted);line-height:1.8;margin-bottom:var(--space-3)">Under OSFI Guideline B-20, Canadian lenders must apply two simultaneous borrowing limits on HELOCs. Your actual borrowing limit is the <strong>lesser</strong> of both rules:</p>
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:var(--space-4)">
+              <div style="padding:var(--space-4);background:#EFF6FF;border:1px solid #BFDBFE;border-radius:var(--radius-md)">
+                <p style="font-weight:700;color:#1E40AF;margin-bottom:var(--space-2)">Rule A — 65% Cap</p>
+                <p style="font-size:var(--text-sm);color:var(--color-text-muted);line-height:1.7">The standalone HELOC cannot exceed 65% of your home's appraised value. On an $800,000 home, this means a maximum HELOC of $520,000 — regardless of your mortgage balance.</p>
+              </div>
+              <div style="padding:var(--space-4);background:#F0FDF4;border:1px solid #86EFAC;border-radius:var(--radius-md)">
+                <p style="font-weight:700;color:#166534;margin-bottom:var(--space-2)">Rule B — 80% Combined</p>
+                <p style="font-size:var(--text-sm);color:var(--color-text-muted);line-height:1.7">Your mortgage balance plus the HELOC limit cannot exceed 80% of your home's value. On an $800,000 home with a $400,000 mortgage, this limits the HELOC to $240,000.</p>
+              </div>
+            </div>
+          </div>
+
+          <div>
+            <h3 style="font-size:var(--text-xl);font-weight:600;margin-bottom:var(--space-3)">📊 HELOC vs. Mortgage Refinance</h3>
+            <div style="overflow-x:auto">
+              <table style="width:100%;border-collapse:collapse;font-size:var(--text-sm)">
+                <thead>
+                  <tr style="background:var(--color-bg);border-bottom:2px solid var(--color-border)">
+                    <th style="padding:var(--space-3);text-align:left;font-weight:600"></th>
+                    <th style="padding:var(--space-3);text-align:left;font-weight:600">HELOC</th>
+                    <th style="padding:var(--space-3);text-align:left;font-weight:600">Mortgage Refinance</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr style="border-bottom:1px solid var(--color-border)"><td style="padding:var(--space-2) var(--space-3)">Maximum LTV</td><td style="padding:var(--space-2) var(--space-3)">65% (standalone)</td><td style="padding:var(--space-2) var(--space-3)">80% (one-time)</td></tr>
+                  <tr style="border-bottom:1px solid var(--color-border);background:var(--color-bg)"><td style="padding:var(--space-2) var(--space-3)">Rate type</td><td style="padding:var(--space-2) var(--space-3)">Variable (prime +)</td><td style="padding:var(--space-2) var(--space-3)">Fixed or variable</td></tr>
+                  <tr style="border-bottom:1px solid var(--color-border)"><td style="padding:var(--space-2) var(--space-3)">Repayment</td><td style="padding:var(--space-2) var(--space-3)">Interest-only minimum</td><td style="padding:var(--space-2) var(--space-3)">Principal + interest</td></tr>
+                  <tr style="border-bottom:1px solid var(--color-border);background:var(--color-bg)"><td style="padding:var(--space-2) var(--space-3)">Flexibility</td><td style="padding:var(--space-2) var(--space-3)">Revolving — borrow, repay, re-borrow</td><td style="padding:var(--space-2) var(--space-3)">One-time lump sum</td></tr>
+                  <tr><td style="padding:var(--space-2) var(--space-3)">Best for</td><td style="padding:var(--space-2) var(--space-3)">Ongoing access, flexibility</td><td style="padding:var(--space-2) var(--space-3)">Large one-time needs, rate certainty</td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <div>
+            <h3 style="font-size:var(--text-xl);font-weight:600;margin-bottom:var(--space-3)">❓ Frequently Asked Questions</h3>
+            <div style="display:flex;flex-direction:column;gap:var(--space-5)">
+              <div>
+                <p style="font-weight:600;margin-bottom:var(--space-1)">How much can I borrow with a HELOC in Canada?</p>
+                <p style="color:var(--color-text-muted);font-size:var(--text-sm);line-height:1.7">Under OSFI Guideline B-20, the lesser of: 65% of your home's appraised value, or 80% of your home's value minus your outstanding mortgage balance. For example, on a $700,000 home with a $300,000 mortgage: Rule A gives $455,000, Rule B gives $260,000 — so your HELOC limit is $260,000. Your lender will also assess your income, credit score, and debt service ratios before approving.</p>
+              </div>
+              <div>
+                <p style="font-weight:600;margin-bottom:var(--space-1)">Is HELOC interest tax deductible in Canada?</p>
+                <p style="color:var(--color-text-muted);font-size:var(--text-sm);line-height:1.7">HELOC interest is tax deductible only if the borrowed funds are used to earn income — for example, to invest in stocks, bonds, or a rental property. The CRA's "direct tracing" rule requires a clear link between the HELOC draw and the income-producing investment. Interest on HELOC funds used for personal purposes (renovations to your principal residence, vacations, debt consolidation) is not deductible. Consult a tax professional before claiming HELOC interest as a deduction.</p>
+              </div>
+              <div>
+                <p style="font-weight:600;margin-bottom:var(--space-1)">What is the current HELOC interest rate in Canada?</p>
+                <p style="color:var(--color-text-muted);font-size:var(--text-sm);line-height:1.7">Canadian HELOCs are variable-rate products priced at the lender's prime rate plus a spread. With the Bank of Canada's prime rate at 4.95% in 2026, most major bank HELOCs are priced at 5.45%–5.95% (prime + 0.50% to prime + 1.00%). Your actual rate depends on your credit score, LTV ratio, and lender relationship. Borrowers with strong credit and low LTV can often negotiate below the posted spread.</p>
+              </div>
+              <div>
+                <p style="font-weight:600;margin-bottom:var(--space-1)">What is the stress test for a HELOC in Canada?</p>
+                <p style="color:var(--color-text-muted);font-size:var(--text-sm);line-height:1.7">Yes — the mortgage stress test applies to HELOCs at federally regulated lenders. You must qualify at the higher of your contracted HELOC rate plus 2%, or 5.25%. At a 5.45% HELOC rate, the stress test rate would be 7.45%. Note that for qualification purposes, the HELOC payment is calculated as interest-only on the limit (not just the drawn balance), which affects your TDS ratio calculation.</p>
+              </div>
+            </div>
+          </div>
+
+          <div>
+            <h3 style="font-size:var(--text-xl);font-weight:600;margin-bottom:var(--space-3)">🔗 Related Calculators</h3>
+            <div id="nn-related"></div>
+          </div>
+
+        </div>
+        <div style="margin-top:var(--space-8);padding:var(--space-4) var(--space-5);background:var(--color-bg);border:1px solid var(--color-border);border-radius:var(--radius-md);font-size:var(--text-sm);color:var(--color-text-muted);line-height:1.7">
+          📋 HELOC limits based on OSFI Guideline B-20: 65% standalone LTV cap and 80% combined LTV cap. Prime rate 4.95% as of 2026. Actual HELOC eligibility depends on lender appraisal, credit score, income, and debt service ratios. Results are estimates only — consult your lender and a financial advisor before making borrowing decisions. See our <a href="/disclaimer.html" style="color:var(--color-primary)">full disclaimer</a>.
+        </div>
+      </section>
+
+    </div>
+  </main>
+
+  <footer class="site-footer" id="nn-footer" role="contentinfo"></footer>
+
+  <script src="../script.js" defer></script>
+  <script src="../data/nn-constants.js" defer></script>
+  <script src="../data/nn-calculators.js" defer></script>
+  <script src="../shared/nn-utils.js" defer></script>
+  <script src="../shared/nn-seo.js" defer></script>
+  <script src="../shared/nn-analytics.js" defer></script>
+  <script src="../shared/nn-ads.js" defer></script>
+  <script src="../shared/nn-components.js" defer></script>
+  <script src="home-equity.js" defer></script>
+</body>
+</html>
