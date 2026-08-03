@@ -1440,6 +1440,7 @@ input[type=number] { -moz-appearance: textfield; }
    Use clip on html + overflow-x hidden on body only (safe combination). */
 html {
   overflow-x: clip; /* prevents horizontal scroll without breaking wheel events */
+  scrollbar-gutter: stable; /* reserves scrollbar space so content doesn't shift when scrollbar appears */
 }
 body {
   overflow-x: hidden;
