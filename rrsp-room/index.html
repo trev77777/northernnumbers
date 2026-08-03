@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html lang="en-CA">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>RRSP Contribution Room Calculator Canada 2026 — Northern Numbers</title>
+  <meta name="description" content="Free RRSP contribution room calculator for Canada 2026. Find out exactly how much RRSP room you have based on your earned income, pension adjustment, carry-forward, and contributions made." />
+  <meta name="keywords" content="RRSP contribution room calculator 2026, how much RRSP room do I have, RRSP deduction limit 2026, RRSP contribution limit canada, RRSP room calculator" />
+  <link rel="canonical" href="https://www.northernnumbers.ca/rrsp-room/" />
+  <meta property="og:title" content="RRSP Contribution Room Calculator Canada 2026" />
+  <meta property="og:description" content="Find out exactly how much RRSP contribution room you have for 2026. Includes pension adjustment, carry-forward, and over-contribution check." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://www.northernnumbers.ca/rrsp-room/" />
+  <meta property="og:locale" content="en_CA" />
+  <meta property="og:site_name" content="Northern Numbers" />
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="RRSP Contribution Room Calculator Canada 2026" />
+  <meta name="twitter:description" content="How much RRSP room do you have? Calculate your 2026 RRSP contribution room in seconds." />
+  <meta name="robots" content="index, follow" />
+  <meta name="author" content="Northern Numbers" />
+  <link rel="icon" type="image/png" sizes="32x32" href="../favicon-32x32.png" />
+  <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png" />
+  <link rel="icon" type="image/x-icon" href="../favicon.ico" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Poppins:wght@600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="../styles.css" />
+</head>
+<body>
+
+  <header class="site-header" id="nn-header" role="banner"></header>
+
+  <main id="main-content" class="calc-page">
+    <div class="container">
+
+      <nav class="calc-breadcrumb" aria-label="Breadcrumb">
+        <a href="/">Home</a>
+        <span class="calc-breadcrumb-sep" aria-hidden="true">›</span>
+        <a href="/finance/">Calculators</a>
+        <span class="calc-breadcrumb-sep" aria-hidden="true">›</span>
+        <span aria-current="page">RRSP Contribution Room Calculator</span>
+      </nav>
+
+      <div class="calc-page-header">
+        <h1 class="calc-page-title">RRSP Contribution Room Calculator Canada 2026</h1>
+        <p class="calc-page-desc">Find out exactly how much RRSP contribution room you have for 2026. Enter your 2025 earned income, pension adjustment, unused carry-forward room, and contributions already made this year.</p>
+      </div>
+
+      <div class="calc-layout">
+
+        <!-- Inputs -->
+        <section class="calc-panel" aria-labelledby="inputs-heading">
+          <h2 id="inputs-heading" class="calc-panel-title">Your RRSP Details</h2>
+
+          <div class="quick-start" role="note">
+            <p class="quick-start-title">📋 Where to find these numbers</p>
+            <ol>
+              <li><strong>Earned income:</strong> Your 2025 employment, self-employment, or rental income. Check your 2025 T4 (Box 14) or T1.</li>
+              <li><strong>Pension adjustment:</strong> T4 Box 52. Enter 0 if you have no employer pension plan.</li>
+              <li><strong>Unused carry-forward room:</strong> Your 2025 Notice of Assessment (NOA) from CRA, or check CRA My Account.</li>
+              <li><strong>Contributions made so far:</strong> Any RRSP contributions made in 2026 or in the first 60 days of 2026 (Jan 1–March 2, 2026) claimed for 2025.</li>
+            </ol>
+          </div>
+
+          <!-- Presets -->
+          <div style="margin-bottom:var(--space-4)">
+            <p style="font-size:var(--text-sm);font-weight:600;color:var(--color-text-muted);margin-bottom:var(--space-2)">Quick examples:</p>
+            <div class="preset-group" role="group">
+              <button type="button" class="preset-btn" data-preset="employee">💼 Salaried ($80K)</button>
+              <button type="button" class="preset-btn" data-preset="selfemployed">🏢 Self-Employed ($120K)</button>
+              <button type="button" class="preset-btn" data-preset="pension">🏦 With Pension</button>
+              <button type="button" class="preset-btn" data-preset="maxout">🏆 High Earner</button>
+            </div>
+          </div>
+
+          <form id="rrsp-form" novalidate>
+
+            <div class="form-group">
+              <label class="form-label" for="earned-income">2025 Earned Income <span class="form-hint">(prior year)</span></label>
+              <div class="input-wrapper">
+                <span class="input-prefix" aria-hidden="true">$</span>
+                <input type="text" id="earned-income" class="form-input has-prefix"
+                  placeholder="80,000" inputmode="numeric" autocomplete="off"
+                  aria-describedby="income-hint income-error" />
+              </div>
+              <p class="field-help" id="income-hint">Employment income (T4 Box 14 minus union dues/expenses), net self-employment income, net rental income, CPP/QPP disability benefit. Does NOT include investment income, capital gains, OAS, or regular CPP retirement pension.</p>
+              <p id="income-error" class="form-error-msg" role="alert"></p>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label" for="pension-adjustment">Pension Adjustment (PA) <span class="form-hint">(optional)</span></label>
+              <div class="input-wrapper">
+                <span class="input-prefix" aria-hidden="true">$</span>
+                <input type="text" id="pension-adjustment" class="form-input has-prefix"
+                  placeholder="0" inputmode="numeric" autocomplete="off" value="0"
+                  aria-describedby="pa-hint" />
+              </div>
+              <p class="field-help" id="pa-hint">Found on your T4 Box 52. Reduces your RRSP room dollar-for-dollar. Enter 0 if you have no employer pension plan (RPP or DPSP).</p>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label" for="carryforward">Unused RRSP Carry-Forward Room <span class="form-hint">(optional)</span></label>
+              <div class="input-wrapper">
+                <span class="input-prefix" aria-hidden="true">$</span>
+                <input type="text" id="carryforward" class="form-input has-prefix"
+                  placeholder="0" inputmode="numeric" autocomplete="off" value="0"
+                  aria-describedby="carry-hint" />
+              </div>
+              <p class="field-help" id="carry-hint">Unused RRSP room from previous years. Find this on your most recent CRA Notice of Assessment (NOA) under "RRSP Deduction Limit." Carries forward indefinitely.</p>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label" for="contributed">RRSP Contributions Made in 2026 <span class="form-hint">(optional)</span></label>
+              <div class="input-wrapper">
+                <span class="input-prefix" aria-hidden="true">$</span>
+                <input type="text" id="contributed" class="form-input has-prefix"
+                  placeholder="0" inputmode="numeric" autocomplete="off" value="0"
+                  aria-describedby="contributed-hint" />
+              </div>
+              <p class="field-help" id="contributed-hint">Contributions made to your own RRSP, a spousal RRSP, or group RRSP during 2026. Reduces your remaining available room.</p>
+            </div>
+
+            <div class="btn-row">
+              <button type="submit" class="btn btn-primary btn-calculate" style="flex:1">
+                Calculate My Room
+              </button>
+              <button type="button" id="reset-btn" class="btn btn-secondary">Reset</button>
+            </div>
+
+          </form>
+        </section>
+
+        <!-- Results -->
+        <section class="calc-panel" aria-labelledby="results-heading" aria-live="polite">
+          <h2 id="results-heading" class="calc-panel-title">Your 2026 RRSP Room</h2>
+
+          <div id="results-placeholder" class="result-placeholder">
+            <div class="result-placeholder-icon" aria-hidden="true">
+              <svg width="56" height="56" viewBox="0 0 56 56" fill="none">
+                <rect x="10" y="10" width="36" height="36" rx="4" stroke="#D1D5DB" stroke-width="2"/>
+                <path d="M20 28H36M28 20V36" stroke="#D1D5DB" stroke-width="2" stroke-linecap="round"/>
+              </svg>
+            </div>
+            <p>Enter your income details and click <strong>Calculate My Room</strong> to see your available RRSP contribution room.</p>
+          </div>
+
+          <div id="results-content" class="hidden">
+
+            <!-- Over-contribution warning -->
+            <div id="overcontrib-notice" style="display:none;margin-bottom:var(--space-4);padding:var(--space-4) var(--space-5);background:#FEF2F2;border:1px solid #FECACA;border-radius:var(--radius-md);font-size:var(--text-sm);color:#991B1B;line-height:1.6">
+              ⚠️ <strong>Possible Over-Contribution:</strong> Your contributions appear to exceed your deduction limit. The first <strong>$2,000</strong> over your limit is penalty-free (lifetime buffer). Any amount over $2,000 above your limit is subject to a <strong>1% per month</strong> CRA penalty. Review your NOA and consider withdrawing any excess or filing a T1-OVP.
+            </div>
+
+            <!-- Hero -->
+            <div class="result-hero">
+              <p class="result-hero-label" id="hero-label">Available Room in 2026</p>
+              <p class="result-hero-value" id="result-available-room">—</p>
+              <p class="result-hero-sub" id="result-hero-sub">—</p>
+            </div>
+
+            <div class="result-summary" role="list" style="margin-top:var(--space-5)">
+              <div class="result-row" role="listitem">
+                <span class="result-row-label">2025 Earned Income</span>
+                <span class="result-row-value" id="result-earned">—</span>
+              </div>
+              <div class="result-row" role="listitem">
+                <span class="result-row-label">New Room (18% of earned income)</span>
+                <span class="result-row-value" id="result-new-room">—</span>
+              </div>
+              <div class="result-row" role="listitem" id="pa-row" style="display:none">
+                <span class="result-row-label">Pension Adjustment</span>
+                <span class="result-row-value is-error" id="result-pa">—</span>
+              </div>
+              <div class="result-row" role="listitem">
+                <span class="result-row-label">New Room After PA</span>
+                <span class="result-row-value" id="result-new-after-pa">—</span>
+              </div>
+              <div class="result-row" role="listitem" id="carry-row" style="display:none">
+                <span class="result-row-label">Unused Carry-Forward</span>
+                <span class="result-row-value is-success" id="result-carryforward">—</span>
+              </div>
+              <div class="result-row" role="listitem">
+                <span class="result-row-label">2026 Deduction Limit</span>
+                <span class="result-row-value" id="result-deduction-limit">—</span>
+              </div>
+              <div class="result-row" role="listitem" id="contrib-row" style="display:none">
+                <span class="result-row-label">Contributions Made in 2026</span>
+                <span class="result-row-value is-error" id="result-contributed">—</span>
+              </div>
+              <div class="result-row result-row--total" role="listitem">
+                <span class="result-row-label">Available RRSP Room</span>
+                <span class="result-row-value" id="result-available">—</span>
+              </div>
+            </div>
+
+            <!-- Milestone cards -->
+            <div class="milestone-grid" style="margin-top:var(--space-5)">
+              <div class="milestone-card">
+                <p class="milestone-label">2026 Dollar Limit</p>
+                <p class="milestone-value">$33,810</p>
+                <p class="milestone-sub">Max new room anyone can earn</p>
+              </div>
+              <div class="milestone-card">
+                <p class="milestone-label">Income to Max Room</p>
+                <p class="milestone-value">$187,834</p>
+                <p class="milestone-sub">Earned income needed to hit cap</p>
+              </div>
+              <div class="milestone-card">
+                <p class="milestone-label">% of Limit Used</p>
+                <p class="milestone-value" id="result-pct-used">—</p>
+                <p class="milestone-sub">Your room vs $33,810 max</p>
+              </div>
+              <div class="milestone-card">
+                <p class="milestone-label">2027 Limit (confirmed)</p>
+                <p class="milestone-value">$35,390</p>
+                <p class="milestone-sub">Next year's dollar ceiling</p>
+              </div>
+            </div>
+
+            <!-- Over-contribution detail -->
+            <div id="overcontrib-detail" style="display:none;margin-top:var(--space-5);padding:var(--space-4) var(--space-5);background:var(--color-bg);border:1px solid var(--color-border);border-radius:var(--radius-md)">
+              <p style="font-family:var(--font-heading);font-weight:700;font-size:var(--text-base);margin-bottom:var(--space-3)">Over-Contribution Breakdown</p>
+              <div class="result-summary" role="list">
+                <div class="result-row" role="listitem">
+                  <span class="result-row-label">Total Over-Contribution</span>
+                  <span class="result-row-value is-error" id="result-overamt">—</span>
+                </div>
+                <div class="result-row" role="listitem">
+                  <span class="result-row-label">Penalty-Free Buffer</span>
+                  <span class="result-row-value">$2,000</span>
+                </div>
+                <div class="result-row" role="listitem">
+                  <span class="result-row-label">Excess Subject to Penalty</span>
+                  <span class="result-row-value is-error" id="result-penalty-base">—</span>
+                </div>
+                <div class="result-row result-row--total" role="listitem">
+                  <span class="result-row-label">Monthly Penalty (1%)</span>
+                  <span class="result-row-value" id="result-monthly-penalty">—</span>
+                </div>
+              </div>
+            </div>
+
+            <div id="nn-disclaimer" style="margin-top:var(--space-5)"></div>
+            <button type="button" id="copy-btn" class="copy-btn" style="margin-top:var(--space-4)">
+              📋 Copy Results to Clipboard
+            </button>
+
+          </div>
+        </section>
+      </div>
+
+      <!-- Educational content -->
+      <section style="margin-top:var(--space-16);padding-top:var(--space-10);border-top:1px solid var(--color-border)">
+        <h2 style="font-size:var(--text-2xl);font-weight:700;margin-bottom:var(--space-8)">RRSP Contribution Room in Canada: 2026 Guide</h2>
+        <div style="display:grid;gap:var(--space-8)">
+
+          <div>
+            <h3 style="font-size:var(--text-xl);font-weight:600;margin-bottom:var(--space-3)">📐 How RRSP Contribution Room Is Calculated</h3>
+            <p style="color:var(--color-text-muted);line-height:1.8">Your RRSP contribution room for 2026 is based on your 2025 earned income — CRA always uses the prior year's income to set the current year's new room. The formula is straightforward: the lesser of 18% of your 2025 earned income or $33,810 (the 2026 dollar cap), minus any pension adjustment, plus any unused room carried forward from prior years. If you've already made RRSP contributions in 2026, those reduce the amount you have left to contribute.</p>
+            <p style="color:var(--color-text-muted);line-height:1.8;margin-top:var(--space-3)">The $33,810 cap is only binding for those who earned roughly $187,834 or more in 2025. For anyone below that threshold, the actual room is simply 18% of their earned income. Someone earning $80,000 in 2025 gets $14,400 in new room for 2026 — not $33,810.</p>
+          </div>
+
+          <div>
+            <h3 style="font-size:var(--text-xl);font-weight:600;margin-bottom:var(--space-3)">💼 What Counts as Earned Income for RRSP Purposes?</h3>
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:var(--space-4)">
+              <div style="padding:var(--space-4);background:#F0FDF4;border:1px solid #86EFAC;border-radius:var(--radius-md)">
+                <p style="font-weight:600;color:#166534;margin-bottom:var(--space-2)">✅ Counts as Earned Income</p>
+                <ul style="font-size:var(--text-sm);color:var(--color-text-muted);list-style:disc;padding-left:var(--space-4);line-height:1.9">
+                  <li>Employment income (T4 Box 14)</li>
+                  <li>Net self-employment income</li>
+                  <li>Net rental income</li>
+                  <li>CPP/QPP disability benefit</li>
+                  <li>Research grants (net)</li>
+                  <li>Royalties (authored works)</li>
+                  <li>Spousal support received</li>
+                </ul>
+              </div>
+              <div style="padding:var(--space-4);background:#FEF2F2;border:1px solid #FECACA;border-radius:var(--radius-md)">
+                <p style="font-weight:600;color:#991B1B;margin-bottom:var(--space-2)">❌ Does NOT Count</p>
+                <ul style="font-size:var(--text-sm);color:var(--color-text-muted);list-style:disc;padding-left:var(--space-4);line-height:1.9">
+                  <li>Investment income (dividends, interest)</li>
+                  <li>Capital gains</li>
+                  <li>RRSP/RRIF withdrawals</li>
+                  <li>OAS pension</li>
+                  <li>CPP retirement pension</li>
+                  <li>Employment Insurance (EI)</li>
+                  <li>Most pension income</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+
+          <div>
+            <h3 style="font-size:var(--text-xl);font-weight:600;margin-bottom:var(--space-3)">📅 Historical RRSP Dollar Limits</h3>
+            <div style="overflow-x:auto">
+              <table style="width:100%;border-collapse:collapse;font-size:var(--text-sm)">
+                <thead>
+                  <tr style="background:var(--color-bg);border-bottom:2px solid var(--color-border)">
+                    <th style="padding:var(--space-3);text-align:left;font-weight:600">Year</th>
+                    <th style="padding:var(--space-3);text-align:right;font-weight:600">Dollar Limit</th>
+                    <th style="padding:var(--space-3);text-align:right;font-weight:600">Income to Max</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr style="border-bottom:1px solid var(--color-border);background:rgba(213,43,30,0.04)"><td style="padding:var(--space-2) var(--space-3);font-weight:600">2027 (confirmed)</td><td style="padding:var(--space-2) var(--space-3);text-align:right;font-weight:600">$35,390</td><td style="padding:var(--space-2) var(--space-3);text-align:right">$196,611</td></tr>
+                  <tr style="border-bottom:1px solid var(--color-border);background:rgba(213,43,30,0.06)"><td style="padding:var(--space-2) var(--space-3);font-weight:700">2026 ← Current</td><td style="padding:var(--space-2) var(--space-3);text-align:right;font-weight:700">$33,810</td><td style="padding:var(--space-2) var(--space-3);text-align:right;font-weight:700">$187,834</td></tr>
+                  <tr style="border-bottom:1px solid var(--color-border)"><td style="padding:var(--space-2) var(--space-3)">2025</td><td style="padding:var(--space-2) var(--space-3);text-align:right">$32,490</td><td style="padding:var(--space-2) var(--space-3);text-align:right">$180,500</td></tr>
+                  <tr style="border-bottom:1px solid var(--color-border);background:var(--color-bg)"><td style="padding:var(--space-2) var(--space-3)">2024</td><td style="padding:var(--space-2) var(--space-3);text-align:right">$31,560</td><td style="padding:var(--space-2) var(--space-3);text-align:right">$175,333</td></tr>
+                  <tr style="border-bottom:1px solid var(--color-border)"><td style="padding:var(--space-2) var(--space-3)">2023</td><td style="padding:var(--space-2) var(--space-3);text-align:right">$30,780</td><td style="padding:var(--space-2) var(--space-3);text-align:right">$171,000</td></tr>
+                  <tr style="border-bottom:1px solid var(--color-border);background:var(--color-bg)"><td style="padding:var(--space-2) var(--space-3)">2022</td><td style="padding:var(--space-2) var(--space-3);text-align:right">$29,210</td><td style="padding:var(--space-2) var(--space-3);text-align:right">$162,278</td></tr>
+                  <tr style="border-bottom:1px solid var(--color-border)"><td style="padding:var(--space-2) var(--space-3)">2021</td><td style="padding:var(--space-2) var(--space-3);text-align:right">$27,830</td><td style="padding:var(--space-2) var(--space-3);text-align:right">$154,611</td></tr>
+                  <tr style="background:var(--color-bg)"><td style="padding:var(--space-2) var(--space-3)">2020</td><td style="padding:var(--space-2) var(--space-3);text-align:right">$27,230</td><td style="padding:var(--space-2) var(--space-3);text-align:right">$151,278</td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <div>
+            <h3 style="font-size:var(--text-xl);font-weight:600;margin-bottom:var(--space-3)">❓ Frequently Asked Questions</h3>
+            <div style="display:flex;flex-direction:column;gap:var(--space-5)">
+              <div>
+                <p style="font-weight:600;margin-bottom:var(--space-1)">Where can I find my exact RRSP room?</p>
+                <p style="color:var(--color-text-muted);font-size:var(--text-sm);line-height:1.7">The most accurate source is your CRA Notice of Assessment (NOA) from last year's filing — it shows your RRSP deduction limit for the current year. You can also sign into CRA My Account online or use the MyCRA mobile app to see your current room instantly. The CRA tracks every dollar of RRSP room and it's updated after every tax filing.</p>
+              </div>
+              <div>
+                <p style="font-weight:600;margin-bottom:var(--space-1)">Can I carry forward unused RRSP room?</p>
+                <p style="color:var(--color-text-muted);font-size:var(--text-sm);line-height:1.7">Yes — unused RRSP contribution room carries forward indefinitely. There is no expiry and no limit on how much can accumulate. If you never contributed to an RRSP but had earned income since 1991 (when carry-forward was introduced), you may have tens of thousands of dollars in accumulated room. Canadians who have significant carry-forward room often make a large "catch-up" contribution when they're in a higher tax bracket, maximizing the deduction's value.</p>
+              </div>
+              <div>
+                <p style="font-weight:600;margin-bottom:var(--space-1)">What is the RRSP deadline for the 2025 tax year?</p>
+                <p style="color:var(--color-text-muted);font-size:var(--text-sm);line-height:1.7">The deadline to contribute to your RRSP and have the contribution count toward your 2025 tax year was March 2, 2026 (60 days after December 31, 2025). Contributions made between January 1 and March 2, 2026 can be claimed on either your 2025 or 2026 tax return. Contributions made from March 3, 2026 onward apply to the 2026 tax year.</p>
+              </div>
+              <div>
+                <p style="font-weight:600;margin-bottom:var(--space-1)">What happens if I over-contribute to my RRSP?</p>
+                <p style="color:var(--color-text-muted);font-size:var(--text-sm);line-height:1.7">CRA allows a lifetime over-contribution buffer of $2,000 — the first $2,000 above your deduction limit is not penalized (though it's also not deductible). Any amount over $2,000 above your limit is subject to a 1% per month penalty tax, calculated on the highest excess in each month. If you over-contribute beyond the buffer, you must file a T1-OVP (Individual Tax Return for RRSP Excess Contributions) and pay the penalty. The easiest fix is to withdraw the excess — though the withdrawal is taxable income.</p>
+              </div>
+              <div>
+                <p style="font-weight:600;margin-bottom:var(--space-1)">Does contributing to a spousal RRSP use my contribution room?</p>
+                <p style="color:var(--color-text-muted);font-size:var(--text-sm);line-height:1.7">Yes. Contributions to a spousal RRSP come out of your own RRSP contribution room, not your spouse's. The advantage is income-splitting in retirement — your spouse owns the account and will pay tax on withdrawals at their (ideally lower) rate. The three-year attribution rule applies: if your spouse withdraws from a spousal RRSP within three calendar years of your last spousal contribution, the withdrawal is attributed back to you as income.</p>
+              </div>
+            </div>
+          </div>
+
+          <div>
+            <h3 style="font-size:var(--text-xl);font-weight:600;margin-bottom:var(--space-3)">🔗 Related Calculators</h3>
+            <div id="nn-related"></div>
+          </div>
+
+        </div>
+        <div style="margin-top:var(--space-8);padding:var(--space-4) var(--space-5);background:var(--color-bg);border:1px solid var(--color-border);border-radius:var(--radius-md);font-size:var(--text-sm);color:var(--color-text-muted);line-height:1.7">
+          📋 2026 RRSP dollar limit: $33,810 (Source: CRA, November 2025 announcement). 2027 RRSP dollar limit: $35,390 (confirmed by CRA). Formula: lesser of 18% × 2025 earned income and $33,810, minus pension adjustment, plus carry-forward. Your exact deduction limit is on your CRA Notice of Assessment. See our <a href="/disclaimer.html" style="color:var(--color-primary)">full disclaimer</a>.
+        </div>
+      </section>
+
+    </div>
+  </main>
+
+  <footer class="site-footer" id="nn-footer" role="contentinfo"></footer>
+
+  <script src="../script.js" defer></script>
+  <script src="../data/nn-constants.js" defer></script>
+  <script src="../data/nn-calculators.js" defer></script>
+  <script src="../shared/nn-utils.js" defer></script>
+  <script src="../shared/nn-seo.js" defer></script>
+  <script src="../shared/nn-analytics.js" defer></script>
+  <script src="../shared/nn-ads.js" defer></script>
+  <script src="../shared/nn-components.js" defer></script>
+  <script src="rrsp-room.js" defer></script>
+</body>
+</html>

@@ -195,6 +195,15 @@ window.NNRegistry = {
     },
     {
     {
+      id: 'rrsp-room', name: 'RRSP Contribution Room Calculator', category: 'retirement',
+      url: '/rrsp-room/', icon: '📊',
+      description: 'Find out exactly how much RRSP contribution room you have for 2026. Includes pension adjustment, carry-forward, and over-contribution check.',
+      keywords: ['RRSP contribution room calculator 2026','how much RRSP room do I have','RRSP deduction limit 2026','RRSP contribution limit canada'],
+      status: 'active', priority: 26,
+      showInFooter: false, showOnHomepage: true,
+      related: ['rrsp','tfsa-room','tfsa','income-tax']
+    },
+    {
       id: 'capital-gains', name: 'Capital Gains Tax Calculator', category: 'taxes',
       url: '/capital-gains/', icon: '📈',
       description: 'Calculate Canadian capital gains tax for 2026. Includes 50% inclusion rate, all provinces, principal residence exemption, LCGE, and capital loss offsets.',
