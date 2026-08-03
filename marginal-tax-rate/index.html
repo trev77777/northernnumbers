@@ -124,7 +124,7 @@
           <div id="results-content" class="hidden">
 
             <!-- Two-rate hero -->
-            <div style="display:grid;grid-template-columns:1fr 1fr;gap:var(--space-4);margin-bottom:var(--space-5)">
+            <div class="result-hero-grid">
               <div class="result-hero" style="text-align:center;padding:var(--space-5)">
                 <p class="result-hero-label">Marginal Rate</p>
                 <p class="result-hero-value" id="result-marginal" style="font-size:2.5rem">—</p>
@@ -169,8 +169,8 @@
             <!-- All-province comparison -->
             <div style="margin-top:var(--space-6)">
               <p style="font-family:var(--font-heading);font-weight:700;font-size:var(--text-base);margin-bottom:var(--space-3)">All-Province Comparison at <span id="compare-income-label">—</span></p>
-              <div style="overflow-x:auto">
-                <table style="width:100%;border-collapse:collapse;font-size:var(--text-sm)">
+              <div style="overflow-x:auto;max-width:100%">
+                <table style="width:100%;min-width:320px;border-collapse:collapse;font-size:var(--text-sm)">
                   <thead>
                     <tr style="background:var(--color-bg);border-bottom:2px solid var(--color-border)">
                       <th style="padding:var(--space-2) var(--space-3);text-align:left;font-weight:600">Province</th>

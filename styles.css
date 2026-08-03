@@ -1349,11 +1349,44 @@ input[type=number] { -moz-appearance: textfield; }
 /* calc-panel padding at <767px is --space-4 (1rem), so match that */
 @media (max-width: 767px) {
   .result-row--total {
-    margin-inline: calc(-1 * var(--space-4));
+    margin-inline: 0;
     padding-inline: var(--space-4);
+    width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
   }
   .result-row--total .result-row-value {
     font-size: var(--text-base);
+  }
+
+  .calc-panel {
+    width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
+    overflow-x: hidden;
+  }
+
+  .result-summary,
+  #rate-callout,
+  #bracket-breakdown,
+  #province-comparison-body,
+  .result-hero-grid {
+    width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
+  }
+}
+
+.result-hero-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-4);
+  margin-bottom: var(--space-5);
+}
+
+@media (max-width: 639px) {
+  .result-hero-grid {
+    grid-template-columns: 1fr;
   }
 }
 
