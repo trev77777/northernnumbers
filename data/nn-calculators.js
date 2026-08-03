@@ -195,6 +195,15 @@ window.NNRegistry = {
     },
     {
     {
+      id: 'dividend-tax', name: 'Dividend Tax Credit Calculator', category: 'taxes',
+      url: '/dividend-tax/', icon: '💰',
+      description: 'Calculate tax on eligible and non-eligible Canadian dividends. All provinces, 2026 rates. See gross-up, DTC, and effective rate.',
+      keywords: ['dividend tax credit calculator canada 2026','eligible dividend tax canada','non-eligible dividend tax calculator','canadian dividend gross-up'],
+      status: 'active', priority: 27,
+      showInFooter: false, showOnHomepage: true,
+      related: ['income-tax','capital-gains','tfsa','rrsp']
+    },
+    {
       id: 'rrsp-room', name: 'RRSP Contribution Room Calculator', category: 'retirement',
       url: '/rrsp-room/', icon: '📊',
       description: 'Find out exactly how much RRSP contribution room you have for 2026. Includes pension adjustment, carry-forward, and over-contribution check.',

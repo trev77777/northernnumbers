@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html lang="en-CA">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Dividend Tax Credit Calculator Canada 2026 — Northern Numbers</title>
+  <meta name="description" content="Free Canadian dividend tax credit calculator for 2026. Calculate tax on eligible and non-eligible dividends for all provinces. See your gross-up, dividend tax credit, effective rate, and tax savings vs employment income." />
+  <meta name="keywords" content="dividend tax credit calculator canada 2026, eligible dividend tax canada, non-eligible dividend tax calculator, canadian dividend gross-up calculator, dividend tax rate by province canada" />
+  <link rel="canonical" href="https://www.northernnumbers.ca/dividend-tax/" />
+  <meta property="og:title" content="Dividend Tax Credit Calculator Canada 2026 — Northern Numbers" />
+  <meta property="og:description" content="Calculate tax on eligible and non-eligible Canadian dividends for all provinces. See gross-up, dividend tax credit, and effective rate." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://www.northernnumbers.ca/dividend-tax/" />
+  <meta property="og:locale" content="en_CA" />
+  <meta property="og:site_name" content="Northern Numbers" />
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Dividend Tax Credit Calculator Canada 2026" />
+  <meta name="twitter:description" content="Calculate Canadian dividend tax for eligible and non-eligible dividends. All provinces, 2026 rates." />
+  <meta name="robots" content="index, follow" />
+  <meta name="author" content="Northern Numbers" />
+  <link rel="icon" type="image/png" sizes="32x32" href="../favicon-32x32.png" />
+  <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png" />
+  <link rel="icon" type="image/x-icon" href="../favicon.ico" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Poppins:wght@600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="../styles.css" />
+</head>
+<body>
+
+  <header class="site-header" id="nn-header" role="banner"></header>
+
+  <main id="main-content" class="calc-page">
+    <div class="container">
+
+      <nav class="calc-breadcrumb" aria-label="Breadcrumb">
+        <a href="/">Home</a>
+        <span class="calc-breadcrumb-sep" aria-hidden="true">›</span>
+        <a href="/finance/">Calculators</a>
+        <span class="calc-breadcrumb-sep" aria-hidden="true">›</span>
+        <span aria-current="page">Dividend Tax Credit Calculator</span>
+      </nav>
+
+      <div class="calc-page-header">
+        <h1 class="calc-page-title">Dividend Tax Credit Calculator Canada 2026</h1>
+        <p class="calc-page-desc">Calculate the tax on eligible and non-eligible Canadian dividends using the 2026 gross-up and dividend tax credit (DTC) system. Covers all 13 provinces and territories. See your effective rate and how it compares to employment or interest income.</p>
+      </div>
+
+      <div class="calc-layout">
+
+        <!-- Inputs -->
+        <section class="calc-panel" aria-labelledby="inputs-heading">
+          <h2 id="inputs-heading" class="calc-panel-title">Your Dividend Details</h2>
+
+          <div class="quick-start" role="note">
+            <p class="quick-start-title">📋 Which type of dividend do you have?</p>
+            <ul>
+              <li><strong>Eligible:</strong> Dividends from Canadian public corporations (TSX-listed stocks like TD, RBC, Enbridge, BCE) and large private corporations. Higher gross-up and larger tax credit.</li>
+              <li><strong>Non-eligible:</strong> Dividends from Canadian-controlled private corporations (CCPCs) paying out of small business income. Lower gross-up and smaller tax credit.</li>
+              <li><strong>Not sure?</strong> Check your T5 slip — Box 24 for eligible dividends, Box 10 for non-eligible dividends.</li>
+            </ul>
+          </div>
+
+          <!-- Presets -->
+          <div style="margin-bottom:var(--space-4)">
+            <p style="font-size:var(--text-sm);font-weight:600;color:var(--color-text-muted);margin-bottom:var(--space-2)">Quick examples:</p>
+            <div class="preset-group" role="group">
+              <button type="button" class="preset-btn" data-preset="rbc">🏦 RBC Dividend ($2K)</button>
+              <button type="button" class="preset-btn" data-preset="enbridge">⚡ Enbridge ($5K)</button>
+              <button type="button" class="preset-btn" data-preset="ccpc">🏢 CCPC Dividend ($10K)</button>
+              <button type="button" class="preset-btn" data-preset="retiree">🏖️ Retiree Portfolio ($20K)</button>
+            </div>
+          </div>
+
+          <form id="dividend-form" novalidate>
+
+            <div class="form-group">
+              <label class="form-label" for="dividend-type">Dividend Type</label>
+              <div class="select-wrapper">
+                <select id="dividend-type" class="form-select" aria-describedby="type-hint">
+                  <option value="eligible" selected>Eligible Dividends (public corporations, large CCPCs)</option>
+                  <option value="non-eligible">Non-Eligible Dividends (CCPC small business income)</option>
+                </select>
+              </div>
+              <p class="field-help" id="type-hint">Eligible dividends have a 38% gross-up and 15.0198% federal DTC. Non-eligible have a 15% gross-up and 9.0301% federal DTC.</p>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label" for="dividend-amount">Actual Dividend Received</label>
+              <div class="input-wrapper">
+                <span class="input-prefix" aria-hidden="true">$</span>
+                <input type="text" id="dividend-amount" class="form-input has-prefix"
+                  placeholder="5,000" inputmode="numeric" autocomplete="off"
+                  aria-describedby="div-hint div-error" />
+              </div>
+              <p class="field-help" id="div-hint">The cash amount actually deposited to your account. Found on your T5 slip — Box 24 (eligible) or Box 10 (non-eligible).</p>
+              <p id="div-error" class="form-error-msg" role="alert"></p>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label" for="other-income">Other Annual Income</label>
+              <div class="input-wrapper">
+                <span class="input-prefix" aria-hidden="true">$</span>
+                <input type="text" id="other-income" class="form-input has-prefix"
+                  placeholder="80,000" inputmode="numeric" autocomplete="off" value="80,000"
+                  aria-describedby="income-hint" />
+              </div>
+              <p class="field-help" id="income-hint">Your income from employment, pension, rental, RRIF withdrawals — before this dividend. Used to determine which tax brackets the grossed-up dividend falls into.</p>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label" for="province">Province / Territory</label>
+              <div class="select-wrapper">
+                <select id="province" class="form-select">
+                  <option value="ON" selected>Ontario</option>
+                  <option value="BC">British Columbia</option>
+                  <option value="AB">Alberta</option>
+                  <option value="QC">Quebec</option>
+                  <option value="MB">Manitoba</option>
+                  <option value="SK">Saskatchewan</option>
+                  <option value="NS">Nova Scotia</option>
+                  <option value="NB">New Brunswick</option>
+                  <option value="PE">Prince Edward Island</option>
+                  <option value="NL">Newfoundland &amp; Labrador</option>
+                  <option value="YT">Yukon</option>
+                  <option value="NT">Northwest Territories</option>
+                  <option value="NU">Nunavut</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="btn-row">
+              <button type="submit" class="btn btn-primary btn-calculate" style="flex:1">
+                Calculate Tax
+              </button>
+              <button type="button" id="reset-btn" class="btn btn-secondary">Reset</button>
+            </div>
+
+          </form>
+        </section>
+
+        <!-- Results -->
+        <section class="calc-panel" aria-labelledby="results-heading" aria-live="polite">
+          <h2 id="results-heading" class="calc-panel-title">Your Results</h2>
+
+          <div id="results-placeholder" class="result-placeholder">
+            <div class="result-placeholder-icon" aria-hidden="true">
+              <svg width="56" height="56" viewBox="0 0 56 56" fill="none">
+                <circle cx="28" cy="28" r="18" stroke="#D1D5DB" stroke-width="2"/>
+                <path d="M28 18V28L34 34" stroke="#D1D5DB" stroke-width="2" stroke-linecap="round"/>
+              </svg>
+            </div>
+            <p>Enter your dividend details and click <strong>Calculate Tax</strong>.</p>
+          </div>
+
+          <div id="results-content" class="hidden">
+
+            <!-- Hero -->
+            <div class="result-hero">
+              <p class="result-hero-label">Estimated Tax on Dividend</p>
+              <p class="result-hero-value" id="result-net-tax">—</p>
+              <p class="result-hero-sub" id="result-hero-sub">—</p>
+            </div>
+
+            <!-- Step-by-step breakdown -->
+            <div class="result-summary" role="list" style="margin-top:var(--space-5)">
+              <div class="result-row" role="listitem">
+                <span class="result-row-label">Actual Dividend Received</span>
+                <span class="result-row-value" id="result-actual">—</span>
+              </div>
+              <div class="result-row" role="listitem">
+                <span class="result-row-label" id="grossup-label">Gross-Up (38%)</span>
+                <span class="result-row-value" id="result-grossup">—</span>
+              </div>
+              <div class="result-row" role="listitem">
+                <span class="result-row-label">Taxable Dividend (reported on T1)</span>
+                <span class="result-row-value" id="result-taxable">—</span>
+              </div>
+              <div class="result-row" role="listitem">
+                <span class="result-row-label">Gross Tax on Taxable Amount</span>
+                <span class="result-row-value is-error" id="result-gross-tax">—</span>
+              </div>
+              <div class="result-row" role="listitem">
+                <span class="result-row-label">Federal Dividend Tax Credit</span>
+                <span class="result-row-value is-success" id="result-fed-dtc">—</span>
+              </div>
+              <div class="result-row" role="listitem">
+                <span class="result-row-label">Provincial Dividend Tax Credit</span>
+                <span class="result-row-value is-success" id="result-prov-dtc">—</span>
+              </div>
+              <div class="result-row result-row--total" role="listitem">
+                <span class="result-row-label">Net Tax Owing on Dividend</span>
+                <span class="result-row-value" id="result-total">—</span>
+              </div>
+            </div>
+
+            <!-- Milestone cards -->
+            <div class="milestone-grid" style="margin-top:var(--space-5)">
+              <div class="milestone-card">
+                <p class="milestone-label">Effective Rate on Dividend</p>
+                <p class="milestone-value" id="result-eff-rate">—</p>
+                <p class="milestone-sub">Net tax ÷ actual dividend</p>
+              </div>
+              <div class="milestone-card">
+                <p class="milestone-label">After-Tax Dividend</p>
+                <p class="milestone-value" id="result-after-tax">—</p>
+                <p class="milestone-sub">Cash kept after tax</p>
+              </div>
+              <div class="milestone-card">
+                <p class="milestone-label">vs. Employment Income</p>
+                <p class="milestone-value is-success" id="result-vs-employment">—</p>
+                <p class="milestone-sub">Tax saved vs same $ as salary</p>
+              </div>
+              <div class="milestone-card">
+                <p class="milestone-label">vs. Interest Income</p>
+                <p class="milestone-value is-success" id="result-vs-interest">—</p>
+                <p class="milestone-sub">Tax saved vs same $ as GIC</p>
+              </div>
+            </div>
+
+            <div style="margin-top:var(--space-4);padding:var(--space-3) var(--space-4);background:#EFF6FF;border:1px solid #BFDBFE;border-radius:var(--radius-md);font-size:var(--text-sm);color:#1E40AF;line-height:1.6">
+              ℹ️ The gross-up amount adds to your reported income on your T1 return and can affect income-tested benefits (OAS clawback, GIS, CCB, etc.) even when the net tax is zero or negative. The calculator shows tax only — not benefit impact.
+            </div>
+
+            <div id="nn-disclaimer" style="margin-top:var(--space-4)"></div>
+            <button type="button" id="copy-btn" class="copy-btn" style="margin-top:var(--space-4)">
+              📋 Copy Results to Clipboard
+            </button>
+
+          </div>
+        </section>
+      </div>
+
+      <!-- Educational -->
+      <section style="margin-top:var(--space-16);padding-top:var(--space-10);border-top:1px solid var(--color-border)">
+        <h2 style="font-size:var(--text-2xl);font-weight:700;margin-bottom:var(--space-8)">Canadian Dividend Taxation: 2026 Guide</h2>
+        <div style="display:grid;gap:var(--space-8)">
+
+          <div>
+            <h3 style="font-size:var(--text-xl);font-weight:600;margin-bottom:var(--space-3)">🔄 How the Gross-Up and Tax Credit System Works</h3>
+            <p style="color:var(--color-text-muted);line-height:1.8">Canada taxes corporate income twice — once at the corporate level when the company earns it, and again when it pays dividends to shareholders. The dividend tax credit system is designed to prevent this double taxation by giving shareholders a credit that reflects the tax the corporation already paid. The mechanism works in three steps: first, your actual dividend is grossed up to approximate the corporation's pre-tax income; second, you pay personal income tax on the grossed-up amount; third, the federal and provincial dividend tax credits reduce your tax to account for the corporate tax already paid.</p>
+          </div>
+
+          <div>
+            <h3 style="font-size:var(--text-xl);font-weight:600;margin-bottom:var(--space-3)">📊 2026 Gross-Up and DTC Rates</h3>
+            <div style="overflow-x:auto">
+              <table style="width:100%;border-collapse:collapse;font-size:var(--text-sm)">
+                <thead>
+                  <tr style="background:var(--color-bg);border-bottom:2px solid var(--color-border)">
+                    <th style="padding:var(--space-3);text-align:left;font-weight:600"></th>
+                    <th style="padding:var(--space-3);text-align:right;font-weight:600">Eligible Dividends</th>
+                    <th style="padding:var(--space-3);text-align:right;font-weight:600">Non-Eligible Dividends</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr style="border-bottom:1px solid var(--color-border)"><td style="padding:var(--space-2) var(--space-3)">Gross-up rate</td><td style="padding:var(--space-2) var(--space-3);text-align:right">38%</td><td style="padding:var(--space-2) var(--space-3);text-align:right">15%</td></tr>
+                  <tr style="border-bottom:1px solid var(--color-border);background:var(--color-bg)"><td style="padding:var(--space-2) var(--space-3)">Federal DTC rate (of taxable dividend)</td><td style="padding:var(--space-2) var(--space-3);text-align:right">15.0198%</td><td style="padding:var(--space-2) var(--space-3);text-align:right">9.0301%</td></tr>
+                  <tr style="border-bottom:1px solid var(--color-border)"><td style="padding:var(--space-2) var(--space-3)">$1,000 actual → taxable reported</td><td style="padding:var(--space-2) var(--space-3);text-align:right">$1,380</td><td style="padding:var(--space-2) var(--space-3);text-align:right">$1,150</td></tr>
+                  <tr style="background:var(--color-bg)"><td style="padding:var(--space-2) var(--space-3)">Federal DTC on $1,000 actual</td><td style="padding:var(--space-2) var(--space-3);text-align:right">$207.27</td><td style="padding:var(--space-2) var(--space-3);text-align:right">$103.85</td></tr>
+                </tbody>
+              </table>
+            </div>
+            <p style="font-size:var(--text-xs);color:var(--color-text-muted);margin-top:var(--space-2)">Source: CRA, TaxTips.ca (revised April 2026). Eligible rates unchanged from 2022–2026.</p>
+          </div>
+
+          <div>
+            <h3 style="font-size:var(--text-xl);font-weight:600;margin-bottom:var(--space-3)">🇨🇦 2026 Provincial Dividend Tax Credit Rates</h3>
+            <div style="overflow-x:auto">
+              <table style="width:100%;border-collapse:collapse;font-size:var(--text-sm)">
+                <thead>
+                  <tr style="background:var(--color-bg);border-bottom:2px solid var(--color-border)">
+                    <th style="padding:var(--space-3);text-align:left;font-weight:600">Province</th>
+                    <th style="padding:var(--space-3);text-align:right;font-weight:600">Eligible DTC</th>
+                    <th style="padding:var(--space-3);text-align:right;font-weight:600">Non-Eligible DTC</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr style="border-bottom:1px solid var(--color-border)"><td style="padding:var(--space-2) var(--space-3)">Alberta</td><td style="padding:var(--space-2) var(--space-3);text-align:right">8.12%</td><td style="padding:var(--space-2) var(--space-3);text-align:right">2.18%</td></tr>
+                  <tr style="border-bottom:1px solid var(--color-border);background:var(--color-bg)"><td style="padding:var(--space-2) var(--space-3)">British Columbia</td><td style="padding:var(--space-2) var(--space-3);text-align:right">12.00%</td><td style="padding:var(--space-2) var(--space-3);text-align:right">1.96%</td></tr>
+                  <tr style="border-bottom:1px solid var(--color-border)"><td style="padding:var(--space-2) var(--space-3)">Manitoba</td><td style="padding:var(--space-2) var(--space-3);text-align:right">8.00%</td><td style="padding:var(--space-2) var(--space-3);text-align:right">0.7835%</td></tr>
+                  <tr style="border-bottom:1px solid var(--color-border);background:var(--color-bg)"><td style="padding:var(--space-2) var(--space-3)">New Brunswick</td><td style="padding:var(--space-2) var(--space-3);text-align:right">14.00%</td><td style="padding:var(--space-2) var(--space-3);text-align:right">2.75%</td></tr>
+                  <tr style="border-bottom:1px solid var(--color-border)"><td style="padding:var(--space-2) var(--space-3)">Newfoundland &amp; Labrador</td><td style="padding:var(--space-2) var(--space-3);text-align:right">6.30%</td><td style="padding:var(--space-2) var(--space-3);text-align:right">3.20%</td></tr>
+                  <tr style="border-bottom:1px solid var(--color-border);background:var(--color-bg)"><td style="padding:var(--space-2) var(--space-3)">Nova Scotia</td><td style="padding:var(--space-2) var(--space-3);text-align:right">8.85%</td><td style="padding:var(--space-2) var(--space-3);text-align:right">1.50%</td></tr>
+                  <tr style="border-bottom:1px solid var(--color-border)"><td style="padding:var(--space-2) var(--space-3)">Northwest Territories</td><td style="padding:var(--space-2) var(--space-3);text-align:right">11.50%</td><td style="padding:var(--space-2) var(--space-3);text-align:right">6.00%</td></tr>
+                  <tr style="border-bottom:1px solid var(--color-border);background:var(--color-bg)"><td style="padding:var(--space-2) var(--space-3)">Nunavut</td><td style="padding:var(--space-2) var(--space-3);text-align:right">5.51%</td><td style="padding:var(--space-2) var(--space-3);text-align:right">2.61%</td></tr>
+                  <tr style="border-bottom:1px solid var(--color-border)"><td style="padding:var(--space-2) var(--space-3)">Ontario</td><td style="padding:var(--space-2) var(--space-3);text-align:right">10.00%</td><td style="padding:var(--space-2) var(--space-3);text-align:right">2.9863%</td></tr>
+                  <tr style="border-bottom:1px solid var(--color-border);background:var(--color-bg)"><td style="padding:var(--space-2) var(--space-3)">Prince Edward Island</td><td style="padding:var(--space-2) var(--space-3);text-align:right">10.50%</td><td style="padding:var(--space-2) var(--space-3);text-align:right">1.30%</td></tr>
+                  <tr style="border-bottom:1px solid var(--color-border)"><td style="padding:var(--space-2) var(--space-3)">Quebec</td><td style="padding:var(--space-2) var(--space-3);text-align:right">11.70%</td><td style="padding:var(--space-2) var(--space-3);text-align:right">3.42%</td></tr>
+                  <tr style="border-bottom:1px solid var(--color-border);background:var(--color-bg)"><td style="padding:var(--space-2) var(--space-3)">Saskatchewan</td><td style="padding:var(--space-2) var(--space-3);text-align:right">11.00%</td><td style="padding:var(--space-2) var(--space-3);text-align:right">2.519%</td></tr>
+                  <tr><td style="padding:var(--space-2) var(--space-3)">Yukon</td><td style="padding:var(--space-2) var(--space-3);text-align:right">12.02%</td><td style="padding:var(--space-2) var(--space-3);text-align:right">0.67%</td></tr>
+                </tbody>
+              </table>
+            </div>
+            <p style="font-size:var(--text-xs);color:var(--color-text-muted);margin-top:var(--space-2)">Rates as % of taxable (grossed-up) dividend. Source: TaxTips.ca (revised April 2026). Eligible rates unchanged from 2022–2026.</p>
+          </div>
+
+          <div>
+            <h3 style="font-size:var(--text-xl);font-weight:600;margin-bottom:var(--space-3)">⚠️ The Gross-Up and Income-Tested Benefits</h3>
+            <p style="color:var(--color-text-muted);line-height:1.8">A critical point many Canadians miss: the gross-up adds to your net income on your tax return even when the dividend tax credit reduces your actual tax owing to zero or below. This inflated net income can trigger OAS clawback (starts at $90,997 in 2026), reduce GIS benefits, affect Canada Child Benefit amounts, and impact other income-tested programs. A retiree receiving $50,000 in eligible dividends actually reports $69,000 on their T1 — which could affect benefit calculations even if they pay little or no tax on those dividends.</p>
+          </div>
+
+          <div>
+            <h3 style="font-size:var(--text-xl);font-weight:600;margin-bottom:var(--space-3)">❓ Frequently Asked Questions</h3>
+            <div style="display:flex;flex-direction:column;gap:var(--space-5)">
+              <div>
+                <p style="font-weight:600;margin-bottom:var(--space-1)">What is the difference between eligible and non-eligible dividends in Canada?</p>
+                <p style="color:var(--color-text-muted);font-size:var(--text-sm);line-height:1.7">Eligible dividends come from Canadian public corporations (like TSX-listed stocks) and large private corporations that pay the general corporate tax rate. They have a 38% gross-up and 15.0198% federal dividend tax credit. Non-eligible (small business) dividends come from Canadian-controlled private corporations paying the small business tax rate. They have a 15% gross-up and 9.0301% federal DTC. The distinction appears on your T5 slip: Box 24 for eligible, Box 10 for non-eligible.</p>
+              </div>
+              <div>
+                <p style="font-weight:600;margin-bottom:var(--space-1)">Can the dividend tax credit result in a negative tax rate?</p>
+                <p style="color:var(--color-text-muted);font-size:var(--text-sm);line-height:1.7">Yes — at low income levels, the combined federal and provincial dividend tax credits can exceed the gross tax on the dividend, resulting in an effective negative tax rate. This doesn't mean you get a cash refund from the dividend itself — instead, the excess credit offsets taxes on your other income. Lower-income Canadians with no other income can receive substantial eligible dividends before owing any federal income tax.</p>
+              </div>
+              <div>
+                <p style="font-weight:600;margin-bottom:var(--space-1)">Do dividend tax credits apply to dividends inside a TFSA or RRSP?</p>
+                <p style="color:var(--color-text-muted);font-size:var(--text-sm);line-height:1.7">No. The dividend tax credit only applies to Canadian dividends received in a non-registered (taxable) account. Dividends inside a TFSA are completely tax-free — you don't pay tax and don't receive the DTC. Dividends inside an RRSP grow tax-deferred but are taxed as ordinary income when withdrawn — not as dividends. For this reason, many tax planners recommend holding Canadian dividend stocks in non-registered accounts (where the DTC provides an advantage) rather than in an RRSP.</p>
+              </div>
+              <div>
+                <p style="font-weight:600;margin-bottom:var(--space-1)">Are US or foreign dividends eligible for the Canadian dividend tax credit?</p>
+                <p style="color:var(--color-text-muted);font-size:var(--text-sm);line-height:1.7">No. The Canadian dividend tax credit only applies to dividends from Canadian corporations. Dividends from US stocks (like Apple, Microsoft, or US REITs) are treated as foreign income and taxed at your full marginal rate as ordinary income — no gross-up and no DTC. US dividends are also subject to a 15% US withholding tax in non-registered accounts (which you can claim as a foreign tax credit), but can be received without withholding in an RRSP under the Canada-US tax treaty.</p>
+              </div>
+            </div>
+          </div>
+
+          <div>
+            <h3 style="font-size:var(--text-xl);font-weight:600;margin-bottom:var(--space-3)">🔗 Related Calculators</h3>
+            <div id="nn-related"></div>
+          </div>
+
+        </div>
+        <div style="margin-top:var(--space-8);padding:var(--space-4) var(--space-5);background:var(--color-bg);border:1px solid var(--color-border);border-radius:var(--radius-md);font-size:var(--text-sm);color:var(--color-text-muted);line-height:1.7">
+          📋 Eligible dividend gross-up 38%, federal DTC 15.0198%; non-eligible gross-up 15%, federal DTC 9.0301%. Provincial DTC rates from TaxTips.ca (revised April 2026). Ontario surtax and Quebec federal abatement (16.5%) applied. Results are estimates — actual tax depends on your complete T1 return including all credits and deductions. The gross-up amount increases net income for income-tested benefit calculations. See our <a href="/disclaimer.html" style="color:var(--color-primary)">full disclaimer</a>.
+        </div>
+      </section>
+
+    </div>
+  </main>
+
+  <footer class="site-footer" id="nn-footer" role="contentinfo"></footer>
+
+  <script src="../script.js" defer></script>
+  <script src="../data/nn-constants.js" defer></script>
+  <script src="../data/nn-calculators.js" defer></script>
+  <script src="../shared/nn-utils.js" defer></script>
+  <script src="../shared/nn-seo.js" defer></script>
+  <script src="../shared/nn-analytics.js" defer></script>
+  <script src="../shared/nn-ads.js" defer></script>
+  <script src="../shared/nn-components.js" defer></script>
+  <script src="dividend-tax.js" defer></script>
+</body>
+</html>
