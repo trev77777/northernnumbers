@@ -404,7 +404,7 @@ echo "✅ Finance content written: $(wc -l < /tmp/finance_new_content.html) line
       }
     })();
   </script>
-  <script>
+<script>
     /* ── Search ── */
     (function() {
       var input = document.getElementById('calc-search-finance');
@@ -412,20 +412,31 @@ echo "✅ Finance content written: $(wc -l < /tmp/finance_new_content.html) line
       if (!input) return;
       input.addEventListener('input', function() {
         var q = this.value.trim().toLowerCase();
+        if (q.length === 0) {
+          document.querySelectorAll('.calc-tile').forEach(function(t) { t.classList.remove('search-hidden'); });
+          document.querySelectorAll('.calc-category').forEach(function(cat) {
+            cat.classList.remove('all-hidden');
+            var btn = cat.querySelector('.calc-category-header');
+            if (btn) { btn.setAttribute('aria-expanded', 'false'); cat.classList.add('collapsed'); }
+          });
+          if (noResults) noResults.classList.remove('visible');
+          return;
+        }
         document.querySelectorAll('.calc-tile').forEach(function(tile) {
-          tile.classList.toggle('search-hidden', q.length > 0 && tile.textContent.toLowerCase().indexOf(q) === -1);
+          tile.classList.toggle('search-hidden', tile.textContent.toLowerCase().indexOf(q) === -1);
         });
         document.querySelectorAll('.calc-category').forEach(function(cat) {
           var hasVisible = cat.querySelectorAll('.calc-tile:not(.search-hidden)').length > 0;
-          cat.classList.toggle('all-hidden', q.length > 0 && !hasVisible);
-          if (q.length > 0 && hasVisible) {
-            var btn = cat.querySelector('.calc-category-header');
-            if (btn) { btn.setAttribute('aria-expanded', 'true'); cat.classList.remove('collapsed'); }
+          cat.classList.toggle('all-hidden', !hasVisible);
+          var btn = cat.querySelector('.calc-category-header');
+          if (btn) {
+            if (hasVisible) { btn.setAttribute('aria-expanded', 'true'); cat.classList.remove('collapsed'); }
+            else { btn.setAttribute('aria-expanded', 'false'); cat.classList.add('collapsed'); }
           }
         });
         if (noResults) {
           var anyVisible = document.querySelectorAll('.calc-tile:not(.search-hidden)').length > 0;
-          noResults.classList.toggle('visible', q.length > 0 && !anyVisible);
+          noResults.classList.toggle('visible', !anyVisible);
         }
       });
     })();
