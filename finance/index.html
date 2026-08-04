@@ -178,7 +178,7 @@
       <div style="padding:var(--space-10) 0">
 
         <!-- Search -->
-        <div class="calc-search-wrap" style="margin-bottom:var(--space-8)">
+        <div class="calc-search-wrap">
           <div class="search-bar-inner">
             <svg class="search-icon" width="18" height="18" viewBox="0 0 18 18" fill="none" aria-hidden="true">
               <circle cx="7.5" cy="7.5" r="5.5" stroke="currentColor" stroke-width="1.5"/>
@@ -192,11 +192,16 @@
 
         <!-- Home Buying & Mortgages -->
         <div class="calc-category">
-          <div class="calc-category-header">
-            <span class="calc-category-icon" aria-hidden="true">🏠</span>
-            <h2 class="calc-category-title">Home Buying &amp; Mortgages</h2>
+          <div class="calc-category-header" role="button" aria-expanded="true" aria-controls="fin-home-grid" tabindex="0">
+            <div class="calc-category-header-inner">
+              <span class="calc-category-icon" aria-hidden="true">🏠</span>
+              <h2 class="calc-category-title">Home Buying &amp; Mortgages</h2>
+              <span class="calc-category-count">6</span>
+            </div>
+            <svg class="calc-category-chevron" width="18" height="18" viewBox="0 0 18 18" fill="none" aria-hidden="true"><path d="M4.5 6.75L9 11.25L13.5 6.75" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
           </div>
-          <div class="calc-category-grid">
+          <div class="calc-category-divider" aria-hidden="true"></div>
+          <div id="fin-home-grid" class="calc-category-grid">
             <a href="/mortgage/" class="calc-tile"><span class="calc-tile-emoji" aria-hidden="true">🏠</span><div class="calc-tile-body"><p class="calc-tile-name">Mortgage Calculator</p><p class="calc-tile-desc">Monthly payments &amp; amortization schedule</p></div></a>
             <a href="/mortgage-affordability/" class="calc-tile"><span class="calc-tile-emoji" aria-hidden="true">🏡</span><div class="calc-tile-body"><p class="calc-tile-name">Mortgage Affordability</p><p class="calc-tile-desc">OSFI stress test, GDS &amp; TDS ratios</p></div></a>
             <a href="/first-home-costs/" class="calc-tile"><span class="calc-tile-emoji" aria-hidden="true">🏠</span><div class="calc-tile-body"><p class="calc-tile-name">First Home Buyer Costs</p><p class="calc-tile-desc">CMHC, LTT, legal fees &amp; closing costs</p></div></a>
@@ -208,11 +213,16 @@
 
         <!-- Registered Accounts -->
         <div class="calc-category">
-          <div class="calc-category-header">
-            <span class="calc-category-icon" aria-hidden="true">💰</span>
-            <h2 class="calc-category-title">Registered Accounts</h2>
+          <div class="calc-category-header" role="button" aria-expanded="true" aria-controls="fin-registered-grid" tabindex="0">
+            <div class="calc-category-header-inner">
+              <span class="calc-category-icon" aria-hidden="true">💰</span>
+              <h2 class="calc-category-title">Registered Accounts</h2>
+              <span class="calc-category-count">8</span>
+            </div>
+            <svg class="calc-category-chevron" width="18" height="18" viewBox="0 0 18 18" fill="none" aria-hidden="true"><path d="M4.5 6.75L9 11.25L13.5 6.75" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
           </div>
-          <div class="calc-category-grid">
+          <div class="calc-category-divider" aria-hidden="true"></div>
+          <div id="fin-registered-grid" class="calc-category-grid">
             <a href="/tfsa/" class="calc-tile"><span class="calc-tile-emoji" aria-hidden="true">💰</span><div class="calc-tile-body"><p class="calc-tile-name">TFSA Calculator</p><p class="calc-tile-desc">Growth projections &amp; contribution room</p></div></a>
             <a href="/rrsp/" class="calc-tile"><span class="calc-tile-emoji" aria-hidden="true">📈</span><div class="calc-tile-body"><p class="calc-tile-name">RRSP Calculator</p><p class="calc-tile-desc">Growth &amp; tax refund by province</p></div></a>
             <a href="/fhsa/" class="calc-tile"><span class="calc-tile-emoji" aria-hidden="true">🏡</span><div class="calc-tile-body"><p class="calc-tile-name">FHSA Calculator</p><p class="calc-tile-desc">First Home Savings Account planner</p></div></a>
@@ -226,11 +236,16 @@
 
         <!-- Taxes -->
         <div class="calc-category">
-          <div class="calc-category-header">
-            <span class="calc-category-icon" aria-hidden="true">📊</span>
-            <h2 class="calc-category-title">Taxes</h2>
+          <div class="calc-category-header" role="button" aria-expanded="true" aria-controls="fin-taxes-grid" tabindex="0">
+            <div class="calc-category-header-inner">
+              <span class="calc-category-icon" aria-hidden="true">📊</span>
+              <h2 class="calc-category-title">Taxes</h2>
+              <span class="calc-category-count">6</span>
+            </div>
+            <svg class="calc-category-chevron" width="18" height="18" viewBox="0 0 18 18" fill="none" aria-hidden="true"><path d="M4.5 6.75L9 11.25L13.5 6.75" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
           </div>
-          <div class="calc-category-grid">
+          <div class="calc-category-divider" aria-hidden="true"></div>
+          <div id="fin-taxes-grid" class="calc-category-grid">
             <a href="/income-tax/" class="calc-tile"><span class="calc-tile-emoji" aria-hidden="true">📊</span><div class="calc-tile-body"><p class="calc-tile-name">Income Tax Calculator</p><p class="calc-tile-desc">Federal &amp; provincial tax, all 13 provinces</p></div></a>
             <a href="/paycheck/" class="calc-tile"><span class="calc-tile-emoji" aria-hidden="true">💵</span><div class="calc-tile-body"><p class="calc-tile-name">Paycheck Calculator</p><p class="calc-tile-desc">Take-home pay after tax, CPP &amp; EI</p></div></a>
             <a href="/marginal-tax-rate/" class="calc-tile"><span class="calc-tile-emoji" aria-hidden="true">📊</span><div class="calc-tile-body"><p class="calc-tile-name">Marginal vs Effective Rate</p><p class="calc-tile-desc">Your 2026 tax rates, all provinces compared</p></div></a>
@@ -242,11 +257,16 @@
 
         <!-- Retirement & Government Benefits -->
         <div class="calc-category">
-          <div class="calc-category-header">
-            <span class="calc-category-icon" aria-hidden="true">🏅</span>
-            <h2 class="calc-category-title">Retirement &amp; Government Benefits</h2>
+          <div class="calc-category-header" role="button" aria-expanded="true" aria-controls="fin-retirement-grid" tabindex="0">
+            <div class="calc-category-header-inner">
+              <span class="calc-category-icon" aria-hidden="true">🏅</span>
+              <h2 class="calc-category-title">Retirement &amp; Government Benefits</h2>
+              <span class="calc-category-count">3</span>
+            </div>
+            <svg class="calc-category-chevron" width="18" height="18" viewBox="0 0 18 18" fill="none" aria-hidden="true"><path d="M4.5 6.75L9 11.25L13.5 6.75" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
           </div>
-          <div class="calc-category-grid">
+          <div class="calc-category-divider" aria-hidden="true"></div>
+          <div id="fin-retirement-grid" class="calc-category-grid">
             <a href="/cpp/" class="calc-tile"><span class="calc-tile-emoji" aria-hidden="true">🇨🇦</span><div class="calc-tile-body"><p class="calc-tile-name">CPP Calculator</p><p class="calc-tile-desc">Benefit estimates at 60, 65, or 70</p></div></a>
             <a href="/oas/" class="calc-tile"><span class="calc-tile-emoji" aria-hidden="true">🏅</span><div class="calc-tile-body"><p class="calc-tile-name">OAS Calculator</p><p class="calc-tile-desc">Pension, GIS eligibility &amp; clawback</p></div></a>
             <a href="/inflation/" class="calc-tile"><span class="calc-tile-emoji" aria-hidden="true">📉</span><div class="calc-tile-body"><p class="calc-tile-name">Inflation Calculator</p><p class="calc-tile-desc">Purchasing power using Canadian CPI data</p></div></a>
@@ -255,11 +275,16 @@
 
         <!-- Loans & Debt -->
         <div class="calc-category">
-          <div class="calc-category-header">
-            <span class="calc-category-icon" aria-hidden="true">💳</span>
-            <h2 class="calc-category-title">Loans &amp; Debt</h2>
+          <div class="calc-category-header" role="button" aria-expanded="true" aria-controls="fin-loans-grid" tabindex="0">
+            <div class="calc-category-header-inner">
+              <span class="calc-category-icon" aria-hidden="true">💳</span>
+              <h2 class="calc-category-title">Loans &amp; Debt</h2>
+              <span class="calc-category-count">3</span>
+            </div>
+            <svg class="calc-category-chevron" width="18" height="18" viewBox="0 0 18 18" fill="none" aria-hidden="true"><path d="M4.5 6.75L9 11.25L13.5 6.75" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
           </div>
-          <div class="calc-category-grid">
+          <div class="calc-category-divider" aria-hidden="true"></div>
+          <div id="fin-loans-grid" class="calc-category-grid">
             <a href="/loan/" class="calc-tile"><span class="calc-tile-emoji" aria-hidden="true">💳</span><div class="calc-tile-body"><p class="calc-tile-name">Loan Calculator</p><p class="calc-tile-desc">Payments &amp; total interest, any loan</p></div></a>
             <a href="/car-loan/" class="calc-tile"><span class="calc-tile-emoji" aria-hidden="true">🚗</span><div class="calc-tile-body"><p class="calc-tile-name">Car Loan Calculator</p><p class="calc-tile-desc">Monthly payments &amp; true cost of ownership</p></div></a>
             <a href="/debt-payoff/" class="calc-tile"><span class="calc-tile-emoji" aria-hidden="true">💳</span><div class="calc-tile-body"><p class="calc-tile-name">Debt Payoff Calculator</p><p class="calc-tile-desc">Avalanche vs snowball, payoff timeline</p></div></a>
@@ -268,11 +293,16 @@
 
         <!-- Budget & Planning -->
         <div class="calc-category">
-          <div class="calc-category-header">
-            <span class="calc-category-icon" aria-hidden="true">📋</span>
-            <h2 class="calc-category-title">Budget &amp; Planning</h2>
+          <div class="calc-category-header" role="button" aria-expanded="true" aria-controls="fin-planning-grid" tabindex="0">
+            <div class="calc-category-header-inner">
+              <span class="calc-category-icon" aria-hidden="true">📋</span>
+              <h2 class="calc-category-title">Budget &amp; Planning</h2>
+              <span class="calc-category-count">4</span>
+            </div>
+            <svg class="calc-category-chevron" width="18" height="18" viewBox="0 0 18 18" fill="none" aria-hidden="true"><path d="M4.5 6.75L9 11.25L13.5 6.75" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
           </div>
-          <div class="calc-category-grid">
+          <div class="calc-category-divider" aria-hidden="true"></div>
+          <div id="fin-planning-grid" class="calc-category-grid">
             <a href="/budget/" class="calc-tile"><span class="calc-tile-emoji" aria-hidden="true">📋</span><div class="calc-tile-body"><p class="calc-tile-name">Budget Calculator</p><p class="calc-tile-desc">Income vs expenses &amp; Budget Health Score</p></div></a>
             <a href="/net-worth/" class="calc-tile"><span class="calc-tile-emoji" aria-hidden="true">💎</span><div class="calc-tile-body"><p class="calc-tile-name">Net Worth Calculator</p><p class="calc-tile-desc">Assets, liabilities &amp; Canadian benchmarks</p></div></a>
             <a href="/emergency-fund/" class="calc-tile"><span class="calc-tile-emoji" aria-hidden="true">🛡️</span><div class="calc-tile-body"><p class="calc-tile-name">Emergency Fund Calculator</p><p class="calc-tile-desc">Personalized savings target &amp; timeline</p></div></a>
@@ -282,12 +312,17 @@
 
         <!-- Coming Soon -->
         <div class="calc-category">
-          <div class="calc-category-header">
-            <span class="calc-category-icon" aria-hidden="true">🔜</span>
-            <h2 class="calc-category-title">Coming Soon</h2>
+          <div class="calc-category-header" role="button" aria-expanded="true" aria-controls="fin-soon-grid" tabindex="0">
+            <div class="calc-category-header-inner">
+              <span class="calc-category-icon" aria-hidden="true">🔜</span>
+              <h2 class="calc-category-title">Coming Soon</h2>
+              <span class="calc-category-count"></span>
+            </div>
+            <svg class="calc-category-chevron" width="18" height="18" viewBox="0 0 18 18" fill="none" aria-hidden="true"><path d="M4.5 6.75L9 11.25L13.5 6.75" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
           </div>
-          <div class="calc-category-grid">
-            <div class="calc-tile" style="opacity:0.55;cursor:default">
+          <div class="calc-category-divider" aria-hidden="true"></div>
+          <div id="fin-soon-grid" class="calc-category-grid">
+            <div class="calc-tile-soon">
               <span class="calc-tile-emoji" aria-hidden="true">🏖</span>
               <div class="calc-tile-body">
                 <p class="calc-tile-name">Retirement Calculator</p>
@@ -325,30 +360,27 @@ echo "✅ Finance content written: $(wc -l < /tmp/finance_new_content.html) line
   <script src="../shared/nn-components.js" defer></script>
   <script src="../shared/nn-grid.js" defer></script>
 
+
   <script>
+    /* ── Collapsible categories ── */
     (function() {
-      var input = document.getElementById('calc-search-finance');
-      var noResults = document.querySelector('.calc-no-results');
-      if (!input) return;
-      input.addEventListener('input', function() {
-        var q = this.value.trim().toLowerCase();
-        var tiles = document.querySelectorAll('.calc-tile');
-        var categories = document.querySelectorAll('.calc-category');
-        tiles.forEach(function(tile) {
-          if (tile.style.cursor === 'default') return;
-          var text = tile.textContent.toLowerCase();
-          tile.classList.toggle('search-hidden', q.length > 0 && text.indexOf(q) === -1);
+      function initCollapse() {
+        document.querySelectorAll('.calc-category-header[role="button"]').forEach(function(header) {
+          header.addEventListener('click', toggle);
+          header.addEventListener('keydown', function(e) {
+            if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); toggle.call(this); }
+          });
         });
-        categories.forEach(function(cat) {
-          var visible = cat.querySelectorAll('.calc-tile:not(.search-hidden)').length > 0;
-          cat.classList.toggle('all-hidden', q.length > 0 && !visible);
-        });
-        if (noResults) {
-          var anyVisible = document.querySelectorAll('.calc-tile:not(.search-hidden)').length > 0;
-          noResults.classList.toggle('visible', q.length > 0 && !anyVisible);
-        }
-      });
+      }
+      function toggle() {
+        var cat = this.closest('.calc-category');
+        if (!cat) return;
+        var expanded = this.getAttribute('aria-expanded') === 'true';
+        this.setAttribute('aria-expanded', expanded ? 'false' : 'true');
+        cat.classList.toggle('collapsed', expanded);
+      }
+      document.addEventListener('DOMContentLoaded', initCollapse);
     })();
   </script>
-</body>
+
 </html>

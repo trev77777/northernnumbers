@@ -125,11 +125,11 @@
 
         <div class="section-header">
           <h2 id="calculators-heading" class="section-title">Calculators</h2>
-          <p class="section-subtitle">30 free tools built specifically for Canadians. No sign-up required.</p>
+          <p class="section-subtitle">30 free calculators built specifically for Canadians.</p>
         </div>
 
         <!-- Search -->
-        <div class="calc-search-wrap" style="margin-bottom:var(--space-10)">
+        <div class="calc-search-wrap">
           <div class="search-bar-inner">
             <svg class="search-icon" width="18" height="18" viewBox="0 0 18 18" fill="none" aria-hidden="true">
               <circle cx="7.5" cy="7.5" r="5.5" stroke="currentColor" stroke-width="1.5"/>
@@ -141,11 +141,16 @@
 
         <!-- ── CATEGORY: HOME BUYING & MORTGAGES ── -->
         <div class="calc-category" id="cat-home">
-          <div class="calc-category-header">
-            <span class="calc-category-icon" aria-hidden="true">🏠</span>
-            <h3 class="calc-category-title">Home Buying &amp; Mortgages</h3>
+          <div class="calc-category-header" role="button" aria-expanded="true" aria-controls="cat-home-grid" tabindex="0">
+            <div class="calc-category-header-inner">
+              <span class="calc-category-icon" aria-hidden="true">🏠</span>
+              <h3 class="calc-category-title">Home Buying &amp; Mortgages</h3>
+              <span class="calc-category-count">6</span>
+            </div>
+            <svg class="calc-category-chevron" width="18" height="18" viewBox="0 0 18 18" fill="none" aria-hidden="true"><path d="M4.5 6.75L9 11.25L13.5 6.75" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
           </div>
-          <div class="calc-category-grid">
+          <div class="calc-category-divider" aria-hidden="true"></div>
+          <div id="cat-home-grid" class="calc-category-grid">
             <a href="/mortgage/" class="calc-tile">
               <span class="calc-tile-emoji" aria-hidden="true">🏠</span>
               <div class="calc-tile-body">
@@ -193,11 +198,16 @@
 
         <!-- ── CATEGORY: REGISTERED ACCOUNTS ── -->
         <div class="calc-category" id="cat-registered">
-          <div class="calc-category-header">
-            <span class="calc-category-icon" aria-hidden="true">💰</span>
-            <h3 class="calc-category-title">Registered Accounts</h3>
+          <div class="calc-category-header" role="button" aria-expanded="true" aria-controls="cat-registered-grid" tabindex="0">
+            <div class="calc-category-header-inner">
+              <span class="calc-category-icon" aria-hidden="true">💰</span>
+              <h3 class="calc-category-title">Registered Accounts</h3>
+              <span class="calc-category-count">8</span>
+            </div>
+            <svg class="calc-category-chevron" width="18" height="18" viewBox="0 0 18 18" fill="none" aria-hidden="true"><path d="M4.5 6.75L9 11.25L13.5 6.75" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
           </div>
-          <div class="calc-category-grid">
+          <div class="calc-category-divider" aria-hidden="true"></div>
+          <div id="cat-registered-grid" class="calc-category-grid">
             <a href="/tfsa/" class="calc-tile">
               <span class="calc-tile-emoji" aria-hidden="true">💰</span>
               <div class="calc-tile-body">
@@ -259,11 +269,16 @@
 
         <!-- ── CATEGORY: TAXES ── -->
         <div class="calc-category" id="cat-taxes">
-          <div class="calc-category-header">
-            <span class="calc-category-icon" aria-hidden="true">📊</span>
-            <h3 class="calc-category-title">Taxes</h3>
+          <div class="calc-category-header" role="button" aria-expanded="true" aria-controls="cat-taxes-grid" tabindex="0">
+            <div class="calc-category-header-inner">
+              <span class="calc-category-icon" aria-hidden="true">📊</span>
+              <h3 class="calc-category-title">Taxes</h3>
+              <span class="calc-category-count">6</span>
+            </div>
+            <svg class="calc-category-chevron" width="18" height="18" viewBox="0 0 18 18" fill="none" aria-hidden="true"><path d="M4.5 6.75L9 11.25L13.5 6.75" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
           </div>
-          <div class="calc-category-grid">
+          <div class="calc-category-divider" aria-hidden="true"></div>
+          <div id="cat-taxes-grid" class="calc-category-grid">
             <a href="/income-tax/" class="calc-tile">
               <span class="calc-tile-emoji" aria-hidden="true">📊</span>
               <div class="calc-tile-body">
@@ -311,11 +326,16 @@
 
         <!-- ── CATEGORY: RETIREMENT ── -->
         <div class="calc-category" id="cat-retirement">
-          <div class="calc-category-header">
-            <span class="calc-category-icon" aria-hidden="true">🏅</span>
-            <h3 class="calc-category-title">Retirement &amp; Government Benefits</h3>
+          <div class="calc-category-header" role="button" aria-expanded="true" aria-controls="cat-retirement-grid" tabindex="0">
+            <div class="calc-category-header-inner">
+              <span class="calc-category-icon" aria-hidden="true">🏅</span>
+              <h3 class="calc-category-title">Retirement &amp; Government Benefits</h3>
+              <span class="calc-category-count">3</span>
+            </div>
+            <svg class="calc-category-chevron" width="18" height="18" viewBox="0 0 18 18" fill="none" aria-hidden="true"><path d="M4.5 6.75L9 11.25L13.5 6.75" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
           </div>
-          <div class="calc-category-grid">
+          <div class="calc-category-divider" aria-hidden="true"></div>
+          <div id="cat-retirement-grid" class="calc-category-grid">
             <a href="/cpp/" class="calc-tile">
               <span class="calc-tile-emoji" aria-hidden="true">🇨🇦</span>
               <div class="calc-tile-body">
@@ -342,11 +362,16 @@
 
         <!-- ── CATEGORY: LOANS & DEBT ── -->
         <div class="calc-category" id="cat-loans">
-          <div class="calc-category-header">
-            <span class="calc-category-icon" aria-hidden="true">💳</span>
-            <h3 class="calc-category-title">Loans &amp; Debt</h3>
+          <div class="calc-category-header" role="button" aria-expanded="true" aria-controls="cat-loans-grid" tabindex="0">
+            <div class="calc-category-header-inner">
+              <span class="calc-category-icon" aria-hidden="true">💳</span>
+              <h3 class="calc-category-title">Loans &amp; Debt</h3>
+              <span class="calc-category-count">3</span>
+            </div>
+            <svg class="calc-category-chevron" width="18" height="18" viewBox="0 0 18 18" fill="none" aria-hidden="true"><path d="M4.5 6.75L9 11.25L13.5 6.75" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
           </div>
-          <div class="calc-category-grid">
+          <div class="calc-category-divider" aria-hidden="true"></div>
+          <div id="cat-loans-grid" class="calc-category-grid">
             <a href="/loan/" class="calc-tile">
               <span class="calc-tile-emoji" aria-hidden="true">💳</span>
               <div class="calc-tile-body">
@@ -373,11 +398,16 @@
 
         <!-- ── CATEGORY: BUDGET & PLANNING ── -->
         <div class="calc-category" id="cat-planning">
-          <div class="calc-category-header">
-            <span class="calc-category-icon" aria-hidden="true">📋</span>
-            <h3 class="calc-category-title">Budget &amp; Planning</h3>
+          <div class="calc-category-header" role="button" aria-expanded="true" aria-controls="cat-planning-grid" tabindex="0">
+            <div class="calc-category-header-inner">
+              <span class="calc-category-icon" aria-hidden="true">📋</span>
+              <h3 class="calc-category-title">Budget &amp; Planning</h3>
+              <span class="calc-category-count">4</span>
+            </div>
+            <svg class="calc-category-chevron" width="18" height="18" viewBox="0 0 18 18" fill="none" aria-hidden="true"><path d="M4.5 6.75L9 11.25L13.5 6.75" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
           </div>
-          <div class="calc-category-grid">
+          <div class="calc-category-divider" aria-hidden="true"></div>
+          <div id="cat-planning-grid" class="calc-category-grid">
             <a href="/budget/" class="calc-tile">
               <span class="calc-tile-emoji" aria-hidden="true">📋</span>
               <div class="calc-tile-body">
@@ -512,29 +542,27 @@ echo "✅ Section written: $(wc -l < /tmp/new_calc_section.html) lines"
   </script>
   <script src="shared/nn-grid.js" defer></script>
 
+
   <script>
+    /* ── Collapsible categories ── */
     (function() {
-      var input = document.getElementById('calc-search-home');
-      var noResults = document.querySelector('.calc-no-results');
-      if (!input) return;
-      input.addEventListener('input', function() {
-        var q = this.value.trim().toLowerCase();
-        var tiles = document.querySelectorAll('.calc-tile');
-        var categories = document.querySelectorAll('.calc-category');
-        tiles.forEach(function(tile) {
-          var text = tile.textContent.toLowerCase();
-          tile.classList.toggle('search-hidden', q.length > 0 && text.indexOf(q) === -1);
+      function initCollapse() {
+        document.querySelectorAll('.calc-category-header[role="button"]').forEach(function(header) {
+          header.addEventListener('click', toggle);
+          header.addEventListener('keydown', function(e) {
+            if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); toggle.call(this); }
+          });
         });
-        categories.forEach(function(cat) {
-          var visible = cat.querySelectorAll('.calc-tile:not(.search-hidden)').length > 0;
-          cat.classList.toggle('all-hidden', q.length > 0 && !visible);
-        });
-        if (noResults) {
-          var anyVisible = document.querySelectorAll('.calc-tile:not(.search-hidden)').length > 0;
-          noResults.classList.toggle('visible', q.length > 0 && !anyVisible);
-        }
-      });
+      }
+      function toggle() {
+        var cat = this.closest('.calc-category');
+        if (!cat) return;
+        var expanded = this.getAttribute('aria-expanded') === 'true';
+        this.setAttribute('aria-expanded', expanded ? 'false' : 'true');
+        cat.classList.toggle('collapsed', expanded);
+      }
+      document.addEventListener('DOMContentLoaded', initCollapse);
     })();
   </script>
-</body>
+
 </html>
