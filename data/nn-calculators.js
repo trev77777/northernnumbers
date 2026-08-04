@@ -194,6 +194,15 @@ window.NNRegistry = {
       related: ['paycheck','income-tax','budget','loan']
     },
     {
+      id: 'first-home-costs', name: 'First Home Buyer Cost Calculator', category: 'mortgage',
+      url: '/first-home-costs/', icon: '🏠',
+      description: 'See every upfront cost of buying your first home in Canada. CMHC insurance, land transfer tax, legal fees, and total cash needed at closing.',
+      keywords: ['first home buyer cost calculator canada 2026','closing costs calculator canada','CMHC insurance calculator canada','first time home buyer costs canada'],
+      status: 'active', priority: 31,
+      showInFooter: false, showOnHomepage: true,
+      related: ['mortgage','mortgage-affordability','fhsa','land-transfer-tax']
+    },
+    {
       id: 'marginal-tax-rate', name: 'Marginal vs Effective Tax Rate Calculator', category: 'taxes',
       url: '/marginal-tax-rate/', icon: '📊',
       description: 'Find your marginal and effective tax rate for 2026. All 13 provinces, confirmed 2026 brackets.',

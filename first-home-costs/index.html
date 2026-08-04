@@ -1,0 +1,399 @@
+<!DOCTYPE html>
+<html lang="en-CA">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>First Home Buyer Cost Calculator Canada 2026 — Northern Numbers</title>
+  <meta name="description" content="Free Canadian first home buyer cost calculator for 2026. See every upfront cost: CMHC insurance, land transfer tax, legal fees, title insurance, home inspection, and total cash needed at closing." />
+  <meta name="keywords" content="first home buyer cost calculator canada 2026, closing costs calculator canada, CMHC insurance calculator canada, first time home buyer costs canada, cash to close calculator canada" />
+  <link rel="canonical" href="https://www.northernnumbers.ca/first-home-costs/" />
+  <meta property="og:title" content="First Home Buyer Cost Calculator Canada 2026" />
+  <meta property="og:description" content="See every upfront cost of buying your first home in Canada. CMHC insurance, land transfer tax, legal fees, and total cash needed at closing." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://www.northernnumbers.ca/first-home-costs/" />
+  <meta property="og:locale" content="en_CA" />
+  <meta property="og:site_name" content="Northern Numbers" />
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="First Home Buyer Cost Calculator Canada 2026" />
+  <meta name="twitter:description" content="Every cost of buying your first home in Canada — CMHC, LTT, legal fees, and more." />
+  <meta name="robots" content="index, follow" />
+  <meta name="author" content="Northern Numbers" />
+  <link rel="icon" type="image/png" sizes="32x32" href="../favicon-32x32.png" />
+  <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png" />
+  <link rel="icon" type="image/x-icon" href="../favicon.ico" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Poppins:wght@600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="../styles.css" />
+</head>
+<body>
+
+  <header class="site-header" id="nn-header" role="banner"></header>
+
+  <main id="main-content" class="calc-page">
+    <div class="container">
+
+      <nav class="calc-breadcrumb" aria-label="Breadcrumb">
+        <a href="/">Home</a>
+        <span class="calc-breadcrumb-sep" aria-hidden="true">›</span>
+        <a href="/finance/">Calculators</a>
+        <span class="calc-breadcrumb-sep" aria-hidden="true">›</span>
+        <span aria-current="page">First Home Buyer Cost Calculator</span>
+      </nav>
+
+      <div class="calc-page-header">
+        <h1 class="calc-page-title">First Home Buyer Cost Calculator Canada 2026</h1>
+        <p class="calc-page-desc">See every upfront cost of buying your first home in Canada — CMHC mortgage insurance, land transfer tax, legal fees, title insurance, home inspection, and the total cash you need at closing on top of your down payment.</p>
+      </div>
+
+      <div class="calc-layout">
+
+        <!-- Inputs -->
+        <section class="calc-panel" aria-labelledby="inputs-heading">
+          <h2 id="inputs-heading" class="calc-panel-title">Your Purchase Details</h2>
+
+          <!-- Presets -->
+          <div style="margin-bottom:var(--space-4)">
+            <p style="font-size:var(--text-sm);font-weight:600;color:var(--color-text-muted);margin-bottom:var(--space-2)">Quick examples:</p>
+            <div class="preset-group" role="group">
+              <button type="button" class="preset-btn" data-preset="condo">🏙️ Toronto Condo ($650K)</button>
+              <button type="button" class="preset-btn" data-preset="detached">🏠 Ontario House ($800K)</button>
+              <button type="button" class="preset-btn" data-preset="calgary">🏔️ Calgary Home ($550K)</button>
+              <button type="button" class="preset-btn" data-preset="maxcmhc">💰 Max CMHC ($1.5M)</button>
+            </div>
+          </div>
+
+          <form id="fhb-form" novalidate>
+
+            <div class="form-group">
+              <label class="form-label" for="purchase-price">Purchase Price</label>
+              <div class="input-wrapper">
+                <span class="input-prefix" aria-hidden="true">$</span>
+                <input type="text" id="purchase-price" class="form-input has-prefix"
+                  placeholder="700,000" inputmode="numeric" autocomplete="off"
+                  aria-describedby="price-hint price-error" />
+              </div>
+              <p class="field-help" id="price-hint">The agreed purchase price from your offer. CMHC insurance is not available above $1,500,000.</p>
+              <p id="price-error" class="form-error-msg" role="alert"></p>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label" for="down-payment">Down Payment</label>
+              <div class="input-wrapper">
+                <span class="input-prefix" aria-hidden="true">$</span>
+                <input type="text" id="down-payment" class="form-input has-prefix"
+                  placeholder="70,000" inputmode="numeric" autocomplete="off"
+                  aria-describedby="dp-hint dp-error" />
+              </div>
+              <p class="field-help" id="dp-hint">Minimum: 5% on first $500K + 10% on the remainder up to $1.5M. A 20% down payment avoids CMHC insurance entirely.</p>
+              <p id="dp-error" class="form-error-msg" role="alert"></p>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label" for="province">Province</label>
+              <div class="select-wrapper">
+                <select id="province" class="form-select">
+                  <option value="ON" selected>Ontario</option>
+                  <option value="BC">British Columbia</option>
+                  <option value="AB">Alberta</option>
+                  <option value="QC">Quebec</option>
+                  <option value="MB">Manitoba</option>
+                  <option value="SK">Saskatchewan</option>
+                  <option value="NS">Nova Scotia</option>
+                  <option value="NB">New Brunswick</option>
+                  <option value="PE">Prince Edward Island</option>
+                  <option value="NL">Newfoundland &amp; Labrador</option>
+                  <option value="YT">Yukon</option>
+                  <option value="NT">Northwest Territories</option>
+                  <option value="NU">Nunavut</option>
+                </select>
+              </div>
+            </div>
+
+            <!-- Toronto toggle (shown only for ON) -->
+            <div class="form-group" id="toronto-group" style="display:none">
+              <label class="form-label">City</label>
+              <label style="display:flex;align-items:center;gap:var(--space-3);cursor:pointer;font-size:var(--text-sm)">
+                <input type="checkbox" id="is-toronto" style="accent-color:var(--color-primary);flex-shrink:0" />
+                Purchasing in the City of Toronto (adds municipal land transfer tax)
+              </label>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label">Buyer Status</label>
+              <label style="display:flex;align-items:center;gap:var(--space-3);cursor:pointer;font-size:var(--text-sm)">
+                <input type="checkbox" id="is-ftb" checked style="accent-color:var(--color-primary);flex-shrink:0" />
+                First-time home buyer (applies available LTT rebates)
+              </label>
+              <p class="field-help" style="margin-top:var(--space-2)">First-time buyers may qualify for land transfer tax rebates in Ontario, BC, and PEI. You must never have owned a home anywhere in the world to qualify in Ontario.</p>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label">Amortization Period</label>
+              <div style="display:flex;gap:var(--space-3)">
+                <label style="display:flex;align-items:center;gap:var(--space-2);cursor:pointer;font-size:var(--text-sm)">
+                  <input type="radio" name="amort" id="amort-25" value="25" checked style="accent-color:var(--color-primary)" />
+                  25 years (standard)
+                </label>
+                <label style="display:flex;align-items:center;gap:var(--space-2);cursor:pointer;font-size:var(--text-sm)">
+                  <input type="radio" name="amort" id="amort-30" value="30" style="accent-color:var(--color-primary)" />
+                  30 years (+0.20% CMHC surcharge)
+                </label>
+              </div>
+              <p class="field-help" style="margin-top:var(--space-2)">30-year amortization is available to first-time buyers on any CMHC-insured purchase (expanded December 15, 2024). A 0.20% premium surcharge applies.</p>
+            </div>
+
+            <div class="btn-row">
+              <button type="submit" class="btn btn-primary btn-calculate" style="flex:1">
+                Calculate Costs
+              </button>
+              <button type="button" id="reset-btn" class="btn btn-secondary">Reset</button>
+            </div>
+
+          </form>
+        </section>
+
+        <!-- Results -->
+        <section class="calc-panel" aria-labelledby="results-heading" aria-live="polite">
+          <h2 id="results-heading" class="calc-panel-title">Your Costs</h2>
+
+          <div id="results-placeholder" class="result-placeholder">
+            <div class="result-placeholder-icon" aria-hidden="true">
+              <svg width="56" height="56" viewBox="0 0 56 56" fill="none">
+                <path d="M10 46L28 10L46 46" stroke="#D1D5DB" stroke-width="2" stroke-linejoin="round"/>
+                <path d="M18 34H38" stroke="#D1D5DB" stroke-width="2" stroke-linecap="round"/>
+              </svg>
+            </div>
+            <p>Enter your purchase price and down payment to see all your upfront costs.</p>
+          </div>
+
+          <div id="results-content" class="hidden">
+
+            <!-- Over $1.5M notice -->
+            <div id="over-cap-notice" style="display:none;margin-bottom:var(--space-4);padding:var(--space-4) var(--space-5);background:#FEF9C3;border:1px solid #FDE047;border-radius:var(--radius-md);font-size:var(--text-sm);color:#713F12;line-height:1.6">
+              ℹ️ At this purchase price, CMHC mortgage insurance is not available. A minimum 20% down payment is required.
+            </div>
+
+            <!-- Below min down notice -->
+            <div id="below-min-notice" style="display:none;margin-bottom:var(--space-4);padding:var(--space-4) var(--space-5);background:#FEF2F2;border:1px solid #FECACA;border-radius:var(--radius-md);font-size:var(--text-sm);color:#991B1B;line-height:1.6">
+              ⚠️ <strong>Down payment is below the minimum required.</strong> The minimum is 5% on the first $500,000 plus 10% on any amount above $500,000. Minimum required: <strong id="min-dp-amount">—</strong>.
+            </div>
+
+            <!-- Hero -->
+            <div class="result-hero">
+              <p class="result-hero-label">Total Cash Needed at Closing</p>
+              <p class="result-hero-value" id="result-total-cash">—</p>
+              <p class="result-hero-sub" id="result-hero-sub">—</p>
+            </div>
+
+            <!-- Cost breakdown -->
+            <div style="margin-top:var(--space-5)">
+              <p style="font-family:var(--font-heading);font-weight:700;font-size:var(--text-base);margin-bottom:var(--space-3)">Cost Breakdown</p>
+              <div class="result-summary" role="list">
+                <div class="result-row" role="listitem">
+                  <span class="result-row-label">Purchase Price</span>
+                  <span class="result-row-value" id="result-price">—</span>
+                </div>
+                <div class="result-row" role="listitem">
+                  <span class="result-row-label">Down Payment</span>
+                  <span class="result-row-value is-success" id="result-dp">—</span>
+                </div>
+                <div class="result-row" role="listitem">
+                  <span class="result-row-label">Mortgage Required</span>
+                  <span class="result-row-value" id="result-mortgage">—</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- CMHC section -->
+            <div id="cmhc-section" style="margin-top:var(--space-5);padding:var(--space-4) var(--space-5);background:var(--color-bg);border:1px solid var(--color-border);border-radius:var(--radius-md)">
+              <p style="font-family:var(--font-heading);font-weight:700;font-size:var(--text-base);margin-bottom:var(--space-3)">🏦 CMHC Mortgage Insurance</p>
+              <div class="result-summary" role="list">
+                <div class="result-row" role="listitem">
+                  <span class="result-row-label" id="cmhc-rate-label">Premium Rate</span>
+                  <span class="result-row-value" id="result-cmhc-rate">—</span>
+                </div>
+                <div class="result-row" role="listitem">
+                  <span class="result-row-label">Premium Amount</span>
+                  <span class="result-row-value" id="result-cmhc-premium">—</span>
+                </div>
+                <div class="result-row" role="listitem" id="pst-row" style="display:none">
+                  <span class="result-row-label" id="pst-label">PST on Premium</span>
+                  <span class="result-row-value is-error" id="result-pst">—</span>
+                </div>
+                <div class="result-row" role="listitem">
+                  <span class="result-row-label">Added to Mortgage</span>
+                  <span class="result-row-value" id="result-cmhc-mortgage">—</span>
+                </div>
+                <div class="result-row" role="listitem">
+                  <span class="result-row-label">Total Mortgage (with CMHC)</span>
+                  <span class="result-row-value" id="result-total-mortgage">—</span>
+                </div>
+              </div>
+              <div id="cmhc-none-msg" style="display:none;font-size:var(--text-sm);color:var(--color-success);font-weight:600">
+                ✅ No CMHC insurance required (20% or more down payment)
+              </div>
+            </div>
+
+            <!-- Closing costs -->
+            <div style="margin-top:var(--space-5)">
+              <p style="font-family:var(--font-heading);font-weight:700;font-size:var(--text-base);margin-bottom:var(--space-3)">📋 Estimated Closing Costs</p>
+              <div class="result-summary" role="list">
+                <div class="result-row" role="listitem">
+                  <span class="result-row-label" id="ltt-label">Land Transfer Tax</span>
+                  <span class="result-row-value is-error" id="result-ltt">—</span>
+                </div>
+                <div class="result-row" role="listitem" id="ltt-rebate-row" style="display:none">
+                  <span class="result-row-label" id="ltt-rebate-label">LTT First-Time Buyer Rebate</span>
+                  <span class="result-row-value is-success" id="result-ltt-rebate">—</span>
+                </div>
+                <div class="result-row" role="listitem" id="toronto-ltt-row" style="display:none">
+                  <span class="result-row-label">Toronto Municipal LTT</span>
+                  <span class="result-row-value is-error" id="result-toronto-ltt">—</span>
+                </div>
+                <div class="result-row" role="listitem" id="toronto-rebate-row" style="display:none">
+                  <span class="result-row-label">Toronto LTT First-Time Buyer Rebate</span>
+                  <span class="result-row-value is-success" id="result-toronto-rebate">—</span>
+                </div>
+                <div class="result-row" role="listitem" id="pst-closing-row" style="display:none">
+                  <span class="result-row-label" id="pst-closing-label">PST on CMHC Premium</span>
+                  <span class="result-row-value is-error" id="result-pst-closing">—</span>
+                </div>
+                <div class="result-row" role="listitem">
+                  <span class="result-row-label">Legal Fees &amp; Disbursements</span>
+                  <span class="result-row-value is-error" id="result-legal">—</span>
+                </div>
+                <div class="result-row" role="listitem">
+                  <span class="result-row-label">Title Insurance</span>
+                  <span class="result-row-value is-error" id="result-title">—</span>
+                </div>
+                <div class="result-row" role="listitem">
+                  <span class="result-row-label">Home Inspection</span>
+                  <span class="result-row-value is-error" id="result-inspection">—</span>
+                </div>
+                <div class="result-row" role="listitem">
+                  <span class="result-row-label">Property Tax Adjustment (est.)</span>
+                  <span class="result-row-value is-error" id="result-tax-adj">—</span>
+                </div>
+                <div class="result-row result-row--total" role="listitem">
+                  <span class="result-row-label">Total Closing Costs</span>
+                  <span class="result-row-value" id="result-closing-total">—</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Summary cards -->
+            <div class="milestone-grid" style="margin-top:var(--space-5)">
+              <div class="milestone-card">
+                <p class="milestone-label">Down Payment %</p>
+                <p class="milestone-value" id="result-dp-pct">—</p>
+                <p class="milestone-sub">Of purchase price</p>
+              </div>
+              <div class="milestone-card">
+                <p class="milestone-label">Closing Costs %</p>
+                <p class="milestone-value" id="result-closing-pct">—</p>
+                <p class="milestone-sub">Of purchase price</p>
+              </div>
+              <div class="milestone-card">
+                <p class="milestone-label">Total Cash Needed</p>
+                <p class="milestone-value" id="result-cash-card">—</p>
+                <p class="milestone-sub">Down payment + closing</p>
+              </div>
+              <div class="milestone-card">
+                <p class="milestone-label">Final Mortgage</p>
+                <p class="milestone-value" id="result-final-mortgage">—</p>
+                <p class="milestone-sub">Including CMHC premium</p>
+              </div>
+            </div>
+
+            <div style="margin-top:var(--space-4);padding:var(--space-3) var(--space-4);background:#FEF9C3;border:1px solid #FDE047;border-radius:var(--radius-md);font-size:var(--text-sm);color:#713F12;line-height:1.6">
+              ⚠️ Legal fees, title insurance, inspection, and tax adjustment are estimates. Actual amounts vary by property and service provider. The CMHC premium itself is added to your mortgage — but any provincial PST on the premium is paid at closing. Budget additional funds for moving costs, immediate repairs, and utility deposits.
+            </div>
+
+            <div id="nn-disclaimer" style="margin-top:var(--space-4)"></div>
+            <button type="button" id="copy-btn" class="copy-btn" style="margin-top:var(--space-4)">
+              📋 Copy Results to Clipboard
+            </button>
+
+          </div>
+        </section>
+      </div>
+
+      <!-- Educational -->
+      <section style="margin-top:var(--space-16);padding-top:var(--space-10);border-top:1px solid var(--color-border)">
+        <h2 style="font-size:var(--text-2xl);font-weight:700;margin-bottom:var(--space-8)">First Home Buying Costs in Canada: 2026 Guide</h2>
+        <div style="display:grid;gap:var(--space-8)">
+
+          <div>
+            <h3 style="font-size:var(--text-xl);font-weight:600;margin-bottom:var(--space-3)">🏦 CMHC Mortgage Insurance — What You Need to Know</h3>
+            <p style="color:var(--color-text-muted);line-height:1.8">If your down payment is less than 20%, CMHC mortgage default insurance is mandatory in Canada. It protects the lender — not you — but it actually benefits buyers because it lets you purchase with as little as 5% down while still qualifying for the same low interest rates available to buyers with 20% down. The premium ranges from 2.80% to 4.00% of your mortgage amount and is added directly to your mortgage balance — you don't pay it upfront. However, three provinces charge provincial sales tax on the premium itself: Ontario (8%), Quebec (9.975%), and Saskatchewan (6%). This PST must be paid in cash at closing and is one of the most commonly overlooked costs by first-time buyers.</p>
+            <div style="overflow-x:auto;margin-top:var(--space-4)">
+              <table style="width:100%;border-collapse:collapse;font-size:var(--text-sm)">
+                <thead>
+                  <tr style="background:var(--color-bg);border-bottom:2px solid var(--color-border)">
+                    <th style="padding:var(--space-3);text-align:left;font-weight:600">Down Payment</th>
+                    <th style="padding:var(--space-3);text-align:right;font-weight:600">Premium (25yr)</th>
+                    <th style="padding:var(--space-3);text-align:right;font-weight:600">Premium (30yr)</th>
+                    <th style="padding:var(--space-3);text-align:right;font-weight:600">On $500K home</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr style="border-bottom:1px solid var(--color-border)"><td style="padding:var(--space-2) var(--space-3)">5% ($25,000)</td><td style="padding:var(--space-2) var(--space-3);text-align:right">4.00%</td><td style="padding:var(--space-2) var(--space-3);text-align:right">4.20%</td><td style="padding:var(--space-2) var(--space-3);text-align:right">$19,000</td></tr>
+                  <tr style="border-bottom:1px solid var(--color-border);background:var(--color-bg)"><td style="padding:var(--space-2) var(--space-3)">10% ($50,000)</td><td style="padding:var(--space-2) var(--space-3);text-align:right">3.10%</td><td style="padding:var(--space-2) var(--space-3);text-align:right">3.30%</td><td style="padding:var(--space-2) var(--space-3);text-align:right">$13,950</td></tr>
+                  <tr style="border-bottom:1px solid var(--color-border)"><td style="padding:var(--space-2) var(--space-3)">15% ($75,000)</td><td style="padding:var(--space-2) var(--space-3);text-align:right">2.80%</td><td style="padding:var(--space-2) var(--space-3);text-align:right">3.00%</td><td style="padding:var(--space-2) var(--space-3);text-align:right">$11,900</td></tr>
+                  <tr><td style="padding:var(--space-2) var(--space-3)">20%+ ($100,000)</td><td style="padding:var(--space-2) var(--space-3);text-align:right">None</td><td style="padding:var(--space-2) var(--space-3);text-align:right">None</td><td style="padding:var(--space-2) var(--space-3);text-align:right">$0</td></tr>
+                </tbody>
+              </table>
+            </div>
+            <p style="font-size:var(--text-xs);color:var(--color-text-muted);margin-top:var(--space-2)">Source: CMHC 2026. 30-year amortization available to first-time buyers on any insured purchase (expanded December 15, 2024). Insured mortgages available up to $1,500,000 purchase price.</p>
+          </div>
+
+          <div>
+            <h3 style="font-size:var(--text-xl);font-weight:600;margin-bottom:var(--space-3)">❓ Frequently Asked Questions</h3>
+            <div style="display:flex;flex-direction:column;gap:var(--space-5)">
+              <div>
+                <p style="font-weight:600;margin-bottom:var(--space-1)">What is the minimum down payment in Canada in 2026?</p>
+                <p style="color:var(--color-text-muted);font-size:var(--text-sm);line-height:1.7">The minimum down payment in Canada is 5% on the first $500,000 of the purchase price, plus 10% on any amount above $500,000 up to $1,500,000. For example, on a $700,000 home the minimum is $35,000 (5% of $500,000 = $25,000 plus 10% of $200,000 = $20,000, totalling $35,000). Homes above $1,500,000 require a minimum 20% down payment and are not eligible for CMHC insurance.</p>
+              </div>
+              <div>
+                <p style="font-weight:600;margin-bottom:var(--space-1)">Can I get a 30-year mortgage as a first-time buyer in Canada?</p>
+                <p style="color:var(--color-text-muted);font-size:var(--text-sm);line-height:1.7">Yes. Since December 15, 2024, first-time buyers can use a 30-year amortization on any CMHC-insured purchase — not just new builds. A 0.20% premium surcharge applies, so the CMHC rate goes from 4.00% to 4.20% for a 5% down payment. The longer amortization lowers your monthly payment but means you pay significantly more interest over the life of the mortgage.</p>
+              </div>
+              <div>
+                <p style="font-weight:600;margin-bottom:var(--space-1)">What first-time buyer rebates are available in Canada in 2026?</p>
+                <p style="color:var(--color-text-muted);font-size:var(--text-sm);line-height:1.7">Ontario: up to $4,000 rebate on provincial land transfer tax (eliminates LTT on homes up to $368,000; partial rebate above). Toronto: additional up to $4,475 rebate on the municipal land transfer tax. British Columbia: full PTT exemption on homes up to $835,000, partial rebate to $860,000. Prince Edward Island: up to $2,000 rebate. Alberta, Saskatchewan, Manitoba, and Atlantic provinces (except PEI) have no land transfer tax, so no rebate is needed.</p>
+              </div>
+              <div>
+                <p style="font-weight:600;margin-bottom:var(--space-1)">What is the First Home Savings Account (FHSA) in Canada?</p>
+                <p style="color:var(--color-text-muted);font-size:var(--text-sm);line-height:1.7">The FHSA lets first-time buyers contribute up to $8,000 per year (lifetime maximum $40,000) to a tax-sheltered account. Contributions are tax deductible (like an RRSP) and withdrawals for a qualifying home purchase are tax-free (like a TFSA). It's the most powerful savings tool available to first-time buyers. Use our <a href="/fhsa/" style="color:var(--color-primary)">FHSA Calculator</a> to plan your contributions.</p>
+              </div>
+            </div>
+          </div>
+
+          <div>
+            <h3 style="font-size:var(--text-xl);font-weight:600;margin-bottom:var(--space-3)">🔗 Related Calculators</h3>
+            <div id="nn-related"></div>
+          </div>
+
+        </div>
+        <div style="margin-top:var(--space-8);padding:var(--space-4) var(--space-5);background:var(--color-bg);border:1px solid var(--color-border);border-radius:var(--radius-md);font-size:var(--text-sm);color:var(--color-text-muted);line-height:1.7">
+          📋 CMHC premium rates: 4.00%/3.10%/2.80% (Source: CMHC 2026). 30-year surcharge +0.20% (effective December 15, 2024). Max insured price $1,500,000 (effective December 15, 2024). PST on CMHC: Ontario 8%, Quebec 9.975%, Saskatchewan 6%. Land transfer tax calculations use confirmed 2026 provincial rates. Legal fees, title insurance, inspection, and tax adjustment are estimates based on typical Canadian ranges — actual amounts will vary. See our <a href="/disclaimer.html" style="color:var(--color-primary)">full disclaimer</a>.
+        </div>
+      </section>
+
+    </div>
+  </main>
+
+  <footer class="site-footer" id="nn-footer" role="contentinfo"></footer>
+
+  <script src="../script.js" defer></script>
+  <script src="../data/nn-constants.js" defer></script>
+  <script src="../data/nn-calculators.js" defer></script>
+  <script src="../shared/nn-utils.js" defer></script>
+  <script src="../shared/nn-seo.js" defer></script>
+  <script src="../shared/nn-analytics.js" defer></script>
+  <script src="../shared/nn-ads.js" defer></script>
+  <script src="../shared/nn-components.js" defer></script>
+  <script src="first-home-costs.js" defer></script>
+</body>
+</html>
