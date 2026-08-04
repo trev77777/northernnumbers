@@ -75,10 +75,43 @@
           </div>
         </div>
 
+        <!-- Hero visual — balances composition on desktop -->
+        <div class="hero-visual" aria-hidden="true">
+          <svg width="340" height="280" viewBox="0 0 340 280" fill="none" xmlns="http://www.w3.org/2000/svg" role="img">
+            <!-- Background card -->
+            <rect x="20" y="20" width="300" height="240" rx="20" fill="#FFF8F8" stroke="#F3E8E8" stroke-width="1.5"/>
+            <!-- Inner card 1: mortgage -->
+            <rect x="40" y="44" width="260" height="64" rx="12" fill="white" stroke="#F0D9D9" stroke-width="1"/>
+            <rect x="56" y="60" width="32" height="32" rx="8" fill="#FDF0F0"/>
+            <text x="72" y="81" text-anchor="middle" font-size="16" fill="#D52B1E">🏠</text>
+            <rect x="100" y="64" width="80" height="10" rx="5" fill="#1F2937" opacity="0.9"/>
+            <rect x="100" y="80" width="120" height="8" rx="4" fill="#9CA3AF" opacity="0.6"/>
+            <rect x="226" y="66" width="58" height="20" rx="6" fill="#D52B1E" opacity="0.12"/>
+            <text x="255" y="80" text-anchor="middle" font-size="10" font-weight="700" fill="#D52B1E" font-family="system-ui">Calculate</text>
+            <!-- Inner card 2: TFSA -->
+            <rect x="40" y="120" width="260" height="64" rx="12" fill="white" stroke="#F0D9D9" stroke-width="1"/>
+            <rect x="56" y="136" width="32" height="32" rx="8" fill="#FDF0F0"/>
+            <text x="72" y="157" text-anchor="middle" font-size="16" fill="#D52B1E">💰</text>
+            <rect x="100" y="140" width="70" height="10" rx="5" fill="#1F2937" opacity="0.9"/>
+            <rect x="100" y="156" width="100" height="8" rx="4" fill="#9CA3AF" opacity="0.6"/>
+            <rect x="226" y="142" width="58" height="20" rx="6" fill="#D52B1E" opacity="0.12"/>
+            <text x="255" y="156" text-anchor="middle" font-size="10" font-weight="700" fill="#D52B1E" font-family="system-ui">Calculate</text>
+            <!-- Inner card 3: income tax -->
+            <rect x="40" y="196" width="260" height="44" rx="12" fill="white" stroke="#F0D9D9" stroke-width="1"/>
+            <rect x="56" y="208" width="24" height="24" rx="6" fill="#FDF0F0"/>
+            <text x="68" y="224" text-anchor="middle" font-size="12" fill="#D52B1E">📊</text>
+            <rect x="92" y="212" width="80" height="8" rx="4" fill="#1F2937" opacity="0.85"/>
+            <rect x="92" y="226" width="110" height="6" rx="3" fill="#9CA3AF" opacity="0.5"/>
+            <!-- Maple leaf accent dot -->
+            <circle cx="298" cy="26" r="8" fill="#D52B1E" opacity="0.15"/>
+            <circle cx="298" cy="26" r="4" fill="#D52B1E" opacity="0.35"/>
+          </svg>
+        </div>
+
         <!-- Hero stats — builds trust fast -->
         <div class="hero-stats" aria-label="Site highlights">
           <div class="stat-item">
-            <span class="stat-number">10+</span>
+            <span class="stat-number">30</span>
             <span class="stat-label">Calculators</span>
           </div>
           <div class="stat-divider" aria-hidden="true"></div>
@@ -458,44 +491,44 @@
 
 
   <!-- Why Northern Numbers section -->
-  <section style="background:var(--color-bg);padding:var(--space-10) 0;border-top:1px solid var(--color-border)" aria-labelledby="why-heading">
+  <section class="bottom-section" aria-labelledby="why-heading">
     <div class="container">
 
-      <h2 id="why-heading" style="font-size:var(--text-2xl);font-weight:700;text-align:center;margin-bottom:var(--space-4)">Built for Canadian Personal Finance</h2>
-      <p style="text-align:center;color:var(--color-text-muted);max-width:640px;margin:0 auto var(--space-8);line-height:1.7">Canadian personal finance is genuinely different. TFSAs, RRSPs, CPP, OAS, CMHC, the mortgage stress test, HST, land transfer tax — these are Canadian realities that generic calculators from the US ignore or get wrong. Every tool on Northern Numbers is built specifically for Canada, uses current 2026 rates, and is completely free.</p>
+      <h2 id="why-heading" class="bottom-section-title">Built for Canadian Personal Finance</h2>
+      <p class="bottom-section-lead">Canadian personal finance is genuinely different. TFSAs, RRSPs, CPP, OAS, CMHC, the mortgage stress test, HST, land transfer tax — these are Canadian realities that generic calculators from the US ignore or get wrong. Every tool on Northern Numbers is built specifically for Canada, uses current 2026 rates, and is completely free.</p>
 
-      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:var(--space-4);margin-bottom:var(--space-6)">
+      <div class="info-grid">
 
-        <div style="padding:var(--space-5);background:var(--color-surface);border:1px solid var(--color-border);border-radius:var(--radius-lg)">
-          <div style="font-size:1.75rem;margin-bottom:var(--space-3)">🏦</div>
-          <h3 style="font-size:var(--text-base);font-weight:700;margin-bottom:var(--space-2)">Registered Accounts</h3>
-          <p style="color:var(--color-text-muted);font-size:var(--text-sm);line-height:1.7">TFSA growth projections, TFSA contribution room by birth year, RRSP growth and tax refund estimates, FHSA first-home savings, RESP with Canada Education Savings Grant, and RRIF minimum withdrawal schedules using official CRA prescribed factors.</p>
+        <div class="info-card">
+          <div class="info-card-icon">🏦</div>
+          <h3 class="info-card-title">Registered Accounts</h3>
+          <p class="info-card-body">TFSA growth projections, TFSA contribution room by birth year, RRSP growth and tax refund estimates, FHSA first-home savings, RESP with Canada Education Savings Grant, and RRIF minimum withdrawal schedules using official CRA prescribed factors.</p>
         </div>
 
-        <div style="padding:var(--space-5);background:var(--color-surface);border:1px solid var(--color-border);border-radius:var(--radius-lg)">
-          <div style="font-size:1.75rem;margin-bottom:var(--space-3)">🏠</div>
-          <h3 style="font-size:var(--text-base);font-weight:700;margin-bottom:var(--space-2)">Real Estate & Mortgages</h3>
-          <p style="color:var(--color-text-muted);font-size:var(--text-sm);line-height:1.7">Mortgage payments with Canadian semi-annual compounding, mortgage affordability using the OSFI stress test and GDS/TDS ratios, land transfer tax for all 13 provinces including Toronto municipal tax and first-time buyer rebates, and a rent vs buy comparison.</p>
+        <div class="info-card">
+          <div class="info-card-icon">🏠</div>
+          <h3 class="info-card-title">Real Estate &amp; Mortgages</h3>
+          <p class="info-card-body">Mortgage payments with Canadian semi-annual compounding, mortgage affordability using the OSFI stress test and GDS/TDS ratios, land transfer tax for all 13 provinces including Toronto municipal tax and first-time buyer rebates, and a rent vs buy comparison.</p>
         </div>
 
-        <div style="padding:var(--space-5);background:var(--color-surface);border:1px solid var(--color-border);border-radius:var(--radius-lg)">
-          <div style="font-size:1.75rem;margin-bottom:var(--space-3)">🧾</div>
-          <h3 style="font-size:var(--text-base);font-weight:700;margin-bottom:var(--space-2)">Tax Calculators</h3>
-          <p style="color:var(--color-text-muted);font-size:var(--text-sm);line-height:1.7">Federal and provincial income tax for all 13 provinces and territories using 2026 brackets, take-home paycheck calculator with CPP, CPP2, and EI, GST/HST calculator for all provinces, and an inflation calculator using Canadian CPI data.</p>
+        <div class="info-card">
+          <div class="info-card-icon">🧾</div>
+          <h3 class="info-card-title">Tax Calculators</h3>
+          <p class="info-card-body">Federal and provincial income tax for all 13 provinces and territories using 2026 brackets, take-home paycheck calculator with CPP, CPP2, and EI, GST/HST calculator for all provinces, and an inflation calculator using Canadian CPI data.</p>
         </div>
 
-        <div style="padding:var(--space-5);background:var(--color-surface);border:1px solid var(--color-border);border-radius:var(--radius-lg)">
-          <div style="font-size:1.75rem;margin-bottom:var(--space-3)">🇨🇦</div>
-          <h3 style="font-size:var(--text-base);font-weight:700;margin-bottom:var(--space-2)">Retirement Planning</h3>
-          <p style="color:var(--color-text-muted);font-size:var(--text-sm);line-height:1.7">CPP benefit estimates at age 60, 65, and 70 with deferral bonuses, OAS pension with GIS eligibility and clawback thresholds, and RRIF minimum withdrawals by age with year-by-year balance projections — all using 2026 CRA rules.</p>
+        <div class="info-card">
+          <div class="info-card-icon">🇨🇦</div>
+          <h3 class="info-card-title">Retirement Planning</h3>
+          <p class="info-card-body">CPP benefit estimates at age 60, 65, and 70 with deferral bonuses, OAS pension with GIS eligibility and clawback thresholds, and RRIF minimum withdrawals by age with year-by-year balance projections — all using 2026 CRA rules.</p>
         </div>
 
       </div>
 
-      <div style="padding:var(--space-6) var(--space-8);background:var(--color-surface);border:1px solid var(--color-border);border-radius:var(--radius-lg);max-width:720px;margin:0 auto">
-        <h3 style="font-size:var(--text-lg);font-weight:700;margin-bottom:var(--space-3)">Always Free. Always Accurate.</h3>
-        <p style="color:var(--color-text-muted);line-height:1.8;margin-bottom:var(--space-3)">Northern Numbers is free to use with no account, no paywall, and no locked features. Every calculator is built from primary sources — CRA tables, Statistics Canada data, OSFI guidelines, and provincial government schedules — and updated when rates change. We are based in Ontario, Canada.</p>
-        <p style="color:var(--color-text-muted);line-height:1.8">Results are estimates for planning purposes. Always verify important figures with your financial institution, CRA My Account, or a qualified advisor before making major financial decisions. See our <a href="/disclaimer.html" style="color:var(--color-primary)">full disclaimer</a>.</p>
+      <div class="always-free-card">
+        <h3 class="always-free-title">Always Free. Always Accurate.</h3>
+        <p class="always-free-body">Northern Numbers is free to use with no account, no paywall, and no locked features. Every calculator is built from primary sources — CRA tables, Statistics Canada data, OSFI guidelines, and provincial government schedules — and updated when rates change. We are based in Ontario, Canada.</p>
+        <p class="always-free-body">Results are estimates for planning purposes. Always verify important figures with your financial institution, CRA My Account, or a qualified advisor before making major financial decisions. See our <a href="/disclaimer.html" style="color:var(--color-primary)">full disclaimer</a>.</p>
       </div>
 
     </div>
