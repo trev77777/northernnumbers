@@ -1349,44 +1349,11 @@ input[type=number] { -moz-appearance: textfield; }
 /* calc-panel padding at <767px is --space-4 (1rem), so match that */
 @media (max-width: 767px) {
   .result-row--total {
-    margin-inline: 0;
+    margin-inline: calc(-1 * var(--space-4));
     padding-inline: var(--space-4);
-    width: 100%;
-    max-width: 100%;
-    box-sizing: border-box;
   }
   .result-row--total .result-row-value {
     font-size: var(--text-base);
-  }
-
-  .calc-panel {
-    width: 100%;
-    max-width: 100%;
-    box-sizing: border-box;
-    overflow-x: hidden;
-  }
-
-  .result-summary,
-  #rate-callout,
-  #bracket-breakdown,
-  #province-comparison-body,
-  .result-hero-grid {
-    width: 100%;
-    max-width: 100%;
-    box-sizing: border-box;
-  }
-}
-
-.result-hero-grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: var(--space-4);
-  margin-bottom: var(--space-5);
-}
-
-@media (max-width: 639px) {
-  .result-hero-grid {
-    grid-template-columns: 1fr;
   }
 }
 
@@ -1691,4 +1658,183 @@ input[type=range]::-moz-range-thumb {
   .nav-toggle {
     display: none !important;
   }
+}
+
+
+/* ── CATEGORY-BASED CALCULATOR LAYOUT ───────────────────────────────────────
+   Redesigned homepage & finance page: calculators grouped into categories.
+   Each category has a header + responsive grid of compact tiles.
+   Scales cleanly to 100–200 calculators.
+   ───────────────────────────────────────────────────────────────────────── */
+
+/* Category block */
+.calc-category {
+  margin-bottom: var(--space-12);
+}
+
+/* Category header row */
+.calc-category-header {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  margin-bottom: var(--space-5);
+  padding-bottom: var(--space-3);
+  border-bottom: 1px solid var(--color-border);
+}
+
+.calc-category-icon {
+  font-size: 1.25rem;
+  line-height: 1;
+  flex-shrink: 0;
+}
+
+.calc-category-title {
+  font-family: var(--font-heading);
+  font-size: var(--text-lg);
+  font-weight: 700;
+  color: var(--color-text);
+  margin: 0;
+}
+
+/* Tile grid — auto-fill responsive, min 200px per tile */
+.calc-category-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: var(--space-3);
+}
+
+/* Individual calculator tile */
+.calc-tile {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-3);
+  padding: var(--space-4);
+  background: var(--color-white);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  text-decoration: none;
+  color: inherit;
+  transition: border-color 0.15s ease, box-shadow 0.15s ease, transform 0.15s ease;
+  cursor: pointer;
+}
+
+.calc-tile:hover {
+  border-color: var(--color-primary);
+  box-shadow: 0 2px 8px rgba(213, 43, 30, 0.08);
+  transform: translateY(-1px);
+  text-decoration: none;
+  color: inherit;
+}
+
+.calc-tile:focus-visible {
+  outline: 2px solid var(--color-primary);
+  outline-offset: 2px;
+}
+
+.calc-tile-emoji {
+  font-size: 1.25rem;
+  line-height: 1;
+  flex-shrink: 0;
+  margin-top: 1px;
+}
+
+.calc-tile-body {
+  min-width: 0;
+}
+
+.calc-tile-name {
+  font-size: var(--text-sm);
+  font-weight: 600;
+  color: var(--color-text);
+  margin: 0 0 2px;
+  line-height: 1.3;
+}
+
+.calc-tile:hover .calc-tile-name {
+  color: var(--color-primary);
+}
+
+.calc-tile-desc {
+  font-size: var(--text-xs);
+  color: var(--color-text-muted);
+  margin: 0;
+  line-height: 1.4;
+}
+
+/* Search bar on homepage */
+.calc-search-wrap {
+  max-width: 480px;
+}
+
+.search-bar-inner {
+  position: relative;
+}
+
+.search-bar-inner .search-icon {
+  position: absolute;
+  left: 14px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--color-text-muted);
+  pointer-events: none;
+}
+
+.calc-search-input {
+  width: 100%;
+  padding: var(--space-3) var(--space-4) var(--space-3) 42px;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-full);
+  font-size: var(--text-sm);
+  color: var(--color-text);
+  background: var(--color-white);
+  transition: border-color 0.15s ease, box-shadow 0.15s ease;
+  box-sizing: border-box;
+}
+
+.calc-search-input:focus {
+  outline: none;
+  border-color: var(--color-primary);
+  box-shadow: 0 0 0 3px rgba(213, 43, 30, 0.08);
+}
+
+.calc-search-input::placeholder {
+  color: var(--color-text-muted);
+}
+
+/* Hide tiles that don't match search */
+.calc-tile.search-hidden {
+  display: none;
+}
+
+/* Hide entire category if all tiles hidden */
+.calc-category.all-hidden {
+  display: none;
+}
+
+/* No results message */
+.calc-no-results {
+  display: none;
+  text-align: center;
+  padding: var(--space-12) 0;
+  color: var(--color-text-muted);
+  font-size: var(--text-sm);
+}
+
+.calc-no-results.visible {
+  display: block;
+}
+
+/* Mobile: single column below 480px */
+@media (max-width: 479px) {
+  .calc-category-grid {
+    grid-template-columns: 1fr;
+  }
+  .calc-tile {
+    padding: var(--space-3);
+  }
+}
+
+/* Finance page category layout (reuses same classes) */
+.finance-category {
+  margin-bottom: var(--space-10);
 }
