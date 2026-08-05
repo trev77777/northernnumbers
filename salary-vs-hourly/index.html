@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<html lang="en-CA">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Salary to Hourly Calculator Canada 2026 — Northern Numbers</title>
+  <meta name="description" content="Free Canadian salary to hourly calculator. Convert between annual salary and hourly wage. See weekly, biweekly, semi-monthly, and monthly pay breakdowns with vacation and stat holiday adjustments." />
+  <meta name="keywords" content="salary to hourly calculator canada, hourly to salary calculator canada, salary converter canada, annual salary to hourly wage canada, pay period calculator canada 2026" />
+  <link rel="canonical" href="https://northernnumbers.ca/salary-vs-hourly/" />
+  <meta property="og:title" content="Salary to Hourly Calculator Canada 2026 — Northern Numbers" />
+  <meta property="og:description" content="Convert between annual salary and hourly wage. See all pay period breakdowns with Canadian vacation and stat holiday adjustments." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://northernnumbers.ca/salary-vs-hourly/" />
+  <meta property="og:locale" content="en_CA" />
+  <meta property="og:site_name" content="Northern Numbers" />
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Salary to Hourly Calculator Canada 2026 — Northern Numbers" />
+  <meta name="twitter:description" content="Convert salary to hourly or hourly to salary with full Canadian pay period breakdown." />
+  <meta name="robots" content="index, follow" />
+  <meta name="author" content="Northern Numbers" />
+  <link rel="icon" type="image/png" sizes="32x32" href="../favicon-32x32.png" />
+  <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png" />
+  <link rel="icon" type="image/x-icon" href="../favicon.ico" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Poppins:wght@600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="../styles.css" />
+</head>
+<body>
+
+  <header class="site-header" id="nn-header" role="banner"></header>
+
+  <main id="main-content" class="calc-page">
+    <div class="container">
+
+      <nav class="calc-breadcrumb" aria-label="Breadcrumb">
+        <a href="/">Home</a>
+        <span class="calc-breadcrumb-sep" aria-hidden="true">›</span>
+        <a href="/finance/">Calculators</a>
+        <span class="calc-breadcrumb-sep" aria-hidden="true">›</span>
+        <span aria-current="page">Salary vs Hourly Calculator</span>
+      </nav>
+
+      <div class="calc-page-header">
+        <h1 class="calc-page-title">Salary to Hourly Calculator Canada 2026</h1>
+        <p class="calc-page-desc">Convert between annual salary and hourly wage. See your pay broken down by every pay period — weekly, biweekly, semi-monthly, and monthly — with adjustments for vacation time and Canadian statutory holidays.</p>
+      </div>
+
+      <div class="calc-layout">
+
+        <!-- Inputs -->
+        <section class="calc-panel" aria-labelledby="inputs-heading">
+          <h2 id="inputs-heading" class="calc-panel-title">Your Details</h2>
+
+          <!-- Mode toggle -->
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:var(--space-2);margin-bottom:var(--space-5)">
+            <button type="button" id="mode-salary" class="btn btn-primary" style="font-size:var(--text-sm)">
+              💰 Salary → Hourly
+            </button>
+            <button type="button" id="mode-hourly" class="btn btn-secondary" style="font-size:var(--text-sm)">
+              ⏱ Hourly → Salary
+            </button>
+          </div>
+
+          <!-- Presets -->
+          <div style="margin-bottom:var(--space-4)">
+            <p style="font-size:var(--text-sm);font-weight:600;color:var(--color-text-muted);margin-bottom:var(--space-2)">Quick presets:</p>
+            <div class="preset-group" role="group">
+              <button type="button" class="preset-btn" data-preset="min-wage">🍁 Min Wage (ON)</button>
+              <button type="button" class="preset-btn" data-preset="median">📊 Median ($62K)</button>
+              <button type="button" class="preset-btn" data-preset="professional">💼 Professional ($100K)</button>
+              <button type="button" class="preset-btn" data-preset="contractor">🔧 Contractor ($50/hr)</button>
+            </div>
+          </div>
+
+          <form id="svh-form" novalidate>
+
+            <!-- Salary input -->
+            <div id="salary-input-group" class="form-group">
+              <label class="form-label" for="annual-salary">Annual Salary</label>
+              <div class="input-wrapper">
+                <span class="input-prefix" aria-hidden="true">$</span>
+                <input type="text" id="annual-salary" class="form-input has-prefix"
+                  placeholder="80,000" inputmode="numeric" autocomplete="off" value="80,000"
+                  aria-describedby="salary-hint salary-error" />
+              </div>
+              <p class="field-help" id="salary-hint">Your total gross annual salary before tax.</p>
+              <p id="salary-error" class="form-error-msg" role="alert"></p>
+            </div>
+
+            <!-- Hourly input -->
+            <div id="hourly-input-group" class="form-group" style="display:none">
+              <label class="form-label" for="hourly-wage">Hourly Wage</label>
+              <div class="input-wrapper">
+                <span class="input-prefix" aria-hidden="true">$</span>
+                <input type="number" id="hourly-wage" class="form-input has-prefix"
+                  placeholder="38.46" min="0.01" max="10000" step="0.01" value="38.46"
+                  aria-describedby="hourly-hint hourly-error" />
+              </div>
+              <p class="field-help" id="hourly-hint">Your gross hourly rate before tax.</p>
+              <p id="hourly-error" class="form-error-msg" role="alert"></p>
+            </div>
+
+            <!-- Hours per week -->
+            <div class="form-group">
+              <label class="form-label" for="hours-per-week">Hours Per Week</label>
+              <div class="input-wrapper">
+                <input type="number" id="hours-per-week" class="form-input has-suffix"
+                  placeholder="40" min="1" max="80" step="0.5" value="40"
+                  aria-describedby="hours-hint" />
+                <span class="input-suffix" aria-hidden="true">hrs</span>
+              </div>
+              <input type="range" id="hours-slider" class="range-slider"
+                min="20" max="60" step="0.5" value="40" aria-label="Hours per week slider" />
+              <p class="field-help" id="hours-hint">Standard full-time in Canada is 40 hours/week. Many professionals work 37.5 hours.</p>
+            </div>
+
+            <!-- Vacation weeks -->
+            <div class="form-group">
+              <label class="form-label" for="vacation-weeks">Paid Vacation / Time Off</label>
+              <div class="select-wrapper">
+                <select id="vacation-weeks" class="form-select" aria-describedby="vac-hint">
+                  <option value="0">No paid vacation (contractor/self-employed)</option>
+                  <option value="2" selected>2 weeks (minimum — most provinces)</option>
+                  <option value="3">3 weeks</option>
+                  <option value="4">4 weeks</option>
+                  <option value="5">5 weeks</option>
+                  <option value="6">6 weeks</option>
+                </select>
+              </div>
+              <p class="field-help" id="vac-hint">For salaried employees with paid vacation, this doesn't change your annual salary. For contractors comparing to salaried roles, unpaid time off reduces effective hourly rate.</p>
+            </div>
+
+            <!-- Stat holidays -->
+            <div class="form-group">
+              <label class="form-label" for="stat-days">Statutory Holidays</label>
+              <div class="select-wrapper">
+                <select id="stat-days" class="form-select" aria-describedby="stat-hint">
+                  <option value="0">Not included</option>
+                  <option value="9">9 days (BC, AB, MB, SK, NS, PEI, NL)</option>
+                  <option value="10" selected>10 days (Federal / Ontario)</option>
+                  <option value="11">11 days (New Brunswick)</option>
+                  <option value="13">13 days (Quebec)</option>
+                </select>
+              </div>
+              <p class="field-help" id="stat-hint">Used to calculate your effective hourly rate — the number of working hours you actually put in per year.</p>
+            </div>
+
+            <div class="btn-row">
+              <button type="submit" class="btn btn-primary btn-calculate" style="flex:1">
+                Convert
+              </button>
+              <button type="button" id="reset-btn" class="btn btn-secondary">Reset</button>
+            </div>
+
+          </form>
+        </section>
+
+        <!-- Results -->
+        <section class="calc-panel" aria-labelledby="results-heading" aria-live="polite">
+          <h2 id="results-heading" class="calc-panel-title">Your Results</h2>
+
+          <div id="results-placeholder" class="result-placeholder">
+            <div class="result-placeholder-icon" aria-hidden="true">
+              <svg width="56" height="56" viewBox="0 0 56 56" fill="none">
+                <rect x="10" y="18" width="36" height="20" rx="3" stroke="#D1D5DB" stroke-width="2"/>
+                <path d="M20 28H36M28 22V34" stroke="#D1D5DB" stroke-width="2" stroke-linecap="round"/>
+              </svg>
+            </div>
+            <p>Enter your salary or hourly rate and click <strong>Convert</strong>.</p>
+          </div>
+
+          <div id="results-content" class="hidden">
+
+            <!-- Hero -->
+            <div class="result-hero">
+              <p class="result-hero-label" id="result-hero-label">Hourly Equivalent</p>
+              <p class="result-hero-value" id="result-hero-value">—</p>
+              <p class="result-hero-sub" id="result-hero-sub">—</p>
+            </div>
+
+            <!-- Pay period breakdown -->
+            <div style="margin-top:var(--space-5)">
+              <p style="font-family:var(--font-heading);font-weight:700;font-size:var(--text-base);margin-bottom:var(--space-3)">Pay Period Breakdown</p>
+              <div class="result-summary" role="list">
+                <div class="result-row" role="listitem">
+                  <span class="result-row-label">Annual Salary</span>
+                  <span class="result-row-value" id="result-annual">—</span>
+                </div>
+                <div class="result-row" role="listitem">
+                  <span class="result-row-label">Monthly (÷ 12)</span>
+                  <span class="result-row-value" id="result-monthly">—</span>
+                </div>
+                <div class="result-row" role="listitem">
+                  <span class="result-row-label">Semi-Monthly (÷ 24)</span>
+                  <span class="result-row-value" id="result-semi-monthly">—</span>
+                </div>
+                <div class="result-row" role="listitem">
+                  <span class="result-row-label">Biweekly (÷ 26)</span>
+                  <span class="result-row-value" id="result-biweekly">—</span>
+                </div>
+                <div class="result-row" role="listitem">
+                  <span class="result-row-label">Weekly (÷ 52)</span>
+                  <span class="result-row-value" id="result-weekly">—</span>
+                </div>
+                <div class="result-row" role="listitem">
+                  <span class="result-row-label">Daily (÷ 260 days)</span>
+                  <span class="result-row-value" id="result-daily">—</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Milestone cards -->
+            <div class="milestone-grid" style="margin-top:var(--space-5)">
+              <div class="milestone-card">
+                <p class="milestone-label">Standard Hourly Rate</p>
+                <p class="milestone-value" id="result-hourly-standard">—</p>
+                <p class="milestone-sub">Based on 2,080 hrs/yr</p>
+              </div>
+              <div class="milestone-card">
+                <p class="milestone-label">Effective Hourly Rate</p>
+                <p class="milestone-value" id="result-hourly-effective">—</p>
+                <p class="milestone-sub">After vacation &amp; stat holidays</p>
+              </div>
+              <div class="milestone-card">
+                <p class="milestone-label">Working Hours/Year</p>
+                <p class="milestone-value" id="result-hours-year">—</p>
+                <p class="milestone-sub">After vacation &amp; stats</p>
+              </div>
+              <div class="milestone-card">
+                <p class="milestone-label">Working Days/Year</p>
+                <p class="milestone-value" id="result-days-year">—</p>
+                <p class="milestone-sub">Excluding vacation &amp; stats</p>
+              </div>
+            </div>
+
+            <!-- Contractor vs employee comparison -->
+            <div style="margin-top:var(--space-5)" id="contractor-section">
+              <button type="button" class="advanced-toggle" id="contractor-toggle" aria-expanded="false" aria-controls="contractor-details">
+                <span>🔧 Contractor vs Employee Comparison</span>
+                <svg class="advanced-toggle-icon" width="18" height="18" viewBox="0 0 20 20" fill="none" aria-hidden="true">
+                  <path d="M5 7.5L10 12.5L15 7.5" stroke="#6B7280" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </button>
+              <div id="contractor-details" class="advanced-fields">
+                <p style="font-size:var(--text-sm);color:var(--color-text-muted);margin-bottom:var(--space-4);margin-top:var(--space-3);line-height:1.7">As a contractor, you are responsible for your own CPP (both employee and employer portions), EI (optional but no employer match), benefits, vacation, and equipment. Your hourly rate must be higher than an equivalent salaried employee to compensate.</p>
+                <div class="result-summary" role="list">
+                  <div class="result-row" role="listitem">
+                    <span class="result-row-label">Equivalent salaried annual</span>
+                    <span class="result-row-value" id="result-annual">—</span>
+                  </div>
+                  <div class="result-row" role="listitem">
+                    <span class="result-row-label">CPP employer match (saved)</span>
+                    <span class="result-row-value is-error" id="result-cpp-cost">—</span>
+                  </div>
+                  <div class="result-row" role="listitem">
+                    <span class="result-row-label">Estimated benefits value</span>
+                    <span class="result-row-value is-error" id="result-benefits-cost">~$5,000–$10,000/yr</span>
+                  </div>
+                  <div class="result-row" role="listitem">
+                    <span class="result-row-label">Suggested contractor rate</span>
+                    <span class="result-row-value" id="result-contractor-rate">—</span>
+                  </div>
+                </div>
+                <p style="font-size:var(--text-xs);color:var(--color-text-muted);margin-top:var(--space-3)">Suggested contractor rate adds ~25–30% to the equivalent salaried hourly rate to compensate for self-employment costs. Actual rate depends on your province, deductions, and specific situation.</p>
+              </div>
+            </div>
+
+            <div id="nn-disclaimer" style="margin-top:var(--space-5)"></div>
+
+            <button type="button" id="copy-btn" class="copy-btn" style="margin-top:var(--space-4)">
+              📋 Copy Results to Clipboard
+            </button>
+
+          </div>
+        </section>
+      </div>
+
+      <!-- Educational -->
+      <section style="margin-top:var(--space-16);padding-top:var(--space-10);border-top:1px solid var(--color-border)">
+        <h2 style="font-size:var(--text-2xl);font-weight:700;margin-bottom:var(--space-8)">Salary vs Hourly in Canada</h2>
+        <div style="display:grid;gap:var(--space-8)">
+
+          <div>
+            <h3 style="font-size:var(--text-xl);font-weight:600;margin-bottom:var(--space-3)">🇨🇦 Canadian Minimum Wage by Province (2026)</h3>
+            <div style="overflow-x:auto">
+              <table style="width:100%;border-collapse:collapse;font-size:var(--text-sm)">
+                <thead>
+                  <tr style="background:var(--color-bg);border-bottom:2px solid var(--color-border)">
+                    <th style="padding:var(--space-3);text-align:left;font-weight:600">Province</th>
+                    <th style="padding:var(--space-3);text-align:right;font-weight:600">Min Wage</th>
+                    <th style="padding:var(--space-3);text-align:right;font-weight:600">Annual (40hr/wk)</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr style="border-bottom:1px solid var(--color-border)"><td style="padding:var(--space-2) var(--space-3)">Ontario</td><td style="padding:var(--space-2) var(--space-3);text-align:right">$17.20/hr</td><td style="padding:var(--space-2) var(--space-3);text-align:right">$35,776</td></tr>
+                  <tr style="border-bottom:1px solid var(--color-border);background:var(--color-bg)"><td style="padding:var(--space-2) var(--space-3)">British Columbia</td><td style="padding:var(--space-2) var(--space-3);text-align:right">$17.40/hr</td><td style="padding:var(--space-2) var(--space-3);text-align:right">$36,192</td></tr>
+                  <tr style="border-bottom:1px solid var(--color-border)"><td style="padding:var(--space-2) var(--space-3)">Alberta</td><td style="padding:var(--space-2) var(--space-3);text-align:right">$15.00/hr</td><td style="padding:var(--space-2) var(--space-3);text-align:right">$31,200</td></tr>
+                  <tr style="border-bottom:1px solid var(--color-border);background:var(--color-bg)"><td style="padding:var(--space-2) var(--space-3)">Quebec</td><td style="padding:var(--space-2) var(--space-3);text-align:right">$15.75/hr</td><td style="padding:var(--space-2) var(--space-3);text-align:right">$32,760</td></tr>
+                  <tr style="border-bottom:1px solid var(--color-border)"><td style="padding:var(--space-2) var(--space-3)">Manitoba</td><td style="padding:var(--space-2) var(--space-3);text-align:right">$15.80/hr</td><td style="padding:var(--space-2) var(--space-3);text-align:right">$32,864</td></tr>
+                  <tr style="border-bottom:1px solid var(--color-border);background:var(--color-bg)"><td style="padding:var(--space-2) var(--space-3)">Saskatchewan</td><td style="padding:var(--space-2) var(--space-3);text-align:right">$15.00/hr</td><td style="padding:var(--space-2) var(--space-3);text-align:right">$31,200</td></tr>
+                  <tr style="border-bottom:1px solid var(--color-border)"><td style="padding:var(--space-2) var(--space-3)">Nova Scotia</td><td style="padding:var(--space-2) var(--space-3);text-align:right">$15.70/hr</td><td style="padding:var(--space-2) var(--space-3);text-align:right">$32,656</td></tr>
+                  <tr><td style="padding:var(--space-2) var(--space-3)">New Brunswick</td><td style="padding:var(--space-2) var(--space-3);text-align:right">$15.30/hr</td><td style="padding:var(--space-2) var(--space-3);text-align:right">$31,824</td></tr>
+                </tbody>
+              </table>
+            </div>
+            <p style="font-size:var(--text-xs);color:var(--color-text-muted);margin-top:var(--space-2)">Annual figures based on 40 hours/week × 52 weeks = 2,080 hours. Minimum wages as of 2026 — verify with your provincial government for the most current rate.</p>
+          </div>
+
+          <div>
+            <h3 style="font-size:var(--text-xl);font-weight:600;margin-bottom:var(--space-3)">🔧 Contractor Rate vs Salaried Rate in Canada</h3>
+            <p style="color:var(--color-text-muted);line-height:1.8;margin-bottom:var(--space-4)">One of the most common mistakes Canadian contractors make is setting their hourly rate equal to what a salaried employee earns on an hourly basis. As a contractor or self-employed person, your rate must be significantly higher to account for costs that employers cover for salaried staff:</p>
+            <div style="padding:var(--space-4) var(--space-5);background:var(--color-bg);border:1px solid var(--color-border);border-radius:var(--radius-md);font-size:var(--text-sm)">
+              <div style="display:flex;flex-direction:column;gap:var(--space-2)">
+                <div style="display:flex;justify-content:space-between"><span>Employer CPP match (2026)</span><span style="font-weight:600">+$3,867.50/yr</span></div>
+                <div style="display:flex;justify-content:space-between"><span>Employer EI match (~1.4×)</span><span style="font-weight:600">+$1,468.77/yr</span></div>
+                <div style="display:flex;justify-content:space-between"><span>Health &amp; dental benefits</span><span style="font-weight:600">~$5,000–$10,000/yr</span></div>
+                <div style="display:flex;justify-content:space-between"><span>Paid vacation (2 weeks)</span><span style="font-weight:600">~4% of salary</span></div>
+                <div style="display:flex;justify-content:space-between"><span>Stat holidays (10 days)</span><span style="font-weight:600">~3.8% of salary</span></div>
+                <div style="display:flex;justify-content:space-between;border-top:1px solid var(--color-border);padding-top:var(--space-2);font-weight:700"><span>Suggested rate premium</span><span>+25–35%</span></div>
+              </div>
+            </div>
+          </div>
+
+          <div>
+            <h3 style="font-size:var(--text-xl);font-weight:600;margin-bottom:var(--space-3)">❓ Frequently Asked Questions</h3>
+            <div style="display:flex;flex-direction:column;gap:var(--space-5)">
+              <div>
+                <p style="font-weight:600;margin-bottom:var(--space-1)">How many working hours are in a Canadian work year?</p>
+                <p style="color:var(--color-text-muted);font-size:var(--text-sm);line-height:1.7">The standard Canadian work year is 52 weeks × 40 hours = 2,080 hours. With 10 federal statutory holidays (Ontario) deducted, it's 2,000 hours. Quebec has 13 stat holidays, giving approximately 1,976 hours. These numbers matter most for contractors calculating their effective hourly rate and for comparing job offers with different hours.</p>
+              </div>
+              <div>
+                <p style="font-weight:600;margin-bottom:var(--space-1)">What is the most common pay period in Canada?</p>
+                <p style="color:var(--color-text-muted);font-size:var(--text-sm);line-height:1.7">Biweekly (every two weeks, 26 pay periods per year) is the most common in Canada, particularly in the public sector and larger private employers. Semi-monthly (twice a month, 24 periods) is also common. Weekly pay is more typical in trades, retail, and hospitality. Monthly pay is standard for many professionals and small businesses. Biweekly results in two months per year with three paychecks instead of the usual two.</p>
+              </div>
+              <div>
+                <p style="font-weight:600;margin-bottom:var(--space-1)">How much paid vacation am I entitled to in Canada?</p>
+                <p style="color:var(--color-text-muted);font-size:var(--text-sm);line-height:1.7">Under federal Canada Labour Code and most provincial employment standards, employees are entitled to 2 weeks of paid vacation (4% of wages) after one year of employment. After 5 years with the same employer, this increases to 3 weeks (6%) in most provinces. Many employers offer more than the minimum — 3 weeks is common, and 4–5 weeks is standard in the public sector and tech industry.</p>
+              </div>
+              <div>
+                <p style="font-weight:600;margin-bottom:var(--space-1)">Does my hourly rate change when I become salaried?</p>
+                <p style="color:var(--color-text-muted);font-size:var(--text-sm);line-height:1.7">Not mathematically, but the practical implications differ. A salaried employee typically receives the same amount each pay period regardless of hours worked (within limits). An hourly employee is paid for exact hours worked and must be paid overtime after the statutory threshold — 44 hours/week in Ontario, 8 hours/day or 40 hours/week federally. Many professional roles in Canada are exempt from overtime as salaried "managers" even when the salary is modest.</p>
+              </div>
+            </div>
+          </div>
+
+          <div>
+            <h3 style="font-size:var(--text-xl);font-weight:600;margin-bottom:var(--space-3)">🔗 Related Calculators</h3>
+            <div id="nn-related"></div>
+          </div>
+
+        </div>
+        <div style="margin-top:var(--space-8);padding:var(--space-4) var(--space-5);background:var(--color-bg);border:1px solid var(--color-border);border-radius:var(--radius-md);font-size:var(--text-sm);color:var(--color-text-muted);line-height:1.7">
+          📋 Calculations based on standard 52-week year. Minimum wages as of 2026 — verify current rates with your provincial government. Contractor rate estimates are general guidance only. See our <a href="/disclaimer.html" style="color:var(--color-primary)">full disclaimer</a>.
+        </div>
+      </section>
+
+    </div>
+  </main>
+
+  <footer class="site-footer" id="nn-footer" role="contentinfo"></footer>
+
+  <script src="../script.js" defer></script>
+  <script src="../data/nn-constants.js" defer></script>
+  <script src="../data/nn-calculators.js" defer></script>
+  <script src="../shared/nn-utils.js" defer></script>
+  <script src="../shared/nn-seo.js" defer></script>
+  <script src="../shared/nn-analytics.js" defer></script>
+  <script src="../shared/nn-ads.js" defer></script>
+  <script src="../shared/nn-components.js" defer></script>
+  <script src="salary-vs-hourly.js" defer></script>
+</body>
+</html>
