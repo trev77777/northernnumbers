@@ -235,66 +235,47 @@
 
           <div>
             <h3 style="font-size:var(--text-xl);font-weight:600;margin-bottom:var(--space-3)">🏠 What Is Home Equity?</h3>
-            <p style="color:var(--color-text-muted);line-height:1.8">Home equity is the portion of your home's value that you own outright — the difference between what your home is worth and what you still owe on your mortgage. If your home is worth $800,000 and you have $350,000 remaining on your mortgage, you have $450,000 in equity. Equity grows in two ways: as you pay down your mortgage principal, and as your home's market value increases over time. You can access this equity without selling by using a home equity line of credit (HELOC) or by refinancing your mortgage.</p>
+            <p style="color:var(--color-text-muted);line-height:1.8;margin-bottom:var(--space-4)">Home equity is the difference between your home's current market value and the amount you still owe on your mortgage. If your house is worth $900,000 and you owe $400,000, your equity is $500,000. Equity grows over time as you pay down the mortgage and as the property appreciates in value. It is the asset you can tap into for major expenses without selling your home.</p>
+            <p style="color:var(--color-text-muted);line-height:1.8">This calculator helps you understand your equity position, your loan-to-value ratio (LTV), and how much you may be able to borrow through a HELOC under Canadian lending rules. It also shows when your current mortgage balance leaves you too close to the 80% combined LTV ceiling, which can block HELOC approval.</p>
           </div>
 
           <div>
-            <h3 style="font-size:var(--text-xl);font-weight:600;margin-bottom:var(--space-3)">📏 The Two OSFI LTV Rules</h3>
-            <p style="color:var(--color-text-muted);line-height:1.8;margin-bottom:var(--space-3)">Under OSFI Guideline B-20, Canadian lenders must apply two simultaneous borrowing limits on HELOCs. Your actual borrowing limit is the <strong>lesser</strong> of both rules:</p>
+            <h3 style="font-size:var(--text-xl);font-weight:600;margin-bottom:var(--space-3)">📏 The Two OSFI LTV Rules Explained</h3>
+            <p style="color:var(--color-text-muted);line-height:1.8;margin-bottom:var(--space-4)">OSFI Guideline B-20 requires lenders to consider two key limits when approving a HELOC. The first is a standalone HELOC cap of 65% of home value. The second is a combined cap of 80% of home value when adding your mortgage balance and HELOC limit together. The lender must comply with both, so your actual borrowing room is the lower of the two amounts.</p>
             <div style="display:grid;grid-template-columns:1fr 1fr;gap:var(--space-4)">
               <div style="padding:var(--space-4);background:#EFF6FF;border:1px solid #BFDBFE;border-radius:var(--radius-md)">
                 <p style="font-weight:700;color:#1E40AF;margin-bottom:var(--space-2)">Rule A — 65% Cap</p>
-                <p style="font-size:var(--text-sm);color:var(--color-text-muted);line-height:1.7">The standalone HELOC cannot exceed 65% of your home's appraised value. On an $800,000 home, this means a maximum HELOC of $520,000 — regardless of your mortgage balance.</p>
+                <p style="font-size:var(--text-sm);color:var(--color-text-muted);line-height:1.7">Your HELOC balance cannot exceed 65% of your home's value by itself. On a $750,000 home, that limit is $487,500.</p>
               </div>
               <div style="padding:var(--space-4);background:#F0FDF4;border:1px solid #86EFAC;border-radius:var(--radius-md)">
                 <p style="font-weight:700;color:#166534;margin-bottom:var(--space-2)">Rule B — 80% Combined</p>
-                <p style="font-size:var(--text-sm);color:var(--color-text-muted);line-height:1.7">Your mortgage balance plus the HELOC limit cannot exceed 80% of your home's value. On an $800,000 home with a $400,000 mortgage, this limits the HELOC to $240,000.</p>
+                <p style="font-size:var(--text-sm);color:var(--color-text-muted);line-height:1.7">Your mortgage balance plus the HELOC limit cannot exceed 80% of the home's value. If your mortgage is $300,000 on a $750,000 house, this rule allows a maximum HELOC of $300,000.</p>
               </div>
             </div>
           </div>
 
           <div>
-            <h3 style="font-size:var(--text-xl);font-weight:600;margin-bottom:var(--space-3)">📊 HELOC vs. Mortgage Refinance</h3>
-            <div style="overflow-x:auto">
-              <table style="width:100%;border-collapse:collapse;font-size:var(--text-sm)">
-                <thead>
-                  <tr style="background:var(--color-bg);border-bottom:2px solid var(--color-border)">
-                    <th style="padding:var(--space-3);text-align:left;font-weight:600"></th>
-                    <th style="padding:var(--space-3);text-align:left;font-weight:600">HELOC</th>
-                    <th style="padding:var(--space-3);text-align:left;font-weight:600">Mortgage Refinance</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr style="border-bottom:1px solid var(--color-border)"><td style="padding:var(--space-2) var(--space-3)">Maximum LTV</td><td style="padding:var(--space-2) var(--space-3)">65% (standalone)</td><td style="padding:var(--space-2) var(--space-3)">80% (one-time)</td></tr>
-                  <tr style="border-bottom:1px solid var(--color-border);background:var(--color-bg)"><td style="padding:var(--space-2) var(--space-3)">Rate type</td><td style="padding:var(--space-2) var(--space-3)">Variable (prime +)</td><td style="padding:var(--space-2) var(--space-3)">Fixed or variable</td></tr>
-                  <tr style="border-bottom:1px solid var(--color-border)"><td style="padding:var(--space-2) var(--space-3)">Repayment</td><td style="padding:var(--space-2) var(--space-3)">Interest-only minimum</td><td style="padding:var(--space-2) var(--space-3)">Principal + interest</td></tr>
-                  <tr style="border-bottom:1px solid var(--color-border);background:var(--color-bg)"><td style="padding:var(--space-2) var(--space-3)">Flexibility</td><td style="padding:var(--space-2) var(--space-3)">Revolving — borrow, repay, re-borrow</td><td style="padding:var(--space-2) var(--space-3)">One-time lump sum</td></tr>
-                  <tr><td style="padding:var(--space-2) var(--space-3)">Best for</td><td style="padding:var(--space-2) var(--space-3)">Ongoing access, flexibility</td><td style="padding:var(--space-2) var(--space-3)">Large one-time needs, rate certainty</td></tr>
-                </tbody>
-              </table>
-            </div>
+            <h3 style="font-size:var(--text-xl);font-weight:600;margin-bottom:var(--space-3)">📊 How Loan-to-Value Affects Your Options</h3>
+            <p style="color:var(--color-text-muted);line-height:1.8;margin-bottom:var(--space-4)">Loan-to-value ratio (LTV) is the percentage of your home's value that is financed. A lower LTV is safer for lenders and usually means better borrowing options. Most Canadian lenders prefer borrowers to stay below 65% to 75% combined LTV for the best rates and the easiest approval.</p>
+            <p style="color:var(--color-text-muted);line-height:1.8">This calculator shows your current LTV and your LTV after a potential full HELOC draw. If your LTV is already close to 80%, you may need to pay down the mortgage or wait until your home appreciates to access more equity. The tool also highlights when you may not qualify for a new HELOC because your mortgage balance already exceeds 80% of value.</p>
           </div>
 
           <div>
-            <h3 style="font-size:var(--text-xl);font-weight:600;margin-bottom:var(--space-3)">❓ Frequently Asked Questions</h3>
-            <div style="display:flex;flex-direction:column;gap:var(--space-5)">
-              <div>
-                <p style="font-weight:600;margin-bottom:var(--space-1)">How much can I borrow with a HELOC in Canada?</p>
-                <p style="color:var(--color-text-muted);font-size:var(--text-sm);line-height:1.7">Under OSFI Guideline B-20, the lesser of: 65% of your home's appraised value, or 80% of your home's value minus your outstanding mortgage balance. For example, on a $700,000 home with a $300,000 mortgage: Rule A gives $455,000, Rule B gives $260,000 — so your HELOC limit is $260,000. Your lender will also assess your income, credit score, and debt service ratios before approving.</p>
-              </div>
-              <div>
-                <p style="font-weight:600;margin-bottom:var(--space-1)">Is HELOC interest tax deductible in Canada?</p>
-                <p style="color:var(--color-text-muted);font-size:var(--text-sm);line-height:1.7">HELOC interest is tax deductible only if the borrowed funds are used to earn income — for example, to invest in stocks, bonds, or a rental property. The CRA's "direct tracing" rule requires a clear link between the HELOC draw and the income-producing investment. Interest on HELOC funds used for personal purposes (renovations to your principal residence, vacations, debt consolidation) is not deductible. Consult a tax professional before claiming HELOC interest as a deduction.</p>
-              </div>
-              <div>
-                <p style="font-weight:600;margin-bottom:var(--space-1)">What is the current HELOC interest rate in Canada?</p>
-                <p style="color:var(--color-text-muted);font-size:var(--text-sm);line-height:1.7">Canadian HELOCs are variable-rate products priced at the lender's prime rate plus a spread. With the Bank of Canada's prime rate at 4.95% in 2026, most major bank HELOCs are priced at 5.45%–5.95% (prime + 0.50% to prime + 1.00%). Your actual rate depends on your credit score, LTV ratio, and lender relationship. Borrowers with strong credit and low LTV can often negotiate below the posted spread.</p>
-              </div>
-              <div>
-                <p style="font-weight:600;margin-bottom:var(--space-1)">What is the stress test for a HELOC in Canada?</p>
-                <p style="color:var(--color-text-muted);font-size:var(--text-sm);line-height:1.7">Yes — the mortgage stress test applies to HELOCs at federally regulated lenders. You must qualify at the higher of your contracted HELOC rate plus 2%, or 5.25%. At a 5.45% HELOC rate, the stress test rate would be 7.45%. Note that for qualification purposes, the HELOC payment is calculated as interest-only on the limit (not just the drawn balance), which affects your TDS ratio calculation.</p>
-              </div>
-            </div>
+            <h3 style="font-size:var(--text-xl);font-weight:600;margin-bottom:var(--space-3)">💡 When to Use a HELOC vs a Refinance</h3>
+            <p style="color:var(--color-text-muted);line-height:1.8;margin-bottom:var(--space-4)">A HELOC is best when you need flexible access to funds for ongoing expenses, renovations, or short-term cash flow. It is a revolving line: borrow, repay, and borrow again as needed. A refinance is better when you have a one-time need and want a single, stable payment schedule.</p>
+            <p style="color:var(--color-text-muted);line-height:1.8">Keep in mind that a HELOC is usually variable rate and can move with prime rate changes. A refinance can lock in a fixed rate for 1–5 years, providing certainty. Use this calculator to estimate your equity and then discuss with your lender whether a HELOC, a refinance, or a combination is the right choice for your goals.</p>
+          </div>
+
+          <div>
+            <h3 style="font-size:var(--text-xl);font-weight:600;margin-bottom:var(--space-3)">⚠️ Risks and Best Practices for HELOC Borrowing</h3>
+            <p style="color:var(--color-text-muted);line-height:1.8;margin-bottom:var(--space-4)">A HELOC gives you valuable access to home equity, but it is still a form of debt secured by your house. If property values fall or you struggle to make payments, the lender can require repayment. For this reason, only use a HELOC for things with clear value, such as home repairs, debt consolidation at lower interest, or business investment.</p>
+            <p style="color:var(--color-text-muted);line-height:1.8">Avoid using a HELOC for discretionary spending like vacations or luxury items. Keep the balance manageable, and if possible, make more than the minimum payment to reduce interest over time. The calculator shows your borrowing room so you can make an informed decision instead of borrowing more than you need.</p>
+          </div>
+
+          <div>
+            <h3 style="font-size:var(--text-xl);font-weight:600;margin-bottom:var(--space-3)">🔎 What Lenders Look At in 2026</h3>
+            <p style="color:var(--color-text-muted);line-height:1.8;margin-bottom:var(--space-4)">Lenders evaluate more than just your LTV. They also look at your credit score, debt service ratios, employment history, and proof of income. Since 2020, lenders have been especially cautious with debt service — they want to make sure you can afford the payments even if interest rates rise.</p>
+            <p style="color:var(--color-text-muted);line-height:1.8">Your HELOC application will typically be stress tested at your HELOC rate plus 2%, or 5.25%, whichever is higher. This means your ability to qualify depends on the cost of the HELOC even before you take any money out. Use the calculator to estimate your equity, but discuss qualification details with the lender before applying.</p>
           </div>
 
           <div>
@@ -304,7 +285,7 @@
 
         </div>
         <div style="margin-top:var(--space-8);padding:var(--space-4) var(--space-5);background:var(--color-bg);border:1px solid var(--color-border);border-radius:var(--radius-md);font-size:var(--text-sm);color:var(--color-text-muted);line-height:1.7">
-          📋 HELOC limits based on OSFI Guideline B-20: 65% standalone LTV cap and 80% combined LTV cap. Prime rate 4.95% as of 2026. Actual HELOC eligibility depends on lender appraisal, credit score, income, and debt service ratios. Results are estimates only — consult your lender and a financial advisor before making borrowing decisions. See our <a href="/disclaimer.html" style="color:var(--color-primary)">full disclaimer</a>.
+          📋 HELOC and home equity guidance is based on OSFI Guideline B-20 and typical Canadian lending practice. Prime rate assumptions are for 2026 and may change. This tool is an estimate; final borrowing capacity depends on lender appraisal, income verification, credit score, and debt service ratios. See our <a href="/disclaimer.html" style="color:var(--color-primary)">full disclaimer</a>.
         </div>
       </section>
 
