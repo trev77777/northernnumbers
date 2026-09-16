@@ -1,10 +1,11 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://www.northernnumbers.ca/sitemap.xml
+Sitemap: https://northernnumbers.ca/sitemap.xml
 
 # Block internal framework files from indexing
+# (Rendering-critical JS lives in /data/ and /shared/ and must stay
+#  crawlable — see YEARLY_UPDATE.md / AdSense audit. Only genuinely
+#  internal, non-rendering folders are blocked here.)
 Disallow: /template/
-Disallow: /data/
-Disallow: /shared/
 Disallow: /tests/

@@ -22,14 +22,34 @@
 
 window.NNSeo = {
   SITE_NAME: 'Northern Numbers',
-  SITE_URL:  'https://www.northernnumbers.ca',
-  OG_IMAGE:  'https://www.northernnumbers.ca/og-image.png',
+  SITE_URL:  'https://northernnumbers.ca',
+  OG_IMAGE:  'https://northernnumbers.ca/og-image.png',
+
+  /**
+   * Builds the final page title without re-appending words the
+   * calculator's own title already contains (was producing doubled
+   * "Canadian ... Canadian", "Calculator ... Calculator", and
+   * repeated years — see AdSense audit, title-mangling bug).
+   */
+  _buildTitle: function(rawTitle, year) {
+    const title = rawTitle || 'Calculator';
+    // /canad/i also matches "Canada", not just "Canadian" — both count
+    // as already having the country name present.
+    const hasCanada     = /canad/i.test(title);
+    const hasCalculator = /calculator/i.test(title);
+    const hasYear       = title.indexOf(String(year)) !== -1;
+    let full = title;
+    if (!hasCanada)      full = `Canadian ${full}`;
+    if (!hasCalculator) full = `${full} Calculator`;
+    if (!hasYear)        full = `${full} ${year}`;
+    return full;
+  },
 
   init: function(config) {
     if (!config) return;
     const year  = new Date().getFullYear();
     const title = config.title || 'Calculator';
-    const full  = `Canadian ${title} Calculator ${year} — ${this.SITE_NAME}`;
+    const full  = this._buildTitle(title, year);
     const url   = config.slug ? `${this.SITE_URL}/${config.slug}/` : this.SITE_URL;
     const desc  = config.description || `Free Canadian ${title} calculator.`;
     const kw    = config.keywords || `${title.toLowerCase()} canada`;

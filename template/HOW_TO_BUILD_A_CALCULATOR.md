@@ -151,7 +151,7 @@ The footer and homepage automatically update — no other files to edit.
 Add your URL:
 ```xml
 <url>
-  <loc>https://www.northernnumbers.ca/car-loan/</loc>
+  <loc>https://northernnumbers.ca/car-loan/</loc>
   <lastmod>2026-07-03</lastmod>
   <changefreq>monthly</changefreq>
   <priority>0.8</priority>

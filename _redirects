@@ -1,1 +1,13 @@
 /budget/* /budget/index.html 200
+
+# Canonical host: non-www. If your DNS/host also serves the www
+# hostname, this forces it to redirect to the apex domain — but on
+# some hosts (e.g. Cloudflare Pages) host-based redirects like this
+# are NOT honoured by the _redirects file and must be configured in
+# the hosting dashboard instead. See audit report for manual steps.
+https://www.northernnumbers.ca/* https://northernnumbers.ca/:splat 301!
+
+# salary-to-hourly consolidated into salary-vs-hourly (AdSense audit
+# Phase 1) — orphaned duplicate page, redirect to the canonical URL.
+/salary-to-hourly/* /salary-vs-hourly/ 301
+/salary-to-hourly /salary-vs-hourly/ 301
