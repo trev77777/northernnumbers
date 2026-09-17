@@ -7,7 +7,7 @@
    - Unused room carries forward indefinitely
    - Withdrawals restore room on Jan 1 of following year
    - Over-contribution penalty: 1% per month on excess
-   - Lifetime room in 2026 (eligible since 2009): $95,000
+   - Lifetime room in 2026 (eligible since 2009): $109,000
 
    Contribution timing (approved):
    - One-Time Contribution Today: Year 1 only, capped at available room
@@ -20,8 +20,10 @@
    ============================================= */
 'use strict';
 
-/* ── CRA annual limits ───────────────────────────────────────── */
-const TFSA_LIMITS = {
+/* ── CRA annual limits — reads data/nn-constants.js (NN.TFSA.ANNUAL_LIMITS),
+   the shared source of truth; this literal is only a fallback if that
+   file failed to load. ── */
+const TFSA_LIMITS = (window.NN && NN.TFSA && NN.TFSA.ANNUAL_LIMITS) || {
   2009:5000,2010:5000,2011:5000,2012:5000,
   2013:5500,2014:5500,2015:10000,
   2016:5500,2017:5500,2018:5500,
@@ -29,6 +31,7 @@ const TFSA_LIMITS = {
   2022:6000,2023:6500,2024:7000,2025:7000,2026:7000
 };
 const CURRENT_YEAR = new Date().getFullYear();
+const TFSA_LIFETIME_2026 = (window.NN && NN.TFSA && NN.TFSA.LIFETIME_2026) || 109000;
 
 function calcLifetimeRoom(birthYear) {
   const first = Math.max(birthYear + 18, 2009);
@@ -140,7 +143,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
   /* ── 5. PRESETS ───────────────────────────────────────────── */
   const PRESETS = {
-    starter:   { balance:0,     room:95000, contribution:500,  frequency:'monthly',  annualReturn:4, horizon:20 },
+    starter:   { balance:0,     room:TFSA_LIFETIME_2026, contribution:500,  frequency:'monthly',  annualReturn:4, horizon:20 },
     consistent:{ balance:10000, room:50000, contribution:7000, frequency:'yearly',   annualReturn:6, horizon:20 },
     aggressive:{ balance:25000, room:30000, contribution:7000, frequency:'yearly',   annualReturn:8, horizon:25 }
   };
@@ -422,7 +425,7 @@ document.addEventListener('DOMContentLoaded', function () {
   if (resetBtn) {
     resetBtn.addEventListener('click', function() {
       if (balanceEl)      balanceEl.value      = NNUtils.formatInputNumber(0);
-      if (roomEl)         roomEl.value         = NNUtils.formatInputNumber(95000);
+      if (roomEl)         roomEl.value         = NNUtils.formatInputNumber(TFSA_LIFETIME_2026);
       if (contributionEl) contributionEl.value = NNUtils.formatInputNumber(7000);
       if (frequencyEl)    frequencyEl.value    = 'yearly';
       if (returnEl)       returnEl.value       = '6';

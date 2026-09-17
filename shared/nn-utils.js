@@ -148,5 +148,12 @@ window.NNUtils = {
   },
   rule72: function(rate) {
     return rate > 0 ? (72 / rate).toFixed(1) : '—';
+  },
+  /* Converts NN.FED_BRACKETS/NN.PROV_BRACKETS' {min,max,rate} shape into
+     [max, rate] tuples — shared so capital-gains.js and dividend-tax.js
+     (the two calculators that stack tax on top of other income bracket-
+     by-bracket) can't drift from each other's copy of this adapter. */
+  bracketsToTuples: function(brackets) {
+    return brackets.map(b => [b.max, b.rate]);
   }
 };

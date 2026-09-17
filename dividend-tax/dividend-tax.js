@@ -62,10 +62,10 @@ document.addEventListener('DOMContentLoaded', function () {
     });
     NNSeo.injectSchema({ title:'Dividend Tax Credit Calculator Canada 2026', slug:'dividend-tax', description:'Calculate Canadian dividend tax using the gross-up and dividend tax credit system for 2026.' });
     NNSeo.injectFAQSchema([
-      { question:'What is the eligible dividend gross-up rate in Canada for 2026?', answer:'The eligible dividend gross-up rate is 38% for 2026 (unchanged since 2016). A $1,000 eligible dividend is reported as $1,380 on your T1 tax return. The federal dividend tax credit is 15.0198% of the grossed-up amount ($207.27 on a $1,000 dividend).' },
-      { question:'What is the non-eligible dividend gross-up rate in Canada for 2026?', answer:'The non-eligible (small business) dividend gross-up rate is 15% for 2026. A $1,000 non-eligible dividend is reported as $1,150 on your T1. The federal DTC is 9.0301% of the grossed-up amount ($103.85 on a $1,000 dividend).' },
-      { question:'Do I pay tax on Canadian dividends inside a TFSA?', answer:'No. Canadian dividends inside a TFSA are completely tax-free. There is no gross-up, no dividend tax credit needed, and no reporting on your T1. The dividend tax credit only applies to dividends received in non-registered (taxable) accounts.' },
-      { question:'Are US dividends eligible for the Canadian dividend tax credit?', answer:'No. The Canadian dividend tax credit only applies to dividends from Canadian corporations. US dividends are taxed as ordinary income at your full marginal rate, subject to 15% US withholding tax in non-registered accounts (claimable as a foreign tax credit).' },
+      { question:'What is the difference between eligible and non-eligible dividends in Canada?', answer:'Eligible dividends come from Canadian public corporations (like TSX-listed stocks) and large private corporations that pay the general corporate tax rate. They have a 38% gross-up and 15.0198% federal dividend tax credit. Non-eligible (small business) dividends come from Canadian-controlled private corporations paying the small business tax rate. They have a 15% gross-up and 9.0301% federal DTC. The distinction appears on your T5 slip: Box 24 for eligible, Box 10 for non-eligible.' },
+      { question:'Can the dividend tax credit result in a negative tax rate?', answer:'Yes — at low income levels, the combined federal and provincial dividend tax credits can exceed the gross tax on the dividend, resulting in an effective negative tax rate. This doesn\'t mean you get a cash refund from the dividend itself — instead, the excess credit offsets taxes on your other income. Lower-income Canadians with no other income can receive substantial eligible dividends before owing any federal income tax.' },
+      { question:'Do dividend tax credits apply to dividends inside a TFSA or RRSP?', answer:'No. The dividend tax credit only applies to Canadian dividends received in a non-registered (taxable) account. Dividends inside a TFSA are completely tax-free — you don\'t pay tax and don\'t receive the DTC. Dividends inside an RRSP grow tax-deferred but are taxed as ordinary income when withdrawn — not as dividends. For this reason, many tax planners recommend holding Canadian dividend stocks in non-registered accounts (where the DTC provides an advantage) rather than in an RRSP.' },
+      { question:'Are US or foreign dividends eligible for the Canadian dividend tax credit?', answer:'No. The Canadian dividend tax credit only applies to dividends from Canadian corporations. Dividends from US stocks (like Apple, Microsoft, or US REITs) are treated as foreign income and taxed at your full marginal rate as ordinary income — no gross-up and no DTC. US dividends are also subject to a 15% US withholding tax in non-registered accounts (which you can claim as a foreign tax credit), but can be received without withholding in an RRSP under the Canada-US tax treaty.' },
     ]);
   } catch(e) {}
 
@@ -76,11 +76,12 @@ document.addEventListener('DOMContentLoaded', function () {
   NNUtils.attachFormatter(incomeEl);
 
   /* ── Tax tables 2026 — read from data/nn-constants.js (single source
-     of truth), converted to this file's [threshold, rate] tuple shape.
-     No private bracket copy is kept here — see AdSense audit Phase 2. ── */
-  function toTuples(brackets) {
-    return brackets.map(b => [b.max, b.rate]);
-  }
+     of truth), converted to this file's [threshold, rate] tuple shape
+     via the shared NNUtils.bracketsToTuples adapter (also used by
+     capital-gains.js, so the two calculators can't drift from each
+     other's copy of it). No private bracket copy is kept here — see
+     AdSense audit Phase 2. ── */
+  const toTuples = NNUtils.bracketsToTuples;
   const FED_BRACKETS = (window.NN && NN.FED_BRACKETS) ? toTuples(NN.FED_BRACKETS) : [
     [58523, 0.14], [117045, 0.205], [181440, 0.26], [258482, 0.29], [Infinity, 0.33],
   ];
@@ -146,7 +147,9 @@ document.addEventListener('DOMContentLoaded', function () {
       prev += apply; rem -= apply;
       if (rem <= 0) break;
     }
-    if (province === 'QC') tax *= (1 - 0.165); // Quebec 16.5% federal abatement
+    // Quebec 16.5% federal abatement — use the shared helper so this stays
+    // in sync with NN.QUEBEC_FEDERAL_ABATEMENT_RATE instead of a private copy.
+    tax = (window.NN && NN.applyQuebecAbatement) ? NN.applyQuebecAbatement(tax, province) : (province === 'QC' ? tax * (1 - 0.165) : tax);
     return tax;
   }
 

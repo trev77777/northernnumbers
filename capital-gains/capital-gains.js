@@ -63,10 +63,10 @@ document.addEventListener('DOMContentLoaded', function () {
     });
     NNSeo.injectSchema({ title:'Capital Gains Tax Calculator Canada 2026', slug:'capital-gains', description:'Calculate Canadian capital gains tax using the 2026 50% inclusion rate for all provinces.' });
     NNSeo.injectFAQSchema([
-      { question:'What is the capital gains inclusion rate in Canada for 2026?', answer:'The capital gains inclusion rate is 50% for 2026 — for all Canadians and all gain sizes. The proposed increase to 66.67% was cancelled by the federal government on March 21, 2025 and never became law. Only half of your capital gain is added to taxable income.' },
-      { question:'Do I pay capital gains tax on my home sale in Canada?', answer:'Not if it was your principal residence for all years you owned it. The principal residence exemption fully eliminates capital gains tax on a qualifying home. You must still report the sale on Schedule 3 of your T1 return even if fully exempt.' },
-      { question:'What is the LCGE in Canada for 2026?', answer:'The Lifetime Capital Gains Exemption is $1,275,000 for 2026, indexed from the $1,250,000 limit established June 25, 2024. It applies to qualifying small business corporation shares and qualifying farm or fishing property.' },
-      { question:'How do capital losses work in Canada?', answer:'Capital losses offset capital gains dollar-for-dollar. Net capital losses can be carried back 3 years or carried forward indefinitely. They can only be applied against capital gains, not other income. The superficial loss rule denies losses if you rebuy the same security within 30 days.' },
+      { question:'What is the capital gains inclusion rate in Canada for 2026?', answer:'The capital gains inclusion rate is 50% for 2026 — for all Canadians, all asset types, and all gain sizes. The proposed increase to 66.67% on gains above $250,000 was cancelled by the federal government on March 21, 2025 and never became law. Only half of any capital gain is added to your taxable income.' },
+      { question:'Do I have to pay capital gains tax on my home sale?', answer:'Not if it was your principal residence for all years you owned it. The principal residence exemption fully eliminates capital gains tax on a qualifying home sale — regardless of how large the gain is. However, you must still report the sale on Schedule 3 of your T1 tax return and claim the exemption. Vacation properties and rental properties generally do not qualify for the exemption.' },
+      { question:'What is the superficial loss rule in Canada?', answer:'The superficial loss rule denies a capital loss if you — or an affiliated person (your spouse, a corporation you control, etc.) — buys the same or identical securities within 30 days before or after the sale and still holds them 30 days after the sale. The denied loss is added to the adjusted cost base of the reacquired securities, deferring rather than permanently losing the tax benefit.' },
+      { question:'How long can I carry forward capital losses in Canada?', answer:'Capital losses can be carried forward indefinitely in Canada and applied against future capital gains. They can also be carried back up to three previous tax years to offset gains you already paid tax on — and receive a refund. Net capital losses can only be applied against capital gains, not against other types of income.' },
     ]);
   } catch(e) {}
 
@@ -96,12 +96,12 @@ document.addEventListener('DOMContentLoaded', function () {
 
   /* ── TAX TABLES 2026 — read from data/nn-constants.js (single source
      of truth) and converted to this file's [threshold, rate] tuple
-     shape. No private bracket copy is kept here — see AdSense audit
-     Phase 2 (this file's own copy had drifted from every other
-     calculator, including a wrong Manitoba threshold). ── */
-  function toTuples(brackets) {
-    return brackets.map(b => [b.max, b.rate]);
-  }
+     shape via the shared NNUtils.bracketsToTuples adapter (also used by
+     dividend-tax.js, so the two calculators can't drift from each
+     other's copy of it). No private bracket copy is kept here — see
+     AdSense audit Phase 2 (this file's own copy had drifted from every
+     other calculator, including a wrong Manitoba threshold). ── */
+  const toTuples = NNUtils.bracketsToTuples;
   const FED_BRACKETS = (window.NN && NN.FED_BRACKETS) ? toTuples(NN.FED_BRACKETS) : [
     [58523, 0.14], [117045, 0.205], [181440, 0.26], [258482, 0.29], [Infinity, 0.33],
   ];
@@ -112,12 +112,32 @@ document.addEventListener('DOMContentLoaded', function () {
     PROV_BRACKETS.ON = [[53891, 0.0505], [107785, 0.0915], [150000, 0.1116], [220000, 0.1216], [Infinity, 0.1316]];
   }
 
-  // Top combined rates — for the "Top CG Rate in Province" display card
-  const TOP_COMBINED = {
-    ON: 0.5353, BC: 0.5392, AB: 0.4600, QC: 0.5375, MB: 0.5040,
-    SK: 0.4750, NS: 0.5400, NB: 0.5280, PE: 0.4875, NL: 0.5480,
-    YT: 0.4800, NT: 0.4740, NU: 0.4450,
+  // Top combined rates — for the "Top CG Rate in Province" display card.
+  // Derived from the shared FED_BRACKETS/PROV_BRACKETS top-bracket rates
+  // (fallback literal below only applies if nn-constants.js failed to load)
+  // instead of a private table, which had drifted from the real 2026
+  // brackets for several provinces (e.g. AB and PE were understated by
+  // 2-4 percentage points). Quebec's 16.5% federal abatement reduces the
+  // federal portion; Ontario's surtax (20% + 36%, both active well before
+  // top-bracket income) multiplies the marginal provincial rate by 1.56.
+  const TOP_COMBINED_FALLBACK = {
+    ON: 0.5353, BC: 0.5350, AB: 0.4800, QC: 0.5331, MB: 0.5040,
+    SK: 0.4750, NS: 0.5400, NB: 0.5250, PE: 0.5300, NL: 0.5480,
+    YT: 0.4800, NT: 0.4705, NU: 0.4450,
   };
+  const TOP_COMBINED = {};
+  if (window.NN && NN.FED_BRACKETS && NN.PROV_BRACKETS) {
+    const fedTop = NN.FED_BRACKETS[NN.FED_BRACKETS.length - 1].rate;
+    const abateRate = NN.QUEBEC_FEDERAL_ABATEMENT_RATE || 0.165;
+    Object.keys(NN.PROV_BRACKETS).forEach(p => {
+      const provTop = NN.PROV_BRACKETS[p][NN.PROV_BRACKETS[p].length - 1].rate;
+      const fedAdj  = p === 'QC' ? fedTop * (1 - abateRate) : fedTop;
+      const provAdj = p === 'ON' ? provTop * 1.56 : provTop;
+      TOP_COMBINED[p] = fedAdj + provAdj;
+    });
+  } else {
+    Object.assign(TOP_COMBINED, TOP_COMBINED_FALLBACK);
+  }
 
   /** Ontario surtax: 20% on prov tax > $5,315; +36% on prov tax > $6,802 */
   function onSurtax(provTax) {
@@ -165,8 +185,9 @@ document.addEventListener('DOMContentLoaded', function () {
       if (rem <= 0) break;
     }
 
-    // Quebec 16.5% federal abatement
-    if (province === 'QC') fedTax *= (1 - 0.165);
+    // Quebec 16.5% federal abatement — use the shared helper so this stays
+    // in sync with NN.QUEBEC_FEDERAL_ABATEMENT_RATE instead of a private copy.
+    fedTax = (window.NN && NN.applyQuebecAbatement) ? NN.applyQuebecAbatement(fedTax, province) : (province === 'QC' ? fedTax * (1 - 0.165) : fedTax);
 
     // Provincial tax on gain (difference before/after)
     const provBefore = provTaxTotal(otherIncome, province);

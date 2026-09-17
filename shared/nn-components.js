@@ -230,7 +230,7 @@ NNComponents.renderRelated = function(containerId, relatedIds) {
   if (!el || !window.NNRegistry) return;
 
   const calcs = relatedIds
-    ? relatedIds.map(id => NNRegistry.getById(id)).filter(Boolean)
+    ? relatedIds.map(id => NNRegistry.getById(id)).filter(c => c && c.status === 'active')
     : [];
 
   if (!calcs.length) return;

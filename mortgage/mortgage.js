@@ -672,6 +672,7 @@ function checkCmhc() {
 
 purchasePriceEl.addEventListener('input', checkCmhc);
 downPaymentEl.addEventListener('input', checkCmhc);
+amortizationEl.addEventListener('change', checkCmhc);
 
 
 /* =============================================

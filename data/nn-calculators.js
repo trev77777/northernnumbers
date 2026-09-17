@@ -22,19 +22,6 @@
 
 window.NNRegistry = {
 
-  /* ─── CATEGORIES ─────────────────────────── */
-  categories: [
-    { id: 'mortgage',        label: '🏠 Mortgage',         url: '/mortgage/'         },
-    { id: 'investing',       label: '📈 Investing',         url: '/investing/'        },
-    { id: 'retirement',      label: '🏖 Retirement',        url: '/retirement/'       },
-    { id: 'taxes',           label: '📋 Taxes',             url: '/taxes/'            },
-    { id: 'loans',           label: '💳 Loans',             url: '/loans/'            },
-    { id: 'savings',         label: '💰 Savings',           url: '/savings/'          },
-    { id: 'personal',        label: '👤 Personal Finance',  url: '/personal-finance/' },
-    { id: 'banking',         label: '🏦 Banking',           url: '/banking/'          },
-    { id: 'business',        label: '🏢 Business',          url: '/business/'         }
-  ],
-
   /* ─── CALCULATORS ────────────────────────── */
   calculators: [
 
@@ -68,7 +55,7 @@ window.NNRegistry = {
       keywords: ['rrsp calculator','rrsp tax refund calculator canada','rrsp contribution limit 2026','rrsp calculator canada'],
       status: 'active', priority: 3,
       showInFooter: true, footerSection: 'calculators', showOnHomepage: true,
-      related: ['tfsa','fhsa','compound-interest','retirement']
+      related: ['tfsa','fhsa','compound-interest','cpp']
     },
 
     /* ── FHSA ── */
@@ -90,7 +77,7 @@ window.NNRegistry = {
       keywords: ['compound interest calculator canada','investment growth calculator','compound interest calculator','future value calculator canada'],
       status: 'active', priority: 5,
       showInFooter: false, footerSection: 'calculators', showOnHomepage: true,
-      related: ['tfsa','rrsp','retirement']
+      related: ['tfsa','rrsp','fhsa']
     },
 
     /* ── PLANNED CALCULATORS ── (change status to 'active' when built) */
@@ -155,7 +142,7 @@ window.NNRegistry = {
       keywords: ['cpp calculator','canada pension plan calculator','cpp benefit calculator 2026','when to take cpp'],
       status: 'active', priority: 12,
       showInFooter: true, footerSection: 'moreTools', showOnHomepage: true,
-      related: ['oas','retirement','rrsp','income-tax']
+      related: ['oas','rrif','rrsp','income-tax']
     },
     {
       id: 'oas', name: 'OAS Calculator', category: 'retirement',
@@ -164,7 +151,7 @@ window.NNRegistry = {
       keywords: ['oas calculator canada','old age security calculator','oas clawback calculator','gis calculator canada'],
       status: 'active', priority: 13,
       showInFooter: true, footerSection: 'moreTools', showOnHomepage: true,
-      related: ['cpp','rrsp','retirement','income-tax']
+      related: ['cpp','rrsp','rrif','income-tax']
     },
     {
       id: 'income-tax', name: 'Income Tax Calculator', category: 'taxes',

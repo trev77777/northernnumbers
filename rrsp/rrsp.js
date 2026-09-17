@@ -585,9 +585,15 @@ function renderMilestone(cardEl, yearEl, textEl, subEl, amount, year, finalBalan
 
 function calcTaxOwed(income, province) {
   // Simplified: apply brackets cumulatively for a rough total tax estimate
-  let tax = 0;
   const fedBrackets = (window.NN && NN.FED_BRACKETS) || [];
   const provBrackets = (window.NN && NN.PROV_BRACKETS && NN.PROV_BRACKETS[province]) || (window.NN && NN.PROV_BRACKETS && NN.PROV_BRACKETS.ON) || [];
+  if (fedBrackets.length === 0 || provBrackets.length === 0) {
+    // nn-constants.js failed to load — approximate with the same flat
+    // fallback rate getMarginalRate uses, instead of silently returning
+    // $0 tax (which would also show "$0 tax saved" from a contribution).
+    return income * 0.2965;
+  }
+  let tax = 0;
 
   for (let i = 0; i < fedBrackets.length; i++) {
     const b = fedBrackets[i];
@@ -827,6 +833,11 @@ if (resetBtn) {
 const contribSlider = document.getElementById('contrib-slider');
 
 if (contribSlider) {
+  // Keep the slider's ceiling in sync with the shared RRSP max (avoids the
+  // HTML's hardcoded max attribute silently drifting from NN.RRSP.ANNUAL_MAX
+  // on a future annual update).
+  contribSlider.max = RRSP_MAX_2026;
+
   // Slider → updates text input
   contribSlider.addEventListener('input', function () {
     const val = parseInt(this.value);

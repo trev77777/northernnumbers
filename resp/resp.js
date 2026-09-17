@@ -40,33 +40,28 @@
 document.addEventListener('DOMContentLoaded', function () {
 
   /* ── SEO ─────────────────────────────────── */
-  NNSeo.init({
-    title:       'RESP Calculator Canada',
-    description: 'Free Canadian RESP calculator. Calculate education savings growth, CESG government grants, and projected university fund. Includes BC BCTESG and Quebec QESI provincial grants.',
-    keywords:    'resp calculator canada, resp calculator 2026, cesg calculator, education savings calculator canada, registered education savings plan calculator, cesg grant calculator',
-    slug:        'resp'
-  });
+  if (window.NNSeo) try {
+    NNSeo.init({
+      title:       'RESP Calculator Canada',
+      description: 'Free Canadian RESP calculator. Calculate education savings growth, CESG government grants, and projected university fund. Includes BC BCTESG and Quebec QESI provincial grants.',
+      keywords:    'resp calculator canada, resp calculator 2026, cesg calculator, education savings calculator canada, registered education savings plan calculator, cesg grant calculator',
+      slug:        'resp'
+    });
 
-  NNSeo.injectSchema({
-    title:       'RESP Calculator Canada',
-    slug:        'resp',
-    description: 'Free Canadian RESP calculator with CESG grant tracking, provincial grants, and year-by-year education savings projection.'
-  });
+    NNSeo.injectSchema({
+      title:       'RESP Calculator Canada',
+      slug:        'resp',
+      description: 'Free Canadian RESP calculator with CESG grant tracking, provincial grants, and year-by-year education savings projection.'
+    });
 
-  NNSeo.injectFAQSchema([
-    { question: 'How much should I contribute to an RESP each year?',
-      answer:   '$2,500 per year maximizes the $500 annual CESG grant. The government matches 20% of the first $2,500 contributed. You can contribute more, but CESG only applies to the first $2,500.' },
-    { question: 'What is the CESG and how much is it?',
-      answer:   'The Canada Education Savings Grant (CESG) adds 20% on the first $2,500 you contribute each year — up to $500 per year and $7,200 lifetime per child. It is available until December 31 of the year your child turns 17.' },
-    { question: 'What happens if my child does not go to post-secondary school?',
-      answer:   'You can transfer the RESP to a sibling\'s plan, transfer up to $50,000 in earnings to your RRSP (if you have room), or close the plan. Government grants must be returned if the plan is closed. The RESP can stay open for 36 years.' },
-    { question: 'What is the RESP lifetime contribution limit?',
-      answer:   'The lifetime RESP contribution limit is $50,000 per beneficiary across all plans combined. There is no annual contribution limit, but CESG only applies to the first $2,500 contributed per year.' },
-    { question: 'Is RESP income taxable in Canada?',
-      answer:   'Your original contributions come out tax-free. Government grants and investment growth (called Educational Assistance Payments) are taxed as income in the student\'s hands — typically at a very low or zero rate since most students have little other income.' },
-    { question: 'What provincial RESP grants are available in Canada?',
-      answer:   'British Columbia offers the BCTESG — a one-time $1,200 grant. Quebec offers the QESI — 10% on the first $2,500 per year. Always check your province\'s current program, as grants may change.' }
-  ]);
+    NNSeo.injectFAQSchema([
+      { question:'How much should I contribute to an RESP each year?', answer:'$2,500/year maximizes the $500 annual CESG grant. If you can\'t afford $2,500, contribute whatever you can — the CESG matches 20% of any amount up to $2,500. Even $1,000/year earns $200 in free government money.' },
+      { question:'What happens if my child doesn\'t go to post-secondary school?', answer:'You have options: transfer to a sibling\'s RESP, transfer up to $50,000 to your RRSP (if you have room), or close the plan. If you close the plan, you return the CESG grants, and the investment earnings are taxed as income plus a 20% penalty. The plan can stay open for 36 years, so there\'s no rush to close it.' },
+      { question:'Can I open an RESP for a child who is not my own?', answer:'Yes. Any Canadian resident can open an RESP for any child with a Social Insurance Number. Grandparents, aunts, uncles, and family friends can all open RESPs for a child. However, a child can only have a total of $50,000 in lifetime RESP contributions across all plans combined.' },
+      { question:'What investments can I hold in an RESP?', answer:'A self-directed RESP at a bank or discount broker can hold stocks, ETFs, mutual funds, GICs, and bonds. Most Canadians use low-cost ETFs (like XEQT or VEQT) that automatically shift to a conservative allocation as the child approaches university age. Avoid scholarship/group plans, which often have high fees and rigid rules.' },
+      { question:'Is RESP income taxable?', answer:'Your original contributions come out tax-free. The grants and investment earnings (EAPs) are taxable as income in the student\'s hands. Most students have little or no other income, so they pay very little or no tax on EAPs. This makes an RESP one of the most tax-efficient savings vehicles available to Canadian families.' },
+    ]);
+  } catch(e) {}
 
   /* ── DOM REFS ────────────────────────────── */
   const childAgeEl      = document.getElementById('child-age');

@@ -53,10 +53,10 @@ document.addEventListener('DOMContentLoaded', function () {
     });
     NNSeo.injectSchema({ title:'TFSA Contribution Room Calculator 2026', slug:'tfsa-room', description:'Calculate your exact TFSA contribution room for 2026 using CRA annual limits.' });
     NNSeo.injectFAQSchema([
-      { question:'How much TFSA room do I have in 2026?', answer:'If you were 18 or older and a Canadian resident in 2009, the maximum TFSA room as of January 1, 2026 is $109,000. If you became eligible later, your room is the sum of annual limits from the year you turned 18 (or became a resident, whichever is later) through 2026.' },
-      { question:'What is the TFSA contribution limit for 2026?', answer:'The TFSA annual contribution limit for 2026 is $7,000, the same as 2024 and 2025. The cumulative lifetime limit for someone eligible since 2009 is $109,000 as of January 1, 2026.' },
-      { question:'When do TFSA withdrawals get added back to my room?', answer:'TFSA withdrawals are restored to your contribution room on January 1 of the following year. If you withdraw $10,000 in 2026, that $10,000 is added back to your room on January 1, 2027 — not immediately. Re-contributing in the same year you withdrew is a common over-contribution mistake.' },
-      { question:'Does TFSA room accumulate if I never had a TFSA?', answer:'Yes. TFSA contribution room accumulates automatically every January 1 for every eligible Canadian (18+, resident) even if you never opened a TFSA. If you have been eligible since 2009 and never contributed, you have $109,000 in available room you can contribute immediately.' },
+      { question:'How do I find my exact TFSA room?', answer:'Log in to CRA My Account at canada.ca/my-cra-account. Under the TFSA section, you will see your current contribution room as of January 1 of the current year. Note that CRA\'s figure is based on information reported by financial institutions as of the prior year — very recent contributions or withdrawals may not yet be reflected. This calculator gives you an estimate — always confirm with CRA before making a large contribution.' },
+      { question:'Does TFSA room accumulate if I never opened a TFSA?', answer:'Yes. TFSA room accumulates automatically every January 1 for every eligible Canadian (18+, resident) regardless of whether you have a TFSA account. If you have never opened a TFSA and have been eligible since 2009, you have up to $109,000 in available room — you could contribute all of it immediately upon opening an account.' },
+      { question:'Can I contribute to my spouse\'s TFSA?', answer:'Yes. Unlike RRSPs, there is no spousal attribution rule for TFSAs. You can give money to your spouse to contribute to their own TFSA without any tax consequences, as long as they have the available room. The contribution uses their room, not yours. This is a common income-splitting strategy in retirement.' },
+      { question:'What is the TFSA limit for 2027?', answer:'The CRA has not yet announced the 2027 TFSA limit. The annual limit is indexed to inflation in $500 increments. Based on current inflation trends, the 2027 limit is expected to remain at $7,000, though it could increase to $7,500 if inflation warrants an adjustment. The CRA typically announces the following year\'s limit in the fall.' },
     ]);
   } catch(e) {}
 
@@ -68,8 +68,10 @@ document.addEventListener('DOMContentLoaded', function () {
   NNUtils.attachFormatter(balanceEl);
   NNUtils.initTableToggle('table-toggle', 'room-table');
 
-  /* ── TFSA Annual Limits (CRA) ── */
-  const ANNUAL_LIMITS = {
+  /* ── TFSA Annual Limits — reads data/nn-constants.js (NN.TFSA.ANNUAL_LIMITS),
+     the shared source of truth; this literal is only a fallback if that
+     file failed to load. ── */
+  const ANNUAL_LIMITS = (window.NN && NN.TFSA && NN.TFSA.ANNUAL_LIMITS) || {
     2009:5000, 2010:5000, 2011:5000, 2012:5000,
     2013:5500, 2014:5500, 2015:10000,
     2016:5500, 2017:5500, 2018:5500,

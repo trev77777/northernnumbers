@@ -62,6 +62,10 @@ const rrspBalanceEl      = document.getElementById('rrsp-balance');
 const homePriceEl        = document.getElementById('home-price');
 const downPaymentPctEl   = document.getElementById('down-payment-pct');
 const contribSlider      = document.getElementById('contrib-slider');
+// Keep the slider's ceiling in sync with the shared FHSA limit (avoids the
+// HTML's hardcoded max attribute silently drifting from NN.FHSA.ANNUAL_LIMIT
+// on a future annual update).
+if (contribSlider) contribSlider.max = FHSA_ANNUAL_LIMIT;
 const overContribWarning = document.getElementById('over-contrib-warning');
 const lifetimeWarning    = document.getElementById('lifetime-warning');
 const roomAutoBadge      = document.getElementById('room-auto-badge');

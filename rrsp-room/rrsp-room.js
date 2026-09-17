@@ -46,7 +46,7 @@ document.addEventListener('DOMContentLoaded', function () {
      limit, so this can't drift from the other RRSP calculators again) ── */
   const LIMIT_2026 = (window.NN && NN.RRSP) ? NN.RRSP.ANNUAL_MAX : 33810;
   const RATE       = (window.NN && NN.RRSP) ? NN.RRSP.INCOME_PCT : 0.18;
-  const OC_BUFFER  = 2000;
+  const OC_BUFFER  = (window.NN && NN.RRSP) ? NN.RRSP.OVERCONTRIB_BUFFER : 2000;
   const OC_PENALTY = 0.01; // 1% per month
 
   /* ── SEO ── */
@@ -59,10 +59,11 @@ document.addEventListener('DOMContentLoaded', function () {
     });
     NNSeo.injectSchema({ title:'RRSP Contribution Room Calculator Canada 2026', slug:'rrsp-room', description:'Calculate your 2026 RRSP contribution room based on earned income, pension adjustment, and carry-forward.' });
     NNSeo.injectFAQSchema([
-      { question:'What is the RRSP contribution limit for 2026?', answer:'The 2026 RRSP dollar limit is $33,810. Your personal limit is the lesser of $33,810 or 18% of your 2025 earned income, minus any pension adjustment, plus unused carry-forward room. The income needed to reach the $33,810 cap is $187,834.' },
-      { question:'Where can I find my RRSP contribution room?', answer:'Your exact RRSP deduction limit is on your CRA Notice of Assessment (NOA) from your most recent tax filing. You can also check it in CRA My Account online or the MyCRA mobile app.' },
-      { question:'Can I carry forward unused RRSP room?', answer:'Yes. Unused RRSP contribution room carries forward indefinitely with no expiry. If you had earned income since 1991 but did not contribute the maximum each year, you may have significant accumulated room available.' },
-      { question:'What happens if I over-contribute to my RRSP?', answer:'CRA allows a lifetime over-contribution buffer of $2,000 — the first $2,000 over your limit is penalty-free. Any amount over $2,000 above your limit is subject to a 1% per month penalty tax. File a T1-OVP if you have excess contributions.' },
+      { question:'Where can I find my exact RRSP room?', answer:'The most accurate source is your CRA Notice of Assessment (NOA) from last year\'s filing — it shows your RRSP deduction limit for the current year. You can also sign into CRA My Account online or use the MyCRA mobile app to see your current room instantly. The CRA tracks every dollar of RRSP room and it\'s updated after every tax filing.' },
+      { question:'Can I carry forward unused RRSP room?', answer:'Yes — unused RRSP contribution room carries forward indefinitely. There is no expiry and no limit on how much can accumulate. If you never contributed to an RRSP but had earned income since 1991 (when carry-forward was introduced), you may have tens of thousands of dollars in accumulated room. Canadians who have significant carry-forward room often make a large "catch-up" contribution when they\'re in a higher tax bracket, maximizing the deduction\'s value.' },
+      { question:'What is the RRSP deadline for the 2025 tax year?', answer:'The deadline to contribute to your RRSP and have the contribution count toward your 2025 tax year was March 2, 2026 (60 days after December 31, 2025). Contributions made between January 1 and March 2, 2026 can be claimed on either your 2025 or 2026 tax return. Contributions made from March 3, 2026 onward apply to the 2026 tax year.' },
+      { question:'What happens if I over-contribute to my RRSP?', answer:'CRA allows a lifetime over-contribution buffer of $2,000 — the first $2,000 above your deduction limit is not penalized (though it\'s also not deductible). Any amount over $2,000 above your limit is subject to a 1% per month penalty tax, calculated on the highest excess in each month. If you over-contribute beyond the buffer, you must file a T1-OVP (Individual Tax Return for RRSP Excess Contributions) and pay the penalty. The easiest fix is to withdraw the excess — though the withdrawal is taxable income.' },
+      { question:'Does contributing to a spousal RRSP use my contribution room?', answer:'Yes. Contributions to a spousal RRSP come out of your own RRSP contribution room, not your spouse\'s. The advantage is income-splitting in retirement — your spouse owns the account and will pay tax on withdrawals at their (ideally lower) rate. The three-year attribution rule applies: if your spouse withdraws from a spousal RRSP within three calendar years of your last spousal contribution, the withdrawal is attributed back to you as income.' },
     ]);
   } catch(e) {}
 

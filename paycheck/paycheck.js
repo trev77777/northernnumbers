@@ -61,10 +61,12 @@ document.addEventListener('DOMContentLoaded', function () {
     });
     NNSeo.injectSchema({ title:'Canadian Paycheck Calculator 2026', slug:'paycheck', description:'Calculate exact take-home pay after federal tax, provincial tax, CPP, and EI for all provinces.' });
     NNSeo.injectFAQSchema([
-      { question:'How is my Canadian paycheck calculated?', answer:'Your gross pay is reduced by federal income tax, provincial income tax, CPP contributions (5.95% up to $4,230.45), CPP2 (4% on $74,600-$85,000), and EI premiums (1.63% up to $1,123.07). The result is your net take-home pay.' },
-      { question:'What is CPP2 in Canada?', answer:'CPP2 is the second additional Canada Pension Plan contribution. In 2026, employees earning between $74,600 and $85,000 contribute 4% on that earnings band, for a maximum of $416 per year. Employers match this contribution.' },
-      { question:'Does RRSP reduce my paycheck deductions?', answer:'Yes, RRSP contributions reduce your taxable income. To have less tax withheld each paycheck, file a T1213 form with the CRA asking for a reduction in withholding based on your planned contributions. Without this form, you pay full tax and receive a refund when you file.' },
-      { question:'Why does biweekly pay have 26 periods but semi-monthly only 24?', answer:'Biweekly means every two weeks, which gives 52 ÷ 2 = 26 paychecks per year. Semi-monthly means twice per month on fixed dates (e.g. the 15th and last day), giving exactly 12 × 2 = 24 paychecks. Your annual income is the same either way — only the per-period amount differs.' },
+      { question:'Why does my actual paycheck differ from this calculator?', answer:'This calculator uses annualized tax rates applied evenly to each pay period. Your actual deductions may differ if you have a TD1 form with additional credits claimed, benefit deductions (health, dental, group RRSP, parking), union dues, garnishments, or if you started mid-year and your employer annualizes differently. The results are a close estimate for most employees on standard T4 employment.' },
+      { question:'What is CPP2 and do I have to pay it?', answer:'CPP2 is the second additional Canada Pension Plan contribution introduced in 2024. If you earn between $74,600 and $85,000 in 2026, you contribute 4% on that band — a maximum of $416 per year. Like CPP1, your employer matches your CPP2 contribution. The benefit is a slightly higher CPP retirement pension in the future.' },
+      { question:'Is it better to be paid weekly or biweekly?', answer:'Your annual net income is identical regardless of pay frequency — only the timing changes. Biweekly pay means 26 paychecks per year, with two months having three paydays. Some people prefer the predictability of semi-monthly (exactly twice per month on fixed dates) for budgeting purposes. Weekly pay can feel like more money but the annual total is the same.' },
+      { question:'What is the minimum wage in Canada in 2026?', answer:'Minimum wage varies by province and changes on different dates through the year. As of September 2026: the federal minimum wage (for federally regulated industries) is $18.15/hour, effective April 1, 2026. Ontario is $17.60/hour, rising to $17.95/hour on October 1, 2026. Alberta is $15.00/hour. British Columbia is $18.25/hour, effective June 1, 2026. Quebec is $16.60/hour, effective May 1, 2026. Always check your province\'s current rate, since these figures are only current as of the date shown.' },
+      { question:'Why does my take-home pay vary between paychecks?', answer:'Your tax withholding is calculated on each paycheck as if you\'ll earn the same amount all year. If you had a month without pay, received a bonus, or your hours varied, the withholding adjusts. CPP and EI contributions also stop mid-year once you hit the annual maximum — so your take-home pay increases slightly after that point. For most salaried employees, tax withholding is fairly consistent throughout the year.' },
+      { question:'What is the difference between gross and net pay?', answer:'Gross pay is your total earnings before any deductions. Net pay (take-home pay) is what you receive after federal tax, provincial tax, CPP, EI, and any other deductions such as group benefits or RRSP contributions are subtracted. The gap between gross and net widens as income rises — a $100,000 salary in Ontario results in roughly $72,000–$74,000 in take-home pay depending on deductions claimed.' },
     ]);
   } catch(e) {}
 
@@ -228,8 +230,11 @@ document.addEventListener('DOMContentLoaded', function () {
     const netAnnual       = grossAnnual - totalDeductions;
     const effectiveRate   = grossAnnual > 0 ? totalDeductions / grossAnnual * 100 : 0;
 
-    /* Marginal rate */
-    const marginalFed  = [...fedBrackets].reverse().find(b => taxable > b.min)?.rate || 0;
+    /* Marginal rate — Quebec's 16.5% federal abatement (NN.QUEBEC_FEDERAL_ABATEMENT_RATE)
+       reduces federal tax uniformly, so it scales the marginal federal rate the same way. */
+    const abatementMultiplier = isQuebec ? (1 - (window.NN && NN.QUEBEC_FEDERAL_ABATEMENT_RATE || 0.165)) : 1;
+    const marginalFedRaw = [...fedBrackets].reverse().find(b => taxable > b.min)?.rate || 0;
+    const marginalFed  = marginalFedRaw * abatementMultiplier;
     const marginalProv = [...provData].reverse().find(b => taxable > b.min)?.rate || 0;
     const marginalRate = (marginalFed + marginalProv) * 100;
 
@@ -309,6 +314,14 @@ document.addEventListener('DOMContentLoaded', function () {
     const eiLabelEl  = document.getElementById('result-ei-label');
     if (cppLabelEl) cppLabelEl.textContent = isQuebec ? 'Annual QPP' : 'Annual CPP';
     if (eiLabelEl)  eiLabelEl.textContent  = isQuebec ? (empType === 'employed' ? 'Annual EI + QPIP' : 'Annual QPIP') : 'Annual EI';
+    // Per-period breakdown uses separate CPP/CPP2/EI rows — relabel those
+    // for Quebec too, so they don't mislabel QPP/QPP2/QPIP as CPP/CPP2/EI.
+    const cppPpLabelEl  = document.getElementById('result-cpp-pp-label');
+    const cpp2PpLabelEl = document.getElementById('result-cpp2-pp-label');
+    const eiPpLabelEl   = document.getElementById('result-ei-pp-label');
+    if (cppPpLabelEl)  cppPpLabelEl.textContent  = isQuebec ? 'QPP Contribution' : 'CPP Contribution';
+    if (cpp2PpLabelEl) cpp2PpLabelEl.textContent = isQuebec ? 'QPP2 Contribution' : 'CPP2 Contribution';
+    if (eiPpLabelEl)   eiPpLabelEl.textContent   = isQuebec ? (empType === 'employed' ? 'EI + QPIP Premium' : 'QPIP Premium') : 'EI Premium';
     document.getElementById('result-net-annual-total').textContent= NNUtils.formatCAD(netAnnual);
 
     window._paycheckResults = { grossAnnual, province, empType, freq, freqLabel, fedTax, provTax, cpp, cpp2, ei, totalDeductions, netAnnual, effectiveRate, marginalRate, net_pp, gross_pp };

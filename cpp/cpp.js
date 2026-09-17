@@ -38,20 +38,20 @@ document.addEventListener('DOMContentLoaded', function () {
     });
     NNSeo.injectSchema({ title:'CPP Calculator Canada 2026', slug:'cpp', description:'Estimate your CPP retirement benefit at 60, 65, or 70 based on income and contribution years.' });
     NNSeo.injectFAQSchema([
-      { question:'What is the maximum CPP payment in 2026?', answer:'The maximum monthly CPP retirement benefit in 2026 is $1,507.65 at age 65. To receive the maximum, you must have contributed at the maximum level for at least 39 years.' },
-      { question:'When should I start taking CPP?', answer:'Taking CPP at 60 reduces your benefit by 36% permanently. Waiting until 70 increases it by 42% permanently. The break-even for waiting from 65 to 70 is approximately age 82. If you\'re in good health, waiting usually results in more lifetime income.' },
-      { question:'How is CPP calculated?', answer:'CPP is based on your average pensionable earnings (up to the YMPE of $74,600 in 2026), how many years you contributed (up to 39), and the age you start receiving it. The standard benefit replaces approximately 25% of your average pensionable earnings.' },
-      { question:'How do I find my actual CPP amount?', answer:'Your actual CPP entitlement is calculated by Service Canada using your complete contribution history. Log into My Service Canada Account to get your Statement of Contributions and an official CPP benefit estimate.' },
+      { question:'Can I collect CPP and still work?', answer:'Yes. If you are under 70 and still working while collecting CPP, you and your employer continue to contribute to CPP through the Post-Retirement Benefit (PRB). Each year of contributions after you start CPP adds a small additional monthly benefit to your pension, paid the following year. At age 70 contributions stop automatically.' },
+      { question:'Does CPP affect my OAS or GIS?', answer:'CPP income counts toward your net income for OAS clawback purposes. If your total income — including CPP — exceeds $95,323 in 2026, your OAS benefit will be reduced. CPP income also reduces your Guaranteed Income Supplement (GIS) eligibility, since GIS is income-tested. Use our OAS Calculator to see how your CPP income affects your OAS and GIS amounts.' },
+      { question:'What happens to my CPP if I die early?', answer:'CPP provides survivor benefits. Your spouse or common-law partner may receive the CPP Survivor\'s Pension — up to 60% of your CPP if they are 65 or older, or a reduced amount if they are younger. Your dependent children may also receive the Children\'s Benefit. A one-time Death Benefit of up to $2,500 is paid to your estate.' },
+      { question:'Is CPP income taxable?', answer:'Yes, CPP retirement benefits are fully taxable as income. Service Canada will issue you a T4A(P) slip each year showing your total CPP income. You can request that tax be withheld at source, or pay tax through quarterly installments. Unlike GIS, CPP does not have any tax-free status.' },
     ]);
   } catch(e) {}
 
-  if (window.NNComponents) try { NNComponents.renderRelated('nn-related', ['oas', 'rrsp', 'retirement', 'income-tax']); } catch(e) {}
+  if (window.NNComponents) try { NNComponents.renderRelated('nn-related', ['oas', 'rrsp', 'income-tax', 'rrif']); } catch(e) {}
 
   /* ── Formatters ── */
   NNUtils.attachFormatter(avgIncomeEl);
 
   /* ── CORE CALCULATION (reads shared constants — see data/nn-constants.js) ── */
-  const CPP_MAX_MONTHLY = 1507.65;  // 2026 maximum at age 65 (Service Canada)
+  const CPP_MAX_MONTHLY = (window.NN && NN.CPP && NN.CPP.MAX_MONTHLY_65) ? NN.CPP.MAX_MONTHLY_65 : 1507.65;  // 2026 maximum at age 65 (Service Canada)
   const CPP_YMPE        = (window.NN && NN.CPP) ? NN.CPP.YMPE : 74600;
   const CPP_EXEMPTION   = (window.NN && NN.CPP) ? NN.CPP.BASIC_EXEMPTION : 3500;
   const MAX_YEARS       = 39;

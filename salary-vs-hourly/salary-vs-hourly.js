@@ -57,10 +57,13 @@ document.addEventListener('DOMContentLoaded', function () {
       description: 'Convert between annual salary and hourly wage with vacation and stat holiday adjustments for Canada.'
     });
     NNSeo.injectFAQSchema([
-      { question: 'How many working hours are in a Canadian work year?', answer: 'The standard Canadian work year is 52 weeks × 40 hours = 2,080 hours. With 10 federal statutory holidays (Ontario) deducted, it\'s 2,000 hours. Quebec has 13 stat holidays, giving approximately 1,976 hours. These numbers matter most for contractors calculating their effective hourly rate and for comparing job offers with different hours.' },
-      { question: 'What is the most common pay period in Canada?', answer: 'Biweekly (every two weeks, 26 pay periods per year) is the most common in Canada, particularly in the public sector and larger private employers. Semi-monthly (twice a month, 24 periods) is also common. Weekly pay is more typical in trades, retail, and hospitality.' },
-      { question: 'How much paid vacation am I entitled to in Canada?', answer: 'Under federal Canada Labour Code and most provincial employment standards, employees are entitled to 2 weeks of paid vacation (4% of wages) after one year of employment. After 5 years with the same employer, this increases to 3 weeks (6%) in most provinces.' },
-      { question: 'Does my hourly rate change when I become salaried?', answer: 'Not mathematically, but the practical implications differ. A salaried employee typically receives the same amount each pay period regardless of hours worked (within limits). An hourly employee is paid for exact hours worked and must be paid overtime after the statutory threshold.' }
+      { question:'How many working hours are in a Canadian work year?', answer:'The standard Canadian work year is 52 weeks × 40 hours = 2,080 hours. With 10 federal statutory holidays (Ontario) deducted, it\'s 2,000 hours. Quebec has 13 stat holidays, giving approximately 1,976 hours. These numbers matter most for contractors calculating their effective hourly rate and for comparing job offers with different hours.' },
+      { question:'What is the most common pay period in Canada?', answer:'Biweekly (every two weeks, 26 pay periods per year) is the most common in Canada, particularly in the public sector and larger private employers. Semi-monthly (twice a month, 24 periods) is also common. Weekly pay is more typical in trades, retail, and hospitality. Monthly pay is standard for many professionals and small businesses. Biweekly results in two months per year with three paychecks instead of the usual two.' },
+      { question:'How much paid vacation am I entitled to in Canada?', answer:'Under federal Canada Labour Code and most provincial employment standards, employees are entitled to 2 weeks of paid vacation (4% of wages) after one year of employment. After 5 years with the same employer, this increases to 3 weeks (6%) in most provinces. Many employers offer more than the minimum — 3 weeks is common, and 4–5 weeks is standard in the public sector and tech industry.' },
+      { question:'Does my hourly rate change when I become salaried?', answer:'Not mathematically, but the practical implications differ. A salaried employee typically receives the same amount each pay period regardless of hours worked (within limits). An hourly employee is paid for exact hours worked and must be paid overtime after the statutory threshold — 44 hours/week in Ontario, 8 hours/day or 40 hours/week federally. Many professional roles in Canada are exempt from overtime as salaried "managers" even when the salary is modest.' },
+      { question:'How do I negotiate a raise using hourly vs salary math?', answer:'Knowing both numbers gives you negotiating flexibility. If you currently earn $65,000 and want $70,000, that\'s a $2.40/hr increase on a 2,080-hour year. Framing a raise as "$2.50 more per hour" can feel more concrete to some employers than "$5,000 more per year." Conversely, a small-sounding hourly increase of $1/hr equals $2,080 more annually. Always calculate both ways before entering any compensation conversation.' },
+      { question:'What happens to my hourly rate if I work overtime?', answer:'In most Canadian provinces, overtime must be paid at 1.5× your regular hourly rate once you exceed the weekly threshold. In Ontario, that threshold is 44 hours per week. Federally regulated workplaces use 40 hours. If you regularly work overtime, your effective annual earnings can significantly exceed the base calculation. A $25/hr role with consistent 10-hour weeks of overtime at 1.5× pays $37.50/hr on those extra hours — adding $19,500 per year to the base calculation.' },
+      { question:'What is the living wage in Canada in 2026?', answer:'The living wage — the amount needed to cover basic expenses without relying on government assistance — varies significantly by city and is recalculated regularly by regional living wage networks (such as the Ontario Living Wage Network) based on local rent, food, transportation, and childcare costs. It is consistently higher than the minimum wage in every province — often by a wide margin in large cities — so check your region\'s current published rate rather than assuming a single national figure.' },
     ]);
   } catch(e) {}
 
@@ -121,8 +124,10 @@ document.addEventListener('DOMContentLoaded', function () {
 
   /* Flat 2026 max employer CPP match, quoted for illustration only —
      matches the figure already stated in this page's own educational
-     copy. Not a per-user tax calculation. */
-  const CONTRACTOR_CPP_MATCH  = 3867.50;
+     copy. Not a per-user tax calculation. Reads data/nn-constants.js
+     (NN.CPP.MAX_EMPLOYEE_CONTRIBUTION) so it can't drift from the real
+     2026 figure the way this file's own private copy previously did. */
+  const CONTRACTOR_CPP_MATCH  = (window.NN && NN.CPP) ? NN.CPP.MAX_EMPLOYEE_CONTRIBUTION : 4230.45;
   const CONTRACTOR_PREMIUM    = 1.275; // ~27.5% suggested rate premium, per this page's own methodology text
 
   /* ── CALCULATE ── */

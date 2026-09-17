@@ -27,26 +27,28 @@
 /* ─── SEO + SCHEMA ─────────────────────────── */
 document.addEventListener('DOMContentLoaded', function () {
 
-  NNSeo.init({
-    title:       'Car Loan Calculator Canada',
-    description: 'Calculate your car loan payments, total interest, and true cost of ownership. Free Canadian auto loan calculator with HST/GST, trade-in, and full amortization schedule.',
-    keywords:    'car loan calculator canada, auto loan calculator canada, vehicle loan calculator, car payment calculator canada, car financing calculator',
-    slug:        'car-loan'
-  });
+  if (window.NNSeo) try {
+    NNSeo.init({
+      title:       'Car Loan Calculator Canada',
+      description: 'Calculate your car loan payments, total interest, and true cost of ownership. Free Canadian auto loan calculator with HST/GST, trade-in, and full amortization schedule.',
+      keywords:    'car loan calculator canada, auto loan calculator canada, vehicle loan calculator, car payment calculator canada, car financing calculator',
+      slug:        'car-loan'
+    });
 
-  NNSeo.injectSchema({
-    title:       'Car Loan Calculator Canada',
-    slug:        'car-loan',
-    description: 'Free Canadian car loan calculator with tax, trade-in value, and full amortization schedule.'
-  });
+    NNSeo.injectSchema({
+      title:       'Car Loan Calculator Canada',
+      slug:        'car-loan',
+      description: 'Free Canadian car loan calculator with tax, trade-in value, and full amortization schedule.'
+    });
 
-  NNSeo.injectFAQSchema([
-    { question: 'What is a good car loan interest rate in Canada?', answer: 'In 2026, good rates for new cars range from 5–8%. Excellent credit (750+) may qualify for 0–4% manufacturer promotions. Used car rates typically run 7–12%.' },
-    { question: 'How much car can I afford in Canada?', answer: 'A common guideline is to keep total vehicle costs (payment + insurance + fuel + maintenance) under 15–20% of your monthly take-home pay.' },
-    { question: 'Is it better to finance through the dealer or my bank?', answer: 'Get pre-approved by your bank before visiting a dealership. Dealers occasionally offer subsidized 0% rates, but banks and credit unions often beat dealer financing for used cars.' },
-    { question: 'Does paying bi-weekly save money vs monthly on a car loan?', answer: 'For car loans, the savings are minimal compared to mortgages due to shorter terms. The bigger factor is your interest rate and loan term.' },
-    { question: 'Can I pay off my car loan early in Canada?', answer: 'Most Canadian auto loans allow early repayment without penalty. Always confirm with your lender. Extra principal payments can shorten your loan and save significant interest.' }
-  ]);
+    NNSeo.injectFAQSchema([
+      { question:'What is a good car loan interest rate in Canada?', answer:'In 2026, good rates for new cars from major banks range from 5–8%. Excellent credit (750+) may qualify for 0–4% manufacturer promotions. Used car rates typically run 7–12%. Credit unions often offer rates 1–2% lower than banks. Always compare your bank\'s rate against the dealer\'s offer before signing.' },
+      { question:'How much car can I afford in Canada?', answer:'A common Canadian guideline is to keep total vehicle costs (payment + insurance + fuel + maintenance) under 15–20% of your monthly take-home pay. For a household earning $80,000/year (~$5,400/month after tax), that\'s roughly $800–$1,100/month maximum. If insurance and gas cost $400/month, your loan payment should stay under $400–$700.' },
+      { question:'Is it better to finance through the dealer or my bank?', answer:'It depends. Dealers occasionally offer manufacturer-subsidized 0% financing that banks can\'t match. However, for most used car purchases, your bank or credit union typically offers lower rates than dealer financing. Get pre-approved by your bank before visiting a dealership — it gives you a benchmark and negotiating power.' },
+      { question:'Does paying bi-weekly save money vs monthly?', answer:'For car loans, the savings from bi-weekly vs monthly payments are minimal compared to mortgages, because auto loans are shorter. The bigger impact comes from the total term and interest rate. That said, bi-weekly payments can help you build a habit and pay down the loan slightly faster.' },
+      { question:'Can I pay off my car loan early in Canada?', answer:'Most Canadian auto loans allow early repayment without penalty, but always confirm with your lender. Paying extra toward principal each month can save significant interest. Even one extra payment per year can shorten a 60-month loan by several months and save hundreds of dollars in interest.' },
+    ]);
+  } catch(e) {}
 
   /* ─── DOM REFS ─────────────────────────── */
   const vehiclePriceEl  = document.getElementById('vehicle-price');

@@ -59,10 +59,10 @@ document.addEventListener('DOMContentLoaded', function () {
     });
     NNSeo.injectSchema({ title:'Canadian Income Tax Calculator 2026', slug:'income-tax', description:'Calculate your 2026 Canadian income tax, CPP, EI, marginal rate, effective rate, and after-tax income.' });
     NNSeo.injectFAQSchema([
-      { question:'What is the federal basic personal amount for 2026?', answer:'The federal Basic Personal Amount for 2026 is $16,452, which provides a 14% non-refundable tax credit of $2,303.28, reducing your federal tax owing.' },
-      { question:'What is the marginal tax rate in Canada?', answer:'Your marginal tax rate is the combined federal and provincial rate on your last dollar of income. It ranges from about 20% at lower incomes to over 53% in some provinces at the highest income levels.' },
-      { question:'How does RRSP reduce income tax?', answer:'RRSP contributions reduce your taxable income dollar-for-dollar. The tax saving equals your marginal tax rate multiplied by your contribution. A $10,000 RRSP contribution at a 40% marginal rate saves $4,000 in taxes.' },
-      { question:'Do I have to pay CPP and EI?', answer:'Employed Canadians pay CPP at 5.95% of insurable earnings (max $4,230.45 in 2026), plus CPP2 at 4% on earnings between $74,600 and $85,000 (max $416), and EI at 1.63% (max $1,123.07). Self-employed pay double CPP and CPP2 (no EI). Retirees and those on pension income are generally exempt.' },
+      { question:'Why is my marginal tax rate higher than my effective tax rate?', answer:'Your marginal rate is the rate on your last dollar of income — it applies only to the portion of income in the highest bracket. Your effective rate is the average across all dollars earned. Because Canada uses a progressive system, only income above each threshold is taxed at the higher rate, so your effective rate is always lower.' },
+      { question:'How do RRSP contributions reduce my taxes?', answer:'RRSP contributions reduce your taxable income dollar-for-dollar. The tax saving equals your marginal rate times your contribution. A $10,000 contribution at a 40% marginal rate saves $4,000 in federal and provincial taxes combined. Enter your RRSP deduction above to see your exact savings.' },
+      { question:'Does this calculator include CPP and EI?', answer:'Yes. CPP contributions (5.95% up to $4,230.45, plus CPP2 at 4% up to $416 above $74,600) and EI premiums (1.63% up to $1,123.07) are included in the Total Deductions and Net Income calculations. Self-employed individuals pay double CPP and no EI — select "Self-Employed" in the Employment Type dropdown.' },
+      { question:'Does this calculator include provincial tax?', answer:'Yes. Select your province or territory and the calculator applies the correct 2026 provincial tax brackets and basic personal amount credit. The Provincial Tax Bracket Breakdown in the results panel shows exactly how your provincial tax is calculated.' },
     ]);
   } catch(e) {}
 
@@ -151,7 +151,7 @@ document.addEventListener('DOMContentLoaded', function () {
     if (isQuebec) {
       if (empType === 'employed' && NN.QPIP) {
         ei += Math.min(gross, NN.QPIP.MAX_INSURABLE_EARNINGS) * NN.QPIP.EMPLOYEE_RATE;
-      } else if (empType !== 'employed' && NN.QPIP_SELF_EMPLOYED) {
+      } else if (empType === 'self-employed' && NN.QPIP_SELF_EMPLOYED) {
         // Revenu Québec: no QPIP premium at all below the $2,000 threshold
         // (not a reduced premium — zero). This represents final annual
         // liability, unlike employer payroll withholding on employees.
@@ -166,9 +166,12 @@ document.addEventListener('DOMContentLoaded', function () {
     const afterTax  = gross - totalTax;
     const monthly   = afterTax / 12;
 
-    /* Rates */
+    /* Rates — Quebec's 16.5% federal abatement (NN.QUEBEC_FEDERAL_ABATEMENT_RATE)
+       reduces federal tax uniformly, so it scales the marginal federal rate the same way. */
     const effectiveRate = gross > 0 ? totalTax / gross * 100 : 0;
-    const marginalFed   = [...NN.FED_BRACKETS].reverse().find(b => taxable > b.min)?.rate || 0;
+    const abatementMultiplier = isQuebec ? (1 - (NN.QUEBEC_FEDERAL_ABATEMENT_RATE || 0.165)) : 1;
+    const marginalFedRaw = [...NN.FED_BRACKETS].reverse().find(b => taxable > b.min)?.rate || 0;
+    const marginalFed   = marginalFedRaw * abatementMultiplier;
     const marginalProv  = [...provBrackets].reverse().find(b => taxable > b.min)?.rate || 0;
     const marginalRate  = (marginalFed + marginalProv) * 100;
 
@@ -190,7 +193,7 @@ document.addEventListener('DOMContentLoaded', function () {
     const cppLabelEl = document.getElementById('result-cpp-label');
     const eiLabelEl  = document.getElementById('result-ei-label');
     if (cppLabelEl) cppLabelEl.textContent = isQuebec ? 'QPP Contributions' : 'CPP Contributions';
-    if (eiLabelEl)  eiLabelEl.textContent  = isQuebec ? (empType === 'employed' ? 'EI + QPIP Premiums' : 'QPIP Premiums') : 'EI Premiums';
+    if (eiLabelEl)  eiLabelEl.textContent  = isQuebec ? (empType === 'self-employed' ? 'QPIP Premiums' : 'EI + QPIP Premiums') : 'EI Premiums';
     document.getElementById('result-ei').textContent          = NNUtils.formatCAD(ei);
     document.getElementById('result-total-tax').textContent   = NNUtils.formatCAD(totalTax);
     document.getElementById('result-marginal').textContent    = marginalRate.toFixed(1) + '%';
@@ -228,6 +231,13 @@ document.addEventListener('DOMContentLoaded', function () {
         <span style="color:var(--color-text-muted)">Less: Basic Personal Amount credit</span>
         <span style="font-weight:600;color:var(--color-success)">–${NNUtils.formatCAD(fedCredit)}</span>
       </div>`;
+      if (isQuebec) {
+        const abatementAmount = fedTaxBeforeAbatement - fedTax;
+        html += `<div style="display:flex;justify-content:space-between;padding:var(--space-2) 0;font-size:var(--text-sm)">
+          <span style="color:var(--color-text-muted)">Less: Quebec federal tax abatement (16.5%)</span>
+          <span style="font-weight:600;color:var(--color-success)">–${NNUtils.formatCAD(abatementAmount)}</span>
+        </div>`;
+      }
       html += `<div style="display:flex;justify-content:space-between;padding:var(--space-3) 0 var(--space-2);border-top:2px solid var(--color-border);margin-top:var(--space-2);font-weight:700">
         <span>Federal Tax Owing</span>
         <span style="color:var(--color-primary)">${NNUtils.formatCAD(fedTax)}</span>

@@ -22,26 +22,28 @@
 document.addEventListener('DOMContentLoaded', function () {
 
   /* ─── SEO ──────────────────────────────── */
-  NNSeo.init({
-    title:       'Loan Calculator Canada',
-    description: 'Free Canadian loan calculator. Calculate monthly payments, total interest, and payoff time for personal loans, lines of credit, and debt consolidation. Includes extra payment savings.',
-    keywords:    'loan calculator canada, personal loan calculator canada, line of credit calculator, debt consolidation calculator canada, loan payment calculator',
-    slug:        'loan'
-  });
+  if (window.NNSeo) try {
+    NNSeo.init({
+      title:       'Loan Calculator Canada',
+      description: 'Free Canadian loan calculator. Calculate monthly payments, total interest, and payoff time for personal loans, lines of credit, and debt consolidation. Includes extra payment savings.',
+      keywords:    'loan calculator canada, personal loan calculator canada, line of credit calculator, debt consolidation calculator canada, loan payment calculator',
+      slug:        'loan'
+    });
 
-  NNSeo.injectSchema({
-    title:       'Loan Calculator Canada',
-    slug:        'loan',
-    description: 'Free Canadian loan calculator with extra payment savings and full amortization schedule.'
-  });
+    NNSeo.injectSchema({
+      title:       'Loan Calculator Canada',
+      slug:        'loan',
+      description: 'Free Canadian loan calculator with extra payment savings and full amortization schedule.'
+    });
 
-  NNSeo.injectFAQSchema([
-    { question: 'What is a good personal loan rate in Canada?', answer: 'In 2026, good personal loan rates range from 6–10% for credit scores above 700. Average credit sees 10–15%. Credit unions often beat bank rates by 1–3%.' },
-    { question: 'How much can I borrow for a personal loan in Canada?', answer: 'Most Canadian banks offer $1,000–$50,000. Some secured loans reach $100,000. Total debt payments should generally not exceed 40% of gross income.' },
-    { question: 'Can I pay off a personal loan early in Canada?', answer: 'Most Canadian personal loans allow early repayment, though some charge prepayment penalties of 1–3 months interest. Always check your loan agreement first.' },
-    { question: 'Is it better to get a shorter or longer loan term?', answer: 'Shorter terms mean higher payments but much less total interest. A $15,000 loan at 9.99% costs $2,422 over 36 months vs $4,063 over 60 months — choose the shortest term you can comfortably afford.' },
-    { question: 'What is an origination fee on a Canadian loan?', answer: 'A one-time charge (usually 1–5% of the loan amount) for processing. Always include fees when comparing offers — a lower rate with high fees may cost more than a higher rate with no fees.' }
-  ]);
+    NNSeo.injectFAQSchema([
+      { question: 'What is a good personal loan rate in Canada?', answer: 'In 2026, good personal loan rates range from 6–10% for credit scores above 700. Average credit sees 10–15%. Credit unions often beat bank rates by 1–3%.' },
+      { question: 'How much can I borrow for a personal loan in Canada?', answer: 'Most Canadian banks offer $1,000–$50,000. Some secured loans reach $100,000. Total debt payments should generally not exceed 40% of gross income.' },
+      { question: 'Can I pay off a personal loan early in Canada?', answer: 'Most Canadian personal loans allow early repayment, though some charge prepayment penalties of 1–3 months interest. Always check your loan agreement first.' },
+      { question: 'Is it better to get a shorter or longer loan term?', answer: 'Shorter terms mean higher payments but much less total interest. A $15,000 loan at 9.99% costs $2,422 over 36 months vs $4,063 over 60 months — choose the shortest term you can comfortably afford.' },
+      { question: 'What is an origination fee on a Canadian loan?', answer: 'A one-time charge (usually 1–5% of the loan amount) for processing. Always include fees when comparing offers — a lower rate with high fees may cost more than a higher rate with no fees.' }
+    ]);
+  } catch(e) {}
 
   /* ─── DOM REFS ─────────────────────────── */
   const loanAmountEl   = document.getElementById('loan-amount');
