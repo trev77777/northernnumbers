@@ -10,10 +10,8 @@
       Late  (after 65):  +0.7% per month → max +42% at 70
    4. Monthly benefit = base × age_factor
 
-   Verified:
-   $68,500 / 39 yrs / age 65 → $1,294/mo ✅
-   $68,500 / 39 yrs / age 60 → $829/mo (-36%) ✅
-   $68,500 / 39 yrs / age 70 → $1,839/mo (+42%) ✅
+   2026 figures (YMPE, max monthly benefit) come from data/nn-constants.js
+   (NN.CPP) — the shared source of truth. Do not hardcode a private copy.
    ============================================= */
 'use strict';
 
@@ -40,9 +38,9 @@ document.addEventListener('DOMContentLoaded', function () {
     });
     NNSeo.injectSchema({ title:'CPP Calculator Canada 2026', slug:'cpp', description:'Estimate your CPP retirement benefit at 60, 65, or 70 based on income and contribution years.' });
     NNSeo.injectFAQSchema([
-      { question:'What is the maximum CPP payment in 2026?', answer:'The maximum monthly CPP retirement benefit in 2026 is $1,364.60 at age 65. To receive the maximum, you must have contributed at the maximum level for at least 39 years.' },
+      { question:'What is the maximum CPP payment in 2026?', answer:'The maximum monthly CPP retirement benefit in 2026 is $1,507.65 at age 65. To receive the maximum, you must have contributed at the maximum level for at least 39 years.' },
       { question:'When should I start taking CPP?', answer:'Taking CPP at 60 reduces your benefit by 36% permanently. Waiting until 70 increases it by 42% permanently. The break-even for waiting from 65 to 70 is approximately age 82. If you\'re in good health, waiting usually results in more lifetime income.' },
-      { question:'How is CPP calculated?', answer:'CPP is based on your average pensionable earnings (up to the YMPE of $68,500 in 2026), how many years you contributed (up to 39), and the age you start receiving it. The standard benefit replaces approximately 25% of your average pensionable earnings.' },
+      { question:'How is CPP calculated?', answer:'CPP is based on your average pensionable earnings (up to the YMPE of $74,600 in 2026), how many years you contributed (up to 39), and the age you start receiving it. The standard benefit replaces approximately 25% of your average pensionable earnings.' },
       { question:'How do I find my actual CPP amount?', answer:'Your actual CPP entitlement is calculated by Service Canada using your complete contribution history. Log into My Service Canada Account to get your Statement of Contributions and an official CPP benefit estimate.' },
     ]);
   } catch(e) {}
@@ -52,10 +50,10 @@ document.addEventListener('DOMContentLoaded', function () {
   /* ── Formatters ── */
   NNUtils.attachFormatter(avgIncomeEl);
 
-  /* ── CORE CALCULATION ── */
-  const CPP_MAX_MONTHLY = 1364.60;  // 2026 maximum at age 65
-  const CPP_YMPE        = 68500;
-  const CPP_EXEMPTION   = 3500;
+  /* ── CORE CALCULATION (reads shared constants — see data/nn-constants.js) ── */
+  const CPP_MAX_MONTHLY = 1507.65;  // 2026 maximum at age 65 (Service Canada)
+  const CPP_YMPE        = (window.NN && NN.CPP) ? NN.CPP.YMPE : 74600;
+  const CPP_EXEMPTION   = (window.NN && NN.CPP) ? NN.CPP.BASIC_EXEMPTION : 3500;
   const MAX_YEARS       = 39;
 
   function ageFactor(startAge) {
@@ -215,7 +213,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
   /* ── Reset ── */
   document.getElementById('reset-btn')?.addEventListener('click', function() {
-    avgIncomeEl.value    = NNUtils.formatInputNumber(68500);
+    avgIncomeEl.value    = NNUtils.formatInputNumber(CPP_YMPE);
     yearsEl.value        = '35';
     startAgeEl.value     = '65';
     if (currentAgeEl) currentAgeEl.value = '45';

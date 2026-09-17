@@ -299,11 +299,11 @@
                   <span class="result-row-value is-error" id="result-prov-annual">—</span>
                 </div>
                 <div class="result-row" role="listitem">
-                  <span class="result-row-label">Annual CPP</span>
+                  <span class="result-row-label" id="result-cpp-label">Annual CPP</span>
                   <span class="result-row-value is-error" id="result-cpp-annual">—</span>
                 </div>
                 <div class="result-row" role="listitem">
-                  <span class="result-row-label">Annual EI</span>
+                  <span class="result-row-label" id="result-ei-label">Annual EI</span>
                   <span class="result-row-value is-error" id="result-ei-annual">—</span>
                 </div>
                 <div class="result-row result-row--total" role="listitem">
@@ -330,7 +330,7 @@
 
           <div>
             <h3 style="font-size:var(--text-xl);font-weight:600;margin-bottom:var(--space-3)">🇨🇦 What Gets Deducted from Your Paycheck?</h3>
-            <p style="color:var(--color-text-muted);line-height:1.8">Every Canadian employee has four mandatory deductions taken from each paycheck: federal income tax, provincial income tax, Canada Pension Plan (CPP) contributions, and Employment Insurance (EI) premiums. Your employer also matches your CPP contribution and pays 1.4 times your EI premium — these employer contributions do not come off your paycheck but are a real cost to your employer. If you earn above $68,500, you also contribute to CPP2 at 4% on earnings between $68,500 and $73,200 (up to $188/year in 2026). Quebec residents pay into QPP and QPIP instead of CPP and EI — this calculator uses simplified federal equivalents for Quebec and the actual difference is minor for most employees.</p>
+            <p style="color:var(--color-text-muted);line-height:1.8">Every Canadian employee has four mandatory deductions taken from each paycheck: federal income tax, provincial income tax, Canada Pension Plan (CPP) contributions, and Employment Insurance (EI) premiums. Your employer also matches your CPP contribution and pays 1.4 times your EI premium — these employer contributions do not come off your paycheck but are a real cost to your employer. If you earn above $74,600, you also contribute to CPP2 at 4% on earnings between $74,600 and $85,000 (up to $416/year in 2026). Quebec residents pay into QPP (Quebec Pension Plan) instead of CPP, a lower Quebec EI rate, and QPIP (Quebec Parental Insurance Plan) — this calculator applies the actual 2026 QPP/QPIP rates for Quebec selections rather than federal CPP/EI.</p>
           </div>
 
           <div>
@@ -345,9 +345,9 @@
                   </tr>
                 </thead>
                 <tbody>
-                  <tr style="border-bottom:1px solid var(--color-border)"><td style="padding:var(--space-3)">CPP (employee)</td><td style="padding:var(--space-3);text-align:right">5.95% of pensionable earnings</td><td style="padding:var(--space-3);text-align:right">$3,867.50</td></tr>
-                  <tr style="border-bottom:1px solid var(--color-border);background:var(--color-bg)"><td style="padding:var(--space-3)">CPP2 (employee)</td><td style="padding:var(--space-3);text-align:right">4% on $68,500–$73,200</td><td style="padding:var(--space-3);text-align:right">$188.00</td></tr>
-                  <tr style="border-bottom:1px solid var(--color-border)"><td style="padding:var(--space-3)">EI (employee)</td><td style="padding:var(--space-3);text-align:right">1.666% of insurable earnings</td><td style="padding:var(--space-3);text-align:right">$1,049.12</td></tr>
+                  <tr style="border-bottom:1px solid var(--color-border)"><td style="padding:var(--space-3)">CPP (employee)</td><td style="padding:var(--space-3);text-align:right">5.95% of pensionable earnings</td><td style="padding:var(--space-3);text-align:right">$4,230.45</td></tr>
+                  <tr style="border-bottom:1px solid var(--color-border);background:var(--color-bg)"><td style="padding:var(--space-3)">CPP2 (employee)</td><td style="padding:var(--space-3);text-align:right">4% on $74,600–$85,000</td><td style="padding:var(--space-3);text-align:right">$416.00</td></tr>
+                  <tr style="border-bottom:1px solid var(--color-border)"><td style="padding:var(--space-3)">EI (employee)</td><td style="padding:var(--space-3);text-align:right">1.63% of insurable earnings</td><td style="padding:var(--space-3);text-align:right">$1,123.07</td></tr>
                   <tr style="border-bottom:1px solid var(--color-border);background:var(--color-bg)"><td style="padding:var(--space-3)">Federal income tax</td><td style="padding:var(--space-3);text-align:right">15% – 33% (progressive)</td><td style="padding:var(--space-3);text-align:right">No maximum</td></tr>
                   <tr><td style="padding:var(--space-3)">Provincial income tax</td><td style="padding:var(--space-3);text-align:right">Varies by province</td><td style="padding:var(--space-3);text-align:right">No maximum</td></tr>
                 </tbody>
@@ -369,7 +369,7 @@
               </div>
               <div>
                 <p style="font-weight:600;margin-bottom:var(--space-1)">What is CPP2 and do I have to pay it?</p>
-                <p style="color:var(--color-text-muted);font-size:var(--text-sm);line-height:1.7">CPP2 is the second additional Canada Pension Plan contribution introduced in 2024. If you earn between $68,500 and $73,200 in 2026, you contribute 4% on that band — a maximum of $188 per year. Like CPP1, your employer matches your CPP2 contribution. The benefit is a slightly higher CPP retirement pension in the future.</p>
+                <p style="color:var(--color-text-muted);font-size:var(--text-sm);line-height:1.7">CPP2 is the second additional Canada Pension Plan contribution introduced in 2024. If you earn between $74,600 and $85,000 in 2026, you contribute 4% on that band — a maximum of $416 per year. Like CPP1, your employer matches your CPP2 contribution. The benefit is a slightly higher CPP retirement pension in the future.</p>
               </div>
               <div>
                 <p style="font-weight:600;margin-bottom:var(--space-1)">Is it better to be paid weekly or biweekly?</p>
@@ -392,12 +392,12 @@
 
           <div>
             <h3 style="font-size:var(--text-xl);font-weight:600;margin-bottom:var(--space-3)">🇨🇦 Understanding Your TD1 and Tax Credits</h3>
-            <p style="color:var(--color-text-muted);line-height:1.8">When you start a new job, your employer asks you to complete a TD1 form — the Personal Tax Credits Return. This form tells your employer how much tax to withhold from each paycheck. The basic personal amount ($16,129 federally in 2026) means you pay no federal tax on the first $16,129 of income. Additional TD1 credits include the age amount (65+), disability amount, tuition, and caregiver amounts. If you only have one employer and no complex credits, the default TD1 is usually fine. Claiming credits you are not entitled to results in a tax bill at filing time.</p>
+            <p style="color:var(--color-text-muted);line-height:1.8">When you start a new job, your employer asks you to complete a TD1 form — the Personal Tax Credits Return. This form tells your employer how much tax to withhold from each paycheck. The basic personal amount ($16,452 federally in 2026) means you pay no federal tax on the first $16,452 of income. Additional TD1 credits include the age amount (65+), disability amount, tuition, and caregiver amounts. If you only have one employer and no complex credits, the default TD1 is usually fine. Claiming credits you are not entitled to results in a tax bill at filing time.</p>
           </div>
 
           <div>
             <h3 style="font-size:var(--text-xl);font-weight:600;margin-bottom:var(--space-3)">📊 CPP2 — The Second Canada Pension Plan</h3>
-            <p style="color:var(--color-text-muted);line-height:1.8">Since 2024, Canada introduced a second CPP contribution tier (CPP2) on earnings above the Year's Maximum Pensionable Earnings (YMPE). In 2026, CPP2 applies at 4% on earnings between $68,500 and $73,200, with a maximum employee contribution of $188. Like CPP1, your employer matches your CPP2 contribution. Unlike CPP1, the CPP2 enhanced benefit will be paid as a separate additional benefit on top of your regular CPP retirement pension. Both CPP contributions appear as deductions on your T4 slip and are claimed as non-refundable tax credits when you file.</p>
+            <p style="color:var(--color-text-muted);line-height:1.8">Since 2024, Canada introduced a second CPP contribution tier (CPP2) on earnings above the Year's Maximum Pensionable Earnings (YMPE). In 2026, CPP2 applies at 4% on earnings between $74,600 and $85,000, with a maximum employee contribution of $416. Like CPP1, your employer matches your CPP2 contribution. Unlike CPP1, the CPP2 enhanced benefit will be paid as a separate additional benefit on top of your regular CPP retirement pension. Both CPP contributions appear as deductions on your T4 slip and are claimed as non-refundable tax credits when you file.</p>
           </div>
 
           <div>
@@ -408,7 +408,7 @@
         </div>
 
         <div style="margin-top:var(--space-8);padding:var(--space-4) var(--space-5);background:var(--color-bg);border:1px solid var(--color-border);border-radius:var(--radius-md);font-size:var(--text-sm);color:var(--color-text-muted);line-height:1.7">
-          📋 Results are estimates based on 2026 federal and provincial rates. Actual deductions may vary based on TD1 credits, benefit deductions, and employer payroll practices. Quebec residents use QPP and QPIP — this calculator uses federal CPP/EI equivalents for Quebec. See our <a href="/disclaimer.html" style="color:var(--color-primary)">full disclaimer</a>.
+          📋 Results are estimates based on 2026 federal and provincial rates. Actual deductions may vary based on TD1 credits, benefit deductions, and employer payroll practices. Quebec residents use QPP and QPIP, not CPP/EI — this calculator applies the actual 2026 Quebec rates. See our <a href="/disclaimer.html" style="color:var(--color-primary)">full disclaimer</a>.
         </div>
       </section>
 

@@ -9,8 +9,8 @@
    4. Canadian compounding: semi-annual, not monthly
       monthly_rate = (1 + annual_rate/2)^(1/6) - 1
    5. CMHC premium: 4% / 3.1% / 2.8% / 0% (added to mortgage)
-   6. Min down: 5% under $500K, 5% + 10% for $500K-$1M, 20%+ for $1M+
-   7. Max insured price: $999,999
+   6. Min down: 5% under $500K, 5% + 10% for $500K-$1.5M, 20%+ over $1.5M
+   7. Max insured price: $1,500,000 (raised from $1M, effective Dec 15, 2024)
 
    Binary search finds max purchase price where both
    GDS and TDS constraints are satisfied simultaneously.
@@ -49,7 +49,7 @@ document.addEventListener('DOMContentLoaded', function () {
     NNSeo.injectFAQSchema([
       { question:'How much mortgage can I afford in Canada?', answer:'Canadian lenders use the GDS ratio (≤39%) and TDS ratio (≤44%) calculated at the OSFI stress test rate. The stress test requires qualifying at your contract rate plus 2%, or 5.25%, whichever is higher. On a $120,000 household income with $60,000 down at 4.5%, you can typically afford a home around $460,000–$470,000.' },
       { question:'What is the mortgage stress test in Canada?', answer:'The OSFI stress test requires you to qualify at the higher of your contract rate + 2% or 5.25%. If your bank offers 4.5%, you must prove you can afford payments at 6.5%. This applies to all federally regulated lenders including major banks.' },
-      { question:'How much down payment do I need in Canada?', answer:'For homes under $500,000: minimum 5%. For $500,000–$999,999: 5% on the first $500,000 plus 10% on the remainder. For homes $1,000,000 and above: minimum 20% — CMHC mortgage insurance is not available.' },
+      { question:'How much down payment do I need in Canada?', answer:'For homes under $500,000: minimum 5%. For $500,000–$1,500,000: 5% on the first $500,000 plus 10% on the remainder. For homes above $1,500,000: minimum 20% — CMHC mortgage insurance is not available.' },
       { question:'What is the GDS ratio in Canada?', answer:'The Gross Debt Service (GDS) ratio is the percentage of your gross monthly income that goes toward housing costs — mortgage principal and interest, property taxes, heating, and 50% of condo fees. Canadian lenders generally require a GDS ratio of 39% or less.' },
     ]);
   } catch(e) {}
@@ -128,12 +128,18 @@ document.addEventListener('DOMContentLoaded', function () {
   }
 
   function stressRate(contractRate) {
-    return Math.max(contractRate + 2.0, 5.25);
+    const floor = (window.NN && NN.MORTGAGE) ? NN.MORTGAGE.STRESS_TEST_RATE : 5.25;
+    return Math.max(contractRate + 2.0, floor);
   }
 
+  // Reads data/nn-constants.js NN.getMinDownPayment — the single source
+  // of truth shared with mortgage.js and first-home-costs.js (was
+  // previously a private $1M-cap copy that had drifted from the
+  // current $1.5M insured price ceiling).
   function minDownPayment(price) {
+    if (window.NN && NN.getMinDownPayment) return NN.getMinDownPayment(price);
     if (price < 500000)  return price * 0.05;
-    if (price < 1000000) return 500000 * 0.05 + (price - 500000) * 0.10;
+    if (price <= 1500000) return 500000 * 0.05 + (price - 500000) * 0.10;
     return price * 0.20;
   }
 

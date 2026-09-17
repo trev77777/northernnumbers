@@ -190,11 +190,11 @@
                 <span class="result-row-value is-error" id="result-prov-tax">—</span>
               </div>
               <div class="result-row" role="listitem">
-                <span class="result-row-label">CPP Contributions</span>
+                <span class="result-row-label" id="result-cpp-label">CPP Contributions</span>
                 <span class="result-row-value is-error" id="result-cpp">—</span>
               </div>
               <div class="result-row" role="listitem">
-                <span class="result-row-label">EI Premiums</span>
+                <span class="result-row-label" id="result-ei-label">EI Premiums</span>
                 <span class="result-row-value is-error" id="result-ei">—</span>
               </div>
               <div class="result-row result-row--total" role="listitem">
@@ -249,7 +249,7 @@
             </div>
 
             <div style="margin-top:var(--space-4);padding:var(--space-3) var(--space-4);background:var(--color-bg);border:1px solid var(--color-border);border-radius:var(--radius-md);font-size:var(--text-xs);color:var(--color-text-muted);line-height:1.6">
-              ℹ️ Both breakdowns include the Federal Basic Personal Amount ($16,129) and the applicable provincial basic personal amount as non-refundable tax credits.
+              ℹ️ Both breakdowns include the Federal Basic Personal Amount ($16,452) and the applicable provincial basic personal amount as non-refundable tax credits.
             </div>
 
             <div id="nn-disclaimer" style="margin-top:var(--space-5)"></div>
@@ -291,7 +291,7 @@
                 </tbody>
               </table>
             </div>
-            <p style="font-size:var(--text-sm);color:var(--color-text-muted);margin-top:var(--space-2)">Federal Basic Personal Amount: $16,129 (15% credit = $2,419 reduction)</p>
+            <p style="font-size:var(--text-sm);color:var(--color-text-muted);margin-top:var(--space-2)">Federal Basic Personal Amount: $16,452 (14% credit = $2,303 reduction)</p>
           </div>
 
           <div>
@@ -306,12 +306,12 @@
 
           <div>
             <h3 style="font-size:var(--text-xl);font-weight:600;margin-bottom:var(--space-3)">🏠 Provincial Tax Rates Across Canada</h3>
-            <p style="color:var(--color-text-muted);line-height:1.8">Every province and territory in Canada has its own income tax system layered on top of federal tax. Provincial rates range from Alberta's flat 10% on the first $148,269 — the lowest effective rates in Canada — to rates exceeding 20% in Nova Scotia and Quebec at higher income levels. Ontario residents face a surtax on provincial tax above certain thresholds, which effectively creates additional brackets beyond the basic rates. Quebec administers its own tax system entirely separately from the federal government — residents file two returns. This calculator covers all 13 provinces and territories using their correct 2026 rates and provincial basic personal amounts.</p>
+            <p style="color:var(--color-text-muted);line-height:1.8">Every province and territory in Canada has its own income tax system layered on top of federal tax. Provincial rates start as low as Alberta's 8% on the first $61,200 — among the lowest effective rates in Canada — to rates exceeding 20% in Nova Scotia and Quebec at higher income levels. Ontario residents face a surtax on provincial tax above certain thresholds, which effectively creates additional brackets beyond the basic rates. Quebec administers its own tax system entirely separately from the federal government — residents file two returns, and in exchange receive a 16.5% federal tax abatement, pay into QPP instead of CPP, and pay QPIP instead of part of federal EI. This calculator applies all of that automatically when Quebec is selected, using correct 2026 rates and provincial basic personal amounts for all 13 provinces and territories.</p>
           </div>
 
           <div>
             <h3 style="font-size:var(--text-xl);font-weight:600;margin-bottom:var(--space-3)">🧾 Non-Refundable Tax Credits You Should Know</h3>
-            <p style="color:var(--color-text-muted);line-height:1.8">The Basic Personal Amount is the most important non-refundable credit — it means you pay no federal tax on the first $16,129 of income in 2026. Each province has its own BPA as well. Other common non-refundable credits include the age amount for Canadians 65 and older, the pension income amount, disability tax credit, caregiver amount, tuition credits, and medical expenses. Non-refundable credits reduce your tax payable but cannot generate a refund if they exceed what you owe. Refundable credits like the GST/HST credit and Canada Child Benefit are different — they are paid out even if you owe no tax, and are not reflected in this calculator.</p>
+            <p style="color:var(--color-text-muted);line-height:1.8">The Basic Personal Amount is the most important non-refundable credit — it means you pay no federal tax on the first $16,452 of income in 2026. Each province has its own BPA as well. Other common non-refundable credits include the age amount for Canadians 65 and older, the pension income amount, disability tax credit, caregiver amount, tuition credits, and medical expenses. Non-refundable credits reduce your tax payable but cannot generate a refund if they exceed what you owe. Refundable credits like the GST/HST credit and Canada Child Benefit are different — they are paid out even if you owe no tax, and are not reflected in this calculator.</p>
           </div>
 
           <div>
@@ -339,7 +339,7 @@
               </div>
               <div>
                 <p style="font-weight:600;margin-bottom:var(--space-1)">Does this calculator include CPP and EI?</p>
-                <p style="color:var(--color-text-muted);font-size:var(--text-sm);line-height:1.7">Yes. CPP contributions (5.95% up to $3,867.50 in 2026) and EI premiums (1.666% up to $1,049.12) are included in the Total Deductions and Net Income calculations. Self-employed individuals pay double CPP and no EI — select "Self-Employed" in the Employment Type dropdown.</p>
+                <p style="color:var(--color-text-muted);font-size:var(--text-sm);line-height:1.7">Yes. CPP contributions (5.95% up to $4,230.45, plus CPP2 at 4% up to $416 above $74,600) and EI premiums (1.63% up to $1,123.07) are included in the Total Deductions and Net Income calculations. Self-employed individuals pay double CPP and no EI — select "Self-Employed" in the Employment Type dropdown.</p>
               </div>
               <div>
                 <p style="font-weight:600;margin-bottom:var(--space-1)">Does this calculator include provincial tax?</p>

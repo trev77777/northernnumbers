@@ -5,12 +5,17 @@
    Key Canadian rule: mortgages compound semi-annually,
    not monthly. We convert to an effective monthly rate.
 
-   CMHC rules (2024):
+   CMHC rules (2026, confirmed unchanged from prior years):
    - 5.00% – 9.99% down  → 4.00% premium
    - 10.00% – 14.99% down → 3.10% premium
    - 15.00% – 19.99% down → 2.80% premium
    - 20.00%+ down         → 0% (conventional)
+   - +0.20% surcharge for extended (>25yr) insured amortization
    Premium is added to the mortgage balance before payment calc.
+   Insured price ceiling ($1.5M), down-payment tiers, and the extended-
+   amortization rule all read from data/nn-constants.js (NN.MORTGAGE) —
+   the single source of truth shared with mortgage-affordability.js and
+   first-home-costs.js. Do not hardcode a private copy of these figures.
    ============================================= */
 
 'use strict';
@@ -163,9 +168,12 @@ attachInputFormatter(downPaymentEl);
  *
  * @param {number} dpRatio       - down payment as decimal, e.g. 0.10
  * @param {number} baseMortgage  - purchase price minus down payment
+ * @param {number} [amortYears]  - amortization length; adds the +0.20%
+ *                                 CMHC surcharge for extended (>25yr)
+ *                                 insured amortizations
  * @returns {{ rate: number, premium: number }}
  */
-function calcCmhc(dpRatio, baseMortgage) {
+function calcCmhc(dpRatio, baseMortgage, amortYears) {
   let rate = 0;
 
   if (dpRatio >= 0.20) {
@@ -178,6 +186,13 @@ function calcCmhc(dpRatio, baseMortgage) {
     rate = 0.0400;
   } else {
     rate = 0; // under 5% — validation blocks this case
+  }
+
+  // Extended (>25yr) amortization on an insured mortgage carries a
+  // +0.20% surcharge — see NN.MORTGAGE.EXTENDED_AMORTIZATION_SURCHARGE.
+  if (rate > 0 && amortYears > 25) {
+    const surcharge = (window.NN && NN.MORTGAGE) ? NN.MORTGAGE.EXTENDED_AMORTIZATION_SURCHARGE : 0.002;
+    rate += surcharge;
   }
 
   return { rate, premium: baseMortgage * rate };
@@ -327,11 +342,15 @@ function validateInputs() {
       downPayment = price * (downPayment / 100);
     }
     const dpRatio = price > 0 ? downPayment / price : 0;
+    // Minimum required down payment is tiered by price (5% under $500K,
+    // 10% on the portion $500K-$1.5M, 20% flat above $1.5M) — not a
+    // flat 5% regardless of price. See NN.getMinDownPayment.
+    const minRequired = (window.NN && NN.getMinDownPayment) ? NN.getMinDownPayment(price) : price * 0.05;
     if (downPayment >= price) {
       setError(downPaymentEl, dpErrorEl, 'Down payment must be less than the purchase price.');
       valid = false;
-    } else if (dpRatio < 0.05) {
-      setError(downPaymentEl, dpErrorEl, 'Minimum down payment for an insured mortgage is 5%.');
+    } else if (downPayment < minRequired) {
+      setError(downPaymentEl, dpErrorEl, `Minimum down payment for a $${Math.round(price).toLocaleString('en-CA')} home is ${formatCAD(Math.round(minRequired))} (${(minRequired / price * 100).toFixed(1)}%).`);
       valid = false;
     } else {
       clearError(downPaymentEl, dpErrorEl);
@@ -385,7 +404,7 @@ function calculate() {
   // --- CMHC ---
   const baseMortgage  = price - downPayment;
   const dpRatio       = downPayment / price;
-  const cmhc          = calcCmhc(dpRatio, baseMortgage);
+  const cmhc          = calcCmhc(dpRatio, baseMortgage, amortYears);
   const totalMortgage = baseMortgage + cmhc.premium; // financed amount
 
   // Determine periods per year and label
@@ -637,9 +656,13 @@ function checkCmhc() {
   }
 
   const dpRatio   = price > 0 ? dp / price : 0;
-  // CMHC only applies when dp is 5%–19.99% AND price < $1M
-  const needsCmhc = price > 0 && dp > 0 && dpRatio >= 0.05 && dpRatio < 0.20 && price < 1000000;
-  const { rate }  = calcCmhc(dpRatio, price - dp);
+  // CMHC/insured financing: dp under 20% AND price at or under the
+  // insured price ceiling ($1.5M since Dec 15, 2024) — see NN.MORTGAGE
+  // in data/nn-constants.js (single source of truth for this ceiling).
+  const needsCmhc = price > 0 && dp > 0 && dpRatio >= 0.05 &&
+    (window.NN && NN.isInsuredEligible ? NN.isInsuredEligible(price, dp) : dpRatio < 0.20 && price <= 1500000);
+  const amortYears = parseInt(amortizationEl.value) || 25;
+  const { rate }  = calcCmhc(dpRatio, price - dp, amortYears);
 
   const cmhcRateEl = document.getElementById('cmhc-rate-label');
   if (cmhcRateEl) cmhcRateEl.textContent = `${(rate * 100).toFixed(2)}%`;

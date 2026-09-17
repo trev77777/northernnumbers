@@ -134,12 +134,16 @@ document.addEventListener('DOMContentLoaded', function () {
     const minWd     = balance * factor;
     const totalWd   = minWd + extraWd;
     const balAfter  = Math.max(0, (balance - totalWd) * (1 + growth));
-    const OAS_THRESH = 95323; // 2026 estimated income threshold
+    // OAS clawback threshold — read from the shared source of truth
+    // (data/nn-constants.js NN.OAS.CLAWBACK_THRESHOLD) so this never
+    // drifts out of sync with the OAS calculator again.
+    const OAS_THRESH = (window.NN && NN.OAS) ? NN.OAS.CLAWBACK_THRESHOLD : 95323;
+    const oasThreshLabel = NNUtils.formatCAD0(OAS_THRESH);
     const oasRisk   = minWd > OAS_THRESH
-      ? '⚠️ This withdrawal alone exceeds $95,323 — actual OAS recovery tax depends on total net world income'
+      ? `⚠️ This withdrawal alone exceeds ${oasThreshLabel} — actual OAS recovery tax depends on total net world income`
       : minWd > OAS_THRESH * 0.75
-      ? '⚡ This withdrawal alone is approaching $95,323 — monitor total net income'
-      : '✅ This withdrawal alone is below the $95,323 threshold';
+      ? `⚡ This withdrawal alone is approaching ${oasThreshLabel} — monitor total net income`
+      : `✅ This withdrawal alone is below the ${oasThreshLabel} threshold`;
 
     /* Render */
     placeholder.classList.add('hidden');

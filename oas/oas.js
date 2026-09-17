@@ -5,19 +5,22 @@
    FORMULAS:
    1. OAS proportion = min(years_in_canada / 40, 1.0)
       Partial: each year = 2.5% of full amount
-   2. Base monthly = OAS_RATE × proportion
-      Age 65-74: $727.67 | Age 75+: $800.44
+   2. Base monthly = OAS_RATE × proportion (see NN.OAS in nn-constants.js)
    3. Deferral factor = 1 + (months_after_65 × 0.006)
       Max 36% at age 70
    4. Gross monthly = base × deferral_factor
-   5. Clawback = max(0, net_income - 90997) × 0.15 / 12
+   5. Clawback = max(0, net_income - NN.OAS.CLAWBACK_THRESHOLD) × 0.15 / 12
    6. Net monthly = max(0, gross - clawback)
 
    GIS:
    - Reduces by $1 for every $2 of other monthly income
-   - Single max: $1,057.01 | Couple max: $636.26
+   - Maximums: see NN.GIS in nn-constants.js
 
-   Verified against Service Canada 2026 Q1 rates ✅
+   IMPORTANT: OAS and GIS monthly amounts are indexed to CPI every
+   January/April/July/October — they are NOT fixed for the full year.
+   The figures used here are for the quarter in NN.OAS.QUARTER_LABEL /
+   NN.GIS.QUARTER_LABEL (data/nn-constants.js). Re-verify against
+   canada.ca each quarter rather than assuming these hold all year.
    ============================================= */
 'use strict';
 
@@ -47,10 +50,10 @@ document.addEventListener('DOMContentLoaded', function () {
     });
     NNSeo.injectSchema({ title:'OAS Calculator Canada 2026', slug:'oas', description:'Calculate your OAS benefit, GIS eligibility, clawback, and deferral bonus for 2026.' });
     NNSeo.injectFAQSchema([
-      { question:'What is the maximum OAS in 2026?', answer:'The maximum monthly OAS for ages 65–74 is $727.67 in 2026. Canadians 75 and older receive $800.44/month — an automatic 10% increase introduced in 2022.' },
-      { question:'What is the OAS clawback threshold for 2026?', answer:'The OAS clawback begins at $90,997 of net income in 2026. For every dollar above this threshold, OAS is reduced by 15 cents. OAS is completely eliminated at approximately $149,211 of net income.' },
+      { question:'What is the maximum OAS in 2026?', answer:'For the July–September 2026 quarter, the maximum monthly OAS for ages 65–74 is $751.97. Canadians 75 and older receive $827.17/month — an automatic 10% increase introduced in 2022. OAS is indexed to CPI every January, April, July, and October, so these amounts change quarterly — check canada.ca for the current quarter.' },
+      { question:'What is the OAS clawback threshold for 2026?', answer:'Clawback runs about 18 months behind the income year it is based on. For OAS payments received July 2026–June 2027, clawback is based on 2025 income: it starts at $93,454, with full elimination at $152,062 (age 65–74) or $157,923 (age 75+). For the next period, July 2027–June 2028, clawback will be based on 2026 income: it starts at $95,323, with full elimination currently estimated around $155,109 (age 65–74) or $161,088 (age 75+) — these two figures are estimates pending that period\'s finalized OAS rates.' },
       { question:'Should I defer OAS to age 70?', answer:'Deferring OAS increases your benefit by 0.6% per month (7.2% per year), up to 36% more at age 70. The break-even versus taking at 65 is around age 82-83. If you have other income and are in good health, deferring usually results in more lifetime income.' },
-      { question:'What is the Guaranteed Income Supplement?', answer:'The GIS is a non-taxable monthly benefit for low-income OAS recipients. In 2026, single seniors can receive up to $1,057.01/month. GIS reduces by $1 for every $2 of income other than OAS.' },
+      { question:'What is the Guaranteed Income Supplement?', answer:'The GIS is a non-taxable monthly benefit for low-income OAS recipients. For the July–September 2026 quarter, single seniors can receive up to $1,123.17/month, and couples where both receive full OAS can receive up to $676.09/month each. Couples where the spouse receives the Allowance or no OAS/Allowance at all have higher income cutoffs and different maximums — see canada.ca for your exact scenario. GIS reduces by $1 for every $2 of income other than OAS, and — like OAS — is adjusted quarterly.' },
     ]);
   } catch(e) {}
 
@@ -67,15 +70,18 @@ document.addEventListener('DOMContentLoaded', function () {
     });
   });
 
-  /* ── CONSTANTS ── */
-  const OAS_65_74      = 727.67;
-  const OAS_75_PLUS    = 800.44;
-  const CLAWBACK_THRESH= 90997;
-  const CLAWBACK_RATE  = 0.15;
+  /* ── CONSTANTS (reads data/nn-constants.js — the shared source of
+     truth for OAS/GIS; fallback literals below are the July–September
+     2026 quarter and only apply if that shared file failed to load) ── */
+  const OAS_65_74      = (window.NN && NN.OAS) ? NN.OAS.MONTHLY_65_TO_74 : 751.97;
+  const OAS_75_PLUS    = (window.NN && NN.OAS) ? NN.OAS.MONTHLY_75_PLUS  : 827.17;
+  const CLAWBACK_THRESH= (window.NN && NN.OAS) ? NN.OAS.CLAWBACK_THRESHOLD : 95323;
+  const CLAWBACK_RATE  = (window.NN && NN.OAS) ? NN.OAS.CLAWBACK_RATE : 0.15;
   const DEFERRAL_RATE  = 0.006;
   const FULL_YEARS     = 40;
-  const GIS_SINGLE_MAX = 1057.01;
-  const GIS_COUPLE_MAX = 636.26;
+  const GIS_SINGLE_MAX = (window.NN && NN.GIS) ? NN.GIS.MAX_MONTHLY_SINGLE : 1123.17;
+  const GIS_COUPLE_MAX = (window.NN && NN.GIS) ? NN.GIS.MAX_MONTHLY_COUPLE : 676.09;
+  const OAS_QUARTER    = (window.NN && NN.OAS && NN.OAS.QUARTER_LABEL) ? NN.OAS.QUARTER_LABEL : 'current quarter';
 
   /* ── CALCULATION ENGINE ── */
   function calcOAS(years, startAge, netIncome, ageGroup) {

@@ -3,7 +3,7 @@
    Canadian RRSP Calculator Logic
 
    Key Canadian RRSP rules:
-   - Contribution room = 18% of prior year earned income, max $32,490 (2026)
+   - Contribution room = 18% of prior year earned income, max $33,810 (2026)
    - Unused room carries forward indefinitely
    - Must convert to RRIF by Dec 31 of the year you turn 71
    - Over-contribution buffer: $2,000 lifetime
@@ -13,109 +13,14 @@
 'use strict';
 
 /* =============================================
-   1. TAX DATA — 2026 Federal + Provincial
-   Combined marginal rates at various income levels
+   1. TAX DATA — reads data/nn-constants.js (NN.FED_BRACKETS,
+   NN.PROV_BRACKETS, NN.RRSP.ANNUAL_MAX). No private bracket copy is
+   kept here — see AdSense audit Phase 2 (duplicate constants were the
+   cause of this calculator using a stale RRSP max after rrsp-room.js
+   and other calculators had already been updated).
    ============================================= */
 
-// Federal tax brackets 2026
-const FED_BRACKETS = [
-  { min: 0,       max: 57375,  rate: 0.15   },
-  { min: 57375,   max: 114750, rate: 0.205  },
-  { min: 114750,  max: 158519, rate: 0.26   },
-  { min: 158519,  max: 220000, rate: 0.29   },
-  { min: 220000,  max: Infinity, rate: 0.33 }
-];
-
-// Provincial tax brackets 2026 (approximate — updated annually)
-const PROV_BRACKETS = {
-  ON: [
-    { min: 0,       max: 51446,  rate: 0.0505 },
-    { min: 51446,   max: 102894, rate: 0.0915 },
-    { min: 102894,  max: 150000, rate: 0.1116 },
-    { min: 150000,  max: 220000, rate: 0.1216 },
-    { min: 220000,  max: Infinity, rate: 0.1316 }
-  ],
-  AB: [
-    { min: 0,       max: 148269, rate: 0.10   },
-    { min: 148269,  max: 177922, rate: 0.12   },
-    { min: 177922,  max: 237230, rate: 0.13   },
-    { min: 237230,  max: 355845, rate: 0.14   },
-    { min: 355845,  max: Infinity, rate: 0.15 }
-  ],
-  BC: [
-    { min: 0,       max: 45654,  rate: 0.0506 },
-    { min: 45654,   max: 91310,  rate: 0.077  },
-    { min: 91310,   max: 104835, rate: 0.105  },
-    { min: 104835,  max: 127299, rate: 0.1229 },
-    { min: 127299,  max: 172602, rate: 0.147  },
-    { min: 172602,  max: 240716, rate: 0.168  },
-    { min: 240716,  max: Infinity, rate: 0.205 }
-  ],
-  MB: [
-    { min: 0,       max: 47000,  rate: 0.108  },
-    { min: 47000,   max: 100000, rate: 0.1275 },
-    { min: 100000,  max: Infinity, rate: 0.174 }
-  ],
-  SK: [
-    { min: 0,       max: 49720,  rate: 0.105  },
-    { min: 49720,   max: 142058, rate: 0.125  },
-    { min: 142058,  max: Infinity, rate: 0.145 }
-  ],
-  QC: [
-    { min: 0,       max: 53255,  rate: 0.14   },
-    { min: 53255,   max: 106495, rate: 0.19   },
-    { min: 106495,  max: 129590, rate: 0.24   },
-    { min: 129590,  max: Infinity, rate: 0.2575 }
-  ],
-  NB: [
-    { min: 0,       max: 49958,  rate: 0.094  },
-    { min: 49958,   max: 99916,  rate: 0.14   },
-    { min: 99916,   max: 185064, rate: 0.16   },
-    { min: 185064,  max: Infinity, rate: 0.195 }
-  ],
-  NS: [
-    { min: 0,       max: 29590,  rate: 0.0879 },
-    { min: 29590,   max: 59180,  rate: 0.1495 },
-    { min: 59180,   max: 93000,  rate: 0.1667 },
-    { min: 93000,   max: 150000, rate: 0.175  },
-    { min: 150000,  max: Infinity, rate: 0.21 }
-  ],
-  PE: [
-    { min: 0,       max: 32656,  rate: 0.0965 },
-    { min: 32656,   max: 64313,  rate: 0.1363 },
-    { min: 64313,   max: 105000, rate: 0.1665 },
-    { min: 105000,  max: 140000, rate: 0.18   },
-    { min: 140000,  max: Infinity, rate: 0.1875 }
-  ],
-  NL: [
-    { min: 0,       max: 43198,  rate: 0.087  },
-    { min: 43198,   max: 86395,  rate: 0.145  },
-    { min: 86395,   max: 154244, rate: 0.158  },
-    { min: 154244,  max: 215943, rate: 0.178  },
-    { min: 215943,  max: 275870, rate: 0.198  },
-    { min: 275870,  max: Infinity, rate: 0.208 }
-  ],
-  YT: [
-    { min: 0,       max: 57375,  rate: 0.064  },
-    { min: 57375,   max: 114750, rate: 0.09   },
-    { min: 114750,  max: 500000, rate: 0.109  },
-    { min: 500000,  max: Infinity, rate: 0.128 }
-  ],
-  NT: [
-    { min: 0,       max: 50597,  rate: 0.059  },
-    { min: 50597,   max: 101198, rate: 0.086  },
-    { min: 101198,  max: 164525, rate: 0.122  },
-    { min: 164525,  max: Infinity, rate: 0.1405 }
-  ],
-  NU: [
-    { min: 0,       max: 53268,  rate: 0.04   },
-    { min: 53268,   max: 106537, rate: 0.07   },
-    { min: 106537,  max: 173205, rate: 0.09   },
-    { min: 173205,  max: Infinity, rate: 0.115 }
-  ]
-};
-
-const RRSP_MAX_2026 = 32490; // 2026 annual RRSP contribution maximum
+const RRSP_MAX_2026 = (window.NN && NN.RRSP) ? NN.RRSP.ANNUAL_MAX : 33810; // 2026 annual RRSP contribution maximum
 
 
 /* =============================================
@@ -127,16 +32,8 @@ const RRSP_MAX_2026 = 32490; // 2026 annual RRSP contribution maximum
  * for a given province (combined federal + provincial).
  */
 function getMarginalRate(income, province) {
-  const fedRate  = getBracketRate(income, FED_BRACKETS);
-  const provRate = getBracketRate(income, PROV_BRACKETS[province] || PROV_BRACKETS['ON']);
-  return fedRate + provRate;
-}
-
-function getBracketRate(income, brackets) {
-  for (let i = brackets.length - 1; i >= 0; i--) {
-    if (income > brackets[i].min) return brackets[i].rate;
-  }
-  return brackets[0].rate;
+  if (window.NN && NN.getMarginalRate) return NN.getMarginalRate(income, province);
+  return 0.2965; // fallback: approx. Ontario combined marginal rate at $80k, only used if nn-constants.js failed to load
 }
 
 /**
@@ -144,8 +41,8 @@ function getBracketRate(income, brackets) {
  * Refund = contribution × combined marginal rate at current income.
  */
 function estimateTaxRefund(income, contribution, province) {
-  const marginalRate = getMarginalRate(income, province);
-  return contribution * marginalRate;
+  if (window.NN && NN.estimateTaxRefund) return NN.estimateTaxRefund(income, contribution, province);
+  return contribution * getMarginalRate(income, province);
 }
 
 /**
@@ -321,7 +218,7 @@ const PRESETS = {
   },
   highincome: {
     income: 175000, province: 'ON', currentAge: 40, retirementAge: 60,
-    balance: 150000, room: 32490, contribution: 32490, frequency: 'yearly',
+    balance: 150000, room: 33810, contribution: 33810, frequency: 'yearly',
     annualReturn: 7, lumpSum: 0
   },
   nearretirement: {
@@ -689,8 +586,8 @@ function renderMilestone(cardEl, yearEl, textEl, subEl, amount, year, finalBalan
 function calcTaxOwed(income, province) {
   // Simplified: apply brackets cumulatively for a rough total tax estimate
   let tax = 0;
-  const fedBrackets = FED_BRACKETS;
-  const provBrackets = PROV_BRACKETS[province] || PROV_BRACKETS['ON'];
+  const fedBrackets = (window.NN && NN.FED_BRACKETS) || [];
+  const provBrackets = (window.NN && NN.PROV_BRACKETS && NN.PROV_BRACKETS[province]) || (window.NN && NN.PROV_BRACKETS && NN.PROV_BRACKETS.ON) || [];
 
   for (let i = 0; i < fedBrackets.length; i++) {
     const b = fedBrackets[i];
@@ -942,7 +839,7 @@ if (contribSlider) {
   // Text input → updates slider
   contributionEl.addEventListener('input', function () {
     const val = parseInputNumber(this.value);
-    if (!isNaN(val) && val >= 0 && val <= 32490) {
+    if (!isNaN(val) && val >= 0 && val <= RRSP_MAX_2026) {
       contribSlider.value = val;
     }
   });
@@ -950,7 +847,7 @@ if (contribSlider) {
   // Update slider max when room changes
   roomEl.addEventListener('input', function () {
     const room = parseInputNumber(this.value);
-    if (room > 0 && room <= 32490) contribSlider.max = room;
+    if (room > 0 && room <= RRSP_MAX_2026) contribSlider.max = room;
   });
 }
 

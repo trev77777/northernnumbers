@@ -38,7 +38,7 @@
    $500K, 5% down → CMHC $19,000, ON PST $1,520 ✅
    $700K, 10% down → CMHC $19,530 ✅
    $700K, 10% down, 30yr → CMHC $20,790 ✅
-   Min down $700K = $35,000 (5%×$500K + 10%×$200K) ✅
+   Min down $700K = $45,000 (5%×$500K + 10%×$200K) ✅
    ============================================= */
 'use strict';
 
@@ -66,7 +66,7 @@ document.addEventListener('DOMContentLoaded', function () {
     });
     NNSeo.injectSchema({ title:'First Home Buyer Cost Calculator Canada 2026', slug:'first-home-costs', description:'Calculate all upfront costs of buying your first home in Canada including CMHC insurance and closing costs.' });
     NNSeo.injectFAQSchema([
-      { question:'What is the minimum down payment in Canada in 2026?', answer:'5% on the first $500,000 plus 10% on amounts above $500,000 up to $1,500,000. On a $700,000 home: $25,000 + $20,000 = $35,000 minimum. Homes above $1,500,000 require 20% down and are not eligible for CMHC insurance.' },
+      { question:'What is the minimum down payment in Canada in 2026?', answer:'5% on the first $500,000 plus 10% on amounts above $500,000 up to $1,500,000. On a $700,000 home: $25,000 + $20,000 = $45,000 minimum. Homes above $1,500,000 require 20% down and are not eligible for CMHC insurance.' },
       { question:'How much is CMHC mortgage insurance in Canada?', answer:'CMHC premiums are 4.00% (5% down), 3.10% (10% down), or 2.80% (15% down) of the mortgage amount. With 30-year amortization, add 0.20% to each tier. The premium is added to your mortgage — but Ontario (8%), Quebec (9.975%), and Saskatchewan (6%) charge PST on the premium in cash at closing.' },
       { question:'What closing costs should I budget for in Canada?', answer:'Closing costs for buyers in Canada typically run 1.5%–4% of the purchase price. Main items: land transfer tax (varies by province), legal fees ($1,500–$2,500), title insurance ($300–$500), home inspection ($400–$700), and PST on CMHC premium where applicable. Alberta and Saskatchewan have no land transfer tax.' },
       { question:'What first-time buyer rebates are available in 2026?', answer:'Ontario: up to $4,000 on provincial LTT, Toronto adds up to $4,475 municipal rebate. BC: full PTT exemption on homes under $835,000. PEI: up to $2,000. Alberta, MB, SK, NS, NB, NL, YT, NT, NU: no land transfer tax.' },
@@ -101,8 +101,11 @@ document.addEventListener('DOMContentLoaded', function () {
   /* ── CMHC PST RATES ── */
   const CMHC_PST = { ON: 0.08, QC: 0.09975, SK: 0.06 };
 
-  /* ── MINIMUM DOWN PAYMENT ── */
+  /* ── MINIMUM DOWN PAYMENT — reads data/nn-constants.js NN.getMinDownPayment,
+     the single source of truth shared with mortgage.js and
+     mortgage-affordability.js. ── */
   function minDownPayment(price) {
+    if (window.NN && NN.getMinDownPayment) return NN.getMinDownPayment(price);
     if (price <= 500000) return price * 0.05;
     if (price <= 1500000) return 500000 * 0.05 + (price - 500000) * 0.10;
     return price * 0.20;
@@ -110,13 +113,14 @@ document.addEventListener('DOMContentLoaded', function () {
 
   /* ── CMHC PREMIUM ── */
   function calcCMHC(price, downPayment, thirtyYear) {
-    if (price > 1500000) return { needsCMHC: false, overCap: true, premium: 0, pst: 0, rate: 0 };
+    const insuredCap = (window.NN && NN.MORTGAGE) ? NN.MORTGAGE.MAX_PURCHASE_INSURED : 1500000;
+    if (price > insuredCap) return { needsCMHC: false, overCap: true, premium: 0, pst: 0, rate: 0 };
     const minDP = minDownPayment(price);
     if (downPayment < minDP - 0.01) return { needsCMHC: false, belowMin: true, premium: 0, pst: 0, rate: 0, minDP };
     const dpPct = downPayment / price * 100;
     if (dpPct >= 20) return { needsCMHC: false, premium: 0, pst: 0, rate: 0 };
     let rate = dpPct < 10 ? 0.04 : dpPct < 15 ? 0.031 : 0.028;
-    if (thirtyYear) rate += 0.002;
+    if (thirtyYear) rate += (window.NN && NN.MORTGAGE) ? NN.MORTGAGE.EXTENDED_AMORTIZATION_SURCHARGE : 0.002;
     const mortgage = price - downPayment;
     const premium = mortgage * rate;
     return { needsCMHC: true, premium, rate, pst: 0, mortgage };

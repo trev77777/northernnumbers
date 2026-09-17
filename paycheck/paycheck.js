@@ -2,20 +2,18 @@
    NORTHERN NUMBERS — paycheck.js
    Canadian Paycheck / Take-Home Pay Calculator 2026
 
-   FORMULAS:
+   FORMULAS (2026 figures come from data/nn-constants.js — NN.FED_BRACKETS,
+   NN.PROV_BRACKETS, NN.CPP, NN.EI — do not hardcode a private copy):
    1. Gross annual = salary OR (hourly × hours/week × 52)
    2. Taxable income = gross - RRSP deduction
-   3. Federal tax = progressive brackets - BPA credit (BPA × 15%)
+   3. Federal tax = progressive brackets - BPA credit (BPA × lowest fed rate)
    4. Provincial tax = progressive prov brackets - prov BPA credit
-   5. CPP = (gross - $3,500) × 5.95%, max $3,867.50
-      CPP2 = (gross - $68,500) × 4%, max $188.00 (if gross > $68,500)
-      Self-employed CPP = × 2 (no CPP2 change)
-   6. EI = gross × 1.666%, max $1,049.12 (employed only)
+   5. CPP = (gross - basic exemption) × employee rate, max NN.CPP.MAX_EMPLOYEE_CONTRIBUTION
+      CPP2 = (gross - YMPE) × 4%, max NN.CPP.MAX_CPP2_CONTRIBUTION (if gross > YMPE)
+      Self-employed pays both the employee and employer portion of CPP and CPP2
+   6. EI = gross × employee rate, max NN.EI.MAX_EMPLOYEE_PREMIUM (employed only —
+      EI is optional for the self-employed, not modeled here)
    7. Per-period = annual ÷ pay_periods
-
-   Verified:
-   $85,000 ON biweekly → net $2,422.17/period ✅
-   $60,000 ON biweekly → net $1,774.31/period ✅
    ============================================= */
 'use strict';
 
@@ -36,6 +34,23 @@ document.addEventListener('DOMContentLoaded', function () {
 
   if (form) form.addEventListener('submit', function(e) { e.preventDefault(); calculate(); });
 
+  /* ── Income field label/hint: CPP and QPIP self-employed premiums
+     are calculated on NET self-employment income (revenue minus
+     eligible business expenses), not gross business revenue — CRA/
+     Revenu Québec both base contributions on net income. This field
+     IS that base for self-employed users, so relabel it to avoid it
+     being misread as "gross revenue". */
+  const salaryLabelEl = document.querySelector('label[for="gross-salary"]');
+  const salaryHintEl  = document.getElementById('salary-hint');
+  function updateIncomeFieldWording() {
+    const isSelfEmployed = empTypeEl?.value === 'self-employed';
+    if (salaryLabelEl) salaryLabelEl.textContent = isSelfEmployed ? 'Annual Net Business Income' : 'Annual Gross Salary';
+    if (salaryHintEl)  salaryHintEl.textContent  = isSelfEmployed
+      ? 'Your net self-employment income (business revenue minus eligible expenses) — not gross revenue. CPP and QPIP are calculated on net income.'
+      : 'Your total gross salary before any deductions.';
+  }
+  updateIncomeFieldWording();
+
   /* ── SEO ──────────────────────────────────────── */
   if (window.NNSeo) try {
     NNSeo.init({
@@ -46,8 +61,8 @@ document.addEventListener('DOMContentLoaded', function () {
     });
     NNSeo.injectSchema({ title:'Canadian Paycheck Calculator 2026', slug:'paycheck', description:'Calculate exact take-home pay after federal tax, provincial tax, CPP, and EI for all provinces.' });
     NNSeo.injectFAQSchema([
-      { question:'How is my Canadian paycheck calculated?', answer:'Your gross pay is reduced by federal income tax, provincial income tax, CPP contributions (5.95% up to $3,867.50), CPP2 (4% on $68,500-$73,200), and EI premiums (1.666% up to $1,049.12). The result is your net take-home pay.' },
-      { question:'What is CPP2 in Canada?', answer:'CPP2 is the second additional Canada Pension Plan contribution. In 2026, employees earning between $68,500 and $73,200 contribute 4% on that earnings band, for a maximum of $188 per year. Employers match this contribution.' },
+      { question:'How is my Canadian paycheck calculated?', answer:'Your gross pay is reduced by federal income tax, provincial income tax, CPP contributions (5.95% up to $4,230.45), CPP2 (4% on $74,600-$85,000), and EI premiums (1.63% up to $1,123.07). The result is your net take-home pay.' },
+      { question:'What is CPP2 in Canada?', answer:'CPP2 is the second additional Canada Pension Plan contribution. In 2026, employees earning between $74,600 and $85,000 contribute 4% on that earnings band, for a maximum of $416 per year. Employers match this contribution.' },
       { question:'Does RRSP reduce my paycheck deductions?', answer:'Yes, RRSP contributions reduce your taxable income. To have less tax withheld each paycheck, file a T1213 form with the CRA asking for a reduction in withholding based on your planned contributions. Without this form, you pay full tax and receive a refund when you file.' },
       { question:'Why does biweekly pay have 26 periods but semi-monthly only 24?', answer:'Biweekly means every two weeks, which gives 52 ÷ 2 = 26 paychecks per year. Semi-monthly means twice per month on fixed dates (e.g. the 15th and last day), giving exactly 12 × 2 = 24 paychecks. Your annual income is the same either way — only the per-period amount differs.' },
     ]);
@@ -72,6 +87,7 @@ document.addEventListener('DOMContentLoaded', function () {
   /* ── Auto-recalc on dropdowns ─────────────────── */
   [provinceEl, freqEl, empTypeEl].forEach(el => {
     el?.addEventListener('change', function() {
+      if (el === empTypeEl) updateIncomeFieldWording();
       if (!resultsContent.classList.contains('hidden')) calculate();
     });
   });
@@ -110,6 +126,7 @@ document.addEventListener('DOMContentLoaded', function () {
     const incomeType = incomeTypeEl.value;
     const freq       = parseInt(freqEl.value) || 26;
     const province   = provinceEl.value;
+    const isQuebec   = province === 'QC';
     const empType    = empTypeEl.value;
     const rrsp       = NNUtils.parseInputNumber(rrspEl.value) || 0;
 
@@ -133,36 +150,78 @@ document.addEventListener('DOMContentLoaded', function () {
 
     const taxable = Math.max(0, grossAnnual - rrsp);
 
-    /* Federal tax */
-    const fedBPA    = (window.NN && NN.FEDERAL_BASIC_PERSONAL) || 16129;
+    /* Federal tax — reads shared constants (data/nn-constants.js); the
+       fallback literals only apply if that shared file failed to load. */
+    // Federal BPA is income-tested above $181,440 (phases to $14,829 by
+    // $258,482) — use NN.getFederalBPA, not the flat constant.
+    const fedBPA    = (window.NN && NN.getFederalBPA) ? NN.getFederalBPA(taxable) : 16452;
     const fedBrackets = (window.NN && NN.FED_BRACKETS) || [
-      {min:0,max:57375,rate:0.15},{min:57375,max:114750,rate:0.205},
-      {min:114750,max:158519,rate:0.26},{min:158519,max:220000,rate:0.29},{min:220000,max:Infinity,rate:0.33}
+      {min:0,max:58523,rate:0.14},{min:58523,max:117045,rate:0.205},
+      {min:117045,max:181440,rate:0.26},{min:181440,max:258482,rate:0.29},{min:258482,max:Infinity,rate:0.33}
     ];
-    const fedTax = Math.max(0, calcTax(taxable, fedBrackets) - fedBPA * 0.15);
+    // Quebec residents get a 16.5% federal tax abatement (compensation
+    // for Quebec running its own equivalents to federal programs) —
+    // applied to federal tax AFTER the BPA credit, per CRA/Dept. of
+    // Finance. See NN.applyQuebecAbatement in data/nn-constants.js.
+    const fedTaxBeforeAbatement = Math.max(0, calcTax(taxable, fedBrackets) - fedBPA * fedBrackets[0].rate);
+    const fedTax = (window.NN && NN.applyQuebecAbatement) ? NN.applyQuebecAbatement(fedTaxBeforeAbatement, province) : (isQuebec ? fedTaxBeforeAbatement * 0.835 : fedTaxBeforeAbatement);
 
     /* Provincial tax */
     const provData    = (window.NN && NN.PROV_BRACKETS && NN.PROV_BRACKETS[province]) ||
-      [{min:0,max:51446,rate:0.0505},{min:51446,max:102894,rate:0.0915},{min:102894,max:150000,rate:0.1116},{min:150000,max:220000,rate:0.1216},{min:220000,max:Infinity,rate:0.1316}];
-    const provBPA     = (window.NN && NN.PROV_BASIC_PERSONAL && NN.PROV_BASIC_PERSONAL[province]) || 10000;
+      [{min:0,max:53891,rate:0.0505},{min:53891,max:107785,rate:0.0915},{min:107785,max:150000,rate:0.1116},{min:150000,max:220000,rate:0.1216},{min:220000,max:Infinity,rate:0.1316}];
+    // Manitoba's BPA is income-tested above $200,000 (to $0 by $400,000)
+    // — NN.getProvincialBPA applies that for MB, flat for every other province.
+    const provBPA     = (window.NN && NN.getProvincialBPA) ? (NN.getProvincialBPA(taxable, province) ?? 12989) : ((window.NN && NN.PROV_BASIC_PERSONAL && NN.PROV_BASIC_PERSONAL[province]) ?? 12989);
     const provLowest  = provData[0].rate;
     const provTax     = Math.max(0, calcTax(taxable, provData) - provBPA * provLowest);
 
-    /* CPP */
-    const CPP_EXEMPTION = 3500;
-    const CPP_MAX       = 3867.50;
-    const CPP2_MAX      = 188.00;
+    /* CPP/QPP + CPP2/QPP2 — Quebec residents pay QPP (not CPP), at a
+       higher combined rate than CPP, via Retraite Québec/Revenu Québec.
+       Self-employed pay double the employee rate on both tiers, same
+       as the federal CPP rule. */
+    const pensionPlan = isQuebec && window.NN && NN.QPP ? NN.QPP : (window.NN && NN.CPP) || {};
+    const CPP_EXEMPTION = pensionPlan.BASIC_EXEMPTION || 3500;
+    const CPP_YMPE       = pensionPlan.YMPE || 74600;
+    const CPP_RATE       = pensionPlan.EMPLOYEE_RATE || 0.0595;
+    const CPP_MAX        = pensionPlan.MAX_EMPLOYEE_CONTRIBUTION || 4230.45;
+    const CPP2_RATE      = isQuebec ? (pensionPlan.QPP2_RATE || 0.04) : (pensionPlan.CPP2_RATE || 0.04);
+    const CPP2_MAX       = isQuebec ? (pensionPlan.MAX_QPP2_CONTRIBUTION || 416.00) : (pensionPlan.MAX_CPP2_CONTRIBUTION || 416.00);
     let cpp = 0, cpp2 = 0;
     if (empType === 'employed') {
-      cpp  = Math.min(Math.max(grossAnnual - CPP_EXEMPTION, 0) * 0.0595, CPP_MAX);
-      cpp2 = grossAnnual > 68500 ? Math.min((grossAnnual - 68500) * 0.04, CPP2_MAX) : 0;
+      cpp  = Math.min(Math.max(grossAnnual - CPP_EXEMPTION, 0) * CPP_RATE, CPP_MAX);
+      cpp2 = grossAnnual > CPP_YMPE ? Math.min((grossAnnual - CPP_YMPE) * CPP2_RATE, CPP2_MAX) : 0;
     } else {
-      cpp  = Math.min(Math.max(grossAnnual - CPP_EXEMPTION, 0) * 0.119, CPP_MAX * 2);
-      cpp2 = 0;
+      cpp  = Math.min(Math.max(grossAnnual - CPP_EXEMPTION, 0) * (CPP_RATE * 2), CPP_MAX * 2);
+      cpp2 = grossAnnual > CPP_YMPE ? Math.min((grossAnnual - CPP_YMPE) * (CPP2_RATE * 2), CPP2_MAX * 2) : 0;
     }
 
-    /* EI */
-    const ei = empType === 'employed' ? Math.min(grossAnnual * 0.01666, 1049.12) : 0;
+    /* EI (self-employed EI is optional/opt-in in Canada — NOT modeled
+       here, deliberately; that disclosure is preserved). Quebec
+       residents pay a lower EI rate (QPIP covers maternity/parental/
+       paternity benefits instead) PLUS a separate, MANDATORY QPIP
+       premium that self-employed Quebec residents must also pay
+       (unlike EI) — both folded into "ei" below since there's no
+       separate QPIP line in this calculator's results. Self-employed
+       QPIP uses its own rate/max (NN.QPIP_SELF_EMPLOYED), not the
+       employee rate — Revenu Québec treats them differently. */
+    const eiPlan = isQuebec && window.NN && NN.QC_EI ? NN.QC_EI : (window.NN && NN.EI) || {};
+    const EI_RATE = eiPlan.EMPLOYEE_RATE || 0.0163;
+    const EI_MAX  = eiPlan.MAX_EMPLOYEE_PREMIUM || 1123.07;
+    let ei = empType === 'employed' ? Math.min(grossAnnual * EI_RATE, EI_MAX) : 0;
+    let qpip = 0;
+    if (isQuebec && window.NN) {
+      if (empType === 'employed' && NN.QPIP) {
+        qpip = Math.min(grossAnnual, NN.QPIP.MAX_INSURABLE_EARNINGS) * NN.QPIP.EMPLOYEE_RATE;
+      } else if (empType !== 'employed' && NN.QPIP_SELF_EMPLOYED) {
+        // QPIP is mandatory for the self-employed, unlike EI — but Revenu
+        // Québec charges no premium at all below the $2,000 threshold
+        // (self-employed have no employer withholding to preserve here).
+        if (grossAnnual >= (NN.QPIP_SELF_EMPLOYED.MIN_THRESHOLD || 2000)) {
+          qpip = Math.min(grossAnnual, NN.QPIP_SELF_EMPLOYED.MAX_INSURABLE_EARNINGS) * NN.QPIP_SELF_EMPLOYED.RATE;
+        }
+      }
+      ei += qpip; // combined into the single "EI" line — see result-ei-label, relabeled to "EI + QPIP" for Quebec
+    }
 
     /* Totals */
     const totalDeductions = fedTax + provTax + cpp + cpp2 + ei;
@@ -246,9 +305,13 @@ document.addEventListener('DOMContentLoaded', function () {
     document.getElementById('result-prov-annual').textContent     = NNUtils.formatCAD(provTax);
     document.getElementById('result-cpp-annual').textContent      = NNUtils.formatCAD(cpp + cpp2);
     document.getElementById('result-ei-annual').textContent       = NNUtils.formatCAD(ei);
+    const cppLabelEl = document.getElementById('result-cpp-label');
+    const eiLabelEl  = document.getElementById('result-ei-label');
+    if (cppLabelEl) cppLabelEl.textContent = isQuebec ? 'Annual QPP' : 'Annual CPP';
+    if (eiLabelEl)  eiLabelEl.textContent  = isQuebec ? (empType === 'employed' ? 'Annual EI + QPIP' : 'Annual QPIP') : 'Annual EI';
     document.getElementById('result-net-annual-total').textContent= NNUtils.formatCAD(netAnnual);
 
-    window._paycheckResults = { grossAnnual, province, freq, freqLabel, fedTax, provTax, cpp, cpp2, ei, totalDeductions, netAnnual, effectiveRate, marginalRate, net_pp, gross_pp };
+    window._paycheckResults = { grossAnnual, province, empType, freq, freqLabel, fedTax, provTax, cpp, cpp2, ei, totalDeductions, netAnnual, effectiveRate, marginalRate, net_pp, gross_pp };
 
     const el = document.getElementById('results-heading');
     if (el) window.scrollTo({ top: Math.max(0, el.getBoundingClientRect().top + window.scrollY - 80), behavior: 'smooth' });
@@ -270,8 +333,8 @@ document.addEventListener('DOMContentLoaded', function () {
       `💵 Gross Per Paycheck:   ${NNUtils.formatCAD(r.gross_pp)}`,
       `🏛  Federal Tax:          ${NNUtils.formatCAD(r.fedTax / r.freq)}/period`,
       `🏠 Provincial Tax:       ${NNUtils.formatCAD(r.provTax / r.freq)}/period`,
-      `👷 CPP:                  ${NNUtils.formatCAD((r.cpp + r.cpp2) / r.freq)}/period`,
-      `🛡  EI:                   ${NNUtils.formatCAD(r.ei / r.freq)}/period`,
+      `👷 ${r.province === 'QC' ? 'QPP' : 'CPP'}:                  ${NNUtils.formatCAD((r.cpp + r.cpp2) / r.freq)}/period`,
+      `🛡  ${r.province === 'QC' ? (r.empType === 'employed' ? 'EI + QPIP' : 'QPIP') : 'EI'}:                   ${NNUtils.formatCAD(r.ei / r.freq)}/period`,
       `─────────────────────────────`,
       `✅ Net Per Paycheck:     ${NNUtils.formatCAD(r.net_pp)}`,
       `📆 Annual Net Income:    ${NNUtils.formatCAD(r.netAnnual)}`,
@@ -287,6 +350,7 @@ document.addEventListener('DOMContentLoaded', function () {
     provinceEl.value   = 'ON';
     freqEl.value       = '26';
     empTypeEl.value    = 'employed';
+    updateIncomeFieldWording();
     rrspEl.value       = NNUtils.formatInputNumber(0);
     document.getElementById('annual-group').style.display = '';
     document.getElementById('hourly-group').style.display = 'none';

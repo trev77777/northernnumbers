@@ -75,33 +75,21 @@ document.addEventListener('DOMContentLoaded', function () {
   NNUtils.attachFormatter(amountEl);
   NNUtils.attachFormatter(incomeEl);
 
-  /* ── Tax tables 2026 ── */
-
-  // Federal income tax brackets 2026
-  const FED_BRACKETS = [
-    [57375,    0.14],
-    [114750,   0.205],
-    [177882,   0.26],
-    [253414,   0.29],
-    [Infinity, 0.33],
+  /* ── Tax tables 2026 — read from data/nn-constants.js (single source
+     of truth), converted to this file's [threshold, rate] tuple shape.
+     No private bracket copy is kept here — see AdSense audit Phase 2. ── */
+  function toTuples(brackets) {
+    return brackets.map(b => [b.max, b.rate]);
+  }
+  const FED_BRACKETS = (window.NN && NN.FED_BRACKETS) ? toTuples(NN.FED_BRACKETS) : [
+    [58523, 0.14], [117045, 0.205], [181440, 0.26], [258482, 0.29], [Infinity, 0.33],
   ];
-
-  // Provincial income tax brackets 2026
-  const PROV_BRACKETS = {
-    ON: [[51446,0.0505],[102894,0.0915],[150000,0.1116],[220000,0.1216],[Infinity,0.1316]],
-    BC: [[45654,0.0506],[91310,0.0770],[104835,0.1050],[127299,0.1229],[172602,0.1470],[240716,0.1680],[Infinity,0.2050]],
-    AB: [[148269,0.10],[177922,0.12],[237230,0.13],[355845,0.14],[Infinity,0.15]],
-    QC: [[51780,0.14],[103545,0.19],[126000,0.2325],[Infinity,0.2575]],
-    MB: [[36842,0.1080],[79625,0.1275],[Infinity,0.1740]],
-    SK: [[49720,0.1050],[142058,0.1250],[Infinity,0.1450]],
-    NS: [[29590,0.0879],[59180,0.1495],[93000,0.1667],[150000,0.2100],[Infinity,0.2100]],
-    NB: [[47715,0.0940],[95431,0.1482],[176756,0.1652],[Infinity,0.2030]],
-    PE: [[32656,0.0965],[64313,0.1363],[105000,0.1665],[140000,0.1825],[Infinity,0.1875]],
-    NL: [[43198,0.0870],[86395,0.1450],[154244,0.1580],[215943,0.1780],[275870,0.1980],[551739,0.2080],[Infinity,0.2130]],
-    YT: [[57375,0.0640],[114750,0.0900],[177882,0.1090],[500000,0.1280],[Infinity,0.1500]],
-    NT: [[50597,0.0590],[101198,0.0860],[164525,0.1220],[Infinity,0.1405]],
-    NU: [[53268,0.0400],[106537,0.0700],[173205,0.0900],[Infinity,0.1150]],
-  };
+  const PROV_BRACKETS = {};
+  if (window.NN && NN.PROV_BRACKETS) {
+    Object.keys(NN.PROV_BRACKETS).forEach(p => { PROV_BRACKETS[p] = toTuples(NN.PROV_BRACKETS[p]); });
+  } else {
+    PROV_BRACKETS.ON = [[53891, 0.0505], [107785, 0.0915], [150000, 0.1116], [220000, 0.1216], [Infinity, 0.1316]];
+  }
 
   // Eligible dividend DTC rates (% of taxable/grossed-up dividend)
   // Source: TaxTips.ca eligible-dividend-tax-credit-rates.htm (2022-2026 unchanged)
@@ -127,8 +115,9 @@ document.addEventListener('DOMContentLoaded', function () {
 
   /** Ontario surtax */
   function onSurtax(provTax) {
-    if (provTax > 6802) return (provTax - 6802) * 0.36 + (6802 - 5315) * 0.20;
-    if (provTax > 5315) return (provTax - 5315) * 0.20;
+    // 2026 thresholds per canada.ca payroll deductions tables (T4032-ON)
+    if (provTax > 7446) return (provTax - 7446) * 0.36 + (7446 - 5818) * 0.20;
+    if (provTax > 5818) return (provTax - 5818) * 0.20;
     return 0;
   }
 

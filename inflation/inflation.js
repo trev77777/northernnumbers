@@ -37,10 +37,10 @@ document.addEventListener('DOMContentLoaded', function () {
     });
     NNSeo.injectSchema({ title:'Canadian Inflation Calculator 2026', slug:'inflation', description:'Calculate the impact of inflation on purchasing power using Canadian CPI data.' });
     NNSeo.injectFAQSchema([
-      { question:'What is the current inflation rate in Canada?', answer:'As of 2025, Canada\'s inflation rate is approximately 2.3%, close to the Bank of Canada\'s 2% target. After peaking at 6.8% in 2022, inflation has steadily declined due to interest rate increases.' },
+      { question:'What is the current inflation rate in Canada?', answer:'As of August 2026, Canada\'s annual inflation rate was 3.0%, above the Bank of Canada\'s 2% target. After peaking at 6.8% in 2022 and cooling to as low as 1.5-1.6% in early 2026, inflation has picked back up in 2026 due largely to energy and transportation costs. Check Statistics Canada\'s monthly CPI release for the current figure, since this changes month to month.' },
       { question:'How does inflation affect purchasing power?', answer:'Inflation reduces the real value of money over time. At 2% inflation, $10,000 today will only have the purchasing power of about $8,200 in 10 years. The compound effect means small inflation rates have a significant long-term impact.' },
       { question:'What is the Rule of 70?', answer:'Divide 70 by the annual inflation rate to estimate how long it takes for purchasing power to halve. At 2% inflation, purchasing power halves in approximately 35 years. At 6.8%, it halves in about 10 years.' },
-      { question:'Are CPP and OAS adjusted for inflation?', answer:'Yes. Both CPP and OAS are indexed to the Consumer Price Index and adjusted quarterly, maintaining real purchasing power throughout retirement.' },
+      { question:'Are CPP and OAS adjusted for inflation?', answer:'Yes, but on different schedules. CPP retirement pension amounts are indexed to the Consumer Price Index and adjusted once per year, every January. OAS (and GIS) are adjusted quarterly — every January, April, July, and October — based on more recent CPI data. Both maintain real purchasing power throughout retirement, just on different timelines.' },
     ]);
   } catch(e) {}
 

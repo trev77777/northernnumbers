@@ -42,9 +42,10 @@ document.addEventListener('DOMContentLoaded', function () {
 
   if (form) form.addEventListener('submit', function(e) { e.preventDefault(); calculate(); });
 
-  /* ── Constants ── */
-  const LIMIT_2026 = 33810;
-  const RATE       = 0.18;
+  /* ── Constants (reads data/nn-constants.js NN.RRSP for the dollar
+     limit, so this can't drift from the other RRSP calculators again) ── */
+  const LIMIT_2026 = (window.NN && NN.RRSP) ? NN.RRSP.ANNUAL_MAX : 33810;
+  const RATE       = (window.NN && NN.RRSP) ? NN.RRSP.INCOME_PCT : 0.18;
   const OC_BUFFER  = 2000;
   const OC_PENALTY = 0.01; // 1% per month
 

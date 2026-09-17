@@ -2,20 +2,19 @@
    NORTHERN NUMBERS — income-tax.js
    Canadian Income Tax Calculator 2026
 
-   FORMULA:
+   FORMULA (2026 figures read from data/nn-constants.js — NN.FED_BRACKETS,
+   NN.PROV_BRACKETS, NN.CPP, NN.EI — do not hardcode a private copy):
    1. Taxable income = gross - RRSP - other deductions
    2. Federal tax = progressive brackets on taxable income
-                  - Federal Basic Personal Amount credit (BPA × 15%)
+                  - Federal Basic Personal Amount credit (BPA × lowest fed rate)
    3. Provincial tax = progressive prov brackets on taxable income
                      - Provincial BPA credit (prov BPA × lowest prov rate)
-   4. CPP = (income - $3,500 exemption) × 5.95%, max $3,867.50
-      Self-employed CPP = both employee + employer = × 11.9%, max $7,735
-   5. EI = income × 1.666%, max $1,049.12 (employed only)
-   6. Total deductions = fed + prov + CPP + EI
+   4. CPP = (income - basic exemption) × employee rate, max NN.CPP.MAX_EMPLOYEE_CONTRIBUTION
+      CPP2 = (income - YMPE) × 4%, max NN.CPP.MAX_CPP2_CONTRIBUTION (if income > YMPE)
+      Self-employed pays both the employee and employer portion of CPP and CPP2
+   5. EI = income × employee rate, max NN.EI.MAX_EMPLOYEE_PREMIUM (employed only)
+   6. Total deductions = fed + prov + CPP + CPP2 + EI
    7. After-tax = gross - total deductions
-
-   Verified:
-   $85,000 ON → Fed $11,850 | Prov $5,069 | CPP $3,868 | EI $1,049 | Total $21,836 ✅
    ============================================= */
 'use strict';
 
@@ -33,6 +32,23 @@ document.addEventListener('DOMContentLoaded', function () {
 
   if (form) form.addEventListener('submit', function(e) { e.preventDefault(); calculate(); });
 
+  /* ── Income field label/hint: CPP and QPIP self-employed premiums
+     are calculated on NET self-employment income (revenue minus
+     eligible business expenses), not gross business revenue — CRA/
+     Revenu Québec both base contributions on net income. This single
+     income field IS that base for self-employed users, so relabel it
+     to avoid it being misread as "gross revenue". */
+  const grossLabelEl = document.querySelector('label[for="gross-income"]');
+  const grossHintEl  = document.getElementById('gross-income-hint');
+  function updateIncomeFieldWording() {
+    const isSelfEmployed = empTypeEl?.value === 'self-employed';
+    if (grossLabelEl) grossLabelEl.textContent = isSelfEmployed ? 'Net Business Income' : 'Employment Income';
+    if (grossHintEl)  grossHintEl.textContent  = isSelfEmployed
+      ? 'Your net self-employment income (business revenue minus eligible expenses) — not gross revenue. CPP and QPIP are calculated on net income.'
+      : 'Your total gross employment income before any deductions.';
+  }
+  updateIncomeFieldWording();
+
   /* ── SEO ── */
   if (window.NNSeo) try {
     NNSeo.init({
@@ -43,10 +59,10 @@ document.addEventListener('DOMContentLoaded', function () {
     });
     NNSeo.injectSchema({ title:'Canadian Income Tax Calculator 2026', slug:'income-tax', description:'Calculate your 2026 Canadian income tax, CPP, EI, marginal rate, effective rate, and after-tax income.' });
     NNSeo.injectFAQSchema([
-      { question:'What is the federal basic personal amount for 2026?', answer:'The federal Basic Personal Amount for 2026 is $16,129, which provides a 15% non-refundable tax credit of $2,419.35, reducing your federal tax owing.' },
+      { question:'What is the federal basic personal amount for 2026?', answer:'The federal Basic Personal Amount for 2026 is $16,452, which provides a 14% non-refundable tax credit of $2,303.28, reducing your federal tax owing.' },
       { question:'What is the marginal tax rate in Canada?', answer:'Your marginal tax rate is the combined federal and provincial rate on your last dollar of income. It ranges from about 20% at lower incomes to over 53% in some provinces at the highest income levels.' },
       { question:'How does RRSP reduce income tax?', answer:'RRSP contributions reduce your taxable income dollar-for-dollar. The tax saving equals your marginal tax rate multiplied by your contribution. A $10,000 RRSP contribution at a 40% marginal rate saves $4,000 in taxes.' },
-      { question:'Do I have to pay CPP and EI?', answer:'Employed Canadians pay CPP at 5.95% of insurable earnings (max $3,867.50 in 2026) and EI at 1.666% (max $1,049.12). Self-employed pay double CPP (no EI). Retirees and those on pension income are generally exempt.' },
+      { question:'Do I have to pay CPP and EI?', answer:'Employed Canadians pay CPP at 5.95% of insurable earnings (max $4,230.45 in 2026), plus CPP2 at 4% on earnings between $74,600 and $85,000 (max $416), and EI at 1.63% (max $1,123.07). Self-employed pay double CPP and CPP2 (no EI). Retirees and those on pension income are generally exempt.' },
     ]);
   } catch(e) {}
 
@@ -77,43 +93,76 @@ document.addEventListener('DOMContentLoaded', function () {
     NNUtils.clearError(grossEl, 'gross-income-error');
 
     const province    = provinceEl.value;
+    const isQuebec    = province === 'QC';
     const rrsp        = NNUtils.parseInputNumber(rrspEl?.value || '0');
     const other       = NNUtils.parseInputNumber(otherEl?.value || '0');
     const empType     = empTypeEl?.value || 'employed';
     const taxable     = Math.max(0, gross - rrsp - other);
 
     /* Federal tax */
-    const fedBPA      = NN.FEDERAL_BASIC_PERSONAL || 16129;
+    // Federal BPA is income-tested above $181,440 (phases to $14,829 by
+    // $258,482) — NN.getFederalBPA applies that; do not use the flat
+    // NN.FEDERAL_BASIC_PERSONAL for anyone in or above the phase-out range.
+    const fedBPA      = NN.getFederalBPA ? NN.getFederalBPA(taxable) : (NN.FEDERAL_BASIC_PERSONAL || 16452);
     const fedTaxGross = calcTax(taxable, NN.FED_BRACKETS);
-    const fedCredit   = fedBPA * 0.15;
-    const fedTax      = Math.max(0, fedTaxGross - fedCredit);
+    const fedCredit   = fedBPA * NN.FED_BRACKETS[0].rate;
+    const fedTaxBeforeAbatement = Math.max(0, fedTaxGross - fedCredit);
+    // Quebec residents get a 16.5% federal tax abatement, applied to
+    // federal tax AFTER the BPA credit — see NN.applyQuebecAbatement.
+    const fedTax      = NN.applyQuebecAbatement ? NN.applyQuebecAbatement(fedTaxBeforeAbatement, province) : (isQuebec ? fedTaxBeforeAbatement * 0.835 : fedTaxBeforeAbatement);
 
-    /* Provincial tax */
+    /* Provincial tax — Manitoba's BPA is similarly income-tested above
+       $200,000 (to $0 by $400,000); NN.getProvincialBPA applies that
+       for MB and returns the flat amount for every other province. */
     const provBrackets = NN.PROV_BRACKETS[province] || NN.PROV_BRACKETS.ON;
-    const provBPA      = (NN.PROV_BASIC_PERSONAL || {})[province] || 10000;
+    const provBPA      = NN.getProvincialBPA ? (NN.getProvincialBPA(taxable, province) ?? 10000) : ((NN.PROV_BASIC_PERSONAL || {})[province] ?? 10000);
     const provLowest   = provBrackets[0].rate;
     const provTaxGross = calcTax(taxable, provBrackets);
     const provCredit   = provBPA * provLowest;
     const provTax      = Math.max(0, provTaxGross - provCredit);
 
-    /* CPP */
-    const CPP_EXEMPTION   = 3500;
-    const CPP_RATE        = 0.0595;
-    const CPP_MAX         = 3867.50;
-    let cpp = 0;
+    /* CPP/QPP — Quebec residents pay QPP (higher combined rate), not
+       CPP; reads data/nn-constants.js NN.CPP / NN.QPP (single source
+       of truth for both). */
+    const pensionPlan = isQuebec && NN.QPP ? NN.QPP : (NN.CPP || {});
+    const CPP_EXEMPTION   = pensionPlan.BASIC_EXEMPTION || 3500;
+    const CPP_RATE        = pensionPlan.EMPLOYEE_RATE || 0.0595;
+    const CPP_MAX         = pensionPlan.MAX_EMPLOYEE_CONTRIBUTION || 4230.45;
+    const CPP_YMPE        = pensionPlan.YMPE || 74600;
+    const CPP2_RATE       = isQuebec ? (pensionPlan.QPP2_RATE || 0.04) : (pensionPlan.CPP2_RATE || 0.04);
+    const CPP2_MAX        = isQuebec ? (pensionPlan.MAX_QPP2_CONTRIBUTION || 416.00) : (pensionPlan.MAX_CPP2_CONTRIBUTION || 416.00);
+    let cpp = 0, cpp2 = 0;
     if (empType === 'employed') {
-      cpp = Math.min(Math.max(gross - CPP_EXEMPTION, 0) * CPP_RATE, CPP_MAX);
+      cpp  = Math.min(Math.max(gross - CPP_EXEMPTION, 0) * CPP_RATE, CPP_MAX);
+      cpp2 = gross > CPP_YMPE ? Math.min((gross - CPP_YMPE) * CPP2_RATE, CPP2_MAX) : 0;
     } else if (empType === 'self-employed') {
-      cpp = Math.min(Math.max(gross - CPP_EXEMPTION, 0) * CPP_RATE * 2, CPP_MAX * 2);
+      cpp  = Math.min(Math.max(gross - CPP_EXEMPTION, 0) * CPP_RATE * 2, CPP_MAX * 2);
+      cpp2 = gross > CPP_YMPE ? Math.min((gross - CPP_YMPE) * CPP2_RATE * 2, CPP2_MAX * 2) : 0;
     }
 
-    /* EI */
-    const EI_RATE = 0.01666;
-    const EI_MAX  = 1049.12;
-    const ei = empType === 'employed' ? Math.min(gross * EI_RATE, EI_MAX) : 0;
+    /* EI/QC-EI + QPIP — Quebec residents pay a lower EI rate (QC_EI)
+       plus a separate, mandatory QPIP premium (self-employed QPIP is
+       ALSO mandatory, unlike EI — uses its own NN.QPIP_SELF_EMPLOYED
+       rate). Self-employed EI itself remains optional/not modeled. */
+    const eiPlan = isQuebec && NN.QC_EI ? NN.QC_EI : (NN.EI || {});
+    const EI_RATE = eiPlan.EMPLOYEE_RATE || 0.0163;
+    const EI_MAX  = eiPlan.MAX_EMPLOYEE_PREMIUM || 1123.07;
+    let ei = empType === 'employed' ? Math.min(gross * EI_RATE, EI_MAX) : 0;
+    if (isQuebec) {
+      if (empType === 'employed' && NN.QPIP) {
+        ei += Math.min(gross, NN.QPIP.MAX_INSURABLE_EARNINGS) * NN.QPIP.EMPLOYEE_RATE;
+      } else if (empType !== 'employed' && NN.QPIP_SELF_EMPLOYED) {
+        // Revenu Québec: no QPIP premium at all below the $2,000 threshold
+        // (not a reduced premium — zero). This represents final annual
+        // liability, unlike employer payroll withholding on employees.
+        if (gross >= (NN.QPIP_SELF_EMPLOYED.MIN_THRESHOLD || 2000)) {
+          ei += Math.min(gross, NN.QPIP_SELF_EMPLOYED.MAX_INSURABLE_EARNINGS) * NN.QPIP_SELF_EMPLOYED.RATE;
+        }
+      }
+    }
 
     /* Totals */
-    const totalTax  = fedTax + provTax + cpp + ei;
+    const totalTax  = fedTax + provTax + cpp + cpp2 + ei;
     const afterTax  = gross - totalTax;
     const monthly   = afterTax / 12;
 
@@ -137,7 +186,11 @@ document.addEventListener('DOMContentLoaded', function () {
     document.getElementById('result-taxable').textContent     = NNUtils.formatCAD(taxable);
     document.getElementById('result-fed-tax').textContent     = NNUtils.formatCAD(fedTax);
     document.getElementById('result-prov-tax').textContent    = NNUtils.formatCAD(provTax);
-    document.getElementById('result-cpp').textContent         = NNUtils.formatCAD(cpp);
+    document.getElementById('result-cpp').textContent         = NNUtils.formatCAD(cpp + cpp2); // includes CPP2 where applicable
+    const cppLabelEl = document.getElementById('result-cpp-label');
+    const eiLabelEl  = document.getElementById('result-ei-label');
+    if (cppLabelEl) cppLabelEl.textContent = isQuebec ? 'QPP Contributions' : 'CPP Contributions';
+    if (eiLabelEl)  eiLabelEl.textContent  = isQuebec ? (empType === 'employed' ? 'EI + QPIP Premiums' : 'QPIP Premiums') : 'EI Premiums';
     document.getElementById('result-ei').textContent          = NNUtils.formatCAD(ei);
     document.getElementById('result-total-tax').textContent   = NNUtils.formatCAD(totalTax);
     document.getElementById('result-marginal').textContent    = marginalRate.toFixed(1) + '%';
@@ -219,7 +272,7 @@ document.addEventListener('DOMContentLoaded', function () {
     ]);
 
     /* Copy results */
-    window._taxResults = { gross, taxable, fedTax, provTax, cpp, ei, totalTax, afterTax, monthly, effectiveRate, marginalRate, province };
+    window._taxResults = { gross, taxable, fedTax, provTax, cpp: cpp + cpp2, ei, totalTax, afterTax, monthly, effectiveRate, marginalRate, province, empType };
 
     /* Scroll */
     const el = document.getElementById('results-heading');
@@ -240,8 +293,8 @@ document.addEventListener('DOMContentLoaded', function () {
       `─────────────────────────────`,
       `🏛 Federal Tax:          ${NNUtils.formatCAD(r.fedTax)}`,
       `🏠 Provincial Tax:       ${NNUtils.formatCAD(r.provTax)}`,
-      `👷 CPP:                  ${NNUtils.formatCAD(r.cpp)}`,
-      `🛡 EI:                   ${NNUtils.formatCAD(r.ei)}`,
+      `👷 ${r.province === 'QC' ? 'QPP' : 'CPP'}:                  ${NNUtils.formatCAD(r.cpp)}`,
+      `🛡 ${r.province === 'QC' ? (r.empType === 'employed' ? 'EI + QPIP' : 'QPIP') : 'EI'}:                   ${NNUtils.formatCAD(r.ei)}`,
       `─────────────────────────────`,
       `📊 Total Deductions:     ${NNUtils.formatCAD(r.totalTax)}`,
       `✅ After-Tax Income:     ${NNUtils.formatCAD(r.afterTax)}`,
@@ -258,6 +311,7 @@ document.addEventListener('DOMContentLoaded', function () {
     if (rrspEl)    rrspEl.value  = NNUtils.formatInputNumber(0);
     if (otherEl)   otherEl.value = NNUtils.formatInputNumber(0);
     if (empTypeEl) empTypeEl.value = 'employed';
+    updateIncomeFieldWording();
     placeholder.classList.remove('hidden');
     resultsContent.classList.add('hidden');
     NNUtils.clearError(grossEl, 'gross-income-error');
@@ -268,6 +322,7 @@ document.addEventListener('DOMContentLoaded', function () {
     if (!resultsContent.classList.contains('hidden')) calculate();
   });
   empTypeEl?.addEventListener('change', function() {
+    updateIncomeFieldWording();
     if (!resultsContent.classList.contains('hidden')) calculate();
   });
 
