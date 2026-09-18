@@ -163,11 +163,14 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
     const effectiveHourly = annual / effectiveHoursPerYear;
-    const monthly    = annual / 12;
-    const semiMo     = annual / 24;
-    const biweekly   = annual / 26;
-    const weekly     = annual / 52;
-    const daily      = annual / 260;
+    /* Displayed pay-period money is rounded half-up to the cent via the shared
+       helper (see NNUtils.roundMoney) so exact half-cent results such as
+       $83,716.62 / 12 = $6,976.385 show $6,976.39, not $6,976.38. */
+    const monthly    = NNUtils.roundMoney(annual / 12);
+    const semiMo     = NNUtils.roundMoney(annual / 24);
+    const biweekly   = NNUtils.roundMoney(annual / 26);
+    const weekly     = NNUtils.roundMoney(annual / 52);
+    const daily      = NNUtils.roundMoney(annual / 260);
     const contractorRate = effectiveHourly * CONTRACTOR_PREMIUM;
 
     /* Render */
@@ -186,7 +189,7 @@ document.addEventListener('DOMContentLoaded', function () {
     document.getElementById('result-hero-value').textContent = heroValue;
     document.getElementById('result-hero-sub').textContent   = heroSub;
 
-    document.getElementById('result-annual').textContent       = NNUtils.formatCAD(annual) + '/yr';
+    document.getElementById('result-annual').textContent       = NNUtils.formatCAD(NNUtils.roundMoney(annual)) + '/yr';
     document.getElementById('result-monthly').textContent      = NNUtils.formatCAD(monthly) + '/mo';
     document.getElementById('result-semi-monthly').textContent = NNUtils.formatCAD(semiMo);
     document.getElementById('result-biweekly').textContent     = NNUtils.formatCAD(biweekly);
@@ -259,7 +262,7 @@ document.addEventListener('DOMContentLoaded', function () {
       `📅 Paid hours: ${Math.round(r.standardHoursPerYear).toLocaleString()}/yr · Hours actually worked: ${Math.round(r.effectiveHoursPerYear).toLocaleString()}/yr`,
       `─────────────────────────────`,
       `All pay figures are GROSS (before tax)`,
-      `💰 Annual gross:      ${NNUtils.formatCAD(r.annual)}/yr`,
+      `💰 Annual gross:      ${NNUtils.formatCAD(NNUtils.roundMoney(r.annual))}/yr`,
       `⏱  Standard hourly:   ${NNUtils.formatCAD(r.standardHourly)}/hr (÷ paid hours)`,
       `⏱  Effective hourly:  ${NNUtils.formatCAD(r.effectiveHourly)}/hr (÷ hours worked)`,
       `📅 Monthly gross:     ${NNUtils.formatCAD(r.monthly)}/mo`,

@@ -10,6 +10,27 @@
 
 window.NNUtils = {
 
+  /* ── MONEY ROUNDING ──
+     Rounds a dollar amount to the nearest cent, half-up (half away from zero,
+     so -x rounds symmetrically to +x). Binary floating point can leave an exact
+     half-cent just below the tie (83716.62 / 12 is 6976.384999999999, not
+     6976.385), which plain Math.round / toFixed / Intl.NumberFormat round DOWN.
+     toPrecision(15) strips that noise (double arithmetic is accurate to ~15-16
+     significant digits), and shifting the decimal point through an exponent
+     string keeps the x100 / x0.01 steps exact. Returns a number of dollars, e.g.
+     6976.39, ready for NNUtils.formatCAD. Use it once, on the final displayed
+     value; do not round intermediate steps. */
+  roundMoney: function(n) {
+    const x = Number(n);
+    if (!isFinite(x)) return x;
+    const abs = Math.abs(x);
+    if (abs < 1e-6) return 0;      // rounds to $0.00 (also avoids exponent-form strings below)
+    if (abs >= 1e15) return x;     // beyond the 15 digits this method can clean safely
+    const cents = Math.round(Number(Number(abs.toPrecision(15)) + 'e2'));
+    const dollars = Number(cents + 'e-2');
+    return x < 0 && dollars !== 0 ? -dollars : dollars;
+  },
+
   /* ── FORMATTING ── */
   formatCAD: function(n) {
     return new Intl.NumberFormat('en-CA',{style:'currency',currency:'CAD',minimumFractionDigits:2,maximumFractionDigits:2}).format(n||0);
