@@ -129,7 +129,7 @@
                   <option value="6">6 weeks</option>
                 </select>
               </div>
-              <p class="field-help" id="vac-hint">For salaried employees with paid vacation, this doesn't change your annual salary. For contractors comparing to salaried roles, unpaid time off reduces effective hourly rate.</p>
+              <p class="field-help" id="vac-hint">Vacation doesn't change your annual gross pay in this calculator. It reduces the hours you actually work, so the same pay is spread over fewer hours and your Effective Hourly Rate goes up. Unpaid time off is not modelled.</p>
             </div>
 
             <!-- Stat holidays -->
@@ -182,57 +182,68 @@
 
             <!-- Pay period breakdown -->
             <div style="margin-top:var(--space-5)">
-              <p style="font-family:var(--font-heading);font-weight:700;font-size:var(--text-base);margin-bottom:var(--space-3)">Pay Period Breakdown</p>
+              <p style="font-family:var(--font-heading);font-weight:700;font-size:var(--text-base);margin-bottom:var(--space-3)">Pay Period Breakdown <span class="result-gross-tag">Gross &mdash; before tax</span></p>
               <div class="result-summary" role="list">
                 <div class="result-row" role="listitem">
-                  <span class="result-row-label">Annual Salary</span>
+                  <span class="result-row-label">Annual gross pay</span>
                   <span class="result-row-value" id="result-annual">—</span>
                 </div>
                 <div class="result-row" role="listitem">
-                  <span class="result-row-label">Monthly (÷ 12)</span>
+                  <span class="result-row-label">Monthly gross (÷ 12)</span>
                   <span class="result-row-value" id="result-monthly">—</span>
                 </div>
                 <div class="result-row" role="listitem">
-                  <span class="result-row-label">Semi-Monthly (÷ 24)</span>
+                  <span class="result-row-label">Semi-monthly gross (÷ 24)</span>
                   <span class="result-row-value" id="result-semi-monthly">—</span>
                 </div>
                 <div class="result-row" role="listitem">
-                  <span class="result-row-label">Biweekly (÷ 26)</span>
+                  <span class="result-row-label">Biweekly gross (÷ 26)</span>
                   <span class="result-row-value" id="result-biweekly">—</span>
                 </div>
                 <div class="result-row" role="listitem">
-                  <span class="result-row-label">Weekly (÷ 52)</span>
+                  <span class="result-row-label">Weekly gross (÷ 52)</span>
                   <span class="result-row-value" id="result-weekly">—</span>
                 </div>
                 <div class="result-row" role="listitem">
-                  <span class="result-row-label">Daily (÷ 260 days)</span>
+                  <span class="result-row-label">Daily gross (÷ 260 days)</span>
                   <span class="result-row-value" id="result-daily">—</span>
                 </div>
               </div>
             </div>
 
-            <!-- Milestone cards -->
+            <!-- Milestone cards: rates on the top row, the hours each one divides by directly beneath -->
             <div class="milestone-grid" style="margin-top:var(--space-5)">
-              <div class="milestone-card">
-                <p class="milestone-label">Standard Hourly Rate</p>
+              <div class="milestone-card has-tip">
+                <p class="milestone-label">Standard Hourly <span class="info-tip-nowrap">Rate <span class="info-tip"><button type="button" class="info-tip-btn" aria-label="About Standard Hourly Rate" aria-describedby="tip-standard-rate" aria-expanded="false">i</button><span role="tooltip" id="tip-standard-rate" class="info-tip-text">Your pay divided by every hour you are paid for, including paid vacation and holidays.</span></span></span></p>
                 <p class="milestone-value" id="result-hourly-standard">—</p>
-                <p class="milestone-sub">Based on 2,080 hrs/yr</p>
+                <p class="milestone-sub">Annual gross pay ÷ all paid hours</p>
               </div>
-              <div class="milestone-card">
-                <p class="milestone-label">Effective Hourly Rate</p>
+              <div class="milestone-card has-tip">
+                <p class="milestone-label">Effective Hourly <span class="info-tip-nowrap">Rate <span class="info-tip"><button type="button" class="info-tip-btn" aria-label="About Effective Hourly Rate" aria-describedby="tip-effective-rate" aria-expanded="false">i</button><span role="tooltip" id="tip-effective-rate" class="info-tip-text">Your pay divided by only the hours you actually work, so time off is left out.</span></span></span></p>
                 <p class="milestone-value" id="result-hourly-effective">—</p>
+                <p class="milestone-sub">Annual gross pay ÷ hours actually worked</p>
+              </div>
+              <div class="milestone-card has-tip">
+                <p class="milestone-label">Paid <span class="info-tip-nowrap">Hours/Year <span class="info-tip"><button type="button" class="info-tip-btn" aria-label="About Paid Hours per Year" aria-describedby="tip-paid-hours" aria-expanded="false">i</button><span role="tooltip" id="tip-paid-hours" class="info-tip-text">Hours per week × 52 weeks. Used for the Standard Hourly Rate.</span></span></span></p>
+                <p class="milestone-value" id="result-hours-paid">—</p>
+                <p class="milestone-sub">Hours/week × 52 weeks</p>
+              </div>
+              <div class="milestone-card has-tip">
+                <p class="milestone-label">Hours Actually <span class="info-tip-nowrap">Worked/Year <span class="info-tip"><button type="button" class="info-tip-btn" aria-label="About Hours Actually Worked per Year" aria-describedby="tip-worked-hours" aria-expanded="false">i</button><span role="tooltip" id="tip-worked-hours" class="info-tip-text">Paid hours minus vacation weeks and statutory holidays. Used for the Effective Hourly Rate.</span></span></span></p>
+                <p class="milestone-value" id="result-hours-year">—</p>
                 <p class="milestone-sub">After vacation &amp; stat holidays</p>
               </div>
-              <div class="milestone-card">
-                <p class="milestone-label">Working Hours/Year</p>
-                <p class="milestone-value" id="result-hours-year">—</p>
-                <p class="milestone-sub">After vacation &amp; stats</p>
-              </div>
-              <div class="milestone-card">
+              <div class="milestone-card" style="grid-column:1 / -1">
                 <p class="milestone-label">Working Days/Year</p>
                 <p class="milestone-value" id="result-days-year">—</p>
                 <p class="milestone-sub">Excluding vacation &amp; stats</p>
               </div>
+            </div>
+
+            <!-- Assumptions -->
+            <div class="result-notes">
+              <p><strong>Assumption:</strong> Hourly-to-annual estimates assume all 52 weeks are paid. Vacation and statutory-holiday inputs are used to estimate hours actually worked and effective hourly rate.</p>
+              <p><strong>Not included:</strong> Overtime, shift premiums, bonuses, vacation pay premiums, and other payroll additions are not included, because this calculator only models the rate and hours you enter. Your actual gross pay may be higher.</p>
             </div>
 
             <!-- Contractor vs employee comparison -->

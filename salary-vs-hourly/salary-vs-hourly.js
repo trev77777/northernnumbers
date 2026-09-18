@@ -174,9 +174,13 @@ document.addEventListener('DOMContentLoaded', function () {
     placeholder.classList.add('hidden');
     resultsContent.classList.remove('hidden');
 
-    const heroLabel = currentMode === 'salary' ? 'Effective Hourly Rate' : 'Annual Salary';
+    const heroLabel = currentMode === 'salary' ? 'Effective Hourly Rate' : 'Estimated Annual Gross Pay';
     const heroValue = currentMode === 'salary' ? NNUtils.formatCAD(effectiveHourly) + '/hr' : NNUtils.formatCAD(annual);
-    const heroSub   = `${workingWeeks} weeks × ${hoursPerWeek} hrs/wk, less ${statDays} stat day(s) = ${Math.round(effectiveHoursPerYear).toLocaleString()} working hrs/year`;
+    const paidHoursLabel   = Math.round(standardHoursPerYear).toLocaleString();
+    const workedHoursLabel = Math.round(effectiveHoursPerYear).toLocaleString();
+    const heroSub   = currentMode === 'salary'
+      ? `Annual gross pay ÷ ${workedHoursLabel} hours actually worked (${workingWeeks} weeks × ${hoursPerWeek} hrs/wk, less ${statDays} stat day(s))`
+      : `${hoursPerWeek} hrs/wk × 52 paid weeks = ${paidHoursLabel} paid hrs/year, before tax`;
 
     document.getElementById('result-hero-label').textContent = heroLabel;
     document.getElementById('result-hero-value').textContent = heroValue;
@@ -191,7 +195,8 @@ document.addEventListener('DOMContentLoaded', function () {
 
     document.getElementById('result-hourly-standard').textContent  = NNUtils.formatCAD(standardHourly) + '/hr';
     document.getElementById('result-hourly-effective').textContent = NNUtils.formatCAD(effectiveHourly) + '/hr';
-    document.getElementById('result-hours-year').textContent       = Math.round(effectiveHoursPerYear).toLocaleString();
+    document.getElementById('result-hours-paid').textContent       = paidHoursLabel;
+    document.getElementById('result-hours-year').textContent       = workedHoursLabel;
     document.getElementById('result-days-year').textContent        = Math.round(workingDaysPerYear).toLocaleString();
 
     document.getElementById('result-annual-contractor').textContent = NNUtils.formatCAD(annual) + '/yr';
@@ -200,7 +205,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
     window._salaryResults = {
       annual, standardHourly, effectiveHourly, hoursPerWeek, vacationWeeks, statDays,
-      effectiveHoursPerYear, monthly, semiMo, biweekly, weekly, daily
+      effectiveHoursPerYear, standardHoursPerYear, monthly, semiMo, biweekly, weekly, daily
     };
 
     const el = document.getElementById('results-heading');
@@ -209,6 +214,40 @@ document.addEventListener('DOMContentLoaded', function () {
     if (window.NNAnalytics) try { NNAnalytics.trackCalculator('Salary vs Hourly Calculator', { annual, effectiveHourly }); } catch(e) {}
   }
 
+  /* ── Info tips: hover/focus handled in CSS; tap toggles, Esc / outside click dismisses ── */
+  const infoTips = document.querySelectorAll('.info-tip');
+  function closeTips(except) {
+    infoTips.forEach(tip => {
+      if (tip === except) return;
+      tip.classList.remove('is-open');
+      tip.querySelector('.info-tip-btn')?.setAttribute('aria-expanded', 'false');
+    });
+  }
+  infoTips.forEach(tip => {
+    const btn = tip.querySelector('.info-tip-btn');
+    if (!btn) return;
+    btn.addEventListener('click', e => {
+      e.stopPropagation();
+      closeTips(tip);
+      const open = !tip.classList.contains('is-open');
+      tip.classList.toggle('is-open', open);
+      tip.classList.remove('is-dismissed');
+      btn.setAttribute('aria-expanded', String(open));
+    });
+    tip.addEventListener('mouseleave', () => tip.classList.remove('is-dismissed'));
+    btn.addEventListener('blur', () => tip.classList.remove('is-dismissed'));
+  });
+  document.addEventListener('click', () => closeTips());
+  document.addEventListener('keydown', e => {
+    if (e.key !== 'Escape') return;
+    infoTips.forEach(tip => {
+      if (tip.classList.contains('is-open') || tip.matches(':hover') || tip.contains(document.activeElement)) {
+        tip.classList.add('is-dismissed');
+      }
+    });
+    closeTips();
+  });
+
   /* ── Copy Results ── */
   document.getElementById('copy-btn')?.addEventListener('click', function() {
     const r = window._salaryResults;
@@ -216,14 +255,16 @@ document.addEventListener('DOMContentLoaded', function () {
     NNUtils.copyResults(this, [
       `💰 Salary vs Hourly — Northern Numbers`,
       `─────────────────────────────`,
-      `📅 ${r.hoursPerWeek} hrs/week, ${r.vacationWeeks} vacation wks, ${r.statDays} stat days = ${Math.round(r.effectiveHoursPerYear).toLocaleString()} working hrs/year`,
+      `📅 ${r.hoursPerWeek} hrs/week, ${r.vacationWeeks} vacation wks, ${r.statDays} stat days`,
+      `📅 Paid hours: ${Math.round(r.standardHoursPerYear).toLocaleString()}/yr · Hours actually worked: ${Math.round(r.effectiveHoursPerYear).toLocaleString()}/yr`,
       `─────────────────────────────`,
-      `💰 Annual:            ${NNUtils.formatCAD(r.annual)}/yr`,
-      `⏱  Standard hourly:   ${NNUtils.formatCAD(r.standardHourly)}/hr`,
-      `⏱  Effective hourly:  ${NNUtils.formatCAD(r.effectiveHourly)}/hr`,
-      `📅 Monthly:           ${NNUtils.formatCAD(r.monthly)}/mo`,
-      `📅 Biweekly:          ${NNUtils.formatCAD(r.biweekly)}`,
-      `📅 Weekly:            ${NNUtils.formatCAD(r.weekly)}/wk`
+      `All pay figures are GROSS (before tax)`,
+      `💰 Annual gross:      ${NNUtils.formatCAD(r.annual)}/yr`,
+      `⏱  Standard hourly:   ${NNUtils.formatCAD(r.standardHourly)}/hr (÷ paid hours)`,
+      `⏱  Effective hourly:  ${NNUtils.formatCAD(r.effectiveHourly)}/hr (÷ hours worked)`,
+      `📅 Monthly gross:     ${NNUtils.formatCAD(r.monthly)}/mo`,
+      `📅 Biweekly gross:    ${NNUtils.formatCAD(r.biweekly)}`,
+      `📅 Weekly gross:      ${NNUtils.formatCAD(r.weekly)}/wk`
     ], 'Salary vs Hourly Calculator');
   });
 
