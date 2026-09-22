@@ -70,6 +70,7 @@
 
   /* Layout */
   --container-max: 1320px;
+  --content-width: 760px; /* shared long-form reading width — About, Contact, Privacy Policy, Disclaimer, Terms */
   --header-height: 68px;
 
   /* Transitions */
