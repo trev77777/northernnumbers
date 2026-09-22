@@ -125,6 +125,16 @@ document.addEventListener('DOMContentLoaded', function () {
       provTax    = beforeTax * provRate;
     }
 
+    // Binary floating point can leave a half-cent tie just below the rounding
+    // point (e.g. 9.975/100 → 0.099749999999999991, so 20 × that tax rate
+    // displays $1.99 instead of $2.00). Round only the final displayed
+    // amounts — the tax-rate math above is untouched.
+    beforeTax  = NNUtils.roundMoney(beforeTax);
+    fedTax     = NNUtils.roundMoney(fedTax);
+    provTax    = NNUtils.roundMoney(provTax);
+    totalTax   = NNUtils.roundMoney(totalTax);
+    grandTotal = NNUtils.roundMoney(grandTotal);
+
     /* Render */
     placeholder.classList.add('hidden');
     resultsContent.classList.remove('hidden');
@@ -167,7 +177,7 @@ document.addEventListener('DOMContentLoaded', function () {
     document.getElementById('result-rate').textContent       = r.total + '%';
     document.getElementById('result-tax-type').textContent   = r.type;
     document.getElementById('result-tax-amount').textContent = NNUtils.formatCAD(totalTax);
-    document.getElementById('result-per-100').textContent    = NNUtils.formatCAD(100 * totalRate);
+    document.getElementById('result-per-100').textContent    = NNUtils.formatCAD(NNUtils.roundMoney(100 * totalRate));
 
     // Federal Portion card — context-aware
     const fedCard      = document.getElementById('result-fed-pct');
@@ -179,8 +189,8 @@ document.addEventListener('DOMContentLoaded', function () {
     } else if (r.type === 'HST') {
       // HST provinces — show federal (5%) and provincial split
       if (fedCard) fedCard.closest('.milestone-card').style.display = '';
-      const fedComponent  = beforeTax * 0.05;
-      const provComponent = totalTax - fedComponent;
+      const fedComponent  = NNUtils.roundMoney(beforeTax * 0.05);
+      const provComponent = NNUtils.roundMoney(totalTax - fedComponent);
       if (fedCard)      fedCard.textContent      = NNUtils.formatCAD(fedComponent) + ' federal / ' + NNUtils.formatCAD(provComponent) + ' prov.';
       if (fedCardLabel) fedCardLabel.textContent = 'HST Breakdown';
       if (fedCardSub)   fedCardSub.textContent   = '5% federal + ' + (r.total - 5) + '% provincial';

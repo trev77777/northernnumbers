@@ -97,10 +97,10 @@ document.addEventListener('DOMContentLoaded', function () {
     return {
       proportion:       Math.round(proportion * 100 * 10) / 10,
       deferralFactor:   Math.round(deferralFactor * 100 * 10) / 10,
-      grossMonthly:     Math.round(grossMonthly * 100) / 100,
-      monthlyClawback:  Math.round(monthlyClawback * 100) / 100,
-      netMonthly:       Math.round(netMonthly * 100) / 100,
-      annualNet:        Math.round(netMonthly * 12 * 100) / 100,
+      grossMonthly:     NNUtils.roundMoney(grossMonthly),
+      monthlyClawback:  NNUtils.roundMoney(monthlyClawback),
+      netMonthly:       NNUtils.roundMoney(netMonthly),
+      annualNet:        NNUtils.roundMoney(netMonthly * 12),
       baseRate,
     };
   }
@@ -110,7 +110,7 @@ document.addEventListener('DOMContentLoaded', function () {
     // GIS reduces $1 per $2 of other income (excluding OAS)
     const reduction = otherMonthly / 2;
     const gis = Math.max(0, maxGIS - reduction);
-    return Math.round(gis * 100) / 100;
+    return NNUtils.roundMoney(gis);
   }
 
   /* ── CALCULATE ── */
@@ -137,11 +137,11 @@ document.addEventListener('DOMContentLoaded', function () {
 
     const r = calcOAS(years, startAge, netIncome, ageGroup);
     const gis = calcGIS(r.netMonthly, otherIncome, marital);
-    const totalMonthly = r.netMonthly + gis;
+    const totalMonthly = NNUtils.roundMoney(r.netMonthly + gis);
     const yearsUntil = Math.max(0, startAge - currentAge);
     const lifeExpect = 85;
     const yearsReceiving = Math.max(0, lifeExpect - startAge);
-    const lifetimeTotal = r.annualNet * yearsReceiving;
+    const lifetimeTotal = NNUtils.roundMoney(r.annualNet * yearsReceiving);
     const gisEligible = gis > 0;
 
     /* Render */
