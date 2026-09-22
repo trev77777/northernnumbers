@@ -900,6 +900,7 @@ document.getElementById('fhsa-reset-btn')?.addEventListener('click', function ()
   if (chartSection) { chartSection.setAttribute('hidden',''); chartWrapper && chartWrapper.classList.remove('is-open'); }
   if (resultSummaryBox) resultSummaryBox.classList.add('hidden');
   if (resultCelebration) resultCelebration.classList.add('hidden');
+  if (window.NNUtils) try { NNUtils.scrollToCalcTop(); } catch(e) {}
 });
 
 

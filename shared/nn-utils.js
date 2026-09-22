@@ -105,6 +105,19 @@ window.NNUtils = {
     if (el) window.scrollTo({ top: el.getBoundingClientRect().top + window.scrollY - 80, behavior:'smooth' });
   },
 
+  /* ── SCROLL TO CALCULATOR TOP (after Reset) ──
+     Every calculator page has .calc-page-header (and .calc-breadcrumb
+     above it) at the top of its own content, above the input/results
+     panels. Call this at the end of a Reset handler, after the reset
+     defaults have already been applied, so the user lands back at the
+     top of the calculator rather than the top of the whole webpage
+     (site header/nav). Fails safely (no-op) if neither element exists. */
+  scrollToCalcTop: function() {
+    const el = document.querySelector('.calc-page-header') || document.querySelector('.calc-breadcrumb');
+    if (!el) return;
+    window.scrollTo({ top: el.getBoundingClientRect().top + window.scrollY - 80, behavior: 'smooth' });
+  },
+
   /* ── INFO TOOLTIPS ──
      Wires up .info-tip / .info-tip-btn / .info-tip-text markup (see
      styles.css). Hover and keyboard focus are handled by CSS alone; this

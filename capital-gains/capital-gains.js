@@ -415,6 +415,7 @@ document.addEventListener('DOMContentLoaded', function () {
     if (capLossNotice) capLossNotice.style.display = 'none';
     const excessNotice = document.getElementById('excess-losses-notice');
     if (excessNotice)  excessNotice.style.display  = 'none';
+    if (window.NNUtils) try { NNUtils.scrollToCalcTop(); } catch(e) {}
   });
 
   // Init

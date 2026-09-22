@@ -328,6 +328,7 @@ document.addEventListener('DOMContentLoaded', function () {
     placeholder.classList.remove('hidden');
     resultsContent.classList.add('hidden');
     NNUtils.clearError(grossEl, 'gross-income-error');
+    if (window.NNUtils) try { NNUtils.scrollToCalcTop(); } catch(e) {}
   });
 
   /* ── Auto-calculate on province/type change ── */

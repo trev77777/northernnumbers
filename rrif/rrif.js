@@ -237,6 +237,7 @@ document.addEventListener('DOMContentLoaded', function () {
     document.querySelectorAll('.preset-btn').forEach(b => b.classList.remove('active'));
     NNUtils.clearError(balanceEl, 'balance-error');
     NNUtils.clearError(ageEl, 'age-error');
+    if (window.NNUtils) try { NNUtils.scrollToCalcTop(); } catch(e) {}
   });
 
 });

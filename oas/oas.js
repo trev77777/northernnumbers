@@ -220,6 +220,7 @@ document.addEventListener('DOMContentLoaded', function () {
     resultsContent.classList.add('hidden');
     NNUtils.clearError(yearsEl, 'years-error');
     NNUtils.clearError(netIncomeEl, 'income-error');
+    if (window.NNUtils) try { NNUtils.scrollToCalcTop(); } catch(e) {}
   });
 
 });

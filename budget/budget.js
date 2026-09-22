@@ -627,6 +627,7 @@ document.addEventListener('DOMContentLoaded', function () {
     if (af) af.classList.remove('is-open');
     if (at) at.setAttribute('aria-expanded', 'false');
     NNUtils.clearError(incomeEl, 'income-error');
+    if (window.NNUtils) try { NNUtils.scrollToCalcTop(); } catch(e) {}
   });
 
 });

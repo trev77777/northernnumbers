@@ -422,6 +422,7 @@ document.addEventListener('DOMContentLoaded', function () {
     const at = document.getElementById('advanced-toggle');
     if (af) { af.classList.remove('is-open'); }
     if (at) { at.setAttribute('aria-expanded', 'false'); }
+    if (window.NNUtils) try { NNUtils.scrollToCalcTop(); } catch(e) {}
   });
 
   /* ─── INIT ─────────────────────────────── */

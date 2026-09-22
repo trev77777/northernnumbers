@@ -823,6 +823,7 @@ if (resetBtn) {
     rrifNote.style.display = 'none';
     if (resultSummaryBox) resultSummaryBox.classList.add('hidden');
     if (resultCelebration) resultCelebration.classList.add('hidden');
+    if (window.NNUtils) try { NNUtils.scrollToCalcTop(); } catch(e) {}
   });
 }
 

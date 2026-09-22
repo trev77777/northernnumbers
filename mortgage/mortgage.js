@@ -810,6 +810,7 @@ if (resetBtn) {
     if (copyBtn) { copyBtn.textContent = '📋 Copy Results to Clipboard'; copyBtn.classList.remove('copied'); }
 
     checkCmhc();
+    if (window.NNUtils) try { NNUtils.scrollToCalcTop(); } catch(e) {}
   });
 }
 

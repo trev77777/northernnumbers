@@ -239,6 +239,7 @@ document.addEventListener('DOMContentLoaded', function () {
     resultsContent.classList.add('hidden');
     document.querySelectorAll('.preset-btn').forEach(b => b.classList.remove('active'));
     NNUtils.clearError(incomeEl, 'income-error');
+    if (window.NNUtils) try { NNUtils.scrollToCalcTop(); } catch(e) {}
   });
 
 });

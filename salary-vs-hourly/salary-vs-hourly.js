@@ -253,6 +253,7 @@ document.addEventListener('DOMContentLoaded', function () {
     document.querySelectorAll('.preset-btn').forEach(b => b.classList.remove('active'));
     NNUtils.clearError(salaryEl, 'salary-error');
     NNUtils.clearError(hourlyEl, 'hourly-error');
+    if (window.NNUtils) try { NNUtils.scrollToCalcTop(); } catch(e) {}
   });
 
 });

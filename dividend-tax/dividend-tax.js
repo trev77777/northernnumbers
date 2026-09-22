@@ -332,6 +332,7 @@ document.addEventListener('DOMContentLoaded', function () {
     NNUtils.clearError(amountEl, 'div-error');
     const grossupLabel = document.getElementById('grossup-label');
     if (grossupLabel) grossupLabel.textContent = 'Gross-Up (38%)';
+    if (window.NNUtils) try { NNUtils.scrollToCalcTop(); } catch(e) {}
   });
 
 });

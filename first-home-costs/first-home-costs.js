@@ -445,6 +445,7 @@ document.addEventListener('DOMContentLoaded', function () {
     document.querySelectorAll('.preset-btn').forEach(b => b.classList.remove('active'));
     NNUtils.clearError(priceEl, 'price-error');
     NNUtils.clearError(dpEl, 'dp-error');
+    if (window.NNUtils) try { NNUtils.scrollToCalcTop(); } catch(e) {}
   });
 
 });

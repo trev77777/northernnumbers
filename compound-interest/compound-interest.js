@@ -735,6 +735,7 @@ document.getElementById('ci-reset-btn')?.addEventListener('click', function () {
   chartSection.setAttribute('hidden', '');
   if (summaryBox)     summaryBox.classList.add('hidden');
   if (celebrationEl)  celebrationEl.classList.add('hidden');
+  if (window.NNUtils) try { NNUtils.scrollToCalcTop(); } catch(e) {}
 });
 
 

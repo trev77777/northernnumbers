@@ -220,6 +220,7 @@ document.addEventListener('DOMContentLoaded', function () {
     updateAllTotals();
     placeholder.classList.remove('hidden');
     resultsContent.classList.add('hidden');
+    if (window.NNUtils) try { NNUtils.scrollToCalcTop(); } catch(e) {}
   });
 
 });

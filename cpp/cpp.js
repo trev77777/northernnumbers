@@ -224,6 +224,7 @@ document.addEventListener('DOMContentLoaded', function () {
     resultsContent.classList.add('hidden');
     NNUtils.clearError(avgIncomeEl, 'avg-income-error');
     NNUtils.clearError(yearsEl, 'years-error');
+    if (window.NNUtils) try { NNUtils.scrollToCalcTop(); } catch(e) {}
   });
 
 });

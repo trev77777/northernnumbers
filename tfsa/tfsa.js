@@ -444,6 +444,7 @@ document.addEventListener('DOMContentLoaded', function () {
       if (resultsContent)     resultsContent.classList.add('hidden');
       if (growthSection)      growthSection.setAttribute('hidden','');
       document.querySelectorAll('.preset-btn').forEach(b => b.classList.remove('is-active'));
+      if (window.NNUtils) try { NNUtils.scrollToCalcTop(); } catch(e) {}
     });
   }
 

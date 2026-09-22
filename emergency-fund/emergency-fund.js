@@ -208,6 +208,7 @@ document.addEventListener('DOMContentLoaded', function () {
     placeholder.classList.remove('hidden');
     resultsContent.classList.add('hidden');
     NNUtils.clearError(expEl, 'exp-error');
+    if (window.NNUtils) try { NNUtils.scrollToCalcTop(); } catch(e) {}
   });
 
   // Recalculate on option changes

@@ -204,6 +204,7 @@ document.addEventListener('DOMContentLoaded', function () {
     placeholder.classList.remove('hidden');
     resultsContent.classList.add('hidden');
     NNUtils.clearError(birthEl, 'birth-error');
+    if (window.NNUtils) try { NNUtils.scrollToCalcTop(); } catch(e) {}
   });
 
 });

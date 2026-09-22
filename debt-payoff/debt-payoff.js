@@ -325,6 +325,7 @@ document.addEventListener('DOMContentLoaded', function () {
     document.querySelector('input[name="strategy"][value="both"]').checked = true;
     placeholder.classList.remove('hidden');
     resultsContent.classList.add('hidden');
+    if (window.NNUtils) try { NNUtils.scrollToCalcTop(); } catch(e) {}
   });
 
 });
