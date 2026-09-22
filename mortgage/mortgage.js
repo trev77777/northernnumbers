@@ -847,3 +847,9 @@ if (copyBtn) {
    17. RELATED CALCULATORS
    ============================================= */
 if (window.NNComponents) try { NNComponents.renderRelated('nn-related', ['mortgage-affordability', 'first-home-costs', 'land-transfer-tax', 'home-equity']); } catch(e) {}
+
+
+/* =============================================
+   18. INFO TIPS
+   ============================================= */
+if (window.NNUtils) try { NNUtils.initInfoTips(); } catch(e) {}

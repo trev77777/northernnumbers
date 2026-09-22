@@ -72,6 +72,9 @@ document.addEventListener('DOMContentLoaded', function () {
 
   if (window.NNComponents) try { NNComponents.renderRelated('nn-related', ['income-tax','tfsa','rrsp','net-worth']); } catch(e) {}
 
+  /* ── Info tips ── */
+  if (window.NNUtils) try { NNUtils.initInfoTips(); } catch(e) {}
+
   /* ── Formatters ── */
   NNUtils.attachFormatter(proceedsEl);
   NNUtils.attachFormatter(acbEl);

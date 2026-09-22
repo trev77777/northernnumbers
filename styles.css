@@ -1117,6 +1117,7 @@ h1, h2, h3, h4, h5, h6 {
    (Shared across all calculator forms)
    ============================================= */
 .form-group {
+  position: relative; /* positioning context for an .info-tip-text popover on the label */
   margin-bottom: var(--space-5);
 }
 
@@ -1294,6 +1295,7 @@ input[type=number] { -moz-appearance: textfield; }
 }
 
 .result-row {
+  position: relative; /* positioning context for an .info-tip-text popover on the label */
   display: flex;
   justify-content: space-between;
   align-items: baseline;

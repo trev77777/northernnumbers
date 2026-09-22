@@ -414,6 +414,7 @@
       margin-bottom: var(--space-4);
     }
     .tax-savings-row {
+      position: relative; /* positioning context for an .info-tip-text popover on the label */
       display: flex;
       justify-content: space-between;
       align-items: center;
@@ -874,7 +875,7 @@
                 <span class="tax-savings-value" id="result-tax-with">—</span>
               </div>
               <div class="tax-savings-row">
-                <span class="tax-savings-label" style="font-weight:600;">You save</span>
+                <span class="tax-savings-label" style="font-weight:600;">You save<span class="info-tip"><button type="button" class="info-tip-btn" aria-label="About your tax savings" aria-describedby="tip-rrsp-savings" aria-expanded="false">i</button><span role="tooltip" id="tip-rrsp-savings" class="info-tip-text">Your RRSP tax savings are your contribution multiplied by your marginal tax rate — the tax rate on your next dollar of income.</span></span></span>
                 <span class="tax-savings-value is-win" id="result-tax-saved">—</span>
               </div>
             </div>
@@ -904,7 +905,7 @@
                 <span class="result-row-value" id="result-inflation-adjusted">—</span>
               </div>
               <div class="result-row" role="listitem">
-                <span class="result-row-label">Remaining Contribution Room</span>
+                <span class="result-row-label">Remaining Contribution Room<span class="info-tip"><button type="button" class="info-tip-btn" aria-label="About Remaining Contribution Room" aria-describedby="tip-rrsp-room" aria-expanded="false">i</button><span role="tooltip" id="tip-rrsp-room" class="info-tip-text">The RRSP room you have left after this contribution. Unused room never expires — it carries forward and adds to future years' limits.</span></span></span>
                 <span class="result-row-value" id="result-remaining-room">—</span>
               </div>
               <div class="result-row" role="listitem">

@@ -923,3 +923,9 @@ document.getElementById('fhsa-reset-btn')?.addEventListener('click', function ()
    20. RELATED CALCULATORS
    ============================================= */
 if (window.NNComponents) try { NNComponents.renderRelated('nn-related', ['first-home-costs', 'mortgage', 'tfsa', 'rrsp']); } catch(e) {}
+
+
+/* =============================================
+   21. INFO TIPS
+   ============================================= */
+if (window.NNUtils) try { NNUtils.initInfoTips(); } catch(e) {}

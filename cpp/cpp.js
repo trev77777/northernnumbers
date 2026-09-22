@@ -47,6 +47,9 @@ document.addEventListener('DOMContentLoaded', function () {
 
   if (window.NNComponents) try { NNComponents.renderRelated('nn-related', ['oas', 'rrsp', 'income-tax', 'rrif']); } catch(e) {}
 
+  /* ── Info tips ── */
+  if (window.NNUtils) try { NNUtils.initInfoTips(); } catch(e) {}
+
   /* ── Formatters ── */
   NNUtils.attachFormatter(avgIncomeEl);
 

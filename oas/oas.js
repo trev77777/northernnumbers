@@ -59,6 +59,9 @@ document.addEventListener('DOMContentLoaded', function () {
 
   if (window.NNComponents) try { NNComponents.renderRelated('nn-related', ['cpp', 'rrsp', 'income-tax', 'rrif']); } catch(e) {}
 
+  /* ── Info tips ── */
+  if (window.NNUtils) try { NNUtils.initInfoTips(); } catch(e) {}
+
   /* ── Formatters ── */
   NNUtils.attachFormatter(netIncomeEl);
   NNUtils.attachFormatter(otherIncomeEl);

@@ -56,6 +56,9 @@ document.addEventListener('DOMContentLoaded', function () {
 
   if (window.NNComponents) try { NNComponents.renderRelated('nn-related', ['mortgage','land-transfer-tax','budget','gst-hst']); } catch(e) {}
 
+  /* ── Info tips ── */
+  if (window.NNUtils) try { NNUtils.initInfoTips(); } catch(e) {}
+
   /* ── Formatters ── */
   NNUtils.attachFormatter(incomeEl);
   NNUtils.attachFormatter(dpEl);

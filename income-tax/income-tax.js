@@ -69,6 +69,9 @@ document.addEventListener('DOMContentLoaded', function () {
   /* ── Related calculators ── */
   if (window.NNComponents) try { NNComponents.renderRelated('nn-related', ['rrsp','tfsa','budget','cpp']); } catch(e) {}
 
+  /* ── Info tips ── */
+  if (window.NNUtils) try { NNUtils.initInfoTips(); } catch(e) {}
+
   /* ── Formatters ── */
   NNUtils.attachFormatter(grossEl);
   NNUtils.attachFormatter(rrspEl);

@@ -72,6 +72,9 @@ document.addEventListener('DOMContentLoaded', function () {
 
   if (window.NNComponents) try { NNComponents.renderRelated('nn-related', ['income-tax','budget','rrsp','cpp']); } catch(e) {}
 
+  /* ── Info tips ── */
+  if (window.NNUtils) try { NNUtils.initInfoTips(); } catch(e) {}
+
   /* ── Formatters ───────────────────────────────── */
   NNUtils.attachFormatter(salaryEl);
   NNUtils.attachFormatter(hourlyEl);
@@ -322,6 +325,9 @@ document.addEventListener('DOMContentLoaded', function () {
     if (cppPpLabelEl)  cppPpLabelEl.textContent  = isQuebec ? 'QPP Contribution' : 'CPP Contribution';
     if (cpp2PpLabelEl) cpp2PpLabelEl.textContent = isQuebec ? 'QPP2 Contribution' : 'CPP2 Contribution';
     if (eiPpLabelEl)   eiPpLabelEl.textContent   = isQuebec ? (empType === 'employed' ? 'EI + QPIP Premium' : 'QPIP Premium') : 'EI Premium';
+    // QPIP info tip only makes sense once the row is actually labelled QPIP/EI + QPIP
+    const qpipTipEl = document.getElementById('tip-pc-qpip-wrap');
+    if (qpipTipEl) qpipTipEl.classList.toggle('hidden', !isQuebec);
     document.getElementById('result-net-annual-total').textContent= NNUtils.formatCAD(netAnnual);
 
     window._paycheckResults = { grossAnnual, province, empType, freq, freqLabel, fedTax, provTax, cpp, cpp2, ei, totalDeductions, netAnnual, effectiveRate, marginalRate, net_pp, gross_pp };

@@ -105,6 +105,54 @@ window.NNUtils = {
     if (el) window.scrollTo({ top: el.getBoundingClientRect().top + window.scrollY - 80, behavior:'smooth' });
   },
 
+  /* ── INFO TOOLTIPS ──
+     Wires up .info-tip / .info-tip-btn / .info-tip-text markup (see
+     styles.css). Hover and keyboard focus are handled by CSS alone; this
+     adds tap-to-toggle for touch devices, Escape-to-dismiss, and
+     outside-click dismissal. Safe to call more than once per page (or with
+     a `root` scoping to newly-rendered content) — each .info-tip is only
+     wired once (data-tip-bound) and the shared document-level listeners are
+     only bound once. Reference implementation: salary-vs-hourly.js. */
+  initInfoTips: function(root) {
+    const scope = root || document;
+    scope.querySelectorAll('.info-tip').forEach(tip => {
+      if (tip.dataset.tipBound) return;
+      tip.dataset.tipBound = '1';
+      const btn = tip.querySelector('.info-tip-btn');
+      if (!btn) return;
+      btn.addEventListener('click', e => {
+        e.stopPropagation();
+        NNUtils._closeInfoTips(tip);
+        const open = !tip.classList.contains('is-open');
+        tip.classList.toggle('is-open', open);
+        tip.classList.remove('is-dismissed');
+        btn.setAttribute('aria-expanded', String(open));
+      });
+      tip.addEventListener('mouseleave', () => tip.classList.remove('is-dismissed'));
+      btn.addEventListener('blur', () => tip.classList.remove('is-dismissed'));
+    });
+
+    if (NNUtils._infoTipsBound) return;
+    NNUtils._infoTipsBound = true;
+    document.addEventListener('click', () => NNUtils._closeInfoTips());
+    document.addEventListener('keydown', function(e) {
+      if (e.key !== 'Escape') return;
+      document.querySelectorAll('.info-tip').forEach(tip => {
+        if (tip.classList.contains('is-open') || tip.matches(':hover') || tip.contains(document.activeElement)) {
+          tip.classList.add('is-dismissed');
+        }
+      });
+      NNUtils._closeInfoTips();
+    });
+  },
+  _closeInfoTips: function(except) {
+    document.querySelectorAll('.info-tip').forEach(tip => {
+      if (tip === except) return;
+      tip.classList.remove('is-open');
+      tip.querySelector('.info-tip-btn')?.setAttribute('aria-expanded', 'false');
+    });
+  },
+
   /* ── SUMMARY PILLS ── */
   renderSummaryPills: function(containerId, pills) {
     const el = document.getElementById(containerId);

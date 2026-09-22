@@ -938,3 +938,9 @@ if (copyBtn) {
   if (contribSlider) contribSlider.value = 7000;
   autoEstimateRoom();
 })();
+
+
+/* =============================================
+   20. INFO TIPS
+   ============================================= */
+if (window.NNUtils) try { NNUtils.initInfoTips(); } catch(e) {}

@@ -217,39 +217,8 @@ document.addEventListener('DOMContentLoaded', function () {
     if (window.NNAnalytics) try { NNAnalytics.trackCalculator('Salary vs Hourly Calculator', { annual, effectiveHourly }); } catch(e) {}
   }
 
-  /* ── Info tips: hover/focus handled in CSS; tap toggles, Esc / outside click dismisses ── */
-  const infoTips = document.querySelectorAll('.info-tip');
-  function closeTips(except) {
-    infoTips.forEach(tip => {
-      if (tip === except) return;
-      tip.classList.remove('is-open');
-      tip.querySelector('.info-tip-btn')?.setAttribute('aria-expanded', 'false');
-    });
-  }
-  infoTips.forEach(tip => {
-    const btn = tip.querySelector('.info-tip-btn');
-    if (!btn) return;
-    btn.addEventListener('click', e => {
-      e.stopPropagation();
-      closeTips(tip);
-      const open = !tip.classList.contains('is-open');
-      tip.classList.toggle('is-open', open);
-      tip.classList.remove('is-dismissed');
-      btn.setAttribute('aria-expanded', String(open));
-    });
-    tip.addEventListener('mouseleave', () => tip.classList.remove('is-dismissed'));
-    btn.addEventListener('blur', () => tip.classList.remove('is-dismissed'));
-  });
-  document.addEventListener('click', () => closeTips());
-  document.addEventListener('keydown', e => {
-    if (e.key !== 'Escape') return;
-    infoTips.forEach(tip => {
-      if (tip.classList.contains('is-open') || tip.matches(':hover') || tip.contains(document.activeElement)) {
-        tip.classList.add('is-dismissed');
-      }
-    });
-    closeTips();
-  });
+  /* ── Info tips: shared helper (hover/focus handled in CSS; tap toggles, Esc / outside click dismisses) ── */
+  NNUtils.initInfoTips();
 
   /* ── Copy Results ── */
   document.getElementById('copy-btn')?.addEventListener('click', function() {
