@@ -461,4 +461,7 @@ document.addEventListener('DOMContentLoaded', function () {
   /* ── 16. INFO TIPS ───────────────────────────────────────── */
   if (window.NNUtils) try { NNUtils.initInfoTips(); } catch(e) {}
 
+  /* ── 17. RELATED CALCULATORS ────────────────────────────── */
+  if (window.NNComponents) try { NNComponents.renderRelated('nn-related', ['rrsp', 'tfsa-room', 'fhsa', 'compound-interest']); } catch(e) {}
+
 }); // end DOMContentLoaded
