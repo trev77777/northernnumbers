@@ -841,3 +841,9 @@ if (copyBtn) {
     }).catch(() => { copyBtn.textContent = 'Copy not supported in this browser'; });
   });
 }
+
+
+/* =============================================
+   17. RELATED CALCULATORS
+   ============================================= */
+if (window.NNComponents) try { NNComponents.renderRelated('nn-related', ['mortgage-affordability', 'first-home-costs', 'land-transfer-tax', 'home-equity']); } catch(e) {}

@@ -917,3 +917,9 @@ document.getElementById('fhsa-reset-btn')?.addEventListener('click', function ()
   if (rrspBalanceEl)   rrspBalanceEl.value = formatInputNumber(0);
   checkOverContrib();
 })();
+
+
+/* =============================================
+   20. RELATED CALCULATORS
+   ============================================= */
+if (window.NNComponents) try { NNComponents.renderRelated('nn-related', ['first-home-costs', 'mortgage', 'tfsa', 'rrsp']); } catch(e) {}

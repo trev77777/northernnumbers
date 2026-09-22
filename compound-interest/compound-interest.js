@@ -748,3 +748,9 @@ document.getElementById('ci-reset-btn')?.addEventListener('click', function () {
   if (bInitialEl) bInitialEl.value = formatInputNumber(10000);
   if (bContribEl) bContribEl.value = formatInputNumber(300);
 })();
+
+
+/* =============================================
+   18. RELATED CALCULATORS
+   ============================================= */
+if (window.NNComponents) try { NNComponents.renderRelated('nn-related', ['tfsa', 'rrsp', 'fhsa', 'resp']); } catch(e) {}
