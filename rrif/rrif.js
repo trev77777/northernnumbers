@@ -134,6 +134,17 @@ document.addEventListener('DOMContentLoaded', function () {
     const minWd     = balance * factor;
     const totalWd   = minWd + extraWd;
     const balAfter  = Math.max(0, (balance - totalWd) * (1 + growth));
+
+    /* Round only the final displayed dollar amounts — binary floating point
+       can leave an exact half-cent tie just below the rounding point (e.g.
+       a $10,025 balance at age 80, 6.82% factor, computes the minimum
+       withdrawal as 683.7049999999999, which Intl.NumberFormat rounds
+       down to $683.70 instead of $683.71). The factor/growth math above
+       stays at full precision; only these display copies are rounded. */
+    const minWdR    = NNUtils.roundMoney(minWd);
+    const totalWdR  = NNUtils.roundMoney(totalWd);
+    const balAfterR = NNUtils.roundMoney(balAfter);
+
     // OAS clawback threshold — read from the shared source of truth
     // (data/nn-constants.js NN.OAS.CLAWBACK_THRESHOLD) so this never
     // drifts out of sync with the OAS calculator again.
@@ -149,12 +160,12 @@ document.addEventListener('DOMContentLoaded', function () {
     placeholder.classList.add('hidden');
     resultsContent.classList.remove('hidden');
 
-    document.getElementById('result-min-withdrawal').textContent = NNUtils.formatCAD(minWd);
+    document.getElementById('result-min-withdrawal').textContent = NNUtils.formatCAD(minWdR);
     document.getElementById('result-hero-sub').textContent       = `Age ${calcAge} · Factor ${(factor*100).toFixed(2)}% · ${NNUtils.formatCAD(balance)} balance`;
     document.getElementById('result-balance').textContent        = NNUtils.formatCAD(balance);
     document.getElementById('result-age-used').textContent       = useSpouse && spouseAge < ownAge ? `${calcAge} (spouse's age)` : `${calcAge}`;
     document.getElementById('result-factor').textContent         = (factor * 100).toFixed(2) + '%';
-    document.getElementById('result-min-wd-row').textContent     = NNUtils.formatCAD(minWd);
+    document.getElementById('result-min-wd-row').textContent     = NNUtils.formatCAD(minWdR);
 
     const extraRow = document.getElementById('extra-wd-row');
     if (extraWd > 0) {
@@ -164,11 +175,11 @@ document.addEventListener('DOMContentLoaded', function () {
       extraRow.style.display = 'none';
     }
 
-    document.getElementById('result-total-wd').textContent    = NNUtils.formatCAD(totalWd);
-    document.getElementById('result-monthly').textContent     = NNUtils.formatCAD(minWd / 12);
+    document.getElementById('result-total-wd').textContent    = NNUtils.formatCAD(totalWdR);
+    document.getElementById('result-monthly').textContent     = NNUtils.formatCAD(NNUtils.roundMoney(minWd / 12));
     document.getElementById('result-rate-pct').textContent    = (factor * 100).toFixed(2) + '%';
     document.getElementById('result-oas-risk').textContent    = oasRisk;
-    document.getElementById('result-balance-after').textContent = NNUtils.formatCAD(balAfter);
+    document.getElementById('result-balance-after').textContent = NNUtils.formatCAD(balAfterR);
 
     /* Projection table */
     const tbody = document.getElementById('projection-body');
@@ -186,17 +197,17 @@ document.addEventListener('DOMContentLoaded', function () {
         rows += `<tr style="${isEven?'background:var(--color-bg);':''}border-bottom:1px solid var(--color-border)">
           <td style="padding:var(--space-2) var(--space-3);font-weight:${i===0?'700':'400'}">${a}${i===0?' ←':''}</td>
           <td style="padding:var(--space-2) var(--space-3);text-align:right">${(f*100).toFixed(2)}%</td>
-          <td style="padding:var(--space-2) var(--space-3);text-align:right;color:${atClawback?'var(--color-danger)':''}">${NNUtils.formatCAD(mwd)}</td>
-          <td style="padding:var(--space-2) var(--space-3);text-align:right">${NNUtils.formatCAD(b)}</td>
-          <td style="padding:var(--space-2) var(--space-3);text-align:right">${end > 0 ? NNUtils.formatCAD(end) : '—'}</td>
+          <td style="padding:var(--space-2) var(--space-3);text-align:right;color:${atClawback?'var(--color-danger)':''}">${NNUtils.formatCAD(NNUtils.roundMoney(mwd))}</td>
+          <td style="padding:var(--space-2) var(--space-3);text-align:right">${NNUtils.formatCAD(NNUtils.roundMoney(b))}</td>
+          <td style="padding:var(--space-2) var(--space-3);text-align:right">${end > 0 ? NNUtils.formatCAD(NNUtils.roundMoney(end)) : '—'}</td>
         </tr>`;
         if (end <= 0) break;
-        b = end;
+        b = end; // unrounded — keeps the year-over-year projection at full precision
       }
       tbody.innerHTML = rows;
     }
 
-    window._rrifResults = { balance, calcAge, factor, minWd, extraWd, totalWd, balAfter };
+    window._rrifResults = { balance, calcAge, factor, minWd: minWdR, extraWd, totalWd: totalWdR, balAfter: balAfterR };
 
     const el = document.getElementById('results-heading');
     if (el) window.scrollTo({ top: Math.max(0, el.getBoundingClientRect().top + window.scrollY - 80), behavior: 'smooth' });
@@ -216,7 +227,7 @@ document.addEventListener('DOMContentLoaded', function () {
       `📈 CRA Factor:            ${(r.factor*100).toFixed(2)}%`,
       `─────────────────────────────`,
       `💵 Minimum Withdrawal:    ${NNUtils.formatCAD(r.minWd)}`,
-      `📅 Monthly Income:        ${NNUtils.formatCAD(r.minWd/12)}`,
+      `📅 Monthly Income:        ${NNUtils.formatCAD(NNUtils.roundMoney(r.minWd/12))}`,
       `💼 Total Withdrawal:      ${NNUtils.formatCAD(r.totalWd)}`,
       `🏦 Balance After:         ${NNUtils.formatCAD(r.balAfter)}`
     ], 'RRIF Calculator');

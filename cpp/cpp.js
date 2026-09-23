@@ -70,10 +70,17 @@ document.addEventListener('DOMContentLoaded', function () {
     const proportion   = Math.min(years / MAX_YEARS, 1.0);
     const baseMonthly  = (pensionable / CPP_YMPE) * CPP_MAX_MONTHLY * proportion;
     const factor       = ageFactor(startAge);
+    /* Round only the final displayed dollar amounts — binary floating point
+       can leave an exact half-cent tie just below the rounding point (e.g.
+       a $56,839 average income with 20 years contributed computes base
+       monthly CPP as 552.805, which Math.round(x*100)/100 evaluates on
+       552.80499999999... and rounds down to $552.80 instead of $552.81).
+       The pensionable/proportion/factor math above stays at full
+       precision; only these returned display values are rounded. */
     return {
-      monthly:    Math.round(baseMonthly * factor * 100) / 100,
-      annual:     Math.round(baseMonthly * factor * 12 * 100) / 100,
-      base:       Math.round(baseMonthly * 100) / 100,
+      monthly:    NNUtils.roundMoney(baseMonthly * factor),
+      annual:     NNUtils.roundMoney(baseMonthly * factor * 12),
+      base:       NNUtils.roundMoney(baseMonthly),
       factor:     Math.round(factor * 100 * 10) / 10
     };
   }
@@ -100,7 +107,7 @@ document.addEventListener('DOMContentLoaded', function () {
     const yearsUntil = Math.max(0, startAge - currentAge);
     const lifeExpect = 85; // conservative Canadian average
     const yearsReceiving = Math.max(0, lifeExpect - startAge);
-    const lifetimeTotal = r.annual * yearsReceiving;
+    const lifetimeTotal = NNUtils.roundMoney(r.annual * yearsReceiving);
 
     /* Render */
     const wasHidden = resultsContent.classList.contains('hidden');
