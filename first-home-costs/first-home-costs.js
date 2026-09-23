@@ -123,6 +123,7 @@ document.addEventListener('DOMContentLoaded', function () {
     if (thirtyYear) rate += (window.NN && NN.MORTGAGE) ? NN.MORTGAGE.EXTENDED_AMORTIZATION_SURCHARGE : 0.002;
     const mortgage = price - downPayment;
     const premium = mortgage * rate;
+    // Full precision — callers round only when rendering/copying to the user.
     return { needsCMHC: true, premium, rate, pst: 0, mortgage };
   }
 
@@ -170,13 +171,11 @@ document.addEventListener('DOMContentLoaded', function () {
       else                      ltt = 1650 + (price - 200000) * 0.02;
 
     } else if (province === 'QC') {
-      // Quebec Welcome Tax 2026
-      if (price <= 58900)       ltt = price * 0.005;
-      else if (price <= 294600) ltt = 294.5 + (price - 58900) * 0.01;
-      else if (price <= 552300) ltt = 2651.5 + (price - 294600) * 0.015;
-      else if (price <= 1059000)ltt = 6516.0 + (price - 552300) * 0.02;
-      else if (price <= 2059000)ltt = 16650.0 + (price - 1059000) * 0.025;
-      else                      ltt = 41650.0 + (price - 2059000) * 0.03;
+      // Quebec Welcome Tax (mutation duty) 2026 — same thresholds as
+      // land-transfer-tax.js: 0.5% to $62,900, 1.0% to $315,000, 1.5% above.
+      if (price <= 62900)       ltt = price * 0.005;
+      else if (price <= 315000) ltt = 314.5 + (price - 62900) * 0.01;
+      else                      ltt = 2835.5 + (price - 315000) * 0.015;
 
     } else if (province === 'PE') {
       // PEI LTT 2026: 1% on first $30K, 2% above $30K
@@ -198,6 +197,7 @@ document.addEventListener('DOMContentLoaded', function () {
     }
     // AB, SK, YT, NT, NU: no land transfer tax
 
+    // Full precision — callers round only when rendering/copying to the user.
     return { ltt, lttRebate, torontoLTT, torontoRebate };
   }
 
@@ -290,13 +290,36 @@ document.addEventListener('DOMContentLoaded', function () {
     const closingTotal = netLTT + netTorontoLTT + pstAmt + legalFees + titleIns + inspection + taxAdj;
     const totalCash    = downPayment + closingTotal;
 
+    /* Round only the final displayed dollar amounts — binary floating
+       point can leave an exact half-cent tie just below the rounding
+       point (e.g. a $50,105 mortgage at the 10–14.99%-down (3.1%) CMHC
+       tier computes the premium as 1553.2549999999999, which
+       Intl.NumberFormat rounds down to $1,553.25 instead of $1,553.26;
+       a $332,077 purchase in Quebec computes the welcome tax as
+       3091.6549999999997, rounding down to $3,091.65 instead of
+       $3,091.66). All calculations above — cmhc.premium, lttResult.ltt/
+       lttRebate/torontoLTT/torontoRebate, pstAmt, taxAdj, closingTotal,
+       totalCash, totalMortgage — stay at full precision and are used
+       as-is for every downstream calculation; only these separate copies
+       are rounded, and only for rendering/copying to the user. */
+    const cmhcPremiumR    = NNUtils.roundMoney(cmhcPremium);
+    const totalMortgageR  = NNUtils.roundMoney(totalMortgage);
+    const lttR            = NNUtils.roundMoney(lttResult.ltt);
+    const lttRebateR      = NNUtils.roundMoney(lttResult.lttRebate);
+    const torontoLTTR     = NNUtils.roundMoney(lttResult.torontoLTT);
+    const torontoRebateR  = NNUtils.roundMoney(lttResult.torontoRebate);
+    const pstAmtR         = NNUtils.roundMoney(pstAmt);
+    const taxAdjR         = NNUtils.roundMoney(taxAdj);
+    const closingTotalR   = NNUtils.roundMoney(closingTotal);
+    const totalCashR      = NNUtils.roundMoney(totalCash);
+
     /* ── Render ── */
     placeholder.classList.add('hidden');
     resultsContent.classList.remove('hidden');
 
-    document.getElementById('result-total-cash').textContent  = NNUtils.formatCAD(totalCash);
+    document.getElementById('result-total-cash').textContent  = NNUtils.formatCAD(totalCashR);
     document.getElementById('result-hero-sub').textContent    =
-      `${NNUtils.formatCAD(downPayment)} down + ${NNUtils.formatCAD(closingTotal)} closing costs · ${PROV_NAMES[province]}`;
+      `${NNUtils.formatCAD(downPayment)} down + ${NNUtils.formatCAD(closingTotalR)} closing costs · ${PROV_NAMES[province]}`;
 
     document.getElementById('result-price').textContent    = NNUtils.formatCAD(price);
     document.getElementById('result-dp').textContent       = NNUtils.formatCAD(downPayment) + ` (${(downPayment/price*100).toFixed(1)}%)`;
@@ -321,9 +344,9 @@ document.addEventListener('DOMContentLoaded', function () {
       const rateLabel = document.getElementById('cmhc-rate-label');
       if (rateLabel) rateLabel.textContent = `Premium Rate (${thirtyYear ? '30yr' : '25yr'} amortization)`;
       document.getElementById('result-cmhc-rate').textContent    = (cmhc.rate * 100).toFixed(2) + '%';
-      document.getElementById('result-cmhc-premium').textContent = NNUtils.formatCAD(cmhcPremium) + ' (added to mortgage)';
-      document.getElementById('result-cmhc-mortgage').textContent = NNUtils.formatCAD(cmhcPremium);
-      document.getElementById('result-total-mortgage').textContent = NNUtils.formatCAD(totalMortgage);
+      document.getElementById('result-cmhc-premium').textContent = NNUtils.formatCAD(cmhcPremiumR) + ' (added to mortgage)';
+      document.getElementById('result-cmhc-mortgage').textContent = NNUtils.formatCAD(cmhcPremiumR);
+      document.getElementById('result-total-mortgage').textContent = NNUtils.formatCAD(totalMortgageR);
 
       if (pstRow) {
         if (pstAmt > 0) {
@@ -331,7 +354,7 @@ document.addEventListener('DOMContentLoaded', function () {
           const pstLabel = document.getElementById('pst-label');
           const pstRates = { ON: '8%', QC: '9.975%', SK: '6%' };
           if (pstLabel) pstLabel.textContent = `PST on CMHC Premium (${pstRates[province]})`;
-          document.getElementById('result-pst').textContent = NNUtils.formatCAD(pstAmt) + ' (paid at closing)';
+          document.getElementById('result-pst').textContent = NNUtils.formatCAD(pstAmtR) + ' (paid at closing)';
         } else {
           pstRow.style.display = 'none';
         }
@@ -350,22 +373,22 @@ document.addEventListener('DOMContentLoaded', function () {
     const noLTT = NO_LTT_PROVS.has(province);
 
     if (lttLabel) lttLabel.textContent = noLTT ? 'Land Transfer Tax' : `Land Transfer Tax (${PROV_NAMES[province]})`;
-    document.getElementById('result-ltt').textContent = noLTT ? 'None (no LTT in ' + province + ')' : NNUtils.formatCAD(lttResult.ltt);
+    document.getElementById('result-ltt').textContent = noLTT ? 'None (no LTT in ' + province + ')' : NNUtils.formatCAD(lttR);
 
     const lttRebateRow = document.getElementById('ltt-rebate-row');
     if (lttResult.lttRebate > 0) {
       lttRebateRow.style.display = '';
-      document.getElementById('result-ltt-rebate').textContent = '−' + NNUtils.formatCAD(lttResult.lttRebate);
+      document.getElementById('result-ltt-rebate').textContent = '−' + NNUtils.formatCAD(lttRebateR);
     } else { lttRebateRow.style.display = 'none'; }
 
     const torontoLTTRow   = document.getElementById('toronto-ltt-row');
     const torontoRebRow   = document.getElementById('toronto-rebate-row');
     if (isToronto && lttResult.torontoLTT > 0) {
       torontoLTTRow.style.display = '';
-      document.getElementById('result-toronto-ltt').textContent = NNUtils.formatCAD(lttResult.torontoLTT);
+      document.getElementById('result-toronto-ltt').textContent = NNUtils.formatCAD(torontoLTTR);
       if (lttResult.torontoRebate > 0) {
         torontoRebRow.style.display = '';
-        document.getElementById('result-toronto-rebate').textContent = '−' + NNUtils.formatCAD(lttResult.torontoRebate);
+        document.getElementById('result-toronto-rebate').textContent = '−' + NNUtils.formatCAD(torontoRebateR);
       } else { torontoRebRow.style.display = 'none'; }
     } else {
       torontoLTTRow.style.display = 'none';
@@ -379,24 +402,24 @@ document.addEventListener('DOMContentLoaded', function () {
       const pstClosingLabel = document.getElementById('pst-closing-label');
       const pstRates = { ON: '8%', QC: '9.975%', SK: '6%' };
       if (pstClosingLabel) pstClosingLabel.textContent = `PST on CMHC Premium (${pstRates[province]})`;
-      document.getElementById('result-pst-closing').textContent = NNUtils.formatCAD(pstAmt);
+      document.getElementById('result-pst-closing').textContent = NNUtils.formatCAD(pstAmtR);
     } else { pstClosingRow.style.display = 'none'; }
 
     document.getElementById('result-legal').textContent     = NNUtils.formatCAD(legalFees) + ' (est.)';
     document.getElementById('result-title').textContent     = NNUtils.formatCAD(titleIns) + ' (est.)';
     document.getElementById('result-inspection').textContent = NNUtils.formatCAD(inspection) + ' (est.)';
-    document.getElementById('result-tax-adj').textContent   = NNUtils.formatCAD(taxAdj) + ' (est.)';
-    document.getElementById('result-closing-total').textContent = NNUtils.formatCAD(closingTotal);
+    document.getElementById('result-tax-adj').textContent   = NNUtils.formatCAD(taxAdjR) + ' (est.)';
+    document.getElementById('result-closing-total').textContent = NNUtils.formatCAD(closingTotalR);
 
     // Milestone cards
     document.getElementById('result-dp-pct').textContent       = (downPayment/price*100).toFixed(1) + '%';
     document.getElementById('result-closing-pct').textContent  = (closingTotal/price*100).toFixed(1) + '%';
-    document.getElementById('result-cash-card').textContent    = NNUtils.formatCAD(totalCash);
-    document.getElementById('result-final-mortgage').textContent = NNUtils.formatCAD(totalMortgage);
+    document.getElementById('result-cash-card').textContent    = NNUtils.formatCAD(totalCashR);
+    document.getElementById('result-final-mortgage').textContent = NNUtils.formatCAD(totalMortgageR);
 
     window._fhbResults = {
-      price, downPayment, province, mortgage, cmhcPremium, pstAmt,
-      closingTotal, totalCash, totalMortgage, lttResult
+      price, downPayment, province, mortgage, cmhcPremium: cmhcPremiumR, pstAmt: pstAmtR,
+      closingTotal: closingTotalR, totalCash: totalCashR, totalMortgage: totalMortgageR, lttResult
     };
 
     const el = document.getElementById('results-heading');

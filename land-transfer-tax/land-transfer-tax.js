@@ -180,7 +180,24 @@ document.addEventListener('DOMContentLoaded', function () {
     const netMun  = munTax  - munRebate;
     const total   = netProv + netMun;
 
-    return { provTax, rebate, munTax, munRebate, netProv, netMun, total, provLabel, munLabel, brackets };
+    /* Round only the final displayed dollar amounts — binary floating
+       point can leave an exact half-cent tie just below the rounding
+       point (e.g. a $332,077 purchase in Quebec computes the welcome tax
+       as 3091.6549999999997, which Intl.NumberFormat rounds down to
+       $3,091.65 instead of $3,091.66). The tiered-bracket math in
+       tiered() above stays at full precision; only these returned
+       display values (used by both the on-screen render and the
+       copy-to-clipboard button) are rounded. */
+    return {
+      provTax:   NNUtils.roundMoney(provTax),
+      rebate:    NNUtils.roundMoney(rebate),
+      munTax:    NNUtils.roundMoney(munTax),
+      munRebate: NNUtils.roundMoney(munRebate),
+      netProv:   NNUtils.roundMoney(netProv),
+      netMun:    NNUtils.roundMoney(netMun),
+      total:     NNUtils.roundMoney(total),
+      provLabel, munLabel, brackets
+    };
   }
 
   /* ── PRESETS ── */
@@ -258,7 +275,7 @@ document.addEventListener('DOMContentLoaded', function () {
     const closingEst = r.total + 2500; // avg legal/title ~$2,500
 
     document.getElementById('result-pct').textContent        = pct.toFixed(2) + '%';
-    document.getElementById('result-per-100k').textContent   = NNUtils.formatCAD(per100k);
+    document.getElementById('result-per-100k').textContent   = NNUtils.formatCAD(NNUtils.roundMoney(per100k));
     document.getElementById('result-rebate-saved').textContent = totalRebate > 0 ? NNUtils.formatCAD(totalRebate) : '—';
     document.getElementById('result-closing').textContent    = NNUtils.formatCAD(closingEst);
 
@@ -279,7 +296,7 @@ document.addEventListener('DOMContentLoaded', function () {
             <td style="padding:var(--space-2) var(--space-3)">Additional units (${nlUnits} × $0.40)</td>
             <td style="padding:var(--space-2) var(--space-3);text-align:right">$0.40/$100</td>
             <td style="padding:var(--space-2) var(--space-3);text-align:right">${NNUtils.formatCAD(Math.max(0, price - 500))}</td>
-            <td style="padding:var(--space-2) var(--space-3);text-align:right;font-weight:500">${NNUtils.formatCAD(nlUnits * 0.40)}</td>
+            <td style="padding:var(--space-2) var(--space-3);text-align:right;font-weight:500">${NNUtils.formatCAD(NNUtils.roundMoney(nlUnits * 0.40))}</td>
           </tr>`;
         tbody.innerHTML = rows;
       } else {
@@ -295,7 +312,7 @@ document.addEventListener('DOMContentLoaded', function () {
             <td style="padding:var(--space-2) var(--space-3)">${label}</td>
             <td style="padding:var(--space-2) var(--space-3);text-align:right">${(rate*100).toFixed(1)}%</td>
             <td style="padding:var(--space-2) var(--space-3);text-align:right">${NNUtils.formatCAD(taxable)}</td>
-            <td style="padding:var(--space-2) var(--space-3);text-align:right;font-weight:500">${NNUtils.formatCAD(tax)}</td>
+            <td style="padding:var(--space-2) var(--space-3);text-align:right;font-weight:500">${NNUtils.formatCAD(NNUtils.roundMoney(tax))}</td>
           </tr>`;
           prev = limit;
         });

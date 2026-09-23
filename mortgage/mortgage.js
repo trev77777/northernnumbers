@@ -456,20 +456,32 @@ function calculate() {
   const principalPct = totalMortgage / totalPayments;
   const interestPct  = totalInterest / totalPayments;
 
+  /* Round only the final displayed dollar amounts — binary floating point
+     can leave an exact half-cent tie just below the rounding point (e.g.
+     a $50,105 mortgage at the 10–14.99%-down (3.1%) CMHC tier computes
+     the premium as 1553.2549999999999, which Intl.NumberFormat rounds
+     down to $1,553.25 instead of $1,553.26). The payment/schedule math
+     above already ran on the full-precision totalMortgage principal;
+     only these display copies are rounded. */
+  const cmhcPremiumR   = NNUtils.roundMoney(cmhc.premium);
+  const totalMortgageR = NNUtils.roundMoney(totalMortgage);
+  const totalInterestR = NNUtils.roundMoney(totalInterest);
+  const totalPaymentsR = NNUtils.roundMoney(totalPayments);
+
   // --- Render ---
   paymentLabel.textContent         = freqLabel;
   resultPayment.textContent        = formatCAD(paymentAmount);
   resultBaseMortgage.textContent   = formatCAD(baseMortgage);
-  resultTotalMortgage.textContent  = formatCAD(totalMortgage);
-  resultTotalPay.textContent       = formatCAD(totalPayments);
-  resultTotalInt.textContent       = formatCAD(totalInterest);
+  resultTotalMortgage.textContent  = formatCAD(totalMortgageR);
+  resultTotalPay.textContent       = formatCAD(totalPaymentsR);
+  resultTotalInt.textContent       = formatCAD(totalInterestR);
   resultPayoffDate.textContent     = payoffDate
     ? formatMonthYear(payoffDate)
     : `~${schedule.length} years`;
 
   // Show CMHC row only when premium applies
   if (cmhc.premium > 0) {
-    resultCmhcPremium.textContent = `${formatCAD(cmhc.premium)} (${(cmhc.rate * 100).toFixed(2)}%)`;
+    resultCmhcPremium.textContent = `${formatCAD(cmhcPremiumR)} (${(cmhc.rate * 100).toFixed(2)}%)`;
     resultCmhcRow.classList.remove('hidden');
   } else {
     resultCmhcRow.classList.add('hidden');
@@ -518,9 +530,9 @@ function calculate() {
         ? `${yearsSaved} yr${yearsSaved > 1 ? 's' : ''} ${moSaved > 0 ? moSaved + ' mo' : ''}`
         : `${moSaved} months`;
 
-      document.getElementById('savings-monthly-total').textContent  = formatCAD(totalMortgage + monthlyInterest);
-      document.getElementById('savings-accel-total').textContent    = formatCAD(totalPayments);
-      document.getElementById('savings-interest-saved').textContent = formatCAD(interestSaved);
+      document.getElementById('savings-monthly-total').textContent  = formatCAD(NNUtils.roundMoney(totalMortgage + monthlyInterest));
+      document.getElementById('savings-accel-total').textContent    = formatCAD(totalPaymentsR);
+      document.getElementById('savings-interest-saved').textContent = formatCAD(NNUtils.roundMoney(interestSaved));
       document.getElementById('savings-time-saved').textContent     = timeSavedText;
       savingsCard.classList.remove('hidden');
     } else {
@@ -546,9 +558,9 @@ function calculate() {
     payment: formatCAD(paymentAmount),
     freq: freqLabel,
     baseMortgage: formatCAD(baseMortgage),
-    totalMortgage: formatCAD(totalMortgage),
-    totalInterest: formatCAD(totalInterest),
-    totalPayments: formatCAD(totalPayments),
+    totalMortgage: formatCAD(totalMortgageR),
+    totalInterest: formatCAD(totalInterestR),
+    totalPayments: formatCAD(totalPaymentsR),
     payoff: payoffDate ? formatMonthYear(payoffDate) : `~${schedule.length} years`
   };
 }

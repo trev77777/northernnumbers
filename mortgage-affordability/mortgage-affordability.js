@@ -239,6 +239,18 @@ document.addEventListener('DOMContentLoaded', function () {
     const cmhcTax        = premium > 0 ? cmhcPremiumAmt * 0.08 : 0; // Ontario 8% PST on CMHC premium
     const closingTotal   = dp + ltt + 3500 + cmhcTax;
 
+    /* Round only the final displayed dollar amounts — binary floating
+       point can leave an exact half-cent tie just below the rounding
+       point (e.g. a $50,105 mortgage at the 10–14.99%-down (3.1%) CMHC
+       tier computes the premium as 1553.2549999999999, which
+       Intl.NumberFormat rounds down to $1,553.25 instead of $1,553.26).
+       The binary-search/tiered-LTT math above stays at full precision;
+       only these display copies are rounded. */
+    const cmhcPremiumAmtR = NNUtils.roundMoney(cmhcPremiumAmt);
+    const cmhcTaxR        = NNUtils.roundMoney(cmhcTax);
+    const lttR            = NNUtils.roundMoney(ltt);
+    const closingTotalR   = NNUtils.roundMoney(closingTotal);
+
     /* Render */
     placeholder.classList.add('hidden');
     resultsContent.classList.remove('hidden');
@@ -251,7 +263,7 @@ document.addEventListener('DOMContentLoaded', function () {
     const cmhcRow = document.getElementById('cmhc-row');
     if (premium > 0) {
       cmhcRow.style.display = '';
-      document.getElementById('result-cmhc').textContent = NNUtils.formatCAD(cmhcPremiumAmt) + ` (${(premium*100).toFixed(1)}%)`;
+      document.getElementById('result-cmhc').textContent = NNUtils.formatCAD(cmhcPremiumAmtR) + ` (${(premium*100).toFixed(1)}%)`;
     } else {
       cmhcRow.style.display = 'none';
     }
@@ -268,14 +280,14 @@ document.addEventListener('DOMContentLoaded', function () {
     document.getElementById('result-income-needed').textContent   = NNUtils.formatCAD(incomeNeeded) + '/yr';
 
     document.getElementById('close-dp').textContent    = NNUtils.formatCAD(dp);
-    document.getElementById('close-ltt').textContent   = NNUtils.formatCAD(ltt);
+    document.getElementById('close-ltt').textContent   = NNUtils.formatCAD(lttR);
     const cmhcTaxRow = document.getElementById('close-cmhc-tax-row');
     const cmhcTaxEl  = document.getElementById('close-cmhc-tax');
     if (cmhcTaxRow && cmhcTaxEl) {
-      if (cmhcTax > 0) { cmhcTaxRow.style.display = ''; cmhcTaxEl.textContent = NNUtils.formatCAD(cmhcTax); }
+      if (cmhcTax > 0) { cmhcTaxRow.style.display = ''; cmhcTaxEl.textContent = NNUtils.formatCAD(cmhcTaxR); }
       else              { cmhcTaxRow.style.display = 'none'; }
     }
-    document.getElementById('close-total').textContent = NNUtils.formatCAD(closingTotal);
+    document.getElementById('close-total').textContent = NNUtils.formatCAD(closingTotalR);
 
     // Warn if down payment below minimum
     if (dp < minDp) {

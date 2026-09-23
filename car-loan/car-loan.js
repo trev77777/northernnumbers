@@ -187,7 +187,7 @@ document.addEventListener('DOMContentLoaded', function () {
     const financed = price - down - trade + tax + fees;
     if (financed <= 0) {
       // Down + trade covers everything
-      showZeroFinanced(price, down, trade, tax);
+      showZeroFinanced(price, down, trade, NNUtils.roundMoney(tax));
       return;
     }
 
@@ -208,12 +208,22 @@ document.addEventListener('DOMContentLoaded', function () {
     const totalInterest = totalPayments - financed;
     const totalCost     = totalPayments + down + trade;
 
-    // Build amortization
+    // Build amortization (uses the full-precision `financed` principal)
     const schedule = buildAmort(financed, r, payment, n, freq, term);
+
+    /* Round only the final displayed dollar amounts — binary floating
+       point can leave an exact half-cent tie just below the rounding
+       point (e.g. a $5,140 taxable amount in Quebec at 14.975% computes
+       sales tax as 769.7149999999999, which Intl.NumberFormat rounds
+       down to $769.71 instead of $769.72). The amortization math above
+       (payment, schedule) already ran on the full-precision `financed`
+       principal; only these display copies are rounded. */
+    const taxR      = NNUtils.roundMoney(tax);
+    const financedR = NNUtils.roundMoney(financed);
 
     // Render
     renderResults({
-      price, down, trade, fees, tax, taxRate, financed,
+      price, down, trade, fees, tax: taxR, taxRate, financed: financedR,
       payment, freq, term, rate, periodsPerYear, n,
       totalPayments, totalInterest, totalCost, schedule
     });
