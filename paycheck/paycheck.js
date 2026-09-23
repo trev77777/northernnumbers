@@ -254,36 +254,58 @@ document.addEventListener('DOMContentLoaded', function () {
     const ded_pp   = totalDeductions / freq;
     const net_pp   = netAnnual / freq;
 
+    /* Round only the final displayed dollar amounts — binary floating point
+       can leave an exact half-cent tie just below the rounding point (e.g.
+       $20,010 gross in Ontario on a semi-monthly schedule computes federal
+       tax/period as 20.754999999999995, which Intl.NumberFormat rounds
+       down to $20.75 instead of $20.76). All bracket/rate math above this
+       point stays at full precision; only these display copies are rounded. */
+    const grossAnnualR     = NNUtils.roundMoney(grossAnnual);
+    const fedTaxR          = NNUtils.roundMoney(fedTax);
+    const provTaxR         = NNUtils.roundMoney(provTax);
+    const cppCombinedR     = NNUtils.roundMoney(cpp + cpp2);
+    const eiR              = NNUtils.roundMoney(ei);
+    const netAnnualR       = NNUtils.roundMoney(netAnnual);
+    const rrspSavingsR     = NNUtils.roundMoney(rrspSavings);
+    const gross_ppR = NNUtils.roundMoney(gross_pp);
+    const fed_ppR   = NNUtils.roundMoney(fed_pp);
+    const prov_ppR  = NNUtils.roundMoney(prov_pp);
+    const cpp_ppR   = NNUtils.roundMoney(cpp_pp);
+    const cpp2_ppR  = NNUtils.roundMoney(cpp2_pp);
+    const ei_ppR    = NNUtils.roundMoney(ei_pp);
+    const ded_ppR   = NNUtils.roundMoney(ded_pp);
+    const net_ppR   = NNUtils.roundMoney(net_pp);
+
     /* Render */
     placeholder.classList.add('hidden');
     resultsContent.classList.remove('hidden');
 
     const freqLabel = {52:'Weekly',26:'Biweekly',24:'Semi-Monthly',12:'Monthly'}[freq] || '';
     document.getElementById('result-hero-label').textContent  = `${freqLabel} Take-Home Pay`;
-    document.getElementById('result-net-per-period').textContent = NNUtils.formatCAD(net_pp);
-    document.getElementById('result-hero-sub').textContent    = `${NNUtils.formatCAD(grossAnnual)} gross · ${province} · ${freqLabel}`;
+    document.getElementById('result-net-per-period').textContent = NNUtils.formatCAD(net_ppR);
+    document.getElementById('result-hero-sub').textContent    = `${NNUtils.formatCAD(grossAnnualR)} gross · ${province} · ${freqLabel}`;
 
-    document.getElementById('result-gross-per-period').textContent = NNUtils.formatCAD(gross_pp);
+    document.getElementById('result-gross-per-period').textContent = NNUtils.formatCAD(gross_ppR);
 
     // Hourly wage equivalent (based on 40 hrs/week, 52 weeks)
     const hourlyEquivRow = document.getElementById('hourly-equiv-row');
     const hourlyEquivEl  = document.getElementById('result-hourly-equiv');
     if (incomeType === 'annual' && hourlyEquivEl) {
-      const hourlyEquiv = grossAnnual / 2080; // 40 hrs × 52 weeks
+      const hourlyEquiv = NNUtils.roundMoney(grossAnnual / 2080); // 40 hrs × 52 weeks
       hourlyEquivEl.textContent = NNUtils.formatCAD(hourlyEquiv) + '/hr';
       if (hourlyEquivRow) hourlyEquivRow.style.display = '';
     } else {
       if (hourlyEquivRow) hourlyEquivRow.style.display = 'none';
     }
-    document.getElementById('result-fed-per-period').textContent   = NNUtils.formatCAD(fed_pp);
-    document.getElementById('result-prov-per-period').textContent  = NNUtils.formatCAD(prov_pp);
-    document.getElementById('result-cpp-per-period').textContent   = NNUtils.formatCAD(cpp_pp);
+    document.getElementById('result-fed-per-period').textContent   = NNUtils.formatCAD(fed_ppR);
+    document.getElementById('result-prov-per-period').textContent  = NNUtils.formatCAD(prov_ppR);
+    document.getElementById('result-cpp-per-period').textContent   = NNUtils.formatCAD(cpp_ppR);
 
     // CPP2 row
     const cpp2Row = document.getElementById('cpp2-row');
     if (cpp2 > 0) {
       cpp2Row.style.display = '';
-      document.getElementById('result-cpp2-per-period').textContent = NNUtils.formatCAD(cpp2_pp);
+      document.getElementById('result-cpp2-per-period').textContent = NNUtils.formatCAD(cpp2_ppR);
     } else {
       cpp2Row.style.display = 'none';
     }
@@ -292,27 +314,27 @@ document.addEventListener('DOMContentLoaded', function () {
     const eiRow = document.getElementById('ei-row');
     if (ei > 0) {
       eiRow.style.display = '';
-      document.getElementById('result-ei-per-period').textContent = NNUtils.formatCAD(ei_pp);
+      document.getElementById('result-ei-per-period').textContent = NNUtils.formatCAD(ei_ppR);
     } else {
       eiRow.style.display = 'none';
     }
 
-    document.getElementById('result-total-deductions').textContent = NNUtils.formatCAD(ded_pp);
-    document.getElementById('result-net-total').textContent        = NNUtils.formatCAD(net_pp);
+    document.getElementById('result-total-deductions').textContent = NNUtils.formatCAD(ded_ppR);
+    document.getElementById('result-net-total').textContent        = NNUtils.formatCAD(net_ppR);
 
     // Milestone cards
-    document.getElementById('result-monthly-takehome').textContent = NNUtils.formatCAD(netAnnual / 12);
-    document.getElementById('result-net-annual').textContent     = NNUtils.formatCAD(netAnnual);
+    document.getElementById('result-monthly-takehome').textContent = NNUtils.formatCAD(NNUtils.roundMoney(netAnnual / 12));
+    document.getElementById('result-net-annual').textContent     = NNUtils.formatCAD(netAnnualR);
     document.getElementById('result-effective-rate').textContent = effectiveRate.toFixed(1) + '%';
     document.getElementById('result-marginal-rate').textContent  = marginalRate.toFixed(1) + '%';
-    document.getElementById('result-rrsp-savings').textContent   = rrsp > 0 ? NNUtils.formatCAD(rrspSavings) : '—';
+    document.getElementById('result-rrsp-savings').textContent   = rrsp > 0 ? NNUtils.formatCAD(rrspSavingsR) : '—';
 
     // Annual summary
-    document.getElementById('result-gross-annual').textContent    = NNUtils.formatCAD(grossAnnual);
-    document.getElementById('result-fed-annual').textContent      = NNUtils.formatCAD(fedTax);
-    document.getElementById('result-prov-annual').textContent     = NNUtils.formatCAD(provTax);
-    document.getElementById('result-cpp-annual').textContent      = NNUtils.formatCAD(cpp + cpp2);
-    document.getElementById('result-ei-annual').textContent       = NNUtils.formatCAD(ei);
+    document.getElementById('result-gross-annual').textContent    = NNUtils.formatCAD(grossAnnualR);
+    document.getElementById('result-fed-annual').textContent      = NNUtils.formatCAD(fedTaxR);
+    document.getElementById('result-prov-annual').textContent     = NNUtils.formatCAD(provTaxR);
+    document.getElementById('result-cpp-annual').textContent      = NNUtils.formatCAD(cppCombinedR);
+    document.getElementById('result-ei-annual').textContent       = NNUtils.formatCAD(eiR);
     const cppLabelEl = document.getElementById('result-cpp-label');
     const eiLabelEl  = document.getElementById('result-ei-label');
     if (cppLabelEl) cppLabelEl.textContent = isQuebec ? 'Annual QPP' : 'Annual CPP';
@@ -328,9 +350,15 @@ document.addEventListener('DOMContentLoaded', function () {
     // QPIP info tip only makes sense once the row is actually labelled QPIP/EI + QPIP
     const qpipTipEl = document.getElementById('tip-pc-qpip-wrap');
     if (qpipTipEl) qpipTipEl.classList.toggle('hidden', !isQuebec);
-    document.getElementById('result-net-annual-total').textContent= NNUtils.formatCAD(netAnnual);
+    document.getElementById('result-net-annual-total').textContent= NNUtils.formatCAD(netAnnualR);
 
-    window._paycheckResults = { grossAnnual, province, empType, freq, freqLabel, fedTax, provTax, cpp, cpp2, ei, totalDeductions, netAnnual, effectiveRate, marginalRate, net_pp, gross_pp };
+    window._paycheckResults = {
+      grossAnnual: grossAnnualR, province, empType, freq, freqLabel,
+      fedTax: fedTaxR, provTax: provTaxR, cpp: cppCombinedR, ei: eiR,
+      netAnnual: netAnnualR, effectiveRate, marginalRate,
+      net_pp: net_ppR, gross_pp: gross_ppR,
+      fed_pp: fed_ppR, prov_pp: prov_ppR, cpp_pp: cpp_ppR, cpp2_pp: cpp2_ppR, ei_pp: ei_ppR,
+    };
 
     const el = document.getElementById('results-heading');
     if (el) window.scrollTo({ top: Math.max(0, el.getBoundingClientRect().top + window.scrollY - 80), behavior: 'smooth' });
@@ -350,10 +378,10 @@ document.addEventListener('DOMContentLoaded', function () {
       `📅 Pay Frequency:        ${r.freqLabel} (${r.freq}/year)`,
       `─────────────────────────────`,
       `💵 Gross Per Paycheck:   ${NNUtils.formatCAD(r.gross_pp)}`,
-      `🏛  Federal Tax:          ${NNUtils.formatCAD(r.fedTax / r.freq)}/period`,
-      `🏠 Provincial Tax:       ${NNUtils.formatCAD(r.provTax / r.freq)}/period`,
-      `👷 ${r.province === 'QC' ? 'QPP' : 'CPP'}:                  ${NNUtils.formatCAD((r.cpp + r.cpp2) / r.freq)}/period`,
-      `🛡  ${r.province === 'QC' ? (r.empType === 'employed' ? 'EI + QPIP' : 'QPIP') : 'EI'}:                   ${NNUtils.formatCAD(r.ei / r.freq)}/period`,
+      `🏛  Federal Tax:          ${NNUtils.formatCAD(r.fed_pp)}/period`,
+      `🏠 Provincial Tax:       ${NNUtils.formatCAD(r.prov_pp)}/period`,
+      `👷 ${r.province === 'QC' ? 'QPP' : 'CPP'}:                  ${NNUtils.formatCAD(NNUtils.roundMoney(r.cpp_pp + r.cpp2_pp))}/period`,
+      `🛡  ${r.province === 'QC' ? (r.empType === 'employed' ? 'EI + QPIP' : 'QPIP') : 'EI'}:                   ${NNUtils.formatCAD(r.ei_pp)}/period`,
       `─────────────────────────────`,
       `✅ Net Per Paycheck:     ${NNUtils.formatCAD(r.net_pp)}`,
       `📆 Annual Net Income:    ${NNUtils.formatCAD(r.netAnnual)}`,

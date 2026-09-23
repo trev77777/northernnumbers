@@ -261,35 +261,52 @@ document.addEventListener('DOMContentLoaded', function () {
     const taxSavedVsEmp      = Math.max(0, empTax - r.netTotal);
     const taxSavedVsInterest = Math.max(0, interestTax - r.netTotal);
 
+    /* Round only the final displayed dollar amounts — binary floating point
+       can leave an exact half-cent tie just below the rounding point (e.g.
+       a $1,500 non-eligible dividend on $30,000 other income in Nova
+       Scotia computes the provincial DTC as 25.874999999999996, which
+       Intl.NumberFormat rounds down to $25.87 instead of $25.88). The
+       gross-up/DTC/bracket math inside calcDividendTax and calcOrdinaryTax
+       stays at full precision; only these display copies are rounded. */
+    const grossUpR      = NNUtils.roundMoney(r.grossUp);
+    const taxableR      = NNUtils.roundMoney(r.taxable);
+    const grossTaxR     = NNUtils.roundMoney(r.grossFed + r.grossProv);
+    const fedDTCR       = NNUtils.roundMoney(r.fedDTC);
+    const provDTCR      = NNUtils.roundMoney(r.provDTC);
+    const netTotalR     = NNUtils.roundMoney(r.netTotal);
+    const afterTaxR     = NNUtils.roundMoney(r.actual - r.netTotal);
+    const taxSavedVsEmpR      = NNUtils.roundMoney(taxSavedVsEmp);
+    const taxSavedVsInterestR = NNUtils.roundMoney(taxSavedVsInterest);
+
     /* ── Render ── */
     placeholder.classList.add('hidden');
     resultsContent.classList.remove('hidden');
 
     const typeLabel = divType === 'eligible' ? 'Eligible' : 'Non-Eligible';
-    document.getElementById('result-net-tax').textContent  = NNUtils.formatCAD(r.netTotal);
+    document.getElementById('result-net-tax').textContent  = NNUtils.formatCAD(netTotalR);
     document.getElementById('result-hero-sub').textContent =
-      `${typeLabel} dividend · ${(r.effectiveRate*100).toFixed(1)}% effective rate · ${province} · ${NNUtils.formatCAD(r.taxable)} reported on T1`;
+      `${typeLabel} dividend · ${(r.effectiveRate*100).toFixed(1)}% effective rate · ${province} · ${NNUtils.formatCAD(taxableR)} reported on T1`;
 
     document.getElementById('result-actual').textContent   = NNUtils.formatCAD(r.actual);
-    document.getElementById('result-grossup').textContent  = '+' + NNUtils.formatCAD(r.grossUp);
-    document.getElementById('result-taxable').textContent  = NNUtils.formatCAD(r.taxable);
-    document.getElementById('result-gross-tax').textContent = NNUtils.formatCAD(r.grossFed + r.grossProv);
-    document.getElementById('result-fed-dtc').textContent  = '−' + NNUtils.formatCAD(r.fedDTC);
-    document.getElementById('result-prov-dtc').textContent = '−' + NNUtils.formatCAD(r.provDTC);
-    document.getElementById('result-total').textContent    = NNUtils.formatCAD(r.netTotal);
+    document.getElementById('result-grossup').textContent  = '+' + NNUtils.formatCAD(grossUpR);
+    document.getElementById('result-taxable').textContent  = NNUtils.formatCAD(taxableR);
+    document.getElementById('result-gross-tax').textContent = NNUtils.formatCAD(grossTaxR);
+    document.getElementById('result-fed-dtc').textContent  = '−' + NNUtils.formatCAD(fedDTCR);
+    document.getElementById('result-prov-dtc').textContent = '−' + NNUtils.formatCAD(provDTCR);
+    document.getElementById('result-total').textContent    = NNUtils.formatCAD(netTotalR);
 
     const grossupLabel = document.getElementById('grossup-label');
     if (grossupLabel) grossupLabel.textContent = divType === 'eligible' ? 'Gross-Up (38%)' : 'Gross-Up (15%)';
 
     document.getElementById('result-eff-rate').textContent      = (r.effectiveRate*100).toFixed(2) + '%';
-    document.getElementById('result-after-tax').textContent     = NNUtils.formatCAD(r.actual - r.netTotal);
-    document.getElementById('result-vs-employment').textContent = taxSavedVsEmp > 0 ? NNUtils.formatCAD(taxSavedVsEmp) : '$0';
-    document.getElementById('result-vs-interest').textContent   = taxSavedVsInterest > 0 ? NNUtils.formatCAD(taxSavedVsInterest) : '$0';
+    document.getElementById('result-after-tax').textContent     = NNUtils.formatCAD(afterTaxR);
+    document.getElementById('result-vs-employment').textContent = taxSavedVsEmpR > 0 ? NNUtils.formatCAD(taxSavedVsEmpR) : '$0';
+    document.getElementById('result-vs-interest').textContent   = taxSavedVsInterestR > 0 ? NNUtils.formatCAD(taxSavedVsInterestR) : '$0';
 
     window._divResults = {
-      actual: r.actual, taxable: r.taxable, grossFed: r.grossFed,
-      grossProv: r.grossProv, fedDTC: r.fedDTC, provDTC: r.provDTC,
-      netTotal: r.netTotal, effectiveRate: r.effectiveRate,
+      actual: r.actual, taxable: taxableR, grossFed: NNUtils.roundMoney(r.grossFed),
+      grossProv: NNUtils.roundMoney(r.grossProv), fedDTC: fedDTCR, provDTC: provDTCR,
+      netTotal: netTotalR, effectiveRate: r.effectiveRate,
       province, divType, income
     };
 
@@ -316,7 +333,7 @@ document.addEventListener('DOMContentLoaded', function () {
       `─────────────────────────────`,
       `Net Tax Owing:         ${NNUtils.formatCAD(r.netTotal)}`,
       `Effective Rate:        ${(r.effectiveRate*100).toFixed(2)}%`,
-      `After-Tax Dividend:    ${NNUtils.formatCAD(r.actual - r.netTotal)}`,
+      `After-Tax Dividend:    ${NNUtils.formatCAD(NNUtils.roundMoney(r.actual - r.netTotal))}`,
     ], 'Dividend Tax Calculator');
   });
 

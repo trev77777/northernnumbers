@@ -181,34 +181,49 @@ document.addEventListener('DOMContentLoaded', function () {
     /* RRSP savings */
     const rrspSavings = rrsp > 0 ? rrsp * (marginalFed + marginalProv) : 0;
 
+    /* Round only the final displayed dollar amounts — binary floating point
+       can leave an exact half-cent tie just below the rounding point (e.g.
+       $22,000 gross in Saskatchewan computes provincial tax as
+       169.99499999999998, which Intl.NumberFormat rounds down to $169.99
+       instead of $170.00). All bracket/credit/abatement math above this
+       point stays at full precision; only these display copies are rounded. */
+    const fedTaxR      = NNUtils.roundMoney(fedTax);
+    const provTaxR     = NNUtils.roundMoney(provTax);
+    const cppCombinedR = NNUtils.roundMoney(cpp + cpp2); // includes CPP2 where applicable
+    const eiR          = NNUtils.roundMoney(ei);
+    const totalTaxR    = NNUtils.roundMoney(totalTax);
+    const afterTaxR    = NNUtils.roundMoney(afterTax);
+    const monthlyR     = NNUtils.roundMoney(monthly);
+    const rrspSavingsR = NNUtils.roundMoney(rrspSavings);
+
     /* Render */
     const wasHidden = resultsContent.classList.contains('hidden');
     placeholder.classList.add('hidden');
     resultsContent.classList.remove('hidden');
 
-    document.getElementById('result-after-tax').textContent   = NNUtils.formatCAD(afterTax);
-    document.getElementById('result-monthly').textContent     = NNUtils.formatCAD(monthly) + '/month take-home';
+    document.getElementById('result-after-tax').textContent   = NNUtils.formatCAD(afterTaxR);
+    document.getElementById('result-monthly').textContent     = NNUtils.formatCAD(monthlyR) + '/month take-home';
     document.getElementById('result-gross').textContent       = NNUtils.formatCAD(gross);
     document.getElementById('result-taxable').textContent     = NNUtils.formatCAD(taxable);
-    document.getElementById('result-fed-tax').textContent     = NNUtils.formatCAD(fedTax);
-    document.getElementById('result-prov-tax').textContent    = NNUtils.formatCAD(provTax);
-    document.getElementById('result-cpp').textContent         = NNUtils.formatCAD(cpp + cpp2); // includes CPP2 where applicable
+    document.getElementById('result-fed-tax').textContent     = NNUtils.formatCAD(fedTaxR);
+    document.getElementById('result-prov-tax').textContent    = NNUtils.formatCAD(provTaxR);
+    document.getElementById('result-cpp').textContent         = NNUtils.formatCAD(cppCombinedR); // includes CPP2 where applicable
     const cppLabelEl = document.getElementById('result-cpp-label');
     const eiLabelEl  = document.getElementById('result-ei-label');
     if (cppLabelEl) cppLabelEl.textContent = isQuebec ? 'QPP Contributions' : 'CPP Contributions';
     if (eiLabelEl)  eiLabelEl.textContent  = isQuebec ? (empType === 'self-employed' ? 'QPIP Premiums' : 'EI + QPIP Premiums') : 'EI Premiums';
-    document.getElementById('result-ei').textContent          = NNUtils.formatCAD(ei);
-    document.getElementById('result-total-tax').textContent   = NNUtils.formatCAD(totalTax);
+    document.getElementById('result-ei').textContent          = NNUtils.formatCAD(eiR);
+    document.getElementById('result-total-tax').textContent   = NNUtils.formatCAD(totalTaxR);
     document.getElementById('result-marginal').textContent    = marginalRate.toFixed(1) + '%';
     document.getElementById('result-effective').textContent   = effectiveRate.toFixed(1) + '%';
-    document.getElementById('result-monthly-card').textContent= NNUtils.formatCAD(monthly);
-    document.getElementById('result-net-income').textContent    = NNUtils.formatCAD(afterTax);
-    document.getElementById('result-total-taxes-card').textContent = NNUtils.formatCAD(totalTax);
-    document.getElementById('result-rrsp-savings').textContent = rrsp > 0 ? NNUtils.formatCAD(rrspSavings) : '—';
+    document.getElementById('result-monthly-card').textContent= NNUtils.formatCAD(monthlyR);
+    document.getElementById('result-net-income').textContent    = NNUtils.formatCAD(afterTaxR);
+    document.getElementById('result-total-taxes-card').textContent = NNUtils.formatCAD(totalTaxR);
+    document.getElementById('result-rrsp-savings').textContent = rrsp > 0 ? NNUtils.formatCAD(rrspSavingsR) : '—';
     const rrspSubEl = document.getElementById('rrsp-savings-sub');
     if (rrspSubEl) {
       rrspSubEl.textContent = rrsp > 0
-        ? `You saved ${NNUtils.formatCAD(rrspSavings)} in taxes from your RRSP contribution`
+        ? `You saved ${NNUtils.formatCAD(rrspSavingsR)} in taxes from your RRSP contribution`
         : 'Enter an RRSP deduction above';
       rrspSubEl.style.color = rrsp > 0 ? 'var(--color-success)' : '';
     }
@@ -227,23 +242,23 @@ document.addEventListener('DOMContentLoaded', function () {
         const maxLabel = b.max === Infinity ? '+' : NNUtils.formatCAD0(b.max);
         html += `<div style="display:flex;justify-content:space-between;padding:var(--space-2) 0;border-bottom:1px solid var(--color-border);font-size:var(--text-sm)">
           <span style="color:var(--color-text-muted)">${(b.rate*100).toFixed(1)}% on ${NNUtils.formatCAD0(b.min)}–${maxLabel}</span>
-          <span style="font-weight:600">${NNUtils.formatCAD(tax_in_bracket)}</span>
+          <span style="font-weight:600">${NNUtils.formatCAD(NNUtils.roundMoney(tax_in_bracket))}</span>
         </div>`;
       }
       html += `<div style="display:flex;justify-content:space-between;padding:var(--space-2) 0;font-size:var(--text-sm)">
         <span style="color:var(--color-text-muted)">Less: Basic Personal Amount credit</span>
-        <span style="font-weight:600;color:var(--color-success)">–${NNUtils.formatCAD(fedCredit)}</span>
+        <span style="font-weight:600;color:var(--color-success)">–${NNUtils.formatCAD(NNUtils.roundMoney(fedCredit))}</span>
       </div>`;
       if (isQuebec) {
         const abatementAmount = fedTaxBeforeAbatement - fedTax;
         html += `<div style="display:flex;justify-content:space-between;padding:var(--space-2) 0;font-size:var(--text-sm)">
           <span style="color:var(--color-text-muted)">Less: Quebec federal tax abatement (16.5%)</span>
-          <span style="font-weight:600;color:var(--color-success)">–${NNUtils.formatCAD(abatementAmount)}</span>
+          <span style="font-weight:600;color:var(--color-success)">–${NNUtils.formatCAD(NNUtils.roundMoney(abatementAmount))}</span>
         </div>`;
       }
       html += `<div style="display:flex;justify-content:space-between;padding:var(--space-3) 0 var(--space-2);border-top:2px solid var(--color-border);margin-top:var(--space-2);font-weight:700">
         <span>Federal Tax Owing</span>
-        <span style="color:var(--color-primary)">${NNUtils.formatCAD(fedTax)}</span>
+        <span style="color:var(--color-primary)">${NNUtils.formatCAD(fedTaxR)}</span>
       </div>`;
       breakdownEl.innerHTML = html;
     }
@@ -253,7 +268,7 @@ document.addEventListener('DOMContentLoaded', function () {
     const provLabelEl     = document.getElementById('prov-bracket-label');
     if (provBreakdownEl) {
       const provName = (window.NN && NN.PROV_NAMES && NN.PROV_NAMES[province]) || province;
-      if (provLabelEl) provLabelEl.textContent = `${provName} — Basic Personal Amount: ${NNUtils.formatCAD0(provBPA)} (credit: ${NNUtils.formatCAD(provCredit)})`;
+      if (provLabelEl) provLabelEl.textContent = `${provName} — Basic Personal Amount: ${NNUtils.formatCAD0(provBPA)} (credit: ${NNUtils.formatCAD(NNUtils.roundMoney(provCredit))})`;
       let phtml = '';
       for (const b of provBrackets) {
         if (taxable <= b.min) break;
@@ -262,16 +277,16 @@ document.addEventListener('DOMContentLoaded', function () {
         const maxL = b.max === Infinity ? '+' : NNUtils.formatCAD0(b.max);
         phtml += `<div style="display:flex;justify-content:space-between;padding:var(--space-2) 0;border-bottom:1px solid var(--color-border);font-size:var(--text-sm)">
           <span style="color:var(--color-text-muted)">${(b.rate*100).toFixed(2)}% on ${NNUtils.formatCAD0(b.min)}–${maxL}</span>
-          <span style="font-weight:600">${NNUtils.formatCAD(tax_in)}</span>
+          <span style="font-weight:600">${NNUtils.formatCAD(NNUtils.roundMoney(tax_in))}</span>
         </div>`;
       }
       phtml += `<div style="display:flex;justify-content:space-between;padding:var(--space-2) 0;font-size:var(--text-sm)">
         <span style="color:var(--color-text-muted)">Less: Provincial Basic Personal Amount credit</span>
-        <span style="font-weight:600;color:var(--color-success)">–${NNUtils.formatCAD(provCredit)}</span>
+        <span style="font-weight:600;color:var(--color-success)">–${NNUtils.formatCAD(NNUtils.roundMoney(provCredit))}</span>
       </div>`;
       phtml += `<div style="display:flex;justify-content:space-between;padding:var(--space-3) 0 var(--space-2);border-top:2px solid var(--color-border);margin-top:var(--space-2);font-weight:700">
         <span>Provincial Tax Owing</span>
-        <span style="color:var(--color-primary)">${NNUtils.formatCAD(provTax)}</span>
+        <span style="color:var(--color-primary)">${NNUtils.formatCAD(provTaxR)}</span>
       </div>`;
       provBreakdownEl.innerHTML = phtml;
     }
@@ -285,7 +300,7 @@ document.addEventListener('DOMContentLoaded', function () {
     ]);
 
     /* Copy results */
-    window._taxResults = { gross, taxable, fedTax, provTax, cpp: cpp + cpp2, ei, totalTax, afterTax, monthly, effectiveRate, marginalRate, province, empType };
+    window._taxResults = { gross, taxable, fedTax: fedTaxR, provTax: provTaxR, cpp: cppCombinedR, ei: eiR, totalTax: totalTaxR, afterTax: afterTaxR, monthly: monthlyR, effectiveRate, marginalRate, province, empType };
 
     /* Scroll */
     const el = document.getElementById('results-heading');

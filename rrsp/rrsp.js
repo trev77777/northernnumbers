@@ -656,6 +656,20 @@ function renderResults(data, values) {
   const withReinvest    = calcReinvestScenario(values, startingBalance);
   const reinvestExtra   = withReinvest - finalBalance;
 
+  /* Round only the final displayed dollar amounts — binary floating point
+     can leave an exact half-cent tie just below the rounding point (e.g.
+     $59,000 income with a $1,000 RRSP contribution in PEI computes tax
+     saved as 305.7049999999999, which Intl.NumberFormat rounds down to
+     $305.70 instead of $305.71). The bracket-tax math inside calcTaxOwed
+     stays at full precision; only these display copies are rounded.
+     Growth-projection figures (finalBalance, totalContributions,
+     inflationValue, reinvest scenario, etc.) are compounding results, not
+     simple bracket/rate math, and are not affected — left untouched. */
+  const taxRefundR  = NNUtils.roundMoney(taxRefund);
+  const taxWithoutR = NNUtils.roundMoney(taxWithout);
+  const taxWithR    = NNUtils.roundMoney(taxWith);
+  const taxSavedR   = NNUtils.roundMoney(taxSaved);
+
   resultsPlaceholder.classList.add('hidden');
   resultsContent.classList.remove('hidden');
 
@@ -670,7 +684,7 @@ function renderResults(data, values) {
   }
 
   // Hero tax refund
-  resultTaxRefund.textContent = formatCAD(taxRefund);
+  resultTaxRefund.textContent = formatCAD(taxRefundR);
   const refundPctEl = document.getElementById('result-refund-pct');
   if (refundPctEl) refundPctEl.textContent = `You're getting back ${refundPct}% of your contribution`;
 
@@ -678,9 +692,9 @@ function renderResults(data, values) {
   const taxWithoutEl = document.getElementById('result-tax-without');
   const taxWithEl    = document.getElementById('result-tax-with');
   const taxSavedEl   = document.getElementById('result-tax-saved');
-  if (taxWithoutEl) taxWithoutEl.textContent = formatCAD(taxWithout);
-  if (taxWithEl)    taxWithEl.textContent    = formatCAD(taxWith);
-  if (taxSavedEl)   taxSavedEl.textContent   = `${formatCAD(taxSaved)} saved`;
+  if (taxWithoutEl) taxWithoutEl.textContent = formatCAD(taxWithoutR);
+  if (taxWithEl)    taxWithEl.textContent    = formatCAD(taxWithR);
+  if (taxSavedEl)   taxSavedEl.textContent   = `${formatCAD(taxSavedR)} saved`;
 
   // Main numbers
   resultFutureValue.textContent   = formatCAD(finalBalance);
@@ -728,7 +742,7 @@ function renderResults(data, values) {
   }
   window._rrspResults = {
     futureValue: formatCAD(finalBalance),
-    taxRefund: formatCAD(taxRefund),
+    taxRefund: formatCAD(taxRefundR),
     retirementIncome: `${formatCAD0(retirementIncome)}/year`,
     totalContribs: formatCAD(totalContributions),
     inflationValue: formatCAD(inflationValue)

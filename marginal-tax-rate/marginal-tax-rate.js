@@ -328,6 +328,16 @@ document.addEventListener('DOMContentLoaded', function () {
     const afterTax  = income - tax;
     const breakdown = getBracketBreakdown(income, province);
 
+    /* Round only the final displayed dollar amounts — binary floating point
+       can leave an exact half-cent tie just below the rounding point (e.g.
+       $20,065 income in Ontario computes total tax as 620.4549999999999,
+       which Intl.NumberFormat rounds down to $620.45 instead of $620.46).
+       The bracket-loop math above (and the effective/marginal rate %s,
+       which are derived from the unrounded tax) stays at full precision;
+       only these display copies are rounded. */
+    const taxR      = NNUtils.roundMoney(tax);
+    const afterTaxR = NNUtils.roundMoney(afterTax);
+
     /* ── Render ── */
     placeholder.classList.add('hidden');
     resultsContent.classList.remove('hidden');
@@ -336,8 +346,8 @@ document.addEventListener('DOMContentLoaded', function () {
     document.getElementById('result-effective').textContent = (effective * 100).toFixed(2) + '%';
     document.getElementById('result-income').textContent    = NNUtils.formatCAD(income);
     document.getElementById('result-province').textContent  = PROVINCE_NAMES[province] || province;
-    document.getElementById('result-total-tax').textContent = NNUtils.formatCAD(tax);
-    document.getElementById('result-after-tax').textContent = NNUtils.formatCAD(afterTax);
+    document.getElementById('result-total-tax').textContent = NNUtils.formatCAD(taxR);
+    document.getElementById('result-after-tax').textContent = NNUtils.formatCAD(afterTaxR);
 
     // Rate callout
     const diff = ((marginal - effective) * 100).toFixed(1);
@@ -364,7 +374,7 @@ document.addEventListener('DOMContentLoaded', function () {
             <div style="height:8px;background:${row.isCurrentBracket ? 'var(--color-primary)' : '#E5E7EB'};border-radius:4px;width:${Math.max(2, pct).toFixed(1)}%"></div>
           </div>
           <div style="min-width:80px;text-align:right;color:var(--color-text-muted)">
-            ${NNUtils.formatCAD(row.taxInBand)}
+            ${NNUtils.formatCAD(NNUtils.roundMoney(row.taxInBand))}
           </div>
         `;
         bbEl.appendChild(div);
@@ -392,13 +402,13 @@ document.addEventListener('DOMContentLoaded', function () {
           <td style="padding:var(--space-2) var(--space-3)">${PROVINCE_NAMES[p]}${isSelected ? ' ←' : ''}</td>
           <td style="padding:var(--space-2) var(--space-3);text-align:right">${(marg*100).toFixed(2)}%</td>
           <td style="padding:var(--space-2) var(--space-3);text-align:right">${(eff*100).toFixed(2)}%</td>
-          <td style="padding:var(--space-2) var(--space-3);text-align:right">${NNUtils.formatCAD(t)}</td>
+          <td style="padding:var(--space-2) var(--space-3);text-align:right">${NNUtils.formatCAD(NNUtils.roundMoney(t))}</td>
         `;
         tbody.appendChild(tr);
       });
     }
 
-    window._taxRateResults = { income, province, tax, marginal, effective, afterTax };
+    window._taxRateResults = { income, province, tax: taxR, marginal, effective, afterTax: afterTaxR };
 
     const el = document.getElementById('results-heading');
     if (el) window.scrollTo({ top: Math.max(0, el.getBoundingClientRect().top + window.scrollY - 80), behavior: 'smooth' });

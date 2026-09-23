@@ -327,11 +327,23 @@ document.addEventListener('DOMContentLoaded', function () {
     const topCGRate     = (TOP_COMBINED[province] || 0.5353) * 0.50;
     const marginalRateOnTaxable = taxableCG > 0 ? totalTax / taxableCG : 0;
 
+    /* Round only the final displayed dollar amounts — binary floating point
+       can leave an exact half-cent tie just below the rounding point (e.g.
+       $100,000 proceeds/$50,000 ACB, $100,000 other income, Yukon computes
+       provincial tax as 2401.1449999999986, which Intl.NumberFormat rounds
+       down to $2,401.14 instead of $2,401.15). The bracket-stacking math
+       inside calcTaxOnGain stays at full precision; only these display
+       copies are rounded. */
+    const fedTaxR           = NNUtils.roundMoney(taxResult.fedTax);
+    const provTaxR          = NNUtils.roundMoney(taxResult.provTax);
+    const totalTaxR         = NNUtils.roundMoney(totalTax);
+    const afterTaxProceedsR = NNUtils.roundMoney(afterTaxProceeds);
+
     /* ── Render ── */
     placeholder.classList.add('hidden');
     resultsContent.classList.remove('hidden');
 
-    document.getElementById('result-cg-tax').textContent  = NNUtils.formatCAD(totalTax);
+    document.getElementById('result-cg-tax').textContent  = NNUtils.formatCAD(totalTaxR);
     document.getElementById('result-hero-sub').textContent =
       `${NNUtils.formatCAD(grossGain)} gain · 50% inclusion · ${province} · ~${(marginalRateOnTaxable*100).toFixed(1)}% marginal rate`;
 
@@ -354,18 +366,18 @@ document.addEventListener('DOMContentLoaded', function () {
     document.getElementById('result-net-gain').textContent      = NNUtils.formatCAD(netGain);
     document.getElementById('result-taxable-cg').textContent    = NNUtils.formatCAD(taxableCG);
     document.getElementById('result-marginal-rate').textContent = `~${(marginalRateOnTaxable*100).toFixed(1)}% (fed + prov, est.)`;
-    document.getElementById('result-tax-total').textContent     = NNUtils.formatCAD(totalTax);
+    document.getElementById('result-tax-total').textContent     = NNUtils.formatCAD(totalTaxR);
 
     document.getElementById('result-effective-rate').textContent = grossGain > 0 ? (effectiveRate*100).toFixed(2) + '%' : '—';
-    document.getElementById('result-after-tax').textContent      = NNUtils.formatCAD(afterTaxProceeds);
+    document.getElementById('result-after-tax').textContent      = NNUtils.formatCAD(afterTaxProceedsR);
     document.getElementById('result-tax-free').textContent       = NNUtils.formatCAD(taxFreeAmt);
     document.getElementById('result-top-rate').textContent       = (topCGRate*100).toFixed(2) + '%';
 
     window._cgResults = {
       proceeds, acb, grossGain, losses, lcge, netGain,
-      taxableCG, totalTax, province,
-      fedTax: taxResult.fedTax, provTax: taxResult.provTax,
-      afterTaxProceeds, effectiveRate, marginalRateOnTaxable
+      taxableCG, totalTax: totalTaxR, province,
+      fedTax: fedTaxR, provTax: provTaxR,
+      afterTaxProceeds: afterTaxProceedsR, effectiveRate, marginalRateOnTaxable
     };
 
     const el = document.getElementById('results-heading');
