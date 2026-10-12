@@ -18,14 +18,14 @@ NNComponents.NAV_LINKS = [
   { href:'/',             label:'Home'     },
   { href:'/mortgage/',    label:'Mortgage' },
   { href:'/finance/',     label:'Finance'  },
-  { href:'/about.html',   label:'About'    },
-  { href:'/contact.html', label:'Contact'  }
+  { href:'/about',   label:'About'    },
+  { href:'/contact', label:'Contact'  }
 ];
 
 NNComponents.FOOTER_LEGAL = [
-  { href:'/privacy-policy.html', label:'Privacy Policy' },
-  { href:'/terms-of-use.html',   label:'Terms of Use'   },
-  { href:'/disclaimer.html',     label:'Disclaimer'     }
+  { href:'/privacy-policy', label:'Privacy Policy' },
+  { href:'/terms-of-use',   label:'Terms of Use'   },
+  { href:'/disclaimer',     label:'Disclaimer'     }
 ];
 
 /* Province dropdown HTML — used in all province selectors */
@@ -197,8 +197,8 @@ NNComponents.renderFooter = function(containerId) {
         <div class="footer-nav-col">
           <h4 class="footer-nav-heading">Site</h4>
           <ul role="list">
-            <li><a href="/about.html">About</a></li>
-            <li><a href="/contact.html">Contact</a></li>
+            <li><a href="/about">About</a></li>
+            <li><a href="/contact">Contact</a></li>
           </ul>
         </div>
         <div class="footer-nav-col">
@@ -219,7 +219,7 @@ NNComponents.renderFooter = function(containerId) {
 NNComponents.renderDisclaimer = function(containerId) {
   const el = document.getElementById(containerId);
   if (!el) return;
-  el.innerHTML = `<div class="calc-disclaimer">Results are estimates only and should not replace professional financial, tax, or legal advice. Consult a registered financial advisor before making any financial decision. <a href="/disclaimer.html">Full disclaimer →</a></div>`;
+  el.innerHTML = `<div class="calc-disclaimer">Results are estimates only and should not replace professional financial, tax, or legal advice. Consult a registered financial advisor before making any financial decision. <a href="/disclaimer">Full disclaimer →</a></div>`;
 };
 
 NNComponents.DISCLAIMER_TEXT = 'Results are estimates only and should not replace professional financial, tax, or legal advice.';
