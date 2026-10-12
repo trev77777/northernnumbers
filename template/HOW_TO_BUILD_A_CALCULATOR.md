@@ -44,6 +44,10 @@ Replace only these CAPS placeholders:
 Leave the header, footer, scripts, AdSense, Analytics, disclaimer EXACTLY as they are.
 They are auto-injected by the shared modules.
 
+Two template-only lines must be changed in your new page (both are marked `TEMPLATE ONLY`):
+- Change `<meta name="robots" content="noindex, nofollow" />` to `content="index, follow"`
+- Add `<script src="../shared/nn-ads.js" defer></script>` where the comment indicates
+
 ---
 
 ## Step 3 — Write your-slug.js
